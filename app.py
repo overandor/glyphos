@@ -41,12 +41,13 @@ from underwriting_endpoints import (
 )
 from receipts import ReceiptGenerator, ReceiptLedger, ReceiptVerifier
 from proofbook_integration import UnderwritingProofBook
+from serl import router as serl_router
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Layer Crawler ETL Engine",
-    description="4-layer crawler, ETL, scoring, and action engine for software verification and underwriting",
-    version="1.0.0"
+    title="MEMBRA — Intellectual Capital Operating System",
+    description="Self-Evolving Runtime Ledger (SERL) + Layer Crawler ETL Engine. thought -> evidence -> artifact -> receipt -> valuation -> liquidity",
+    version="2.0.0"
 )
 
 # Add CORS middleware
@@ -57,6 +58,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount SERL router
+app.include_router(serl_router)
 
 # Initialize components
 source_registry = SourceRegistry()

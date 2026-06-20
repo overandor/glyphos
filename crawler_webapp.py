@@ -460,10 +460,13 @@ JOB2_SOURCES = [
     {'type':'site','url':'https://www.pjt.com/our-people','org':'PJT Partners','category':'investment_bank'},
 ]
 
+from serl import router as serl_router
+
 # ─── App State ──────────────────────────────────────────────────────────────
 
-app = FastAPI()
+app = FastAPI(title="MEMBRA — Intellectual Capital OS + Email Crawler Dashboard")
 app.include_router(make_router(poptimizer))
+app.include_router(serl_router)
 init_db()
 
 jobs = {

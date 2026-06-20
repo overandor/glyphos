@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY crawler_webapp.py layer_crawler_etl.py poptimizer_etl_engine.py ./
+COPY crawler_webapp.py layer_crawler_etl.py poptimizer_etl_engine.py serl.py app.py ./
 
 RUN mkdir -p /app/data
 
