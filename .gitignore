@@ -7,3 +7,4 @@ email_pipeline.py
 email_collector.py
 email_crawler.py
 email_crawler_10k.py
+.DS_Store

@@ -15,11 +15,19 @@ from pathlib import Path
 from collections import defaultdict
 import urllib3
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
+import io, csv
 import uvicorn
 
+from layer_crawler_etl import run_etl, latest_run, list_receipts
+from poptimizer_etl_engine import POptimizerETL, make_router
+
 urllib3.disable_warnings()
+
+poptimizer = POptimizerETL(system_name="Email Crawler Dashboard")
+poptimizer.register_source("crawler_repo", "repo", ".")
+poptimizer.register_source("crawler_web", "runtime", "http://localhost:7860")
 
 BASE = Path(__file__).parent
 DB = str(BASE / 'data' / 'emails10k.db')
@@ -455,6 +463,7 @@ JOB2_SOURCES = [
 # ─── App State ──────────────────────────────────────────────────────────────
 
 app = FastAPI()
+app.include_router(make_router(poptimizer))
 init_db()
 
 jobs = {
@@ -467,6 +476,10 @@ def run_job(job_id):
     c = jobs[job_id]['crawler']
     if c is None: return
     c.run(jobs[job_id]['sources'])
+    try:
+        run_etl(save=True)
+    except Exception as e:
+        log.warning(f"[ETL] post-crawl receipt failed: {e}")
 
 def start_job(job_id):
     if jobs[job_id]['crawler'] and jobs[job_id]['crawler'].status == 'running':
@@ -528,6 +541,162 @@ async def api_start_all():
     r2 = start_job('job2')
     return {'job1': r1, 'job2': r2}
 
+@app.post("/api/stop-all")
+async def api_stop_all():
+    r1 = stop_job('job1')
+    r2 = stop_job('job2')
+    return {'job1': r1, 'job2': r2}
+
+@app.get("/health")
+async def health():
+    return {"status": "ok", "service": "email-crawler", "port": int(os.environ.get("PORT", 7860))}
+
+@app.get("/api/categories")
+async def api_categories():
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("SELECT category, COUNT(*) FROM emails GROUP BY category ORDER BY COUNT(*) DESC")
+    rows = c.fetchall()
+    conn.close()
+    return {"categories": [{"name": r[0], "count": r[1]} for r in rows]}
+
+@app.get("/api/organizations")
+async def api_organizations(limit: int = 50, offset: int = 0):
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    c.execute("SELECT organization, COUNT(*) as cnt, AVG(response_likelihood) as avg_score FROM emails GROUP BY organization ORDER BY cnt DESC LIMIT ? OFFSET ?", (limit, offset))
+    rows = c.fetchall()
+    conn.close()
+    return {"organizations": [{"name": r[0], "email_count": r[1], "avg_score": round(r[2] or 0, 1)} for r in rows]}
+
+@app.get("/api/search")
+async def api_search(q: str = '', category: str = '', min_score: int = 0, limit: int = 100, offset: int = 0):
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    conditions = []
+    params = []
+    if q:
+        conditions.append("(email LIKE ? OR name LIKE ? OR organization LIKE ? OR title LIKE ?)")
+        params.extend([f'%{q}%', f'%{q}%', f'%{q}%', f'%{q}%'])
+    if category:
+        conditions.append("category=?")
+        params.append(category)
+    if min_score:
+        conditions.append("response_likelihood>=?")
+        params.append(min_score)
+    where = " WHERE " + " AND ".join(conditions) if conditions else ""
+    c.execute(f"SELECT COUNT(*) FROM emails{where}", params)
+    total = c.fetchone()[0]
+    q2 = f"SELECT email,name,title,organization,category,location,phones,source_url,response_likelihood,job_id FROM emails{where} ORDER BY response_likelihood DESC LIMIT ? OFFSET ?"
+    c.execute(q2, params + [limit, offset])
+    rows = c.fetchall()
+    conn.close()
+    return {
+        "total": total,
+        "limit": limit,
+        "offset": offset,
+        "results": [{'email':r[0],'name':r[1],'title':r[2],'organization':r[3],'category':r[4],
+                     'location':r[5],'phones':json.loads(r[6]) if r[6] else [],'source_url':r[7],
+                     'response_likelihood':r[8],'job_id':r[9]} for r in rows]
+    }
+
+@app.get("/api/email/{email_id}")
+async def api_email_detail(email_id: str):
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    eid = hashlib.md5(email_id.lower().encode()).hexdigest()
+    c.execute("SELECT email,name,title,organization,category,location,phones,source_url,keywords,role_scores,response_likelihood,dossier_text,cluster_id,collected_at,job_id FROM emails WHERE id=?", (eid,))
+    r = c.fetchone()
+    conn.close()
+    if not r:
+        return JSONResponse({"error": "not found"}, 404)
+    return {'email':r[0],'name':r[1],'title':r[2],'organization':r[3],'category':r[4],
+            'location':r[5],'phones':json.loads(r[6]) if r[6] else [],'source_url':r[7],
+            'keywords':json.loads(r[8]) if r[8] else [],'role_scores':json.loads(r[9]) if r[9] else {},
+            'response_likelihood':r[10],'dossier_text':r[11],'cluster_id':r[12],
+            'collected_at':r[13],'job_id':r[14]}
+
+@app.get("/api/export/csv")
+async def api_export_csv(category: str = '', min_score: int = 0):
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    q = "SELECT email,name,title,organization,category,location,phones,source_url,response_likelihood,job_id FROM emails"
+    conditions = []
+    params = []
+    if category: conditions.append("category=?"); params.append(category)
+    if min_score: conditions.append("response_likelihood>=?"); params.append(min_score)
+    if conditions: q += " WHERE " + " AND ".join(conditions)
+    q += " ORDER BY response_likelihood DESC"
+    c.execute(q, params)
+    rows = c.fetchall()
+    conn.close()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['email','name','title','organization','category','location','phones','source_url','response_likelihood','job_id'])
+    for r in rows:
+        writer.writerow([r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7],r[8],r[9]])
+    output.seek(0)
+    return StreamingResponse(iter([output.getvalue()]), media_type='text/csv', headers={'Content-Disposition': 'attachment; filename="emails_export.csv"'})
+
+@app.get("/api/export/json")
+async def api_export_json(category: str = '', min_score: int = 0):
+    conn = sqlite3.connect(DB)
+    c = conn.cursor()
+    q = "SELECT email,name,title,organization,category,location,phones,source_url,response_likelihood,job_id FROM emails"
+    conditions = []
+    params = []
+    if category: conditions.append("category=?"); params.append(category)
+    if min_score: conditions.append("response_likelihood>=?"); params.append(min_score)
+    if conditions: q += " WHERE " + " AND ".join(conditions)
+    q += " ORDER BY response_likelihood DESC"
+    c.execute(q, params)
+    rows = c.fetchall()
+    conn.close()
+    data = [{'email':r[0],'name':r[1],'title':r[2],'organization':r[3],'category':r[4],
+             'location':r[5],'phones':json.loads(r[6]) if r[6] else [],'source_url':r[7],
+             'response_likelihood':r[8],'job_id':r[9]} for r in rows]
+    return JSONResponse(data, headers={'Content-Disposition': 'attachment; filename="emails_export.json"'})
+
+@app.get("/api/etl/receipt/{receipt_id}")
+async def api_etl_receipt_detail(receipt_id: str):
+    from layer_crawler_etl import RECEIPTS_DIR
+    path = RECEIPTS_DIR / f"{receipt_id}.json"
+    if not path.exists():
+        return JSONResponse({"error": "receipt not found"}, 404)
+    return json.loads(path.read_text(encoding='utf-8'))
+
+@app.get("/hf-space")
+async def hf_space_meta():
+    return {
+        "title": "Email Crawler Dashboard",
+        "sdk": "docker",
+        "app_port": int(os.environ.get("PORT", 7860)),
+        "endpoints": [
+            {"method": "GET", "path": "/", "desc": "Dashboard UI"},
+            {"method": "GET", "path": "/health", "desc": "Health check"},
+            {"method": "GET", "path": "/api/stats", "desc": "Database stats"},
+            {"method": "GET", "path": "/api/categories", "desc": "List categories with counts"},
+            {"method": "GET", "path": "/api/organizations", "desc": "List organizations with counts and avg scores"},
+            {"method": "GET", "path": "/api/emails", "desc": "Paginated email list with filters"},
+            {"method": "GET", "path": "/api/search", "desc": "Full-text search across emails"},
+            {"method": "GET", "path": "/api/email/{id}", "desc": "Single email dossier"},
+            {"method": "GET", "path": "/api/export/csv", "desc": "Export all emails as CSV"},
+            {"method": "GET", "path": "/api/export/json", "desc": "Export all emails as JSON"},
+            {"method": "POST", "path": "/api/job/{job_id}/start", "desc": "Start crawl job"},
+            {"method": "POST", "path": "/api/job/{job_id}/stop", "desc": "Stop crawl job"},
+            {"method": "POST", "path": "/api/start-all", "desc": "Start all crawl jobs"},
+            {"method": "POST", "path": "/api/stop-all", "desc": "Stop all crawl jobs"},
+            {"method": "POST", "path": "/api/etl/run", "desc": "Run ETL audit"},
+            {"method": "GET", "path": "/api/etl/score", "desc": "Latest ETL scores"},
+            {"method": "GET", "path": "/api/etl/receipts", "desc": "List all receipts"},
+            {"method": "GET", "path": "/api/etl/receipt/{id}", "desc": "Single receipt detail"},
+            {"method": "GET", "path": "/api/etl/run/latest", "desc": "Latest ETL run summary"},
+            {"method": "GET", "path": "/hf-space", "desc": "This metadata"},
+        ],
+        "crawler_jobs": list(jobs.keys()),
+        "etl_layers": ["source_registry", "subject_crawlers", "etl", "scoring", "action"],
+    }
+
 @app.get("/api/emails")
 async def api_emails(limit: int = 100, offset: int = 0, category: str = '', min_score: int = 0):
     conn = sqlite3.connect(DB)
@@ -546,6 +715,39 @@ async def api_emails(limit: int = 100, offset: int = 0, category: str = '', min_
     return [{'email':r[0],'name':r[1],'title':r[2],'organization':r[3],'category':r[4],
              'location':r[5],'phones':json.loads(r[6]) if r[6] else [],'source_url':r[7],
              'response_likelihood':r[8],'job_id':r[9]} for r in rows]
+
+@app.post("/api/etl/run")
+async def api_etl_run():
+    import asyncio as _a
+    loop = _a.get_event_loop()
+    try:
+        result = await loop.run_in_executor(None, lambda: run_etl(save=True))
+        return result
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, 500)
+
+@app.get("/api/etl/receipts")
+async def api_etl_receipts():
+    return {"receipts": list_receipts()}
+
+@app.get("/api/etl/run/latest")
+async def api_etl_latest():
+    run = latest_run()
+    if run is None:
+        return JSONResponse({"error": "no etl run yet"}, 404)
+    return run
+
+@app.get("/api/etl/score")
+async def api_etl_score():
+    run = latest_run()
+    if run is None:
+        return JSONResponse({"error": "no etl run yet"}, 404)
+    return {
+        "run_id": run.get("run_id"),
+        "timestamp": run.get("timestamp"),
+        "aggregate_scores": run.get("aggregate_scores", {}),
+        "hardening_actions": run.get("hardening_actions", []),
+    }
 
 @app.websocket("/ws")
 async def websocket_endpoint(ws: WebSocket):
@@ -615,6 +817,16 @@ table { width:100%; border-collapse:collapse; font-size:12px; }
 th { background:#1a1a1a; padding:8px; text-align:left; color:#888; border-bottom:1px solid #333; }
 td { padding:6px 8px; border-bottom:1px solid #222; }
 tr:hover { background:#1a1a1a; }
+.etl-panel { background:#1a1a1a; border:1px solid #333; border-radius:8px; padding:16px; margin-bottom:24px; }
+.etl-controls { margin-bottom:12px; }
+.etl-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+.etl-stat { background:#222; border-radius:6px; padding:12px; text-align:center; }
+.etl-stat .num { font-size:24px; font-weight:bold; color:#4fc3f7; }
+.etl-stat .label { font-size:10px; color:#888; margin-top:4px; text-transform:uppercase; }
+.etl-actions { background:#111; border:1px solid #222; border-radius:6px; padding:12px; }
+.etl-actions .label { font-size:11px; color:#888; text-transform:uppercase; margin-bottom:8px; }
+.etl-actions ul { margin:0; padding-left:18px; font-size:12px; color:#aaa; }
+.etl-actions li { margin-bottom:6px; }
 .score { font-weight:bold; }
 .score-high { color:#81c784; }
 .score-vip { color:#ffd700; }
@@ -664,6 +876,21 @@ tr:hover { background:#1a1a1a; }
 
 <h2>Top Emails by Response Likelihood</h2>
 <table id="email-table"><thead><tr><th>Score</th><th>Email</th><th>Name</th><th>Title</th><th>Organization</th><th>Category</th><th>Location</th><th>Phone</th></tr></thead><tbody></tbody></table>
+
+<h2>Layer Crawler ETL — Receipts & Hardening</h2>
+<div class="etl-panel">
+  <div class="etl-controls"><button class="btn btn-start" id="etl-run-btn">▶ Run ETL Audit</button></div>
+  <div class="etl-grid">
+    <div class="etl-stat"><div class="num" id="etl-evidence">—</div><div class="label">Evidence</div></div>
+    <div class="etl-stat"><div class="num" id="etl-prod">—</div><div class="label">ProdScore</div></div>
+    <div class="etl-stat"><div class="num" id="etl-harden">—</div><div class="label">HardenRank</div></div>
+    <div class="etl-stat"><div class="num" id="etl-ip">—</div><div class="label">IP Risk</div></div>
+  </div>
+  <div class="etl-actions">
+    <div class="label">Hardening Actions</div>
+    <ul id="etl-actions"></ul>
+  </div>
+</div>
 
 <script>
 let ws;
@@ -718,6 +945,25 @@ async function loadEmails() {
 }
 setInterval(loadEmails, 5000);
 loadEmails();
+
+async function loadEtl() {
+    const r = await fetch('/api/etl/score');
+    if (!r.ok) return;
+    const s = await r.json();
+    const sc = s.aggregate_scores || {};
+    document.getElementById('etl-evidence').textContent = sc.evidence ?? '—';
+    document.getElementById('etl-prod').textContent = sc.prod_score ?? '—';
+    document.getElementById('etl-harden').textContent = sc.harden_rank ?? '—';
+    document.getElementById('etl-ip').textContent = sc.ip_risk ?? '—';
+    const ul = document.getElementById('etl-actions');
+    ul.innerHTML = (s.hardening_actions || []).map(a => `<li>${a}</li>`).join('');
+}
+document.getElementById('etl-run-btn').addEventListener('click', async () => {
+    await fetch('/api/etl/run', {method:'POST'});
+    loadEtl();
+});
+setInterval(loadEtl, 10000);
+loadEtl();
 </script>
 </body>
 </html>'''
