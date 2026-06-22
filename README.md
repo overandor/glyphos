@@ -1,10 +1,9 @@
 ---
-title: Layer Crawler ETL Engine
-emoji: �️
+title: MEMBRA — Intellectual Capital OS
+emoji: 🧠
 colorFrom: blue
 colorTo: indigo
-sdk: python
-sdk_version: 3.10
+sdk: docker
 app_file: app.py
 pinned: false
 license: mit
