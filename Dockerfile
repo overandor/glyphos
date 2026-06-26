@@ -1,3 +1,10 @@
+FROM node:20-slim AS ui-builder
+WORKDIR /jorki
+COPY jorki/package.json jorki/package-lock.json ./
+RUN npm ci
+COPY jorki/ .
+RUN npm run build
+
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -10,6 +17,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+
+COPY --from=ui-builder /jorki/dist /app/jorki_ui_dist
 
 RUN mkdir -p /tmp/systemlake_v4b
 

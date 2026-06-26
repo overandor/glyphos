@@ -47,9 +47,11 @@ import threading
 import uuid
 from datetime import datetime
 from typing import Dict, List, Optional
+from pathlib import Path as _Path
 
-from fastapi import FastAPI, HTTPException, UploadFile, File
-from fastapi.responses import HTMLResponse, PlainTextResponse
+from fastapi import FastAPI, HTTPException, UploadFile, File, Body
+from fastapi.responses import HTMLResponse, PlainTextResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 # ─── Configuration ──────────────────────────────────────────────────────
 
@@ -642,7 +644,14 @@ async def verification():
 
 # ─── Dashboard / Upload UI ──────────────────────────────────────────────
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
+async def root():
+    ui_path = _Path("/app/jorki_ui_dist/index.html")
+    if ui_path.exists():
+        return FileResponse(str(ui_path))
+    return HTMLResponse("<h1>Jorki</h1><p>UI not built. Visit /systemlake for the legacy dashboard.</p>")
+
+@app.get("/systemlake", response_class=HTMLResponse)
 async def dashboard():
     data = _load_all()
     has_telemetry = data["systems"] is not None
@@ -829,6 +838,265 @@ function showResult(data){{
 }}
 </script>
 </body></html>""")
+
+# ─── JORKI API Endpoints ─────────────────────────────────────────────────
+
+import sqlite3
+import re
+import time
+
+JORKI_DATA_DIR = _Path(os.environ.get("SYSTEMLAKE_DATA_DIR", "/tmp/systemlake_v4b")) / "jorki"
+JORKI_DATA_DIR.mkdir(parents=True, exist_ok=True)
+JORKI_INDEX_DIR = JORKI_DATA_DIR / "indexes"
+JORKI_INDEX_DIR.mkdir(parents=True, exist_ok=True)
+JORKI_REGISTRY_PATH = JORKI_DATA_DIR / "registry.json"
+
+def _jorki_load_registry():
+    if JORKI_REGISTRY_PATH.exists():
+        return json.loads(JORKI_REGISTRY_PATH.read_text())
+    return {}
+
+def _jorki_save_registry(reg):
+    JORKI_REGISTRY_PATH.write_text(json.dumps(reg, indent=2))
+
+def _jorki_index_file(filepath):
+    path = _Path(filepath)
+    content = path.read_bytes()
+    size = len(content)
+    merkle_root = hashlib.sha256(content).hexdigest()
+    file_id = merkle_root[:12]
+    text = content.decode("utf-8", errors="replace")
+    lines = text.split("\n")
+    line_count = len(lines)
+    words = re.findall(r"\b\w+\b", text)
+    word_freq = {}
+    for w in words:
+        word_freq[w] = word_freq.get(w, 0) + 1
+    top_words = sorted(word_freq.items(), key=lambda x: -x[1])[:20]
+
+    chunks = []
+    current_chunk = []
+    chunk_start = 0
+    for i, line in enumerate(lines):
+        current_chunk.append(line)
+        is_boundary = (
+            (line.strip() == "" and len(current_chunk) > 5)
+            or line.strip().startswith("def ")
+            or line.strip().startswith("class ")
+            or line.strip().startswith("func ")
+            or line.strip().startswith("workflow:")
+        )
+        if is_boundary and len(current_chunk) >= 3:
+            chunks.append({"idx": len(chunks), "line_start": chunk_start, "line_end": i,
+                           "boundary_type": "function" if line.strip().startswith(("def ", "class ", "func ")) else "paragraph",
+                           "preview": "\n".join(current_chunk[:3])[:200], "line_count": len(current_chunk)})
+            current_chunk = []
+            chunk_start = i + 1
+    if current_chunk:
+        chunks.append({"idx": len(chunks), "line_start": chunk_start, "line_end": line_count - 1,
+                       "boundary_type": "final", "preview": "\n".join(current_chunk[:3])[:200], "line_count": len(current_chunk)})
+
+    symbols = []
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        for prefix in ["def ", "class ", "func ", "async def "]:
+            if stripped.startswith(prefix):
+                name = stripped[len(prefix):].split("(")[0].split(":")[0].strip()
+                symbols.append({"line": i + 1, "name": name, "type": prefix.strip()})
+
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    conn = sqlite3.connect(str(idx_path))
+    conn.execute("CREATE TABLE IF NOT EXISTS file_meta (key TEXT, value TEXT)")
+    conn.execute("CREATE TABLE IF NOT EXISTS chunks (idx INTEGER, line_start INTEGER, line_end INTEGER, boundary_type TEXT, preview TEXT, line_count INTEGER)")
+    conn.execute("CREATE TABLE IF NOT EXISTS word_freq (word TEXT, count INTEGER)")
+    conn.execute("CREATE TABLE IF NOT EXISTS symbols (line INTEGER, name TEXT, type TEXT)")
+    conn.execute("CREATE TABLE IF NOT EXISTS capabilities (id INTEGER, name TEXT)")
+    conn.execute("DELETE FROM file_meta")
+    conn.execute("DELETE FROM chunks")
+    conn.execute("DELETE FROM word_freq")
+    conn.execute("DELETE FROM symbols")
+    conn.execute("DELETE FROM capabilities")
+    meta = {"filename": path.name, "size_bytes": str(size), "total_lines": str(line_count),
+            "total_words": str(len(words)), "merkle_root": merkle_root,
+            "total_chunks": str(len(chunks)), "total_symbols": str(len(symbols)),
+            "file_id": file_id, "size_human": f"{size/1024:.1f}KB" if size < 1048576 else f"{size/1048576:.1f}MB"}
+    for k, v in meta.items():
+        conn.execute("INSERT INTO file_meta VALUES (?,?)", (k, str(v)))
+    for c in chunks:
+        conn.execute("INSERT INTO chunks VALUES (?,?,?,?,?,?)", (c["idx"], c["line_start"], c["line_end"], c["boundary_type"], c["preview"], c["line_count"]))
+    for w, cnt in top_words:
+        conn.execute("INSERT INTO word_freq VALUES (?,?)", (w, cnt))
+    for s in symbols:
+        conn.execute("INSERT INTO symbols VALUES (?,?,?)", (s["line"], s["name"], s["type"]))
+    caps = [(i, name) for i, name in enumerate(["sql", "nosql", "search", "chunk", "summary", "meta", "mcp", "word_freq", "symbols", "chunks", "merkle", "sha256", "capabilities", "revocation"])]
+    conn.executemany("INSERT INTO capabilities VALUES (?,?)", caps)
+    conn.commit()
+    conn.close()
+
+    index_size = idx_path.stat().st_size
+    return {"file_id": file_id, "filename": path.name, "size_bytes": size,
+            "size_human": f"{size/1024:.1f}KB" if size < 1048576 else f"{size/1048576:.1f}MB",
+            "total_lines": line_count, "total_words": len(words),
+            "total_chunks": len(chunks), "total_symbols": len(symbols),
+            "merkle_root": merkle_root, "index_size_bytes": index_size,
+            "index_ratio": round(index_size / max(size, 1) * 100, 1)}
+
+# JORKI query tracking
+_jorki_query_log = {}
+
+def _jorki_track_query(file_id, query_type):
+    if file_id not in _jorki_query_log:
+        _jorki_query_log[file_id] = {"total_queries": 0, "query_breakdown": {}}
+    _jorki_query_log[file_id]["total_queries"] += 1
+    _jorki_query_log[file_id]["query_breakdown"][query_type] = _jorki_query_log[file_id]["query_breakdown"].get(query_type, 0) + 1
+    _jorki_query_log[file_id]["last_access"] = time.time()
+
+@app.get("/health")
+async def jorki_health():
+    reg = _jorki_load_registry()
+    return {"status": "ok", "service": "jorki", "version": "2.0",
+            "files_registered": len(reg),
+            "persistent_storage": os.path.exists("/data"),
+            "endpoints": ["/health", "/files", "/meta/{id}", "/summary/{id}",
+                          "/capabilities/{id}", "/superpose/state/{id}",
+                          "/search/{id}", "/chunk/{id}/{idx}", "/query/sql/{id}", "/stats/{id}"]}
+
+@app.get("/files")
+async def jorki_files():
+    reg = _jorki_load_registry()
+    files = []
+    for fid, entry in reg.items():
+        files.append({"file_id": fid, "filename": entry.get("filename", "unknown"),
+                       "size": entry.get("size_human", ""), "format": entry.get("format", ""),
+                       "status": entry.get("status", "unknown")})
+    return {"files": files, "total": len(files)}
+
+@app.get("/meta/{file_id}")
+async def jorki_meta(file_id: str):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    caps = conn.execute("SELECT name FROM capabilities").fetchall()
+    conn.close()
+    meta = {r[0]: r[1] for r in rows}
+    return {"file_id": file_id, "meta": meta,
+            "capabilities": [r[0] for r in caps],
+            "endpoints": {"meta": f"/meta/{file_id}", "search": f"/search/{file_id}?q=",
+                          "chunk": f"/chunk/{file_id}/{{idx}}", "sql": f"/query/sql/{file_id}"}}
+
+@app.get("/summary/{file_id}")
+async def jorki_summary(file_id: str):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    chunks = conn.execute("SELECT idx, boundary_type, line_start, line_end, line_count, preview FROM chunks LIMIT 50").fetchall()
+    symbols = conn.execute("SELECT line, name, type FROM symbols LIMIT 50").fetchall()
+    words = conn.execute("SELECT word, count FROM word_freq ORDER BY count DESC LIMIT 20").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "summary")
+    return {"file_id": file_id,
+            "semantic_chunks": [{"idx": r[0], "type": r[1], "lines": f"{r[2]}-{r[3]}", "line_count": r[4], "size": len(r[5])} for r in chunks],
+            "functions": [{"line": r[0], "symbol": r[1]} for r in symbols],
+            "top_words": [{"word": r[0], "count": r[1]} for r in words]}
+
+@app.get("/capabilities/{file_id}")
+async def jorki_capabilities(file_id: str):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    caps = conn.execute("SELECT id, name FROM capabilities").fetchall()
+    conn.close()
+    return {"file_id": file_id, "total": len(caps),
+            "capabilities": [{"id": r[0], "name": r[1], "enabled": True} for r in caps]}
+
+@app.get("/superpose/state/{file_id}")
+async def jorki_state(file_id: str):
+    reg = _jorki_load_registry()
+    entry = reg.get(file_id, {})
+    ql = _jorki_query_log.get(file_id, {"total_queries": 0, "query_breakdown": {}})
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    index_size = idx_path.stat().st_size if idx_path.exists() else 0
+    return {"file_id": file_id,
+            "session_status": "live" if entry.get("status") == "active" else "idle",
+            "uploaded_at": entry.get("indexed_at"),
+            "last_access": ql.get("last_access"),
+            "total_queries": ql.get("total_queries", 0),
+            "query_breakdown": ql.get("query_breakdown", {}),
+            "index_size_bytes": index_size,
+            "original_size": entry.get("size_human", ""),
+            "compression_ratio": f"{round(index_size / max(int(entry.get('size_bytes', 1)), 1) * 100, 1)}%" if entry.get('size_bytes') else ""}
+
+@app.get("/search/{file_id}")
+async def jorki_search(file_id: str, q: str = ""):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    chunk_results = conn.execute("SELECT idx, line_start, line_end, preview FROM chunks WHERE preview LIKE ?", (f"%{q}%",)).fetchall()
+    sym_results = conn.execute("SELECT line, name, type FROM symbols WHERE name LIKE ?", (f"%{q}%",)).fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "search")
+    return {"file_id": file_id, "query": q,
+            "results": [{"line": r[1], "text": r[3][:200]} for r in chunk_results] +
+                       [{"line": r[0], "text": r[1]} for r in sym_results]}
+
+@app.get("/chunk/{file_id}/{idx}")
+async def jorki_chunk(file_id: str, idx: int):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    row = conn.execute("SELECT idx, line_start, line_end, boundary_type, preview, line_count FROM chunks WHERE idx = ?", (idx,)).fetchone()
+    conn.close()
+    _jorki_track_query(file_id, "chunk")
+    if not row:
+        return {"error": f"Chunk {idx} not found"}
+    return {"idx": row[0], "line_start": row[1], "line_end": row[2],
+            "boundary_type": row[3], "content": row[4], "line_count": row[5]}
+
+@app.post("/query/sql/{file_id}")
+async def jorki_sql(file_id: str, body: dict = Body(...)):
+    sql = body.get("sql", "")
+    if not sql.strip().upper().startswith("SELECT"):
+        return {"error": "Only SELECT statements allowed"}
+    for kw in ["INSERT", "UPDATE", "DELETE", "DROP", "ATTACH", "PRAGMA", "CREATE", "ALTER"]:
+        if kw in sql.upper():
+            return {"error": f"{kw} not allowed"}
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    try:
+        cursor = conn.execute(sql)
+        columns = [d[0] for d in cursor.description] if cursor.description else []
+        rows = cursor.fetchmany(1000)
+        conn.close()
+        _jorki_track_query(file_id, "sql")
+        return {"file_id": file_id, "columns": columns, "rows": [list(r) for r in rows], "row_count": len(rows)}
+    except Exception as e:
+        conn.close()
+        return {"error": str(e)}
+
+@app.get("/stats/{file_id}")
+async def jorki_stats(file_id: str):
+    ql = _jorki_query_log.get(file_id, {"total_queries": 0, "query_breakdown": {}})
+    return {"file_id": file_id, "stats": [{"type": k, "count": v} for k, v in ql.get("query_breakdown", {}).items()],
+            "total_queries": ql.get("total_queries", 0)}
+
+# Mount React UI static assets if dist exists
+_ui_dist = _Path("/app/jorki_ui_dist")
+if _ui_dist.exists():
+    _assets_dist = _ui_dist / "assets"
+    if _assets_dist.exists():
+        app.mount("/assets", StaticFiles(directory=str(_assets_dist)), name="jorki_assets")
+
+    @app.get("/ui")
+    async def jorki_ui():
+        return FileResponse(str(_ui_dist / "index.html"))
 
 if __name__ == "__main__":
     import uvicorn
