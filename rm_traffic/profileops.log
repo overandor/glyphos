@@ -1,0 +1,42 @@
+2026-06-25 16:07:23,178 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:07:25,868 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:07:31,259 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:07:32,050 [INFO] Login OK as karpathianwolf
+2026-06-25 16:07:32,052 [INFO] RECEIPT: login | API login
+2026-06-25 16:07:41,809 [INFO] RECEIPT: print_dashboard | Dashboard printed
+2026-06-25 16:07:43,906 [INFO] Profile visibility: shown
+2026-06-25 16:07:45,805 [INFO] Availability: Available (remaining ~15313s)
+2026-06-25 16:07:45,808 [INFO] RECEIPT: ensure_available | Availability OK: Available, 15313s left
+2026-06-25 16:08:01,638 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:08:02,474 [INFO] Login OK as karpathianwolf
+2026-06-25 16:08:02,477 [INFO] RECEIPT: login | API login
+2026-06-25 16:08:12,020 [INFO] RECEIPT: print_dashboard | Dashboard printed
+2026-06-25 16:08:14,144 [INFO] Profile visibility: shown
+2026-06-25 16:08:16,052 [INFO] Availability: Available (remaining ~21568s)
+2026-06-25 16:08:16,057 [INFO] RECEIPT: ensure_available | Availability OK: Available, 21568s left
+2026-06-25 16:08:26,255 [INFO] Stats recorded: views=2808 contacts=135 visits=31 bookmarks=2
+2026-06-25 16:08:26,258 [INFO] RECEIPT: collect_stats | Traffic stats collected
+2026-06-25 16:08:30,324 [INFO] Search position: #None/0 (available #None/0)
+2026-06-25 16:08:30,326 [INFO] RECEIPT: check_search_position | Position #None/0, available #None/0
+2026-06-25 16:08:34,235 [INFO] Bio experiment suggestion: headline='Professional massage for people who sit too hard.'
+2026-06-25 16:08:34,236 [INFO] RECEIPT: bio_experiment | Draft bio variant generated (not applied). Headline: Professional massage for people who sit too hard.
+2026-06-25 16:08:34,238 [WARNING] ALERT [info/bio_suggestion]: New bio variant drafted: Professional massage for people who sit too hard.
+2026-06-25 16:08:34,239 [INFO] RECEIPT: draft_blog | Drafted blog: Why your shoulders hurt and what actually helps
+2026-06-25 16:08:34,239 [INFO] Blog draft (not published): Why your shoulders hurt and what actually helps
+2026-06-25 16:10:57,837 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:11:29,477 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:11:30,175 [ERROR] Login response not JSON (captcha/block?): <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CrowdSec Captcha</title>
+    <meta content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>/*! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com*/*,:after,:before{borde
+2026-06-25 16:11:30,179 [ERROR] RECEIPT FAIL: login | API login
+2026-06-25 16:11:54,789 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:11:55,223 [ERROR] API login response not JSON (captcha/block?). Trying Selenium...
+2026-06-25 16:11:55,230 [INFO] Attempting Selenium hybrid login...
+2026-06-25 16:12:07,223 [ERROR] Selenium login failed, still on login page
+2026-06-25 16:12:07,364 [ERROR] RECEIPT FAIL: login | API login
+2026-06-25 16:21:56,945 [INFO] Database initialized at /Users/alep/Downloads/windsurf-smoke/rm_traffic/profileops.db
+2026-06-25 16:21:56,950 [INFO] Attempting Selenium hybrid login...

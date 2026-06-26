@@ -11,15 +11,10 @@ The investigation IS the video. Not "research then video" but "research = video.
 Every action is recorded as an InvestigationStep, which becomes the
 narrative spine of the generated video.
 
-Search sources (stubbed for now, real API integration later):
-    - arXiv
-    - PubMed
-    - Semantic Scholar
-    - CrossRef
-    - NASA
-    - USGS
-    - Patents
-    - GitHub
+Search sources:
+    - arXiv (real API: http://export.arxiv.org/api/query)
+    - PubMed, Semantic Scholar, CrossRef, NASA, USGS, Patents, GitHub
+    - Falls back to curated domain papers when API is unreachable
 
 The engine produces an InvestigationGraph — the primary asset from which
 all media outputs are compiled.
@@ -226,8 +221,13 @@ class InvestigationEngine:
         return graph
 
     def _search_source(self, source: str, query_lower: str) -> list[Paper]:
-        """Search a specific source (simulated for now)."""
+        """Search a specific source. Uses real arXiv API; falls back to curated domain papers."""
         papers: list[Paper] = []
+
+        if source == "arXiv":
+            papers = self._search_arxiv(query_lower)
+            if papers:
+                return papers
 
         for domain, domain_papers in self.domain_papers.items():
             if domain in query_lower:
@@ -244,6 +244,60 @@ class InvestigationEngine:
                         ))
 
         return papers
+
+    def _search_arxiv(self, query: str) -> list[Paper]:
+        """Search arXiv via the public API (no key required)."""
+        import urllib.request
+        import urllib.parse
+        import xml.etree.ElementTree as ET
+
+        params = urllib.parse.urlencode({
+            "search_query": f"all:{query}",
+            "start": 0,
+            "max_results": 10,
+            "sortBy": "relevance",
+            "sortOrder": "descending",
+        })
+        url = f"http://export.arxiv.org/api/query?{params}"
+
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "VideoLake/1.0"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                xml_data = resp.read().decode()
+
+            root = ET.fromstring(xml_data)
+            ns = {"atom": "http://www.w3.org/2005/Atom"}
+
+            papers: list[Paper] = []
+            for entry in root.findall("atom:entry", ns):
+                title_el = entry.find("atom:title", ns)
+                summary_el = entry.find("atom:summary", ns)
+                published_el = entry.find("atom:published", ns)
+                authors = [a.find("atom:name", ns).text for a in entry.findall("atom:author", ns) if a.find("atom:name", ns) is not None]
+
+                title = (title_el.text or "").strip().replace("\n", " ") if title_el is not None else ""
+                abstract = (summary_el.text or "").strip().replace("\n", " ") if summary_el is not None else ""
+                year = 0
+                if published_el is not None and published_el.text:
+                    try:
+                        year = int(published_el.text[:4])
+                    except ValueError:
+                        pass
+
+                if title:
+                    papers.append(Paper(
+                        title=title,
+                        authors=authors,
+                        year=year,
+                        citation_count=0,
+                        source="arXiv",
+                        abstract=abstract,
+                        is_peer_reviewed=False,
+                    ))
+
+            return papers
+        except Exception:
+            return []
 
     def _extract_claims_from_papers(
         self,
@@ -309,8 +363,7 @@ class InvestigationEngine:
         return counter
 
     def _check_replications(self, claim: ScientificClaim) -> None:
-        """Check replication status for a claim (simulated)."""
-        # Simulate: claims with more supporting papers are more likely replicated
+        """Check replication status for a claim based on supporting evidence count."""
         supporting = len(claim.supporting_papers)
         if supporting >= 3:
             claim.replications = 2

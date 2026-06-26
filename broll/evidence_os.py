@@ -300,13 +300,23 @@ class EvidenceOS:
                 if any(s in filename.lower() for s in [".env", "secret", "key", "token"]):
                     graph.add_secret("potential_secret_file", rel_path)
 
-        # Add a simulated commit
-        graph.add_commit(
-            commit_hash="abc123def456",
-            author="system",
-            message="Initial scan",
-            files_changed=list(graph._files.keys())[:5],
-        )
+        # Add real git commits if available, otherwise record scan metadata
+        git_commits = self._get_git_commits(repo_path)
+        if git_commits:
+            for c in git_commits[:5]:
+                graph.add_commit(
+                    commit_hash=c["hash"],
+                    author=c["author"],
+                    message=c["message"],
+                    files_changed=c.get("files_changed", []),
+                )
+        else:
+            graph.add_commit(
+                commit_hash=hashlib.sha256(f"scan:{repo_path}:{time.time()}".encode()).hexdigest()[:16],
+                author="evidence_os",
+                message="Repository scan (no git history available)",
+                files_changed=list(graph._files.keys())[:5],
+            )
 
         # Add license if found
         for filepath in graph._files:
@@ -323,6 +333,34 @@ class EvidenceOS:
         graph.build_manifest()
 
         return graph
+
+    @staticmethod
+    def _get_git_commits(repo_path: str) -> list[dict]:
+        """Get recent git commits from the repository."""
+        import subprocess
+        try:
+            result = subprocess.run(
+                ["git", "log", "--pretty=format:%H|%an|%s", "--name-only", "-5"],
+                cwd=repo_path, capture_output=True, text=True, timeout=10,
+            )
+            if result.returncode != 0:
+                return []
+
+            commits: list[dict] = []
+            current: dict | None = None
+            for line in result.stdout.split("\n"):
+                if "|" in line and line.count("|") >= 2:
+                    if current:
+                        commits.append(current)
+                    parts = line.split("|", 2)
+                    current = {"hash": parts[0][:16], "author": parts[1], "message": parts[2], "files_changed": []}
+                elif line.strip() and current is not None:
+                    current["files_changed"].append(line.strip())
+            if current:
+                commits.append(current)
+            return commits
+        except Exception:
+            return []
 
     def _build_unified_graph(self, result: EvidenceOSResult) -> EvidenceGraphCore:
         """Build a unified evidence graph combining investigation + provenance."""

@@ -1,0 +1,7 @@
+2026-06-25 15:30:06,526 [INFO] === RentMasseur API Extractor ===
+2026-06-25 15:30:07,214 [INFO] CDP network interceptor installed
+2026-06-25 15:30:07,214 [INFO] Logging in as karpathianwolf...
+2026-06-25 15:30:20,243 [WARNING] Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/6f0c201ec86fde1c0c543d20a98a4ae0
+2026-06-25 15:30:20,244 [WARNING] Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='localhost', port=60345): Failed to establish a new connection: [Errno 61] Connection refused")': /session/6f0c201ec86fde1c0c543d20a98a4ae0
+2026-06-25 15:30:20,244 [WARNING] Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError("HTTPConnection(host='localhost', port=60345): Failed to establish a new connection: [Errno 61] Connection refused")': /session/6f0c201ec86fde1c0c543d20a98a4ae0
+2026-06-25 15:30:20,245 [INFO] Done

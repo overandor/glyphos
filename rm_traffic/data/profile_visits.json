@@ -1,0 +1,251 @@
+{
+  "action": "reciprocal_profile_visits",
+  "timestamp": "2026-06-26T10:04:19Z",
+  "total_clients": 48,
+  "visited": 48,
+  "success_200": 47,
+  "elapsed_seconds": 2.2,
+  "concurrent_workers": 33,
+  "visited_details": [
+    {
+      "username": "BehindtheClouds",
+      "status": 200,
+      "bytes": 68787
+    },
+    {
+      "username": "Davisit",
+      "status": 200,
+      "bytes": 68779
+    },
+    {
+      "username": "AvivaAviva",
+      "status": 200,
+      "bytes": 68748
+    },
+    {
+      "username": "Bigtopuc",
+      "status": 200,
+      "bytes": 70025
+    },
+    {
+      "username": "Big_Boy",
+      "status": 200,
+      "bytes": 69366
+    },
+    {
+      "username": "Calvinlau",
+      "status": 200,
+      "bytes": 68759
+    },
+    {
+      "username": "DanitzHH",
+      "status": 410,
+      "bytes": 41041
+    },
+    {
+      "username": "Joerocca",
+      "status": 200,
+      "bytes": 68731
+    },
+    {
+      "username": "Brownbb",
+      "status": 200,
+      "bytes": 68695
+    },
+    {
+      "username": "Avengermichael",
+      "status": 200,
+      "bytes": 68827
+    },
+    {
+      "username": "Blackcake",
+      "status": 200,
+      "bytes": 68739
+    },
+    {
+      "username": "Headsandtails",
+      "status": 200,
+      "bytes": 68846
+    },
+    {
+      "username": "Andrewmat",
+      "status": 200,
+      "bytes": 68804
+    },
+    {
+      "username": "Achingbod",
+      "status": 200,
+      "bytes": 68729
+    },
+    {
+      "username": "Alexandr_Moscow",
+      "status": 200,
+      "bytes": 115791
+    },
+    {
+      "username": "Fredericodedeus",
+      "status": 200,
+      "bytes": 138188
+    },
+    {
+      "username": "DeepSwedishSpa",
+      "status": 200,
+      "bytes": 137120
+    },
+    {
+      "username": "DAVIDMANXXX",
+      "status": 200,
+      "bytes": 139142
+    },
+    {
+      "username": "Bigadonismak",
+      "status": 200,
+      "bytes": 68821
+    },
+    {
+      "username": "Aalphi",
+      "status": 200,
+      "bytes": 68662
+    },
+    {
+      "username": "Hardrein",
+      "status": 200,
+      "bytes": 68809
+    },
+    {
+      "username": "Inneedofmassage",
+      "status": 200,
+      "bytes": 68901
+    },
+    {
+      "username": "ChrisRestrepo",
+      "status": 200,
+      "bytes": 158705
+    },
+    {
+      "username": "Gokhankaan",
+      "status": 200,
+      "bytes": 68766
+    },
+    {
+      "username": "Alexispf",
+      "status": 200,
+      "bytes": 68712
+    },
+    {
+      "username": "InosukeTopXL",
+      "status": 200,
+      "bytes": 106985
+    },
+    {
+      "username": "Igor_Masseur",
+      "status": 200,
+      "bytes": 145580
+    },
+    {
+      "username": "Jodymuscle",
+      "status": 200,
+      "bytes": 156656
+    },
+    {
+      "username": "Mattlatino",
+      "status": 200,
+      "bytes": 107638
+    },
+    {
+      "username": "MJack",
+      "status": 200,
+      "bytes": 113940
+    },
+    {
+      "username": "JoeUptownNYC",
+      "status": 200,
+      "bytes": 68885
+    },
+    {
+      "username": "Trek",
+      "status": 200,
+      "bytes": 73333
+    },
+    {
+      "username": "Webmaster",
+      "status": 200,
+      "bytes": 131684
+    },
+    {
+      "username": "BRAZILHEAT",
+      "status": 200,
+      "bytes": 134701
+    },
+    {
+      "username": "BRAZILPLEASURE",
+      "status": 200,
+      "bytes": 103761
+    },
+    {
+      "username": "Ghenessis",
+      "status": 200,
+      "bytes": 182156
+    },
+    {
+      "username": "Luvsagoodmassage",
+      "status": 200,
+      "bytes": 69104
+    },
+    {
+      "username": "AxelMasseur",
+      "status": 200,
+      "bytes": 220425
+    },
+    {
+      "username": "Sheldonn",
+      "status": 200,
+      "bytes": 68888
+    },
+    {
+      "username": "WenDylaTinoHot",
+      "status": 200,
+      "bytes": 218281
+    },
+    {
+      "username": "Paulvazo",
+      "status": 200,
+      "bytes": 148268
+    },
+    {
+      "username": "LeoAperol",
+      "status": 200,
+      "bytes": 69082
+    },
+    {
+      "username": "Talleshbr",
+      "status": 200,
+      "bytes": 69916
+    },
+    {
+      "username": "Sobro",
+      "status": 200,
+      "bytes": 71742
+    },
+    {
+      "username": "Ksander",
+      "status": 200,
+      "bytes": 127916
+    },
+    {
+      "username": "RyanRypped",
+      "status": 200,
+      "bytes": 200369
+    },
+    {
+      "username": "Uwsnyc",
+      "status": 200,
+      "bytes": 68705
+    },
+    {
+      "username": "LuisNYC",
+      "status": 200,
+      "bytes": 110902
+    }
+  ]
+}

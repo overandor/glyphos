@@ -99,16 +99,19 @@ def cmd_rights(args):
 
     if args.simulate is not None:
         from .rights_vault import RightsVault, PayoutSimulator, FRVO, OfferingMode, OfferingStatus, RevenueSource, PayoutWaterfallTier, Backer, BackerType
+        _rs_fields = {"source_id", "source_type", "description", "gross_revenue_usd", "platform_fee_pct", "direct_cost_usd"}
+        _pw_fields = {"tier", "name", "recipient", "share_pct", "cap_usd", "description"}
         frvo = FRVO(
             frvo_id=frvo_data["frvo_id"],
+            video_id=frvo_data.get("video_id", ""),
             project_name=frvo_data.get("project_name", ""),
             copyright_owner=frvo_data.get("copyright_owner", ""),
             offering_mode=OfferingMode(frvo_data.get("offering_mode", "PERK_ONLY")),
             offering_status=OfferingStatus(frvo_data.get("offering_status", "DRAFT")),
             fractional_units=frvo_data.get("fractional_units", 1_000_000),
             units_issued=frvo_data.get("units_issued", 0),
-            revenue_sources=[RevenueSource(**rs) for rs in frvo_data.get("revenue_sources", [])],
-            payout_waterfall=[PayoutWaterfallTier(**pw) for pw in frvo_data.get("payout_waterfall", [])],
+            revenue_sources=[RevenueSource(**{k: v for k, v in rs.items() if k in _rs_fields}) for rs in frvo_data.get("revenue_sources", [])],
+            payout_waterfall=[PayoutWaterfallTier(**{k: v for k, v in pw.items() if k in _pw_fields}) for pw in frvo_data.get("payout_waterfall", [])],
             backers=[Backer(
                 backer_id=b["backer_id"],
                 backer_type=BackerType(b["backer_type"]),

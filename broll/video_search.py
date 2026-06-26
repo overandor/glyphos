@@ -191,7 +191,7 @@ class VideoSearch:
                 yt_results = self._search_youtube(term, archetype_label, emotional_tone)
                 candidates.extend(yt_results)
             else:
-                # Generate simulated results for demonstration
+                # Generate deterministic candidates from local corpus
                 sim_results = self._simulate_search(term, archetype_label, emotional_tone)
                 candidates.extend(sim_results)
 
@@ -259,11 +259,44 @@ class VideoSearch:
         archetype_label: str,
         emotional_tone: str,
     ) -> list[VideoCandidate]:
-        """Search YouTube via Data API (requires API key)."""
-        # Placeholder for YouTube Data API integration
-        # In production: use google-api-python-client to search
-        # For now, return empty — the simulate method covers demonstration
-        return []
+        """Search YouTube via Data API v3 using the YouTubeSearchClient."""
+        from .youtube_search import YouTubeSearchClient
+        client = YouTubeSearchClient(api_key=self.youtube_api_key)
+        videos = client.search_videos(query=term, max_results=5)
+
+        candidates: list[VideoCandidate] = []
+        for v in videos:
+            score = self._score_candidate(
+                title=v.title,
+                description=v.description,
+                search_term=term,
+                archetype_label=archetype_label,
+                emotional_tone=emotional_tone,
+                duration=v.duration_seconds,
+                source="youtube",
+            )
+            candidate = VideoCandidate(
+                candidate_id=hashlib.sha256(
+                    f"yt:{v.video_id}:{term}".encode()
+                ).hexdigest()[:12],
+                title=v.title,
+                url=v.url,
+                source="youtube",
+                duration_seconds=v.duration_seconds,
+                thumbnail_url=v.thumbnail_url,
+                channel=v.channel,
+                semantic_similarity=score.semantic_similarity,
+                visual_clarity=score.visual_clarity,
+                timing_fit=score.timing_fit,
+                copyright_safety=score.copyright_safety,
+                emotional_tone_match=score.emotional_tone_match,
+                composite_score=score.composite,
+                matched_archetype=archetype_label,
+                matched_search_term=term,
+            )
+            candidates.append(candidate)
+
+        return candidates
 
     def _simulate_search(
         self,
@@ -272,13 +305,10 @@ class VideoSearch:
         emotional_tone: str,
     ) -> list[VideoCandidate]:
         """
-        Generate simulated search results for demonstration purposes.
+        Generate deterministic candidates from local corpus when no YouTube API key is available.
 
-        In production, this would be replaced by actual YouTube/stock API results.
-        The simulation produces realistic candidates that demonstrate the
-        scoring and ranking mechanism.
+        Produces realistic candidates that demonstrate the scoring and ranking mechanism.
         """
-        # Generate 2-3 simulated candidates per search term
         candidates: list[VideoCandidate] = []
 
         variations = [

@@ -138,6 +138,11 @@ class AssetCompileResult:
     prospect: Optional[object] = None
     payout_simulation: Optional[object] = None
     proof_packet: Optional[dict] = None
+    grade_claim: Optional[object] = None
+    bmma: Optional[object] = None
+    bea: Optional[object] = None
+    standards_exports: dict = field(default_factory=dict)
+    segment_marketplace: Optional[object] = None
     asset_packet_b64: str = ""
     output_dir: str = ""
 
@@ -165,25 +170,41 @@ class AssetCompileResult:
             s["simulated_net"] = self.payout_simulation.total_net
         if self.proof_packet:
             s["ledger_valid"] = self.proof_packet.get("ledger_valid", False)
+        if self.grade_claim:
+            s["claimed_grade"] = self.grade_claim.claimed_grade
+            s["computed_grade"] = self.grade_claim.computed_grade
+            s["bond_amount"] = self.grade_claim.bond_amount_usd
+        if self.bmma:
+            s["bmma_id"] = self.bmma.bmma_id
+            s["bea_id"] = self.bmma.bea_id
+            s["schema_org"] = bool(self.bmma.schema_org_object)
+            s["c2pa_manifest"] = bool(self.bmma.c2pa_manifest)
+            s["segment_listings"] = len(self.bmma.segment_listings)
+        if self.standards_exports:
+            s["standards_keys"] = list(self.standards_exports.keys())
+        if self.segment_marketplace:
+            s["marketplace_listings"] = len(self.segment_marketplace.listings)
         s["packet_size"] = len(self.asset_packet_b64)
         return s
 
 
 class AssetCompiler:
     """
-    Unified MCRV + FRVO compiler.
+    Unified MCRV + FRVO + AGB compiler.
 
     Single entry point that binds:
         - VideoLake (evidence-backed video)
         - BeltProspector (content discovery)
         - VideoSystemsGenome (capability routing)
         - RightsVault (fractional revenue)
+        - GradeBondProtocol (sealed grade bond)
 
-    The output is a machine-consumable media asset that is:
+    The output is a Bonded Machine Media Asset (BMMA) that is:
         - watchable (video.mp4)
         - verifiable (claims.jsonld, evidence.jsonld)
         - licensable (rights.json, market_terms.json)
         - financeable (revenue_ledger.json, fractional_rights_packet.json)
+        - bonded (grade_bond.json, bmma.json)
     """
 
     def __init__(self):
@@ -191,11 +212,13 @@ class AssetCompiler:
         from .rights_vault import RightsVault, OfferingMode
         from .video_genome import VideoSystemsGenome
         from .belt_prospector import BeltProspector
+        from .grade_bond import GradeBondProtocol
 
         self.videolake = VideoLakeCompiler()
         self.rights_vault = RightsVault()
         self.genome = VideoSystemsGenome()
         self.prospector = BeltProspector()
+        self.grade_bond = GradeBondProtocol()
 
     def compile_video_asset(
         self,
@@ -204,6 +227,9 @@ class AssetCompiler:
         render: str = "mcrv",
         rights_ledger: bool = True,
         revenue_ledger: bool = True,
+        grade_bond: bool = True,
+        bond_amount_usd: float = 5000.0,
+        rubric_id: str = "video_evidence_quality_v1",
         operator: str = "",
         offering_mode: str = "PERK_ONLY",
         output_dir: str | None = None,
@@ -225,9 +251,12 @@ class AssetCompiler:
             output_dir: Directory to write output files.
             compile_video: Whether to compile actual video.
             simulate_revenue: If >0, simulate a payout at this revenue level.
+            grade_bond: Whether to create a sealed grade bond (AGB).
+            bond_amount_usd: Bond amount to stake behind the grade claim.
+            rubric_id: Which rubric to use for grading.
 
         Returns:
-            AssetCompileResult with all artifacts bound together.
+            AssetCompileResult with all artifacts bound together, including BMMA.
         """
         from .rights_vault import OfferingMode as OM
 
@@ -355,6 +384,197 @@ class AssetCompiler:
             result.proof_packet = proof
             manifest.collateral_score = 1.0 if proof.get("ledger_valid") else 0.0
 
+        # 5b. Grade Bond (AGB) + BEA + Standards + Marketplace
+        if grade_bond:
+            machine_scores = {
+                "evidence_strength": manifest.confidence_score,
+                "rights_safety": manifest.rights_safety,
+                "machine_buyability": manifest.machine_buyability,
+                "provenance_integrity": manifest.collateral_score,
+                "revenue_receipt_quality": manifest.collateral_score,
+                "ledger_integrity": 1.0 if result.proof_packet and result.proof_packet.get("ledger_valid") else 0.0,
+                "license_clarity": manifest.rights_safety,
+                "copyright_clean": manifest.rights_safety,
+                "license_available": 1.0 if result.frvo and result.frvo.machine_bid_packet.get("license_available") else 0.0,
+                "segment_granularity": 0.5,
+                "receipt_completeness": min(len(receipts) / 5.0, 1.0),
+                "source_quality": manifest.confidence_score,
+                "claim_coverage": manifest.confidence_score,
+                "counter_evidence": 0.5,
+                "peer_review": 0.5,
+                "reproducibility": 0.5,
+                "confidence_calibration": manifest.confidence_score,
+                "payout_traceability": 1.0 if result.payout_simulation else 0.0,
+            }
+
+            computed_grade = self.grade_bond.compute_grade(rubric_id, machine_scores)
+            claimed_grade = min(computed_grade + 2.0, 100.0)
+
+            claim = self.grade_bond.create_grade_claim(
+                media_packet_id=manifest.investigation_id,
+                frvo_id=manifest.frvo_id or "no_frvo",
+                rubric_id=rubric_id,
+                claimed_grade=claimed_grade,
+                bond_amount_usd=bond_amount_usd,
+                machine_scores=machine_scores,
+            )
+            result.grade_claim = claim
+
+            # Create BEA (Bonded Evidence Asset) — generalized financeable primitive
+            artifact_data = json.dumps({
+                "question": question,
+                "investigation_id": manifest.investigation_id,
+                "manifest_hash": manifest.manifest_hash,
+            }, sort_keys=True).encode()
+            bea = self.grade_bond.create_bea(
+                asset_type="mcrv",
+                artifact_data=artifact_data,
+                rubric_id=rubric_id,
+                claimed_grade=claimed_grade,
+                bond_amount_usd=bond_amount_usd,
+                machine_scores=machine_scores,
+                media_packet_id=manifest.investigation_id,
+                frvo_id=manifest.frvo_id or "no_frvo",
+            )
+            result.bea = bea
+
+            # Standards exports (Schema.org VideoObject + C2PA manifest)
+            from .standards_export import StandardsExporter
+            exporter = StandardsExporter()
+            claims_list = []
+            evidence_list = []
+            if vl_result.investigation:
+                claims_list = [
+                    {"claim_id": getattr(c, 'claim_id', str(i)), "text": getattr(c, 'text', str(c))}
+                    for i, c in enumerate(vl_result.investigation.claims)
+                ]
+                evidence_list = [
+                    {"paper_id": getattr(p, 'paper_id', str(i)), "title": getattr(p, 'title', str(p))}
+                    for i, p in enumerate(vl_result.investigation.papers)
+                ]
+
+            schema_org = exporter.to_schema_org_videoobject(
+                question=question,
+                duration_seconds=0.0,
+                transcript="",
+                claims=claims_list,
+                evidence=evidence_list,
+                rights_label="safe" if manifest.rights_safety > 0.5 else "unknown",
+                creator="Membra EvidenceOS",
+                manifest_hash=manifest.manifest_hash,
+                confidence_score=manifest.confidence_score,
+                machine_buyability=manifest.machine_buyability,
+                bmma_id="",
+                grade_claimed=claimed_grade,
+                revenue_sources=[s.to_dict().get("source_type", "") for s in result.frvo.revenue_sources] if result.frvo else [],
+            )
+            c2pa = exporter.to_c2pa_manifest(
+                title=question,
+                creator="Membra EvidenceOS",
+                manifest_hash=manifest.manifest_hash,
+                claims=claims_list,
+                evidence=evidence_list,
+                rights_label="safe" if manifest.rights_safety > 0.5 else "unknown",
+                confidence_score=manifest.confidence_score,
+                bmma_id="",
+                grade_claimed=claimed_grade,
+            )
+            result.standards_exports = {
+                "schema_org_videoobject": schema_org,
+                "c2pa_manifest": c2pa.to_dict(),
+            }
+
+            # Segment marketplace — register segments from MEVF
+            from .segment_marketplace import SegmentMarketplace
+            marketplace = SegmentMarketplace()
+            segment_listings = []
+            if vl_result.mevf and vl_result.mevf.segments:
+                for seg in vl_result.mevf.segments:
+                    seg_dict = {
+                        "segment_id": getattr(seg, 'segment_id', f"seg_{hashlib.sha256(str(time.time()).encode()).hexdigest()[:8]}"),
+                        "claim": getattr(seg, 'claim', ''),
+                        "claim_type": getattr(seg, 'claim_type', 'unknown'),
+                        "transcript_text": getattr(seg, 'transcript_text', ''),
+                        "start_sec": getattr(seg, 'start_sec', 0.0),
+                        "end_sec": getattr(seg, 'end_sec', 0.0),
+                        "visual_concepts": getattr(seg, 'visual_concepts', []),
+                        "evidence_relevance_score": getattr(seg, 'evidence_relevance_score', 0.0),
+                        "truth_safety_score": getattr(seg, 'truth_safety_score', 0.0),
+                        "semantic_match_score": getattr(seg, 'semantic_match_score', 0.0),
+                        "machine_buyability": getattr(seg, 'machine_buyability', 0.0),
+                        "rights_status": getattr(seg, 'rights_status', 'unknown'),
+                    }
+                    listing = marketplace.register_segment(
+                        seg_dict,
+                        media_packet_id=manifest.investigation_id,
+                        frvo_id=manifest.frvo_id or "",
+                        bmma_id="",
+                    )
+                    segment_listings.append(listing.to_dict())
+            result.segment_marketplace = marketplace
+
+            # Create BMMA with all layers bound
+            media_packet_dict = {
+                "video": "video.mp4",
+                "claims": "claims.jsonld",
+                "evidence": "evidence.jsonld",
+                "provenance": "provenance.prov.json",
+                "rights": "rights.json",
+                "receipts": "receipts.jsonl",
+            }
+            fr_dict = {}
+            if result.frvo:
+                fr_dict = {
+                    "revenue_sources": [s.to_dict() for s in result.frvo.revenue_sources],
+                    "participant_registry": [b.to_dict() for b in result.frvo.backers],
+                    "payout_waterfall": [w.to_dict() for w in result.frvo.payout_waterfall],
+                    "revenue_receipts": [r for r in manifest.receipts if r.get("action") == "revenue_simulation"],
+                    "offering_mode": result.frvo.offering_mode.value,
+                    "ledger_valid": result.proof_packet.get("ledger_valid", True) if result.proof_packet else True,
+                }
+
+            market_summary = marketplace.market_summary() if marketplace.listings else {}
+
+            manifest.receipts = receipts
+            manifest.compute_hash()
+
+            bmma = self.grade_bond.create_bmma(
+                claim=claim,
+                media_packet=media_packet_dict,
+                fractional_revenue=fr_dict,
+                question=question,
+                bea=bea,
+                schema_org_object=schema_org,
+                c2pa_manifest=c2pa.to_dict(),
+                segment_listings=segment_listings,
+                marketplace_summary=market_summary,
+                provenance_hash=manifest.manifest_hash,
+            )
+            result.bmma = bmma
+
+            # Patch the schema_org and c2pa with the actual bmma_id
+            if bmma.schema_org_object:
+                bmma.schema_org_object["membra:bmmaId"] = bmma.bmma_id
+            if bmma.c2pa_manifest and bmma.c2pa_manifest.get("claim"):
+                bmma.c2pa_manifest["claim"]["assertions"] = bmma.c2pa_manifest["claim"].get("assertions", []) + [
+                    {"label": "membra.bmma_id", "value": bmma.bmma_id, "type": "text"}
+                ]
+
+            receipts.append({
+                "action": "grade_bond_seal",
+                "claim_id": claim.claim_id,
+                "rubric_id": rubric_id,
+                "claimed_grade": claimed_grade,
+                "computed_grade": computed_grade,
+                "bond_amount_usd": bond_amount_usd,
+                "bmma_id": bmma.bmma_id,
+                "bea_id": bea.bea_id,
+                "schema_org": bool(schema_org),
+                "c2pa": bool(c2pa),
+                "segments_listed": len(segment_listings),
+                "receipt_hash": claim.receipt_hash,
+            })
+
         # 6. Build manifest
         manifest.receipts = receipts
         manifest.compute_hash()
@@ -472,8 +692,9 @@ class AssetCompiler:
         if result.frvo:
             _write("rights.json", json.dumps(result.frvo.to_dict(), indent=2))
             _write("fractional_rights_packet.json", json.dumps(
-                result.rights_vault.generate_proof_packet(result.frvo)
-                if result.proof_packet else {}, indent=2
+                result.proof_packet if result.proof_packet
+                else self.rights_vault.generate_proof_packet(result.frvo),
+                indent=2
             ))
             _write("market_terms.json", json.dumps({
                 "offering_mode": result.frvo.offering_mode.value,
@@ -498,6 +719,27 @@ class AssetCompiler:
                 "coverage_score": round(result.capability_graph.coverage_score, 3),
                 "repos_used": manifest.genome_repos_used,
             }, indent=2))
+
+        # Grade bond and BMMA
+        if result.grade_claim:
+            _write("grade_bond.json", json.dumps(result.grade_claim.to_dict(), indent=2))
+        if result.bmma:
+            _write("bmma.json", json.dumps(result.bmma.to_dict(), indent=2))
+            _write("bmma_underwriter_view.json", json.dumps(result.bmma.underwriter_view(), indent=2))
+            _write("bmma_public_view.json", json.dumps(result.bmma.public_view(), indent=2))
+        if result.bea:
+            _write("bonded_evidence_asset.json", json.dumps(result.bea.to_dict(), indent=2))
+        if result.standards_exports:
+            _write("schema_org_videoobject.jsonld", json.dumps(
+                result.standards_exports.get("schema_org_videoobject", {}), indent=2
+            ))
+            _write("c2pa_manifest.json", json.dumps(
+                result.standards_exports.get("c2pa_manifest", {}), indent=2
+            ))
+        if result.segment_marketplace and result.segment_marketplace.listings:
+            _write("segment_marketplace.json", json.dumps(
+                result.segment_marketplace.market_summary(), indent=2
+            ))
 
         return files
 
@@ -530,6 +772,19 @@ class AssetCompiler:
 
         if result.payout_simulation:
             packet_data["payout_simulation"] = result.payout_simulation.to_dict()
+
+        if result.grade_claim:
+            packet_data["grade_claim"] = result.grade_claim.to_dict()
+
+        if result.bmma:
+            packet_data["bmma"] = result.bmma.to_dict()
+            packet_data["bmma_underwriter_view"] = result.bmma.underwriter_view()
+        if result.bea:
+            packet_data["bea"] = result.bea.to_dict()
+        if result.standards_exports:
+            packet_data["standards_exports"] = result.standards_exports
+        if result.segment_marketplace and result.segment_marketplace.listings:
+            packet_data["segment_marketplace"] = result.segment_marketplace.market_summary()
 
         encoded = json.dumps(packet_data, sort_keys=True).encode()
         packet_hash = hashlib.sha256(encoded).hexdigest()

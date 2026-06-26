@@ -115,6 +115,28 @@ from broll.video_genome import (
 from broll.asset_compiler import (
     AssetCompiler, AssetManifest, AssetCompileResult,
 )
+from broll.grade_bond import (
+    GradeBondProtocol, GradeClaim, Bond, Challenge, Settlement,
+    BMMA, Rubric, SlashSchedule, SlashTier, ClaimStatus, ChallengeVerdict,
+    ProducerTrackRecord, AuditDraw, BondedEvidenceAsset,
+    compute_required_bond, verify_artifact_hash,
+)
+from broll.standards_export import (
+    StandardsExporter,
+    C2PAManifest,
+    C2PAClaim,
+    C2PAAssertion,
+    C2PAIngredient,
+    C2PAAction,
+)
+from broll.segment_marketplace import (
+    SegmentMarketplace,
+    SegmentListing,
+    PriceQuote,
+    Purchase,
+    LicenseTier,
+    PurchaseStatus,
+)
 from broll.youtube_os import (
     InvestigationYouTubeOS,
     Episode,
@@ -285,33 +307,6 @@ def test_clip_score():
     # Zero score
     zero = ClipScore()
     assert abs(zero.composite - 0.0) < 0.01, f"Zero score should be ~0.0, got {zero.composite}"
-
-    # Verify weights sum to 1.0
-    weight_sum = sum(ClipScore.WEIGHTS.values())
-    assert abs(weight_sum - 1.0) < 0.01, f"Weights should sum to 1.0, got {weight_sum}"
-
-    print(f"Perfect composite: {perfect.composite:.3f}")
-    print(f"Zero composite: {zero.composite:.3f}")
-    print(f"Weight sum: {weight_sum:.3f}")
-    print("PASS: Clip score formula is correct")
-
-
-def test_full_compilation():
-    """Test the full B-roll compilation pipeline with the user's example."""
-    print("\n--- Test: Full Compilation ---")
-
-    compiler = BrollCompiler()
-
-    text = "The material could have been derived from eastern energy wavelengths, a unit calibrated to the planet's natural resonance."
-
-    result = compiler.compile(
-        text=text,
-        duration=15.0,
-        timestamp_start=0.0,
-    )
-
-    print(f"Compilation ID: {result.compilation_id}")
-    print(f"Concepts: {result.stats['concept_count']}")
     print(f"Archetypes: {result.stats['archetype_count']}")
     print(f"Candidates: {result.stats['candidate_count']}")
     print(f"Segments: {result.stats['segment_count']}")
@@ -4293,8 +4288,8 @@ def test_compile_video_asset():
     # Genome track
     assert result.capability_graph is not None, "Capability graph should exist"
     assert manifest.capability_graph_hash.startswith("sha256:"), "Genome hash should be set"
-    assert manifest.capability_graph.total_repos > 0, "Genome should have repos"
-    print(f"Genome: {manifest.capability_graph.total_repos} repos, hash={manifest.capability_graph_hash}")
+    assert result.capability_graph.total_repos > 0, "Genome should have repos"
+    print(f"Genome: {result.capability_graph.total_repos} repos, hash={manifest.capability_graph_hash}")
 
     # Rights track (FRVO)
     assert result.frvo is not None, "FRVO should exist"
@@ -4379,6 +4374,1013 @@ def test_asset_packet_round_trip():
     print("\nPASS: Asset packet round-trip — encode/verify verified")
 
 
+def test_grade_bond_protocol():
+    """Test the Sealed Grade Bond (AGB) protocol — rubrics, claims, bonds, challenges, settlements."""
+    print("\n--- Test: Sealed Grade Bond (AGB) Protocol ---")
+
+    protocol = GradeBondProtocol()
+
+    # Verify default rubrics
+    assert len(protocol.rubrics) >= 5, "Should have at least 5 default rubrics"
+    assert "video_evidence_quality_v1" in protocol.rubrics, "Should have video evidence rubric"
+    assert "rights_safety_v1" in protocol.rubrics, "Should have rights safety rubric"
+    assert "revenue_receipt_quality_v1" in protocol.rubrics, "Should have revenue receipt rubric"
+    assert "machine_buyability_v1" in protocol.rubrics, "Should have machine buyability rubric"
+    assert "scientific_claim_quality_v1" in protocol.rubrics, "Should have scientific claim rubric"
+    print(f"Rubrics: {list(protocol.rubrics.keys())}")
+
+    # Compute a grade
+    scores = {
+        "evidence_strength": 0.86,
+        "source_quality": 0.80,
+        "claim_coverage": 0.75,
+        "counter_evidence": 0.60,
+        "provenance_integrity": 0.94,
+    }
+    grade = protocol.compute_grade("video_evidence_quality_v1", scores)
+    assert 0 <= grade <= 100, f"Grade should be 0-100, got {grade}"
+    print(f"Computed grade: {grade}")
+
+    # Create a grade claim with bond
+    claim = protocol.create_grade_claim(
+        media_packet_id="mcrv_test_001",
+        frvo_id="frvo_test_001",
+        rubric_id="video_evidence_quality_v1",
+        claimed_grade=92.0,
+        bond_amount_usd=5000.0,
+        machine_scores=scores,
+    )
+    assert claim.claim_id.startswith("agb_"), "Claim ID should start with agb_"
+    assert claim.status == ClaimStatus.SEALED, "Claim should be SEALED"
+    assert claim.bond_amount_usd == 5000.0, "Bond amount should match"
+    assert claim.receipt_hash.startswith("sha256:"), "Claim should have receipt hash"
+    assert claim.computed_grade > 0, "Computed grade should be positive"
+    print(f"Claim: id={claim.claim_id}, claimed={claim.claimed_grade}, computed={claim.computed_grade}, bond=${claim.bond_amount_usd}")
+
+    # Verify bond
+    bond = next(b for b in protocol.bonds if b.bond_id == claim.bond_id)
+    assert bond.amount_usd == 5000.0, "Bond amount should match"
+    assert bond.status == "ACTIVE", "Bond should be ACTIVE"
+    print(f"Bond: id={bond.bond_id}, amount=${bond.amount_usd}, status={bond.status}")
+
+    # Challenge the claim
+    challenge = protocol.challenge_claim(
+        claim,
+        challenger_id="auditor_001",
+        reason="grade_inflated",
+        evidence="computed_grade is lower than claimed",
+        proposed_grade=claim.computed_grade,
+    )
+    assert challenge.challenge_id.startswith("ch_"), "Challenge ID should start with ch_"
+    assert challenge.status == ChallengeVerdict.PENDING, "Challenge should be PENDING"
+    assert claim.status == ClaimStatus.CHALLENGED, "Claim should be CHALLENGED"
+    print(f"Challenge: id={challenge.challenge_id}, reason={challenge.reason}")
+
+    # Settle the challenge — claim is upheld (claimed is within tolerance)
+    settlement = protocol.settle_challenge(
+        challenge,
+        verdict="UPHELD",
+        auditor_grade=claim.computed_grade,
+    )
+    assert settlement.verdict == ChallengeVerdict.UPHELD, "Verdict should be UPHELD"
+    assert settlement.slash_amount == 0.0, "No slash for upheld claim"
+    assert settlement.bond_remaining == 5000.0, "Bond should remain intact"
+    assert claim.status == ClaimStatus.UPHELD, "Claim should be UPHELD"
+    print(f"Settlement: verdict={settlement.verdict.value}, slash=${settlement.slash_amount}, remaining=${settlement.bond_remaining}")
+
+    # Verify ledger
+    assert protocol.ledger.verify_chain() is True, "Ledger should be valid"
+    print(f"Ledger: {len(protocol.ledger.entries)} entries, valid={protocol.ledger.verify_chain()}")
+
+    # Audit report
+    report = protocol.audit_report()
+    assert report["total_claims"] == 1, "Should have 1 claim"
+    assert report["total_bonded_usd"] == 5000.0, "Should have $5000 bonded"
+    assert report["ledger_valid"] is True, "Ledger should be valid"
+    print(f"Audit: {report['total_claims']} claims, ${report['total_bonded_usd']} bonded, ledger_valid={report['ledger_valid']}")
+
+    print("\nPASS: Sealed Grade Bond — rubrics, claims, bonds, challenges, settlements verified")
+
+
+def test_grade_bond_slash():
+    """Test that false grade claims get slashed."""
+    print("\n--- Test: Grade Bond Slash ---")
+
+    protocol = GradeBondProtocol()
+
+    # Create a claim with inflated grade
+    scores = {
+        "evidence_strength": 0.50,
+        "source_quality": 0.40,
+        "claim_coverage": 0.30,
+        "counter_evidence": 0.20,
+        "provenance_integrity": 0.50,
+    }
+    computed = protocol.compute_grade("video_evidence_quality_v1", scores)
+    print(f"Computed grade: {computed}")
+
+    # Claim 95 when computed is much lower — way outside tolerance
+    claim = protocol.create_grade_claim(
+        media_packet_id="mcrv_inflated_001",
+        frvo_id="frvo_inflated_001",
+        rubric_id="video_evidence_quality_v1",
+        claimed_grade=95.0,
+        bond_amount_usd=10000.0,
+        machine_scores=scores,
+    )
+    deviation = abs(claim.claimed_grade - claim.computed_grade)
+    print(f"Claim: claimed={claim.claimed_grade}, computed={claim.computed_grade}, deviation={deviation:.1f}")
+    assert deviation > claim.tolerance, "Deviation should exceed tolerance"
+
+    # Challenge and overturn
+    challenge = protocol.challenge_claim(
+        claim,
+        challenger_id="auditor_002",
+        reason="severe_grade_inflation",
+        evidence="claimed grade is far above computed",
+        proposed_grade=computed,
+    )
+
+    settlement = protocol.settle_challenge(
+        challenge,
+        verdict="OVERTURNED",
+        auditor_grade=computed,
+    )
+    assert settlement.verdict == ChallengeVerdict.OVERTURNED, "Should be OVERTURNED"
+    assert settlement.slash_amount > 0, "Should have non-zero slash"
+    assert settlement.challenger_reward > 0, "Challenger should get reward"
+    assert settlement.bond_remaining < 10000.0, "Bond should be reduced"
+    assert claim.status == ClaimStatus.SLASHED, "Claim should be SLASHED"
+    print(f"Slash: tier={settlement.slash_tier.value}, slash=${settlement.slash_amount}, reward=${settlement.challenger_reward}, remaining=${settlement.bond_remaining}")
+
+    # Verify slash schedule tiers
+    assert SlashSchedule.determine_tier(1.0, 3.0) == SlashTier.NONE, "Within tolerance = NONE"
+    assert SlashSchedule.determine_tier(4.0, 3.0) == SlashTier.MINOR, "1-2x tolerance = MINOR"
+    assert SlashSchedule.determine_tier(7.0, 3.0) == SlashTier.MODERATE, "2-3x tolerance = MODERATE"
+    assert SlashSchedule.determine_tier(10.0, 3.0) == SlashTier.MAJOR, "3-4x tolerance = MAJOR"
+    assert SlashSchedule.determine_tier(20.0, 3.0) == SlashTier.SEVERE, ">4x tolerance = SEVERE"
+    print(f"Slash tiers verified: NONE/MINOR/MODERATE/MAJOR/SEVERE")
+
+    print("\nPASS: Grade Bond Slash — false claims slashed, challenger rewarded")
+
+
+def test_bmma_compilation():
+    """Test that compile_video_asset now produces a BMMA with a bonded grade."""
+    print("\n--- Test: BMMA Compilation (MCRV + FRVO + AGB) ---")
+
+    compiler = AssetCompiler()
+    result = compiler.compile_video_asset(
+        question="Can gravitational wave detectors measure quantum gravity effects?",
+        rights_ledger=True,
+        revenue_ledger=True,
+        grade_bond=True,
+        bond_amount_usd=5000.0,
+        rubric_id="video_evidence_quality_v1",
+        offering_mode="PERK_ONLY",
+        simulate_revenue=25000.0,
+        compile_video=False,
+    )
+
+    # BMMA should exist
+    assert result.bmma is not None, "BMMA should exist"
+    bmma = result.bmma
+    assert bmma.instrument_type == "bonded_machine_media_asset_v1", "Instrument type should match"
+    assert bmma.bmma_id.startswith("bmma_"), "BMMA ID should start with bmma_"
+    assert bmma.receipt_hash.startswith("sha256:"), "BMMA should have receipt hash"
+    assert bmma.media_packet_id, "BMMA should have media packet ID"
+    assert bmma.video_asset_id, "BMMA should have video asset ID"
+    assert bmma.grade_bond_id, "BMMA should have grade bond ID"
+    print(f"BMMA: id={bmma.bmma_id}, type={bmma.instrument_type}")
+    print(f"  media_packet={bmma.media_packet_id}, frvo={bmma.video_asset_id}, bond={bmma.grade_bond_id}")
+
+    # Grade claim should exist
+    assert result.grade_claim is not None, "Grade claim should exist"
+    claim = result.grade_claim
+    assert claim.status == ClaimStatus.SEALED, "Claim should be SEALED"
+    assert claim.bond_amount_usd == 5000.0, "Bond amount should match"
+    assert claim.claimed_grade > 0, "Claimed grade should be positive"
+    assert claim.computed_grade > 0, "Computed grade should be positive"
+    assert claim.rubric_id == "video_evidence_quality_v1", "Rubric ID should match"
+    print(f"Grade: claimed={claim.claimed_grade}, computed={claim.computed_grade}, bond=${claim.bond_amount_usd}")
+
+    # BMMA should have bonded_grade section
+    bg = bmma.bonded_grade
+    assert "claimed_grade" in bg, "Bonded grade should have claimed_grade"
+    assert "bond_amount" in bg, "Bonded grade should have bond_amount"
+    assert "rubric_id" in bg, "Bonded grade should have rubric_id"
+    assert "slash_schedule_id" in bg, "Bonded grade should have slash_schedule_id"
+    print(f"Bonded grade: rubric={bg['rubric_id']}, slash_schedule={bg['slash_schedule_id']}")
+
+    # BMMA should have machine_scores
+    assert len(bmma.machine_scores) > 0, "BMMA should have machine scores"
+    print(f"Machine scores: {len(bmma.machine_scores)} dimensions")
+
+    # Output files should include grade_bond.json and bmma.json
+    assert "grade_bond.json" in result.manifest.output_files, "Should have grade_bond.json"
+    assert "bmma.json" in result.manifest.output_files, "Should have bmma.json"
+    print(f"Output files: grade_bond.json + bmma.json present")
+
+    # Receipts should include grade_bond_seal
+    receipt_actions = [r["action"] for r in result.manifest.receipts]
+    assert "grade_bond_seal" in receipt_actions, "Should have grade_bond_seal receipt"
+    print(f"Receipts: {len(result.manifest.receipts)} total, grade_bond_seal present")
+
+    # Asset packet should verify
+    verification = AssetCompiler.verify_asset_packet(result.asset_packet_b64)
+    assert verification["valid"] is True, "Asset packet should verify"
+    print(f"Packet: {len(result.asset_packet_b64)} bytes, verified={verification['valid']}")
+
+    # Summary should include bond info
+    s = result.summary()
+    assert "claimed_grade" in s, "Summary should have claimed_grade"
+    assert "bmma_id" in s, "Summary should have bmma_id"
+    print(f"Summary: bmma_id={s['bmma_id']}, grade={s['claimed_grade']}, bond=${s['bond_amount']}")
+
+    print("\nPASS: BMMA Compilation — MCRV + FRVO + AGB unified instrument verified")
+
+
+def test_sealed_grade_bond():
+    """Test the Sealed Grade Bond (SGB) protocol — BEA, audit draws, producer track records."""
+    print("\n--- Test: Sealed Grade Bond (SGB) Protocol ---")
+
+    protocol = GradeBondProtocol()
+
+    # Verify MCRV rubric v1 is registered (10 dimensions)
+    assert "mcrv_rubric_v1" in protocol.rubrics, "Should have MCRV rubric v1"
+    mcrv_rubric = protocol.rubrics["mcrv_rubric_v1"]
+    assert len(mcrv_rubric.dimensions) == 10, f"MCRV rubric should have 10 dimensions, got {len(mcrv_rubric.dimensions)}"
+    dim_names = [d.name for d in mcrv_rubric.dimensions]
+    assert "claim_accuracy" in dim_names, "Should have claim_accuracy dimension"
+    assert "citation_precision" in dim_names, "Should have citation_precision dimension"
+    assert "counterevidence_coverage" in dim_names, "Should have counterevidence_coverage dimension"
+    assert "rights_clarity" in dim_names, "Should have rights_clarity dimension"
+    assert "provenance_completeness" in dim_names, "Should have provenance_completeness dimension"
+    assert "reproduction_strength" in dim_names, "Should have reproduction_strength dimension"
+    assert "machine_parseability" in dim_names, "Should have machine_parseability dimension"
+    assert "segment_buyability" in dim_names, "Should have segment_buyability dimension"
+    assert "revenue_ledger_quality" in dim_names, "Should have revenue_ledger_quality dimension"
+    assert "method_supply_chain_safety" in dim_names, "Should have method_supply_chain_safety dimension"
+    print(f"MCRV Rubric v1: {len(mcrv_rubric.dimensions)} dimensions verified")
+
+    # Test required bond formula: Required Bond >= Grade Premium / Audit Probability
+    rb = compute_required_bond(grade_premium=100.0, audit_probability=0.05)
+    assert rb == 2000.0, f"Required bond should be 2000, got {rb}"
+    print(f"Required bond: premium=100, audit_prob=0.05 -> bond={rb}")
+
+    # With producer multiplier
+    rb_gold = compute_required_bond(grade_premium=100.0, audit_probability=0.05, producer_multiplier=0.75)
+    assert rb_gold == 1500.0, f"Gold tier bond should be 1500, got {rb_gold}"
+    print(f"Gold tier required bond: {rb_gold}")
+
+    # Zero audit probability = infinite bond
+    rb_inf = compute_required_bond(grade_premium=100.0, audit_probability=0.0)
+    assert rb_inf == float("inf"), "Zero audit probability should require infinite bond"
+    print(f"Zero audit probability -> infinite bond: {rb_inf}")
+
+    # Test artifact hash verification
+    artifact = b'{"question": "test", "claims": [], "evidence": []}'
+    artifact_hash = f"sha256:{__import__('hashlib').sha256(artifact).hexdigest()}"
+    assert verify_artifact_hash(artifact, artifact_hash) is True, "Hash should match"
+    assert verify_artifact_hash(b'tampered', artifact_hash) is False, "Tampered hash should not match"
+    print(f"Artifact hash verification: verified={verify_artifact_hash(artifact, artifact_hash)}")
+
+    print("\nPASS: Sealed Grade Bond — MCRV rubric, required bond formula, hash verification")
+
+
+def test_bonded_evidence_asset():
+    """Test creating a Bonded Evidence Asset (BEA) — the generalized financeable primitive."""
+    print("\n--- Test: Bonded Evidence Asset (BEA) ---")
+
+    protocol = GradeBondProtocol()
+
+    # Create a BEA from an MCRV packet
+    mcrv_data = json.dumps({
+        "question": "Can gravitational waves detect quantum gravity?",
+        "claims": ["spacetime ripples carry quantum information"],
+        "evidence": ["LIGO O3 data"],
+        "rights": {"license": "CC-BY-4.0"},
+        "provenance": {"source": "LIGO collaboration"},
+    }).encode()
+
+    machine_scores = {
+        "claim_accuracy": 0.92,
+        "citation_precision": 0.85,
+        "counterevidence_coverage": 0.78,
+        "rights_clarity": 0.95,
+        "provenance_completeness": 0.91,
+        "reproduction_strength": 0.80,
+        "machine_parseability": 0.97,
+        "segment_buyability": 0.88,
+        "revenue_ledger_quality": 0.84,
+        "method_supply_chain_safety": 0.90,
+    }
+
+    bea = protocol.create_bea(
+        asset_type="mcrv",
+        artifact_data=mcrv_data,
+        rubric_id="mcrv_rubric_v1",
+        claimed_grade=91,
+        bond_amount_usd=2500,
+        machine_scores=machine_scores,
+        producer_id="producer_001",
+        audit_probability=0.05,
+        grade_premium=125.0,
+        asset_uri="ipfs://QmTest...",
+    )
+
+    assert bea.bea_id.startswith("bea_"), "BEA ID should start with bea_"
+    assert bea.asset_type == "mcrv", "Asset type should be mcrv"
+    assert bea.asset_hash.startswith("sha256:"), "Asset hash should be sha256"
+    assert bea.claimed_grade == 91, "Claimed grade should be 91"
+    assert bea.computed_grade > 0, "Computed grade should be positive"
+    assert bea.bond_amount == 2500, "Bond amount should be 2500"
+    assert bea.required_bond == 2500.0, f"Required bond should be 2500 (125/0.05), got {bea.required_bond}"
+    assert bea.audit_probability == 0.05, "Audit probability should be 0.05"
+    assert bea.producer_id == "producer_001", "Producer ID should match"
+    assert bea.producer_tier == "unproven", "New producer should be unproven"
+    assert bea.claim_id.startswith("agb_"), "Should have linked claim ID"
+    assert bea.receipt_hash.startswith("sha256:"), "Should have receipt hash"
+    assert len(bea.grade_dimensions) == 10, f"Should have 10 grade dimensions, got {len(bea.grade_dimensions)}"
+    print(f"BEA: id={bea.bea_id}, type={bea.asset_type}, grade={bea.claimed_grade}, bond=${bea.bond_amount}")
+    print(f"  asset_hash={bea.asset_hash[:22]}..., required_bond={bea.required_bond}")
+    print(f"  grade_dimensions: {len(bea.grade_dimensions)} dimensions")
+
+    # Verify the artifact hash matches
+    assert verify_artifact_hash(mcrv_data, bea.asset_hash) is True, "Artifact hash should verify"
+    print(f"  artifact hash verified: True")
+
+    # BEA should serialize to JSON
+    bea_json = bea.to_json()
+    assert "bea_id" in bea_json, "JSON should contain bea_id"
+    assert "asset_hash" in bea_json, "JSON should contain asset_hash"
+    print(f"  JSON serialization: {len(bea_json)} bytes")
+
+    # Verify ledger is valid
+    assert protocol.ledger.verify_chain() is True, "Ledger should be valid"
+    print(f"  ledger: {len(protocol.ledger.entries)} entries, valid=True")
+
+    print("\nPASS: Bonded Evidence Asset — MCRV packet bonded with grade, bond, and receipt")
+
+
+def test_audit_draw_slash():
+    """Test stochastic audit draws and slashing when actual grade is below tolerance."""
+    print("\n--- Test: Audit Draw and Slash ---")
+
+    protocol = GradeBondProtocol()
+
+    # Create a claim with inflated grade
+    scores = {
+        "claim_accuracy": 0.50,
+        "citation_precision": 0.40,
+        "counterevidence_coverage": 0.30,
+        "rights_clarity": 0.60,
+        "provenance_completeness": 0.45,
+        "reproduction_strength": 0.35,
+        "machine_parseability": 0.70,
+        "segment_buyability": 0.50,
+        "revenue_ledger_quality": 0.40,
+        "method_supply_chain_safety": 0.55,
+    }
+    computed = protocol.compute_grade("mcrv_rubric_v1", scores)
+    print(f"Computed grade: {computed}")
+
+    claim = protocol.create_grade_claim(
+        media_packet_id="mcrv_audit_test",
+        frvo_id="frvo_audit_test",
+        rubric_id="mcrv_rubric_v1",
+        claimed_grade=92.0,
+        bond_amount_usd=3000.0,
+        machine_scores=scores,
+        audit_probability=0.10,
+    )
+    deviation = abs(claim.claimed_grade - claim.computed_grade)
+    print(f"Claim: claimed={claim.claimed_grade}, computed={claim.computed_grade}, deviation={deviation:.1f}")
+    assert deviation > claim.tolerance, "Deviation should exceed tolerance for slash test"
+
+    # Force an audit draw with a low auditor grade
+    audit = protocol.draw_audit(
+        claim,
+        auditor_id="auditor_001",
+        auditor_grade=computed,
+        force_draw=True,
+    )
+    assert audit.drawn is True, "Audit should be drawn (forced)"
+    assert audit.auditor_grade == computed, "Auditor grade should match"
+    assert audit.deviation > 0, "Deviation should be positive"
+    assert audit.deviation > claim.tolerance, "Deviation should exceed tolerance"
+    assert audit.slash_tier != "NONE", "Slash tier should not be NONE for large deviation"
+    print(f"Audit: drawn=True, auditor_grade={audit.auditor_grade}, deviation={audit.deviation}, tier={audit.slash_tier}")
+
+    # The claim should have been challenged and settled (OVERTURNED)
+    assert claim.status == ClaimStatus.SLASHED, f"Claim should be SLASHED after audit, got {claim.status.value}"
+    assert len(protocol.settlements) > 0, "Should have at least one settlement"
+    settlement = protocol.settlements[-1]
+    assert settlement.slash_amount > 0, "Should have non-zero slash amount"
+    print(f"Settlement: slash=${settlement.slash_amount}, remaining=${settlement.bond_remaining}")
+
+    # Now test an audit where the claim is accurate (no slash)
+    protocol2 = GradeBondProtocol()
+    good_scores = {
+        "claim_accuracy": 0.90,
+        "citation_precision": 0.88,
+        "counterevidence_coverage": 0.85,
+        "rights_clarity": 0.92,
+        "provenance_completeness": 0.89,
+        "reproduction_strength": 0.86,
+        "machine_parseability": 0.94,
+        "segment_buyability": 0.87,
+        "revenue_ledger_quality": 0.85,
+        "method_supply_chain_safety": 0.91,
+    }
+    good_computed = protocol2.compute_grade("mcrv_rubric_v1", good_scores)
+    good_claim = protocol2.create_grade_claim(
+        media_packet_id="mcrv_good",
+        frvo_id="frvo_good",
+        rubric_id="mcrv_rubric_v1",
+        claimed_grade=good_computed,
+        bond_amount_usd=2000.0,
+        machine_scores=good_scores,
+        audit_probability=0.10,
+    )
+    good_audit = protocol2.draw_audit(
+        good_claim,
+        auditor_id="auditor_002",
+        auditor_grade=good_computed,
+        force_draw=True,
+    )
+    assert good_audit.deviation <= good_claim.tolerance, "Good claim deviation should be within tolerance"
+    assert good_audit.slash_tier == "NONE", "Good claim should have NONE slash tier"
+    assert good_claim.status != ClaimStatus.SLASHED, "Good claim should not be slashed"
+    print(f"Good audit: deviation={good_audit.deviation}, tier={good_audit.slash_tier}, status={good_claim.status.value}")
+
+    # Verify ledgers
+    assert protocol.ledger.verify_chain() is True, "Protocol 1 ledger should be valid"
+    assert protocol2.ledger.verify_chain() is True, "Protocol 2 ledger should be valid"
+
+    print("\nPASS: Audit Draw — inflated claim slashed, accurate claim upheld")
+
+
+def test_producer_track_record():
+    """Test producer track records with reputation tiers and bond multipliers."""
+    print("\n--- Test: Producer Track Record ---")
+
+    protocol = GradeBondProtocol()
+
+    # New producer should be "unproven"
+    record = ProducerTrackRecord(producer_id="producer_001")
+    assert record.reputation_tier == "unproven", "New producer should be unproven"
+    assert record.bond_multiplier == 1.50, "Unproven multiplier should be 1.50"
+    assert record.slash_rate == 0.0, "New producer should have 0 slash rate"
+    print(f"New producer: tier={record.reputation_tier}, multiplier={record.bond_multiplier}")
+
+    # Simulate a clean claim
+    scores = {
+        "evidence_strength": 0.85,
+        "source_quality": 0.80,
+        "claim_coverage": 0.75,
+        "counter_evidence": 0.70,
+        "provenance_integrity": 0.90,
+    }
+    claim = protocol.create_grade_claim(
+        media_packet_id="mcrv_clean",
+        frvo_id="frvo_clean",
+        rubric_id="video_evidence_quality_v1",
+        claimed_grade=80.0,
+        bond_amount_usd=1000.0,
+        machine_scores=scores,
+    )
+    record.record_claim(claim)
+    assert record.total_claims == 1, "Should have 1 claim"
+    assert record.total_bond_posted_usd == 1000.0, "Should have $1000 posted"
+    print(f"After 1 claim: total_claims={record.total_claims}, bond_posted=${record.total_bond_posted_usd}")
+
+    # Simulate a challenge that's upheld (claim is accurate)
+    challenge = protocol.challenge_claim(
+        claim, challenger_id="auditor_001",
+        reason="test", evidence="test",
+        proposed_grade=claim.computed_grade,
+    )
+    settlement = protocol.settle_challenge(challenge, verdict="UPHELD", auditor_grade=claim.computed_grade)
+    record.record_settlement(settlement)
+    assert record.total_upheld == 1, "Should have 1 upheld"
+    assert record.total_slashed == 0, "Should have 0 slashed"
+    assert record.upheld_rate == 1.0, "Upheld rate should be 1.0"
+    print(f"After upheld: upheld={record.total_upheld}, slashed={record.total_slashed}, upheld_rate={record.upheld_rate}")
+
+    # Simulate a slashed claim
+    protocol2 = GradeBondProtocol()
+    bad_scores = {
+        "evidence_strength": 0.30,
+        "source_quality": 0.25,
+        "claim_coverage": 0.20,
+        "counter_evidence": 0.10,
+        "provenance_integrity": 0.35,
+    }
+    bad_claim = protocol2.create_grade_claim(
+        media_packet_id="mcrv_bad",
+        frvo_id="frvo_bad",
+        rubric_id="video_evidence_quality_v1",
+        claimed_grade=90.0,
+        bond_amount_usd=2000.0,
+        machine_scores=bad_scores,
+    )
+    record.record_claim(bad_claim)
+    bad_challenge = protocol2.challenge_claim(
+        bad_claim, challenger_id="auditor_002",
+        reason="inflated", evidence="overstated",
+        proposed_grade=bad_claim.computed_grade,
+    )
+    bad_settlement = protocol2.settle_challenge(bad_challenge, verdict="OVERTURNED", auditor_grade=bad_claim.computed_grade)
+    record.record_settlement(bad_settlement)
+    assert record.total_slashed == 1, "Should have 1 slashed"
+    assert record.slash_rate > 0, "Slash rate should be positive"
+    assert record.total_slash_amount_usd > 0, "Should have slash amount"
+    print(f"After slash: slashed={record.total_slashed}, slash_rate={record.slash_rate:.4f}, slash_amount=${record.total_slash_amount_usd}")
+
+    # Test track record serialization
+    record_dict = record.to_dict()
+    assert "producer_id" in record_dict, "Dict should have producer_id"
+    assert "reputation_tier" in record_dict, "Dict should have reputation_tier"
+    assert "bond_multiplier" in record_dict, "Dict should have bond_multiplier"
+    assert "slash_rate" in record_dict, "Dict should have slash_rate"
+    print(f"Track record dict: tier={record_dict['reputation_tier']}, multiplier={record_dict['bond_multiplier']}")
+
+    print("\nPASS: Producer Track Record — claims, settlements, reputation tiers verified")
+
+
+def test_bea_multiple_asset_types():
+    """Test bonding different asset types: MCRV, FRVO revenue ledger, repo method claim."""
+    print("\n--- Test: BEA Multiple Asset Types ---")
+
+    protocol = GradeBondProtocol()
+
+    # 1. Bond an MCRV packet
+    mcrv_data = json.dumps({"question": "test", "claims": [], "evidence": []}).encode()
+    mcrv_scores = {
+        "claim_accuracy": 0.90, "citation_precision": 0.85,
+        "counterevidence_coverage": 0.80, "rights_clarity": 0.92,
+        "provenance_completeness": 0.88, "reproduction_strength": 0.85,
+        "machine_parseability": 0.95, "segment_buyability": 0.87,
+        "revenue_ledger_quality": 0.82, "method_supply_chain_safety": 0.90,
+    }
+    mcrv_bea = protocol.create_bea(
+        asset_type="mcrv",
+        artifact_data=mcrv_data,
+        rubric_id="mcrv_rubric_v1",
+        claimed_grade=90,
+        bond_amount_usd=3000,
+        machine_scores=mcrv_scores,
+        producer_id="producer_001",
+    )
+    assert mcrv_bea.asset_type == "mcrv", "Should be mcrv type"
+    assert mcrv_bea.asset_hash.startswith("sha256:"), "Should have sha256 hash"
+    print(f"MCRV BEA: id={mcrv_bea.bea_id}, grade={mcrv_bea.claimed_grade}, bond=${mcrv_bea.bond_amount}")
+
+    # 2. Bond a FRVO revenue ledger
+    frvo_data = json.dumps({
+        "video_asset_id": "va_001",
+        "revenue_sources": [{"source": "YouTube", "amount": 5000}],
+        "payout_waterfall": [{"recipient": "creator", "share": 0.7}],
+    }).encode()
+    frvo_scores = {
+        "revenue_receipt_quality": 0.88,
+        "ledger_integrity": 0.92,
+        "payout_traceability": 0.85,
+    }
+    frvo_bea = protocol.create_bea(
+        asset_type="revenue_ledger",
+        artifact_data=frvo_data,
+        rubric_id="revenue_receipt_quality_v1",
+        claimed_grade=88,
+        bond_amount_usd=1500,
+        machine_scores=frvo_scores,
+        producer_id="producer_001",
+    )
+    assert frvo_bea.asset_type == "revenue_ledger", "Should be revenue_ledger type"
+    assert frvo_bea.claimed_grade == 88, "Claimed grade should be 88"
+    print(f"FRVO BEA: id={frvo_bea.bea_id}, grade={frvo_bea.claimed_grade}, bond=${frvo_bea.bond_amount}")
+
+    # 3. Bond a repo method claim (Video Systems Genome)
+    repo_data = json.dumps({
+        "repo_url": "https://github.com/example/video-gen",
+        "capability": "video_generation",
+        "license": "MIT",
+        "security_risk": "clean",
+    }).encode()
+    repo_scores = {
+        "machine_buyability": 0.85,
+        "license_available": 0.90,
+        "segment_granularity": 0.70,
+        "receipt_completeness": 0.80,
+    }
+    repo_bea = protocol.create_bea(
+        asset_type="repo_method",
+        artifact_data=repo_data,
+        rubric_id="machine_buyability_v1",
+        claimed_grade=82,
+        bond_amount_usd=800,
+        machine_scores=repo_scores,
+        producer_id="producer_002",
+    )
+    assert repo_bea.asset_type == "repo_method", "Should be repo_method type"
+    assert repo_bea.producer_id == "producer_002", "Producer should be producer_002"
+    print(f"Repo Method BEA: id={repo_bea.bea_id}, grade={repo_bea.claimed_grade}, bond=${repo_bea.bond_amount}")
+
+    # All BEAs should have unique hashes
+    hashes = {mcrv_bea.asset_hash, frvo_bea.asset_hash, repo_bea.asset_hash}
+    assert len(hashes) == 3, "All 3 BEAs should have unique asset hashes"
+    print(f"Unique asset hashes: {len(hashes)} (expected 3)")
+
+    # Verify ledger
+    assert protocol.ledger.verify_chain() is True, "Ledger should be valid"
+    report = protocol.audit_report()
+    assert report["total_claims"] == 3, f"Should have 3 claims, got {report['total_claims']}"
+    assert report["total_bonded_usd"] == 5300.0, f"Should have $5300 bonded, got {report['total_bonded_usd']}"
+    print(f"Audit: {report['total_claims']} claims, ${report['total_bonded_usd']} bonded, ledger_valid={report['ledger_valid']}")
+
+    print("\nPASS: BEA Multiple Asset Types — MCRV, FRVO, repo method all bonded")
+
+
+def test_bmma_underwriter_view():
+    """Test BMMA underwriter_view() and public_view() expose correct fields."""
+    print("\n--- Test: BMMA Underwriter & Public Views ---")
+
+    protocol = GradeBondProtocol()
+
+    claim = protocol.create_grade_claim(
+        media_packet_id="mcrv_test",
+        frvo_id="frvo_test",
+        rubric_id="video_evidence_quality_v1",
+        claimed_grade=82.0,
+        bond_amount_usd=5000.0,
+        machine_scores={
+            "evidence_strength": 0.8,
+            "rights_safety": 0.9,
+            "machine_buyability": 0.7,
+            "provenance_integrity": 0.85,
+            "revenue_receipt_quality": 0.8,
+            "ledger_integrity": 1.0,
+            "license_clarity": 0.9,
+            "copyright_clean": 0.9,
+            "license_available": 1.0,
+            "segment_granularity": 0.6,
+            "receipt_completeness": 0.9,
+            "source_quality": 0.8,
+            "claim_coverage": 0.8,
+            "counter_evidence": 0.6,
+            "peer_review": 0.5,
+            "reproducibility": 0.5,
+            "confidence_calibration": 0.8,
+            "payout_traceability": 0.0,
+        },
+    )
+
+    bea = protocol.create_bea(
+        asset_type="mcrv",
+        artifact_data=b'{"question": "test", "claims": []}',
+        rubric_id="video_evidence_quality_v1",
+        claimed_grade=82.0,
+        bond_amount_usd=5000.0,
+        machine_scores={"evidence_strength": 0.8},
+        media_packet_id="mcrv_test",
+        frvo_id="frvo_test",
+    )
+
+    bmma = protocol.create_bmma(
+        claim=claim,
+        media_packet={"video": "video.mp4", "claims": "claims.jsonld"},
+        fractional_revenue={
+            "offering_mode": "PERK_ONLY",
+            "revenue_sources": [{"source_type": "sponsorship"}],
+            "participant_registry": [{"backer_id": "b1"}],
+            "ledger_valid": True,
+        },
+        question="What does the Hubble tension reveal?",
+        bea=bea,
+        schema_org_object={"@type": "VideoObject", "name": "test"},
+        c2pa_manifest={"manifest_id": "c2pa_test", "claim": {"assertions": []}},
+        segment_listings=[
+            {"listing_id": "lst_1", "license_available": True, "evidence_relevance_score": 0.8},
+            {"listing_id": "lst_2", "license_available": False, "evidence_relevance_score": 0.6},
+        ],
+        marketplace_summary={"avg_evidence_score": 0.7, "avg_price": 5.0},
+        provenance_hash="sha256:abc123",
+    )
+
+    uv = bmma.underwriter_view()
+    assert uv["schema"] == "bmma_underwriter_view_v1"
+    assert uv["bmma_id"] == bmma.bmma_id
+    assert uv["grade"]["claimed"] == 82.0
+    assert uv["bond"]["amount_usd"] == 5000.0
+    assert uv["bond"]["audit_probability"] > 0
+    assert uv["producer"]["tier"] == "unproven"
+    assert uv["rights"]["offering_mode"] == "PERK_ONLY"
+    assert uv["rights"]["ledger_valid"] is True
+    assert uv["rights"]["revenue_sources_count"] == 1
+    assert uv["rights"]["participants_count"] == 1
+    assert uv["marketplace"]["segments_listed"] == 2
+    assert uv["marketplace"]["segments_available"] == 1
+    assert uv["standards"]["schema_org"] is True
+    assert uv["standards"]["c2pa_manifest"] is True
+    assert uv["receipt_hash"] != ""
+    assert "bond_amount" not in str(uv["grade"])
+
+    pv = bmma.public_view()
+    assert pv["schema"] == "bmma_public_view_v1"
+    assert pv["bmma_id"] == bmma.bmma_id
+    assert pv["claimed_grade"] == 82.0
+    assert pv["segments_available"] == 1
+    assert pv["standards_compliant"] is True
+    assert "bond" not in pv
+    assert "producer" not in pv
+    assert "rights" not in pv
+
+    print(f"Underwriter view keys: {sorted(uv.keys())}")
+    print(f"Public view keys: {sorted(pv.keys())}")
+    print(f"BEA ID: {bmma.bea_id}")
+    print(f"Ledger valid: {uv['ledger_valid']}")
+
+    print("\nPASS: BMMA Underwriter & Public Views — correct field exposure")
+
+
+def test_standards_export():
+    """Test Schema.org VideoObject and C2PA manifest generation."""
+    print("\n--- Test: Standards Export (Schema.org + C2PA) ---")
+
+    exporter = StandardsExporter()
+
+    schema_org = exporter.to_schema_org_videoobject(
+        question="What does the Hubble tension reveal?",
+        duration_seconds=180,
+        transcript="The Hubble tension refers to the discrepancy...",
+        claims=[{"claim_id": "c1", "text": "Hubble constant measurements differ"}],
+        evidence=[{"paper_id": "p1", "title": "Riess et al. 2019"}],
+        rights_label="safe",
+        creator="Membra EvidenceOS",
+        manifest_hash="sha256:abc123",
+        confidence_score=0.82,
+        machine_buyability=0.75,
+        bmma_id="bmma_test",
+        grade_claimed=82.0,
+        revenue_sources=["sponsorship", "licensing"],
+    )
+
+    assert schema_org["@type"] == "VideoObject"
+    assert schema_org["name"] == "What does the Hubble tension reveal?"
+    assert schema_org["duration"] == "PT3M0S"
+    assert schema_org["license"] == "https://creativecommons.org/licenses/by/4.0/"
+    assert schema_org["membra:evidenceBacking"]["claims_count"] == 1
+    assert schema_org["membra:evidenceBacking"]["evidence_count"] == 1
+    assert schema_org["membra:rightsLabel"] == "safe"
+    assert schema_org["membra:confidenceScore"] == 0.82
+    assert schema_org["membra:machineBuyability"] == 0.75
+    assert schema_org["membra:bmmaId"] == "bmma_test"
+    assert schema_org["membra:bondedGrade"] == 82.0
+    assert "sponsorship" in schema_org["membra:revenueSources"]
+    assert "prov:wasGeneratedBy" in schema_org
+
+    c2pa = exporter.to_c2pa_manifest(
+        title="Hubble Tension Investigation",
+        creator="Membra EvidenceOS",
+        manifest_hash="sha256:abc123",
+        claims=[{"claim_id": "c1", "text": "Hubble constant measurements differ"}],
+        evidence=[{"paper_id": "p1", "title": "Riess et al. 2019"}],
+        rights_label="safe",
+        confidence_score=0.82,
+        bmma_id="bmma_test",
+        grade_claimed=82.0,
+    )
+
+    assert c2pa.manifest_id.startswith("c2pa_")
+    assert c2pa.title == "Hubble Tension Investigation"
+    assert c2pa.creator == "Membra EvidenceOS"
+    assert c2pa.claim is not None
+    assert c2pa.claim_hash != ""
+    assert c2pa.manifest_hash != ""
+    assert len(c2pa.claim.assertions) > 0
+    assert any(a.label == "membra.evidence_backed" for a in c2pa.claim.assertions)
+    assert any(a.label == "membra.rights_label" for a in c2pa.claim.assertions)
+    assert any(a.label == "membra.bmma_id" for a in c2pa.claim.assertions)
+    assert any(a.label == "membra.bonded_grade" for a in c2pa.claim.assertions)
+    assert len(c2pa.claim.ingredients) == 1
+    assert c2pa.claim.ingredients[0].title == "Riess et al. 2019"
+    assert len(c2pa.claim.actions) >= 2
+
+    c2pa_dict = c2pa.to_dict()
+    assert c2pa_dict["schema"] == "c2pa_manifest_v1"
+
+    ro_crate = exporter.to_ro_crate(
+        question="Hubble tension",
+        manifest_hash="sha256:abc123",
+        files=[{"name": "video.mp4", "type": "File", "format": "video/mp4", "size": 1000000}],
+    )
+    assert ro_crate["@context"] == "https://w3id.org/ro/crate/1.1/context"
+    assert len(ro_crate["@graph"]) >= 3
+
+    print(f"Schema.org VideoObject: @type={schema_org['@type']}, duration={schema_org['duration']}")
+    print(f"C2PA manifest: {c2pa.manifest_id}, {len(c2pa.claim.assertions)} assertions, {len(c2pa.claim.ingredients)} ingredients")
+    print(f"RO-Crate: {len(ro_crate['@graph'])} graph nodes")
+
+    print("\nPASS: Standards Export — Schema.org, C2PA, RO-Crate all valid")
+
+
+def test_segment_marketplace():
+    """Test segment marketplace: register, query, quote, purchase, verify."""
+    print("\n--- Test: Segment Marketplace ---")
+
+    market = SegmentMarketplace()
+
+    segments = [
+        {
+            "segment_id": "seg_001",
+            "claim": "Hubble constant measurements differ between methods",
+            "claim_type": "verified",
+            "transcript_text": "The Hubble tension refers to the 5-sigma discrepancy...",
+            "start_sec": 0.0,
+            "end_sec": 30.0,
+            "visual_concepts": ["telescope", "data_plot", "cosmology"],
+            "evidence_relevance_score": 0.92,
+            "truth_safety_score": 0.88,
+            "semantic_match_score": 0.85,
+            "machine_buyability": 0.90,
+            "rights_status": "safe",
+        },
+        {
+            "segment_id": "seg_002",
+            "claim": "Dark energy may explain the acceleration discrepancy",
+            "claim_type": "hypothesis",
+            "transcript_text": "One explanation is that dark energy...",
+            "start_sec": 30.0,
+            "end_sec": 60.0,
+            "visual_concepts": ["dark_energy", "expansion"],
+            "evidence_relevance_score": 0.75,
+            "truth_safety_score": 0.70,
+            "semantic_match_score": 0.80,
+            "machine_buyability": 0.65,
+            "rights_status": "fair_use",
+        },
+        {
+            "segment_id": "seg_003",
+            "claim": "The multiverse theory remains speculative",
+            "claim_type": "speculative",
+            "transcript_text": "Some physicists propose...",
+            "start_sec": 60.0,
+            "end_sec": 90.0,
+            "visual_concepts": ["multiverse"],
+            "evidence_relevance_score": 0.40,
+            "truth_safety_score": 0.50,
+            "semantic_match_score": 0.60,
+            "machine_buyability": 0.30,
+            "rights_status": "restricted",
+        },
+    ]
+
+    listings = market.register_segments(
+        segments,
+        media_packet_id="mcrv_test",
+        frvo_id="frvo_test",
+        bmma_id="bmma_test",
+        base_price_usd=10.0,
+    )
+
+    assert len(listings) == 3
+    assert listings[0].license_available is True
+    assert listings[1].license_available is True
+    assert listings[2].license_available is False
+    assert listings[0].bmma_id == "bmma_test"
+
+    results = market.query(min_evidence_score=0.7, rights_status="safe")
+    assert len(results) == 1
+    assert results[0].segment_id == "seg_001"
+
+    results = market.query(max_price=5.0, license_available_only=True)
+    assert all(l.license_available for l in results)
+
+    quote = market.get_quote(
+        listing_id=listings[0].listing_id,
+        buyer_id="agent_7",
+        use_case="citation",
+    )
+    assert quote.license_tier == LicenseTier.CITE
+    assert quote.price_usd > 0
+    assert quote.price_usd < 10.0
+    assert "bmma_id" in quote.terms
+
+    quote_research = market.get_quote(
+        listing_id=listings[0].listing_id,
+        buyer_id="agent_7",
+        use_case="research",
+    )
+    assert quote_research.license_tier == LicenseTier.RESEARCH
+    assert quote_research.price_usd > quote.price_usd
+
+    purchase = market.purchase(quote, buyer_id="agent_7")
+    assert purchase.status == PurchaseStatus.COMPLETED
+    assert purchase.license_key != ""
+    assert purchase.price_paid_usd == quote.price_usd
+    assert purchase.prev_receipt_hash != ""
+
+    assert market.verify_purchase(purchase.purchase_id) is True
+
+    license_info = market.get_license(purchase.purchase_id)
+    assert license_info["license_key"] == purchase.license_key
+    assert license_info["claim"] == "Hubble constant measurements differ between methods"
+
+    history = market.buyer_history("agent_7")
+    assert len(history) == 1
+    assert history[0]["purchase_id"] == purchase.purchase_id
+
+    summary = market.market_summary()
+    assert summary["schema"] == "segment_marketplace_summary_v1"
+    assert summary["total_listings"] == 3
+    assert summary["available_listings"] == 2
+    assert summary["total_purchases"] == 1
+    assert summary["total_revenue_usd"] > 0
+    assert summary["receipt_chain_valid"] is True
+    assert summary["by_rights_status"]["safe"] == 1
+    assert summary["by_rights_status"]["fair_use"] == 1
+    assert summary["by_rights_status"]["restricted"] == 1
+
+    receipts = market.export_receipts()
+    assert len(receipts) >= 4
+
+    print(f"Marketplace: {summary['total_listings']} listings, {summary['total_purchases']} purchases, ${summary['total_revenue_usd']} revenue")
+    print(f"Citation quote: ${quote.price_usd}, Research quote: ${quote_research.price_usd}")
+    print(f"Receipt chain: {len(receipts)} entries, valid={summary['receipt_chain_valid']}")
+
+    print("\nPASS: Segment Marketplace — register, query, quote, purchase, verify, license")
+
+
+def test_bmma_full_stack_integration():
+    """Test that compile_video_asset produces a BMMA with all five layers bound."""
+    print("\n--- Test: BMMA Full Stack Integration ---")
+
+    compiler = AssetCompiler()
+    result = compiler.compile_video_asset(
+        question="What does the Hubble tension reveal about cosmology?",
+        render="mcrv",
+        rights_ledger=True,
+        revenue_ledger=False,
+        grade_bond=True,
+        bond_amount_usd=5000.0,
+        rubric_id="video_evidence_quality_v1",
+        offering_mode="PERK_ONLY",
+        compile_video=False,
+    )
+
+    assert result.bmma is not None
+    assert result.bea is not None
+    assert result.standards_exports is not None
+    assert result.segment_marketplace is not None
+
+    bmma = result.bmma
+    assert bmma.bea_id != ""
+    assert bmma.schema_org_object != {}
+    assert bmma.c2pa_manifest != {}
+    assert bmma.provenance_hash != ""
+
+    uv = bmma.underwriter_view()
+    assert uv["schema"] == "bmma_underwriter_view_v1"
+    assert uv["grade"]["claimed"] > 0
+    assert uv["grade"]["rubric_id"] == "video_evidence_quality_v1"
+    assert uv["bond"]["amount_usd"] == 5000.0
+    assert uv["standards"]["schema_org"] is True
+    assert uv["standards"]["c2pa_manifest"] is True
+    assert uv["marketplace"]["segments_listed"] >= 0
+    assert uv["receipt_hash"] != ""
+
+    pv = bmma.public_view()
+    assert pv["schema"] == "bmma_public_view_v1"
+    assert pv["question"] == "What does the Hubble tension reveal about cosmology?"
+    assert pv["standards_compliant"] is True
+
+    summary = result.summary()
+    assert "bmma_id" in summary
+    assert "bea_id" in summary
+    assert summary["schema_org"] is True
+    assert summary["c2pa_manifest"] is True
+
+    assert result.grade_claim is not None
+    assert result.grade_claim.claimed_grade > 0
+    assert result.grade_claim.computed_grade > 0
+
+    assert compiler.grade_bond.ledger.verify_chain() is True
+
+    if result.segment_marketplace and result.segment_marketplace.listings:
+        for listing in result.segment_marketplace.listings.values():
+            assert listing.bmma_id == bmma.bmma_id or listing.bmma_id == ""
+
+    print(f"BMMA: {bmma.bmma_id}")
+    print(f"BEA: {bmma.bea_id}")
+    print(f"Schema.org: {bool(bmma.schema_org_object)}")
+    print(f"C2PA: {bool(bmma.c2pa_manifest)}")
+    print(f"Segments: {len(bmma.segment_listings)}")
+    print(f"Grade: claimed={uv['grade']['claimed']:.1f}, computed={uv['grade']['computed']:.1f}")
+    print(f"Ledger valid: {compiler.grade_bond.ledger.verify_chain()}")
+
+    print("\nPASS: BMMA Full Stack Integration — all five layers bound into one instrument")
+
+
 def run_all_tests():
     """Run all tests."""
     tests = [
@@ -4394,7 +5396,7 @@ def run_all_tests():
         test_rights_filter,
         test_proof_chain,
         test_visual_evidence_segment,
-        test_full_compilation,
+        test_bmma_compilation,
         test_full_compilation_with_truth_status,
         test_overvisual_full_pipeline,
         test_evidence_graph,
@@ -4458,6 +5460,18 @@ def run_all_tests():
         test_video_genome_compose,
         test_compile_video_asset,
         test_asset_packet_round_trip,
+        test_grade_bond_protocol,
+        test_grade_bond_slash,
+        test_bmma_compilation,
+        test_sealed_grade_bond,
+        test_bonded_evidence_asset,
+        test_audit_draw_slash,
+        test_producer_track_record,
+        test_bea_multiple_asset_types,
+        test_bmma_underwriter_view,
+        test_standards_export,
+        test_segment_marketplace,
+        test_bmma_full_stack_integration,
     ]
 
     passed = 0

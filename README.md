@@ -1,19 +1,80 @@
 ---
-title: MEMBRA — Intellectual Capital OS
-emoji: 🧠
-colorFrom: blue
-colorTo: indigo
+title: HyperFlow Ledger OS
+emoji: ⚡
+colorFrom: dark
+colorTo: blue
 sdk: docker
 app_file: app.py
 pinned: false
 license: mit
 ---
 
-# Email Crawler Dashboard & Computational Capital Infrastructure
+# HyperFlow Ledger OS
+
+> **One repo-centered hyper-flow connecting ChatGPT, Claude, Codex, Windsurf, and Xcode into a single production loop.**
+
+A multi-agent production ledger that converts AI-assisted work into auditable, reusable, financeable software artifacts.
+
+## The Primitive
+
+```
+Many AI agents, one repo, one task ledger, one artifact registry, one build truth.
+```
+
+## Pipeline
+
+```
+Intent → Spec → Task → Patch → Build → Test → Receipt → Commit → Release candidate
+```
+
+## Agent Roles
+
+| Agent | Role |
+|-------|------|
+| ChatGPT | Strategist / spec compiler / reviewer |
+| Claude | Long-context refactorer / architecture critic |
+| Codex | Patch generator / test-driven implementer |
+| Windsurf | IDE-native repo operator / integrator |
+| Xcode | Apple build/test/sign authority |
+| GitHub | Source of truth / evidence archive |
+
+## State Machine
+
+```
+RAW_IDEA → SPECIFIED → PLANNED → PATCHED → BUILT → TESTED → AUDITED → COMMITTED → PACKAGED → VALUED → SOLD
+```
+
+## Hydra Anti-Timeout
+
+Devin is a disposable 15-minute burst worker inside a persistent production ledger. The watchdog snapshots state every 12 minutes and generates relaunch packets when workers drop.
+
+- `scripts/hydra_watchdog.py` — checks tasks, snapshots state, generates relaunch packets
+- `scripts/devin_relaunch.py` — generates continuation prompt from task/receipt/git state
+- `scripts/verify.sh` — runs build/test/lint
+- `scripts/xcode_verify.sh` — Xcode build/test/signing verification
+
+## CLI
+
+```bash
+python3 hyperflow/hyperflow_cli.py new "Build MVP"
+python3 hyperflow/hyperflow_cli.py list
+python3 hyperflow/hyperflow_cli.py assign HF-0001 claude
+python3 hyperflow/hyperflow_cli.py build HF-0001
+python3 hyperflow/hyperflow_cli.py test HF-0001
+python3 hyperflow/hyperflow_cli.py status
+```
+
+## Key Principle
+
+Do not connect the models to each other first. Connect all of them to the same artifact ledger. The repo is the memory, judge, and ledger.
+
+---
+
+## Legacy: Email Crawler Dashboard & Computational Capital Infrastructure
 
 Dual-job email collection pipeline with real-time dashboard, plus computational capital valuation and underwriting infrastructure.
 
-## Email Crawler
+### Email Crawler
 
 A comprehensive 4-layer crawler, ETL, scoring, and action engine for verifying software systems with receipts and audit trails. Deployed on Hugging Face Spaces.
 

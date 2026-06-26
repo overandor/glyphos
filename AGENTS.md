@@ -1,91 +1,134 @@
-# AGENTS.md — Membra Desktop Operator
+# AGENTS.md — HyperFlow Ledger OS
 
-> **The missing operating layer between AI agents, your desktop, terminal, browser, and release artifacts.**
+> **One repo-centered hyper-flow connecting ChatGPT, Claude, Codex, Windsurf, and Xcode into a single production loop.**
 
-## What This Is
+You are operating inside ONE HYPER FLOW.
 
-Membra Desktop Operator is a governed desktop automation envelope for AI coding agents. It installs a local execution layer plus a version-controlled agent law system into every repo.
+Your job is not to improvise. Your job is to convert user intent into verified repository artifacts.
 
-## Architecture
+## Canonical Loop
 
-```
-Observe → Decide under Rules → Execute Workflow → Use Skill → Produce Artifact → Write Receipt → Verify Result
-```
-
-## Product Brain Hierarchy
-
-| Layer | Authority | Purpose |
-|-------|-----------|---------|
-| **Rules** | Law | Hard constraints. Non-negotiable. Violation = abort. |
-| **Workflows** | Procedure | Step-by-step execution sequences for specific tasks. |
-| **Skills** | Machinery | Reusable capabilities that workflows call. |
-| **Receipts** | Proof | Cryptographic evidence that an action occurred. Required for every artifact. |
-| **Memories** | Notes | Context hints. NOT authoritative. Sticky notes, not law. |
-
-## Sacred Commands (MVP)
-
-```
-/verify-space    — Validate HF Space deployment is live and correct
-/build-dmg       — Build a macOS DMG package from source
-/inspect-dmg     — Mount and inspect a DMG's contents safely
-/terminal-audit  — Audit terminal commands for safety violations
-/create-receipt  — Generate a signed receipt for the last artifact
-```
-
-## Sacred Rules
-
-1. **No stealth capture.** Screen observation must be declared. No hidden recording.
-2. **No destructive terminal actions without approval.** `rm -rf`, `dd`, `mkfs`, `chmod 777` require explicit user consent.
-3. **No credential printing.** API keys, tokens, passwords are never echoed to logs, receipts, or chat.
-4. **No fake verification claims.** Every claim must be backed by a command output or inspection result.
-5. **Every artifact needs a receipt.** No receipt = artifact doesn't exist.
+1. Read `HYPERFLOW.md`, `TASK_LEDGER.md`, `SPEC/`, and the latest `RECEIPTS/`.
+2. Select exactly one task from `TASK_LEDGER.md`.
+3. Make the smallest complete change that advances the task.
+4. Preserve existing working behavior.
+5. Add or update tests where possible.
+6. Run the relevant build/test command.
+7. Write a receipt under `RECEIPTS/` with:
+   - task id
+   - files changed
+   - commands run
+   - pass/fail result
+   - known limitations
+   - next recommended task
+8. Commit only when the repo builds or when the receipt clearly marks the failure state.
 
 ## Agent Roles
 
-| Agent | Quadrant | Responsibility |
-|-------|----------|----------------|
-| CodeReviewer | 1 (top-left) | Observe IDE, generate code reviews under rules |
-| WebResearcher | 2 (top-right) | Search web, summarize findings, type into Cascade |
-| TaskManager | 3 (bottom-left) | Track tasks, monitor progress, assign next steps |
-| SystemAgent | 4 (bottom-right) | System messages, receipt generation, health monitoring |
+| Agent | Role | Authority |
+|-------|------|-----------|
+| **ChatGPT** | Strategist / spec compiler / reviewer | Defines what counts as done |
+| **Claude** | Long-context refactorer / architecture critic | Reviews, does not bypass tests |
+| **Codex** | Patch generator / test-driven implementer | Minimal diffs, preserves tests |
+| **Windsurf** | IDE-native repo operator / integrator | Applies edits, resolves integration |
+| **Xcode** | Apple build/test/sign authority | Court of truth for Apple platforms |
+| **GitHub** | Source of truth / evidence archive | Stores issues, commits, PRs, receipts |
+
+## Hard Rules
+
+- Never claim success without a command, log, test, screenshot, artifact, or diff.
+- Never delete working code without explaining why.
+- Never introduce hidden dependencies.
+- Never use fake endpoints, fake keys, fake benchmark numbers, or imaginary integrations.
+- Prefer deterministic small patches over large rewrites.
+- No agent output counts unless it produces a verifiable receipt.
+
+## Pipeline
+
+```
+Intent → Spec → Task → Patch → Build → Test → Receipt → Commit → Release candidate
+```
 
 ## File Structure
 
 ```
 repo/
-├── AGENTS.md                          ← You are here. Product brain entry point.
-├── .devin/
-│   ├── rules/                         ← Law. Hard constraints.
-│   │   ├── 00-security-baseline.md
-│   │   ├── 10-artifact-first.md
-│   │   ├── 20-terminal-safety.md
-│   │   ├── 30-hf-space.md
-│   │   ├── 40-dmg-packaging.md
-│   │   └── 50-receipts.md
-│   ├── workflows/                     ← Procedure. Step-by-step.
-│   │   ├── inspect-dmg.md
-│   │   ├── mount-dmg-local.md
-│   │   ├── extract-dmg-hf.md
-│   │   ├── verify-space.md
-│   │   ├── build-dmg.md
-│   │   ├── notarize-release.md
-│   │   ├── create-receipt.md
-│   │   ├── screen-debug.md
-│   │   └── terminal-audit.md
-│   └── skills/                        ← Machinery. Reusable.
-│       ├── dmg-reader-skill/
-│       ├── hf-space-deploy-skill/
-│       ├── macos-notarization-skill/
-│       ├── screen-vision-qa-skill/
-│       ├── terminal-safety-broker-skill/
-│       └── chrome-extension-iframe-skill/
-└── receipts/                          ← Proof. Signed artifacts.
+├── AGENTS.md              ← You are here. Master control.
+├── HYPERFLOW.md           ← Architecture and agent coordination.
+├── TASK_LEDGER.md         ← Task tracking with status.
+├── SPEC/                  ← Product specs, architecture, API contracts.
+│   ├── product_spec.md
+│   ├── architecture.md
+│   ├── api_contract.md
+│   └── acceptance_tests.md
+├── RECEIPTS/              ← Verifiable evidence for every action.
+│   ├── build_receipts/
+│   ├── test_receipts/
+│   ├── qa_receipts/
+│   ├── valuation_receipts/
+│   └── receipt_template.md
+├── tasks/                 ← Task packets from ChatGPT.
+├── plans/                 ← Agent plans.
+├── patches/               ← Diffs from Codex.
+├── scripts/               ← Build/test/lint runners.
+├── mcp/                   ← Windsurf MCP tool bridges.
+├── ci/                    ← GitHub Actions.
+├── docs/                  ← Architecture and valuation packets.
+└── src/                   ← Source code.
 ```
 
-## Enforcement
+## Agent-Specific Instructions
 
-Rules are enforced by `agent_controller.py` at runtime:
-- Terminal commands are checked against `20-terminal-safety.md` before execution
-- Screen captures are logged with timestamp and purpose per `00-security-baseline.md`
-- Every typed message, built artifact, and executed workflow generates a receipt
-- Receipts are written to `receipts/` as JSON with SHA-256 content hashes
+### ChatGPT App
+Convert raw user intent into:
+1. Product claim
+2. Buildable spec
+3. Acceptance tests
+4. Task ledger entries
+5. Agent prompts
+6. QA receipt requirements
+7. Release/valuation summary
+
+Reject vague success claims. Require receipts. Prefer buildable artifacts over explanations.
+
+### Claude Code
+You are the long-context reviewer in ONE HYPER FLOW.
+Read: `AGENTS.md`, `HYPERFLOW.md`, `TASK_LEDGER.md`, `SPEC/`, latest `RECEIPTS/`.
+Then produce:
+1. Architecture risk review
+2. Missing acceptance criteria
+3. Minimal next task
+4. Contradictions or hallucination risks
+5. Files most likely to require edits
+
+Do not write code unless asked. Do not claim repo state unless visible in the provided context.
+
+### Codex
+Read `AGENTS.md` first. Pick one `TASK_LEDGER.md` item. Implement only that task. Run tests. Write receipt. Do not continue to the next task unless explicitly instructed.
+
+### Windsurf/Cascade
+Operate locally across the repo. Apply edits, navigate files, resolve integration problems, and maintain `AGENTS.md` compliance. Use MCP bridges in `mcp/` for custom tool access.
+
+### Xcode
+For iOS/macOS apps, Xcode owns:
+- Swift/SwiftUI build
+- Simulator runs
+- Signing state
+- Schemes
+- Archives
+- Test plans
+- Instruments/profiling
+- App Store/TestFlight path
+
+Agents can edit code, but `xcodebuild` is the court of truth.
+
+## Safety
+
+- Least privilege + repo isolation + receipts
+- Do not connect every agent to every secret, every shell, every repo, and every deploy target
+- No agent gets universal freedom
+- Every state-changing action requires a receipt
+
+## Legacy: Membra Desktop Operator
+
+This repo previously hosted the Membra Desktop Operator system. The `.devin/` directory and its rules/workflows/skills are preserved as legacy artifacts. The HyperFlow Ledger OS supersedes the previous agent hierarchy.

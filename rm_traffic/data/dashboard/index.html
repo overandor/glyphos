@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RM ProfileOps Stats Dashboard</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 40px; background: #f5f5f7; color: #1d1d1f; }
+        h1 { font-size: 32px; margin-bottom: 8px; }
+        .timestamp { color: #86868b; font-size: 14px; margin-bottom: 24px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .card h2 { font-size: 14px; color: #86868b; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card .value { font-size: 32px; font-weight: 600; margin: 0; }
+        .card .sub { font-size: 14px; color: #86868b; margin-top: 4px; }
+        .section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .section h2 { font-size: 18px; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #eee; }
+        th { color: #86868b; font-weight: 500; }
+        .ok { color: #34c759; }
+        .warn { color: #ff9500; }
+        .bad { color: #ff3b30; }
+    </style>
+</head>
+<body>
+    <h1>RM ProfileOps Stats Dashboard</h1>
+    <div class="timestamp">Generated: 2026-06-25T20:46:41.613396+00:00 UTC</div>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Profile Views</h2>
+            <p class="value">2802</p>
+        </div>
+        <div class="card">
+            <h2>Contact Clicks</h2>
+            <p class="value">135</p>
+        </div>
+        <div class="card">
+            <h2>Contact Rate</h2>
+            <p class="value">4.82%</p>
+        </div>
+        <div class="card">
+            <h2>Receipts</h2>
+            <p class="value">20</p>
+            <p class="sub">20 verified</p>
+        </div>
+        <div class="card">
+            <h2>Experiments</h2>
+            <p class="value">0</p>
+            <p class="sub">0 open</p>
+        </div>
+        <div class="card">
+            <h2>Drafts</h2>
+            <p class="value">61</p>
+            <p class="sub">bio 56 | blog 5 | interview 0</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>24h Trend</h2>
+        <p><strong>Status:</strong> insufficient_data</p>
+        <p><strong>Delta views:</strong> N/A</p>
+        <p><strong>Delta contacts:</strong> N/A</p>
+        <p><strong>Rate change:</strong> N/A</p>
+        <p><strong>Alert:</strong> <span class="ok">NO</span></p>
+    </div>
+
+    <div class="section">
+        <h2>Recent Receipts</h2>
+        <table>
+            <tr><th>Time</th><th>Action</th><th>Verified</th></tr>
+            <tr><td>2026-06-25T20:45:18.059423+00:00</td><td>run_evolution</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:44:16.228389+00:00</td><td>generate_bios</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:43:21.445456+00:00</td><td>draft_bio_variant</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:43:14.804158+00:00</td><td>generate_blog_draft</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:43:14.802726+00:00</td><td>generate_blog_draft</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:43:14.801251+00:00</td><td>generate_blog_draft</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:42:59.738182+00:00</td><td>generate_blog_draft</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:42:59.736787+00:00</td><td>generate_blog_draft</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:40:32.777701+00:00</td><td>check_availability</td><td class="ok">YES</td></tr><tr><td>2026-06-25T20:40:30.860406+00:00</td><td>check_visible</td><td class="ok">YES</td></tr>
+        </table>
+    </div>
+</body>
+</html>

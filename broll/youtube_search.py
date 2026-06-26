@@ -10,13 +10,15 @@ Uses YouTube Data API v3 to:
 Reference: https://developers.google.com/youtube/v3/docs/search/list
 
 Requires a YouTube Data API key. When no key is provided, falls back
-to the simulated search in VideoSearch.
+to the local corpus search in VideoSearch.
 """
 
 import hashlib
 import json
 import re
 import time
+import urllib.request
+import urllib.parse
 from dataclasses import dataclass, field
 from typing import Optional
 from collections import Counter
@@ -136,7 +138,6 @@ class YouTubeSearch:
         if not self._has_key:
             return []
 
-        # Build search request
         params: dict[str, str] = {
             "part": "snippet",
             "q": query,
@@ -153,14 +154,33 @@ class YouTubeSearch:
         if region_code:
             params["regionCode"] = region_code
 
-        # In production:
-        # import requests
-        # response = requests.get(f"{self.BASE_URL}/search", params=params)
-        # data = response.json()
-        # self._quota_used += 100
+        url = f"{self.BASE_URL}/search?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url, headers={"User-Agent": "VideoLake/1.0"})
 
-        # For now, return empty — the VideoSearch simulated results cover demonstration
-        return []
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode())
+            self._quota_used += 100
+
+            videos: list[YouTubeVideo] = []
+            for item in data.get("items", []):
+                vid = item.get("id", {}).get("videoId", "")
+                if not vid:
+                    continue
+                snippet = item.get("snippet", {})
+                videos.append(YouTubeVideo(
+                    video_id=vid,
+                    title=snippet.get("title", ""),
+                    channel=snippet.get("channelTitle", ""),
+                    channel_id=snippet.get("channelId", ""),
+                    description=snippet.get("description", ""),
+                    published_at=snippet.get("publishedAt", ""),
+                    thumbnail_url=snippet.get("thumbnails", {}).get("medium", {}).get("url", ""),
+                    url=f"https://www.youtube.com/watch?v={vid}",
+                ))
+            return videos
+        except Exception:
+            return []
 
     def get_video_details(self, video_id: str) -> YouTubeVideo | None:
         """
@@ -171,13 +191,47 @@ class YouTubeSearch:
         if not self._has_key:
             return None
 
-        # In production:
-        # params = {"part": "snippet,statistics,contentDetails", "id": video_id, "key": self.api_key}
-        # response = requests.get(f"{self.BASE_URL}/videos", params=params)
-        # data = response.json()
-        # self._quota_used += 1
+        params = {
+            "part": "snippet,statistics,contentDetails",
+            "id": video_id,
+            "key": self.api_key,
+        }
+        url = f"{self.BASE_URL}/videos?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url, headers={"User-Agent": "VideoLake/1.0"})
 
-        return None
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode())
+            self._quota_used += 1
+
+            items = data.get("items", [])
+            if not items:
+                return None
+
+            item = items[0]
+            snippet = item.get("snippet", {})
+            stats = item.get("statistics", {})
+            content = item.get("contentDetails", {})
+
+            duration_str = content.get("duration", "PT0S")
+            duration_sec = self._parse_iso8601_duration(duration_str)
+
+            return YouTubeVideo(
+                video_id=video_id,
+                title=snippet.get("title", ""),
+                channel=snippet.get("channelTitle", ""),
+                channel_id=snippet.get("channelId", ""),
+                description=snippet.get("description", ""),
+                published_at=snippet.get("publishedAt", ""),
+                duration_seconds=duration_sec,
+                view_count=int(stats.get("viewCount", 0)),
+                like_count=int(stats.get("likeCount", 0)),
+                tags=snippet.get("tags", []),
+                thumbnail_url=snippet.get("thumbnails", {}).get("medium", {}).get("url", ""),
+                url=f"https://www.youtube.com/watch?v={video_id}",
+            )
+        except Exception:
+            return None
 
     def get_captions(self, video_id: str) -> list[CaptionTrack]:
         """
@@ -196,12 +250,41 @@ class YouTubeSearch:
         if not self._has_key:
             return []
 
-        # In production with OAuth2:
-        # params = {"part": "snippet", "videoId": video_id, "key": self.api_key}
-        # response = requests.get(f"{self.BASE_URL}/captions", params=params)
-        # self._quota_used += 50
+        params = {"part": "snippet", "videoId": video_id, "key": self.api_key}
+        url = f"{self.BASE_URL}/captions?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url, headers={"User-Agent": "VideoLake/1.0"})
 
-        return []
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                data = json.loads(resp.read().decode())
+            self._quota_used += 50
+
+            tracks: list[CaptionTrack] = []
+            for item in data.get("items", []):
+                snippet = item.get("snippet", {})
+                tracks.append(CaptionTrack(
+                    track_id=item.get("id", ""),
+                    language=snippet.get("language", ""),
+                    name=snippet.get("name", ""),
+                    is_cc=snippet.get("trackKind", "") == "standard",
+                    is_asr=snippet.get("trackKind", "") == "ASR",
+                ))
+            return tracks
+        except Exception:
+            return []
+
+    @staticmethod
+    def _parse_iso8601_duration(duration: str) -> float:
+        """Parse ISO 8601 duration (e.g. PT1M30S) to seconds."""
+        import re
+        pattern = r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?"
+        match = re.match(pattern, duration)
+        if not match:
+            return 0.0
+        hours = int(match.group(1) or 0)
+        minutes = int(match.group(2) or 0)
+        seconds = int(match.group(3) or 0)
+        return hours * 3600 + minutes * 60 + seconds
 
     def get_transcript(self, video_id: str) -> str:
         """

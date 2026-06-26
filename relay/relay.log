@@ -1,0 +1,1429 @@
+[2026-06-25T00:29:17Z] Project 0d5cc36f: TestForge
+[2026-06-25T00:29:20Z] Project 0d5cc36f → BUILD → windsurf
+[2026-06-25T00:29:20Z] Stage BUILD: failed (16ms)
+[2026-06-25T00:29:22Z] Project 0d5cc36f → TEST → windsurf
+[2026-06-25T00:29:22Z] Stage TEST: completed (87ms)
+[2026-06-25T00:47:34Z] Project c4f10fa2: QuickCalc
+[2026-06-25T00:48:58Z] Project e844c9bf: QuickCalc
+[2026-06-25T00:49:10Z] Project e844c9bf → IDEA → chatgpt
+[2026-06-25T00:49:10Z] Stage IDEA: skipped (0ms)
+[2026-06-25T00:49:10Z] Project e844c9bf → SPEC → chatgpt
+[2026-06-25T00:49:10Z] Stage SPEC: skipped (1ms)
+[2026-06-25T00:49:11Z] Project e844c9bf → ARCHITECT → claude
+[2026-06-25T00:49:11Z] Stage ARCHITECT: failed (651ms)
+[2026-06-25T00:49:12Z] Project e844c9bf → CODE → codex
+[2026-06-25T00:49:42Z] Stage CODE: failed (30014ms)
+[2026-06-25T00:49:42Z] Project e844c9bf → BUILD → windsurf
+[2026-06-25T00:49:42Z] Stage BUILD: completed (29ms)
+[2026-06-25T00:49:43Z] Project e844c9bf → TEST → windsurf
+[2026-06-25T00:49:43Z] Stage TEST: completed (154ms)
+[2026-06-25T00:49:44Z] Project e844c9bf → RECEIPT → windsurf
+[2026-06-25T00:49:44Z] Stage RECEIPT: completed (7ms)
+[2026-06-25T00:49:44Z] Project e844c9bf → SHIP → chatgpt
+[2026-06-25T00:49:44Z] Stage SHIP: skipped (2ms)
+[2026-06-25T00:50:09Z] Project 80dcd6ec: QuickCalc
+[2026-06-25T01:13:09Z] Project 80dcd6ec → IDEA → chatgpt
+[2026-06-25T01:13:09Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:13:10Z] Project 80dcd6ec → SPEC → chatgpt
+[2026-06-25T01:13:10Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:13:10Z] Project 80dcd6ec → ARCHITECT → claude
+[2026-06-25T01:13:11Z] Stage ARCHITECT: failed (429ms)
+[2026-06-25T01:13:11Z] Project 80dcd6ec → CODE → codex
+[2026-06-25T01:13:41Z] Stage CODE: failed (30021ms)
+[2026-06-25T01:13:42Z] Project 80dcd6ec → BUILD → windsurf
+[2026-06-25T01:13:42Z] Stage BUILD: completed (29ms)
+[2026-06-25T01:13:42Z] Project 80dcd6ec → TEST → windsurf
+[2026-06-25T01:13:42Z] Stage TEST: completed (145ms)
+[2026-06-25T01:13:43Z] Project 80dcd6ec → RECEIPT → windsurf
+[2026-06-25T01:13:43Z] Stage RECEIPT: completed (7ms)
+[2026-06-25T01:13:43Z] Project 80dcd6ec → SHIP → chatgpt
+[2026-06-25T01:13:43Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:14:12Z] Project f108349c: QuickCalc
+[2026-06-25T01:14:29Z] Project f108349c → IDEA → chatgpt
+[2026-06-25T01:14:29Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:14:29Z] Project f108349c → SPEC → chatgpt
+[2026-06-25T01:14:29Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:14:30Z] Project f108349c → ARCHITECT → claude
+[2026-06-25T01:14:30Z] Stage ARCHITECT: failed (431ms)
+[2026-06-25T01:14:30Z] Project f108349c → CODE → codex
+[2026-06-25T01:14:30Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:14:31Z] Project f108349c → BUILD → windsurf
+[2026-06-25T01:14:31Z] Stage BUILD: completed (17ms)
+[2026-06-25T01:14:32Z] Project f108349c → TEST → windsurf
+[2026-06-25T01:14:32Z] Stage TEST: completed (143ms)
+[2026-06-25T01:14:32Z] Project f108349c → RECEIPT → windsurf
+[2026-06-25T01:14:32Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:14:33Z] Project f108349c → SHIP → chatgpt
+[2026-06-25T01:14:33Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:02Z] Project 0a1739d8: TodoCLI
+[2026-06-25T01:18:02Z] Project 0a1739d8 → IDEA → chatgpt
+[2026-06-25T01:18:02Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:02Z] Project 0a1739d8 → SPEC → chatgpt
+[2026-06-25T01:18:02Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:03Z] Project 0a1739d8 → ARCHITECT → claude
+[2026-06-25T01:18:03Z] Stage ARCHITECT: failed (470ms)
+[2026-06-25T01:18:03Z] Project 0a1739d8 → ARCHITECT → claude
+[2026-06-25T01:18:03Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:03Z] Project 0a1739d8 → CODE → codex
+[2026-06-25T01:18:03Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:04Z] Project 0a1739d8 → BUILD → windsurf
+[2026-06-25T01:18:04Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:18:04Z] Project 0a1739d8 → TEST → windsurf
+[2026-06-25T01:18:04Z] Stage TEST: completed (160ms)
+[2026-06-25T01:18:05Z] Project 0a1739d8 → RECEIPT → windsurf
+[2026-06-25T01:18:05Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:05Z] Project 0a1739d8 → SHIP → chatgpt
+[2026-06-25T01:18:05Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:07Z] Project ee75e57e: WeatherFetch
+[2026-06-25T01:18:07Z] Project ee75e57e → IDEA → chatgpt
+[2026-06-25T01:18:07Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:07Z] Project ee75e57e → SPEC → chatgpt
+[2026-06-25T01:18:07Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:08Z] Project ee75e57e → ARCHITECT → claude
+[2026-06-25T01:18:08Z] Stage ARCHITECT: failed (411ms)
+[2026-06-25T01:18:08Z] Project ee75e57e → ARCHITECT → claude
+[2026-06-25T01:18:08Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:08Z] Project ee75e57e → CODE → codex
+[2026-06-25T01:18:08Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:09Z] Project ee75e57e → BUILD → windsurf
+[2026-06-25T01:18:09Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:18:09Z] Project ee75e57e → TEST → windsurf
+[2026-06-25T01:18:09Z] Stage TEST: completed (158ms)
+[2026-06-25T01:18:10Z] Project ee75e57e → RECEIPT → windsurf
+[2026-06-25T01:18:10Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:18:10Z] Project ee75e57e → SHIP → chatgpt
+[2026-06-25T01:18:10Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:12Z] Project d493db8d: PassGen
+[2026-06-25T01:18:12Z] Project d493db8d → IDEA → chatgpt
+[2026-06-25T01:18:12Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:12Z] Project d493db8d → SPEC → chatgpt
+[2026-06-25T01:18:12Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:13Z] Project d493db8d → ARCHITECT → claude
+[2026-06-25T01:18:13Z] Stage ARCHITECT: failed (419ms)
+[2026-06-25T01:18:13Z] Project d493db8d → ARCHITECT → claude
+[2026-06-25T01:18:13Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:14Z] Project d493db8d → CODE → codex
+[2026-06-25T01:18:14Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:14Z] Project d493db8d → BUILD → windsurf
+[2026-06-25T01:18:14Z] Stage BUILD: completed (24ms)
+[2026-06-25T01:18:14Z] Project d493db8d → TEST → windsurf
+[2026-06-25T01:18:14Z] Stage TEST: failed (163ms)
+[2026-06-25T01:18:15Z] Project d493db8d → RECEIPT → windsurf
+[2026-06-25T01:18:15Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:15Z] Project d493db8d → SHIP → chatgpt
+[2026-06-25T01:18:15Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:17Z] Project 367d2463: FileWatcher
+[2026-06-25T01:18:17Z] Project 367d2463 → IDEA → chatgpt
+[2026-06-25T01:18:17Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:18Z] Project 367d2463 → SPEC → chatgpt
+[2026-06-25T01:18:18Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:18:18Z] Project 367d2463 → ARCHITECT → claude
+[2026-06-25T01:18:18Z] Stage ARCHITECT: failed (482ms)
+[2026-06-25T01:18:18Z] Project 367d2463 → ARCHITECT → claude
+[2026-06-25T01:18:18Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:19Z] Project 367d2463 → CODE → codex
+[2026-06-25T01:18:19Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:19Z] Project 367d2463 → BUILD → windsurf
+[2026-06-25T01:18:19Z] Stage BUILD: completed (20ms)
+[2026-06-25T01:18:19Z] Project 367d2463 → TEST → windsurf
+[2026-06-25T01:18:19Z] Stage TEST: completed (158ms)
+[2026-06-25T01:18:20Z] Project 367d2463 → RECEIPT → windsurf
+[2026-06-25T01:18:20Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:20Z] Project 367d2463 → SHIP → chatgpt
+[2026-06-25T01:18:20Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:22Z] Project ea4d7e60: PortScanner
+[2026-06-25T01:18:22Z] Project ea4d7e60 → IDEA → chatgpt
+[2026-06-25T01:18:22Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:23Z] Project ea4d7e60 → SPEC → chatgpt
+[2026-06-25T01:18:23Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:23Z] Project ea4d7e60 → ARCHITECT → claude
+[2026-06-25T01:18:23Z] Stage ARCHITECT: failed (374ms)
+[2026-06-25T01:18:23Z] Project ea4d7e60 → ARCHITECT → claude
+[2026-06-25T01:18:23Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:24Z] Project ea4d7e60 → CODE → codex
+[2026-06-25T01:18:24Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:24Z] Project ea4d7e60 → BUILD → windsurf
+[2026-06-25T01:18:24Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:18:24Z] Project ea4d7e60 → TEST → windsurf
+[2026-06-25T01:18:24Z] Stage TEST: completed (155ms)
+[2026-06-25T01:18:25Z] Project ea4d7e60 → RECEIPT → windsurf
+[2026-06-25T01:18:25Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:25Z] Project ea4d7e60 → SHIP → chatgpt
+[2026-06-25T01:18:25Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:27Z] Project 2db6da32: MarkdownNotes
+[2026-06-25T01:18:27Z] Project 2db6da32 → IDEA → chatgpt
+[2026-06-25T01:18:27Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:28Z] Project 2db6da32 → SPEC → chatgpt
+[2026-06-25T01:18:28Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:28Z] Project 2db6da32 → ARCHITECT → claude
+[2026-06-25T01:18:28Z] Stage ARCHITECT: failed (397ms)
+[2026-06-25T01:18:28Z] Project 2db6da32 → ARCHITECT → claude
+[2026-06-25T01:18:28Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:29Z] Project 2db6da32 → CODE → codex
+[2026-06-25T01:18:29Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:29Z] Project 2db6da32 → BUILD → windsurf
+[2026-06-25T01:18:29Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:18:29Z] Project 2db6da32 → TEST → windsurf
+[2026-06-25T01:18:29Z] Stage TEST: completed (156ms)
+[2026-06-25T01:18:30Z] Project 2db6da32 → RECEIPT → windsurf
+[2026-06-25T01:18:30Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:30Z] Project 2db6da32 → SHIP → chatgpt
+[2026-06-25T01:18:30Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:32Z] Project bc48e2e6: ColorPicker
+[2026-06-25T01:18:32Z] Project bc48e2e6 → IDEA → chatgpt
+[2026-06-25T01:18:32Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:33Z] Project bc48e2e6 → SPEC → chatgpt
+[2026-06-25T01:18:33Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:33Z] Project bc48e2e6 → ARCHITECT → claude
+[2026-06-25T01:18:33Z] Stage ARCHITECT: failed (419ms)
+[2026-06-25T01:18:33Z] Project bc48e2e6 → ARCHITECT → claude
+[2026-06-25T01:18:33Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:34Z] Project bc48e2e6 → CODE → codex
+[2026-06-25T01:18:34Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:34Z] Project bc48e2e6 → BUILD → windsurf
+[2026-06-25T01:18:34Z] Stage BUILD: completed (19ms)
+[2026-06-25T01:18:34Z] Project bc48e2e6 → TEST → windsurf
+[2026-06-25T01:18:35Z] Stage TEST: completed (154ms)
+[2026-06-25T01:18:35Z] Project bc48e2e6 → RECEIPT → windsurf
+[2026-06-25T01:18:35Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:35Z] Project bc48e2e6 → SHIP → chatgpt
+[2026-06-25T01:18:35Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:37Z] Project 30b62ff9: CronHelper
+[2026-06-25T01:18:37Z] Project 30b62ff9 → IDEA → chatgpt
+[2026-06-25T01:18:37Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:38Z] Project 30b62ff9 → SPEC → chatgpt
+[2026-06-25T01:18:38Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:38Z] Project 30b62ff9 → ARCHITECT → claude
+[2026-06-25T01:18:38Z] Stage ARCHITECT: failed (385ms)
+[2026-06-25T01:18:38Z] Project 30b62ff9 → ARCHITECT → claude
+[2026-06-25T01:18:38Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:39Z] Project 30b62ff9 → CODE → codex
+[2026-06-25T01:18:39Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:39Z] Project 30b62ff9 → BUILD → windsurf
+[2026-06-25T01:18:39Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:18:39Z] Project 30b62ff9 → TEST → windsurf
+[2026-06-25T01:18:40Z] Stage TEST: completed (155ms)
+[2026-06-25T01:18:40Z] Project 30b62ff9 → RECEIPT → windsurf
+[2026-06-25T01:18:40Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:40Z] Project 30b62ff9 → SHIP → chatgpt
+[2026-06-25T01:18:40Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:42Z] Project 51822ded: Base64Tool
+[2026-06-25T01:18:42Z] Project 51822ded → IDEA → chatgpt
+[2026-06-25T01:18:42Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:43Z] Project 51822ded → SPEC → chatgpt
+[2026-06-25T01:18:43Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:18:43Z] Project 51822ded → ARCHITECT → claude
+[2026-06-25T01:18:44Z] Stage ARCHITECT: failed (583ms)
+[2026-06-25T01:18:44Z] Project 51822ded → ARCHITECT → claude
+[2026-06-25T01:18:44Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:44Z] Project 51822ded → CODE → codex
+[2026-06-25T01:18:44Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:44Z] Project 51822ded → BUILD → windsurf
+[2026-06-25T01:18:44Z] Stage BUILD: completed (16ms)
+[2026-06-25T01:18:45Z] Project 51822ded → TEST → windsurf
+[2026-06-25T01:18:45Z] Stage TEST: completed (158ms)
+[2026-06-25T01:18:45Z] Project 51822ded → RECEIPT → windsurf
+[2026-06-25T01:18:45Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:18:45Z] Project 51822ded → SHIP → chatgpt
+[2026-06-25T01:18:45Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:48Z] Project ca42608d: HashDiff
+[2026-06-25T01:18:48Z] Project ca42608d → IDEA → chatgpt
+[2026-06-25T01:18:48Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:48Z] Project ca42608d → SPEC → chatgpt
+[2026-06-25T01:18:48Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:48Z] Project ca42608d → ARCHITECT → claude
+[2026-06-25T01:18:49Z] Stage ARCHITECT: failed (384ms)
+[2026-06-25T01:18:49Z] Project ca42608d → ARCHITECT → claude
+[2026-06-25T01:18:49Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:49Z] Project ca42608d → CODE → codex
+[2026-06-25T01:18:49Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:49Z] Project ca42608d → BUILD → windsurf
+[2026-06-25T01:18:49Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:18:50Z] Project ca42608d → TEST → windsurf
+[2026-06-25T01:18:50Z] Stage TEST: completed (159ms)
+[2026-06-25T01:18:50Z] Project ca42608d → RECEIPT → windsurf
+[2026-06-25T01:18:50Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:50Z] Project ca42608d → SHIP → chatgpt
+[2026-06-25T01:18:50Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:53Z] Project 4e71014c: JSONQuery
+[2026-06-25T01:18:53Z] Project 4e71014c → IDEA → chatgpt
+[2026-06-25T01:18:53Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:53Z] Project 4e71014c → SPEC → chatgpt
+[2026-06-25T01:18:53Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:53Z] Project 4e71014c → ARCHITECT → claude
+[2026-06-25T01:18:54Z] Stage ARCHITECT: failed (373ms)
+[2026-06-25T01:18:54Z] Project 4e71014c → ARCHITECT → claude
+[2026-06-25T01:18:54Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:54Z] Project 4e71014c → CODE → codex
+[2026-06-25T01:18:54Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:54Z] Project 4e71014c → BUILD → windsurf
+[2026-06-25T01:18:54Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:18:55Z] Project 4e71014c → TEST → windsurf
+[2026-06-25T01:18:55Z] Stage TEST: completed (163ms)
+[2026-06-25T01:18:55Z] Project 4e71014c → RECEIPT → windsurf
+[2026-06-25T01:18:55Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:18:55Z] Project 4e71014c → SHIP → chatgpt
+[2026-06-25T01:18:55Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:18:58Z] Project 0a097188: UptimeMonitor
+[2026-06-25T01:18:58Z] Project 0a097188 → IDEA → chatgpt
+[2026-06-25T01:18:58Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:18:58Z] Project 0a097188 → SPEC → chatgpt
+[2026-06-25T01:18:58Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:18:58Z] Project 0a097188 → ARCHITECT → claude
+[2026-06-25T01:18:59Z] Stage ARCHITECT: failed (429ms)
+[2026-06-25T01:18:59Z] Project 0a097188 → ARCHITECT → claude
+[2026-06-25T01:18:59Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:18:59Z] Project 0a097188 → CODE → codex
+[2026-06-25T01:18:59Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:18:59Z] Project 0a097188 → BUILD → windsurf
+[2026-06-25T01:18:59Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:19:00Z] Project 0a097188 → TEST → windsurf
+[2026-06-25T01:19:00Z] Stage TEST: completed (161ms)
+[2026-06-25T01:19:00Z] Project 0a097188 → RECEIPT → windsurf
+[2026-06-25T01:19:00Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:00Z] Project 0a097188 → SHIP → chatgpt
+[2026-06-25T01:19:00Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:03Z] Project 2a470c7d: QRCoder
+[2026-06-25T01:19:03Z] Project 2a470c7d → IDEA → chatgpt
+[2026-06-25T01:19:03Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:03Z] Project 2a470c7d → SPEC → chatgpt
+[2026-06-25T01:19:03Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:03Z] Project 2a470c7d → ARCHITECT → claude
+[2026-06-25T01:19:04Z] Stage ARCHITECT: failed (455ms)
+[2026-06-25T01:19:04Z] Project 2a470c7d → ARCHITECT → claude
+[2026-06-25T01:19:04Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:04Z] Project 2a470c7d → CODE → codex
+[2026-06-25T01:19:04Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:04Z] Project 2a470c7d → BUILD → windsurf
+[2026-06-25T01:19:04Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:19:05Z] Project 2a470c7d → TEST → windsurf
+[2026-06-25T01:19:05Z] Stage TEST: completed (168ms)
+[2026-06-25T01:19:05Z] Project 2a470c7d → RECEIPT → windsurf
+[2026-06-25T01:19:05Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:06Z] Project 2a470c7d → SHIP → chatgpt
+[2026-06-25T01:19:06Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:19:08Z] Project 814310f2: CSVStat
+[2026-06-25T01:19:08Z] Project 814310f2 → IDEA → chatgpt
+[2026-06-25T01:19:08Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:08Z] Project 814310f2 → SPEC → chatgpt
+[2026-06-25T01:19:08Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:19:08Z] Project 814310f2 → ARCHITECT → claude
+[2026-06-25T01:19:09Z] Stage ARCHITECT: failed (417ms)
+[2026-06-25T01:19:09Z] Project 814310f2 → ARCHITECT → claude
+[2026-06-25T01:19:09Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:09Z] Project 814310f2 → CODE → codex
+[2026-06-25T01:19:09Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:09Z] Project 814310f2 → BUILD → windsurf
+[2026-06-25T01:19:10Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:19:10Z] Project 814310f2 → TEST → windsurf
+[2026-06-25T01:19:10Z] Stage TEST: completed (158ms)
+[2026-06-25T01:19:10Z] Project 814310f2 → RECEIPT → windsurf
+[2026-06-25T01:19:10Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:11Z] Project 814310f2 → SHIP → chatgpt
+[2026-06-25T01:19:11Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:13Z] Project d0e019d3: TextStats
+[2026-06-25T01:19:13Z] Project d0e019d3 → IDEA → chatgpt
+[2026-06-25T01:19:13Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:16Z] Project 60789793: TodoCLI
+[2026-06-25T01:19:16Z] Project 60789793 → IDEA → chatgpt
+[2026-06-25T01:19:16Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:17Z] Project 60789793 → SPEC → chatgpt
+[2026-06-25T01:19:17Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:17Z] Project 60789793 → ARCHITECT → claude
+[2026-06-25T01:19:18Z] Stage ARCHITECT: failed (472ms)
+[2026-06-25T01:19:18Z] Project 60789793 → ARCHITECT → claude
+[2026-06-25T01:19:18Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:18Z] Project 60789793 → CODE → codex
+[2026-06-25T01:19:18Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:18Z] Project 60789793 → BUILD → windsurf
+[2026-06-25T01:19:18Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:19:19Z] Project 60789793 → TEST → windsurf
+[2026-06-25T01:19:19Z] Stage TEST: completed (153ms)
+[2026-06-25T01:19:19Z] Project 60789793 → RECEIPT → windsurf
+[2026-06-25T01:19:19Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:19Z] Project 60789793 → SHIP → chatgpt
+[2026-06-25T01:19:19Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:22Z] Project 78325041: WeatherFetch
+[2026-06-25T01:19:22Z] Project 78325041 → IDEA → chatgpt
+[2026-06-25T01:19:22Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:22Z] Project 78325041 → SPEC → chatgpt
+[2026-06-25T01:19:22Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:22Z] Project 78325041 → ARCHITECT → claude
+[2026-06-25T01:19:23Z] Stage ARCHITECT: failed (400ms)
+[2026-06-25T01:19:23Z] Project 78325041 → ARCHITECT → claude
+[2026-06-25T01:19:23Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:23Z] Project 78325041 → CODE → codex
+[2026-06-25T01:19:23Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:23Z] Project 78325041 → BUILD → windsurf
+[2026-06-25T01:19:23Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:19:24Z] Project 78325041 → TEST → windsurf
+[2026-06-25T01:19:24Z] Stage TEST: completed (151ms)
+[2026-06-25T01:19:24Z] Project 78325041 → RECEIPT → windsurf
+[2026-06-25T01:19:24Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:24Z] Project 78325041 → SHIP → chatgpt
+[2026-06-25T01:19:24Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:27Z] Project b6a3109c: PassGen
+[2026-06-25T01:19:27Z] Project b6a3109c → IDEA → chatgpt
+[2026-06-25T01:19:27Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:27Z] Project b6a3109c → SPEC → chatgpt
+[2026-06-25T01:19:27Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:27Z] Project b6a3109c → ARCHITECT → claude
+[2026-06-25T01:19:28Z] Stage ARCHITECT: failed (416ms)
+[2026-06-25T01:19:28Z] Project b6a3109c → ARCHITECT → claude
+[2026-06-25T01:19:28Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:28Z] Project b6a3109c → CODE → codex
+[2026-06-25T01:19:28Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:28Z] Project b6a3109c → BUILD → windsurf
+[2026-06-25T01:19:28Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:19:29Z] Project b6a3109c → TEST → windsurf
+[2026-06-25T01:19:29Z] Stage TEST: failed (153ms)
+[2026-06-25T01:19:29Z] Project b6a3109c → RECEIPT → windsurf
+[2026-06-25T01:19:29Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:29Z] Project b6a3109c → SHIP → chatgpt
+[2026-06-25T01:19:29Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:32Z] Project 8ee4011e: FileWatcher
+[2026-06-25T01:19:32Z] Project 8ee4011e → IDEA → chatgpt
+[2026-06-25T01:19:32Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:32Z] Project 8ee4011e → SPEC → chatgpt
+[2026-06-25T01:19:32Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:19:32Z] Project 8ee4011e → ARCHITECT → claude
+[2026-06-25T01:19:33Z] Stage ARCHITECT: failed (379ms)
+[2026-06-25T01:19:33Z] Project 8ee4011e → ARCHITECT → claude
+[2026-06-25T01:19:33Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:33Z] Project 8ee4011e → CODE → codex
+[2026-06-25T01:19:33Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:33Z] Project 8ee4011e → BUILD → windsurf
+[2026-06-25T01:19:33Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:19:34Z] Project 8ee4011e → TEST → windsurf
+[2026-06-25T01:19:34Z] Stage TEST: completed (147ms)
+[2026-06-25T01:19:34Z] Project 8ee4011e → RECEIPT → windsurf
+[2026-06-25T01:19:34Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:34Z] Project 8ee4011e → SHIP → chatgpt
+[2026-06-25T01:19:34Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:37Z] Project 9ea4ded1: PortScanner
+[2026-06-25T01:19:37Z] Project 9ea4ded1 → IDEA → chatgpt
+[2026-06-25T01:19:37Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:37Z] Project 9ea4ded1 → SPEC → chatgpt
+[2026-06-25T01:19:37Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:37Z] Project 9ea4ded1 → ARCHITECT → claude
+[2026-06-25T01:19:38Z] Stage ARCHITECT: failed (372ms)
+[2026-06-25T01:19:38Z] Project 9ea4ded1 → ARCHITECT → claude
+[2026-06-25T01:19:38Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:38Z] Project 9ea4ded1 → CODE → codex
+[2026-06-25T01:19:38Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:38Z] Project 9ea4ded1 → BUILD → windsurf
+[2026-06-25T01:19:38Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:19:39Z] Project 9ea4ded1 → TEST → windsurf
+[2026-06-25T01:19:39Z] Stage TEST: completed (147ms)
+[2026-06-25T01:19:39Z] Project 9ea4ded1 → RECEIPT → windsurf
+[2026-06-25T01:19:39Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:39Z] Project 9ea4ded1 → SHIP → chatgpt
+[2026-06-25T01:19:39Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:42Z] Project 795529e0: MarkdownNotes
+[2026-06-25T01:19:42Z] Project 795529e0 → IDEA → chatgpt
+[2026-06-25T01:19:42Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:42Z] Project 795529e0 → SPEC → chatgpt
+[2026-06-25T01:19:42Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:42Z] Project 795529e0 → ARCHITECT → claude
+[2026-06-25T01:19:43Z] Stage ARCHITECT: failed (378ms)
+[2026-06-25T01:19:43Z] Project 795529e0 → ARCHITECT → claude
+[2026-06-25T01:19:43Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:43Z] Project 795529e0 → CODE → codex
+[2026-06-25T01:19:43Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:43Z] Project 795529e0 → BUILD → windsurf
+[2026-06-25T01:19:43Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:19:44Z] Project 795529e0 → TEST → windsurf
+[2026-06-25T01:19:44Z] Stage TEST: completed (147ms)
+[2026-06-25T01:19:44Z] Project 795529e0 → RECEIPT → windsurf
+[2026-06-25T01:19:44Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:44Z] Project 795529e0 → SHIP → chatgpt
+[2026-06-25T01:19:44Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:19:47Z] Project b8649208: ColorPicker
+[2026-06-25T01:19:47Z] Project b8649208 → IDEA → chatgpt
+[2026-06-25T01:19:47Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:47Z] Project b8649208 → SPEC → chatgpt
+[2026-06-25T01:19:47Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:47Z] Project b8649208 → ARCHITECT → claude
+[2026-06-25T01:19:48Z] Stage ARCHITECT: failed (503ms)
+[2026-06-25T01:19:48Z] Project b8649208 → ARCHITECT → claude
+[2026-06-25T01:19:48Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:48Z] Project b8649208 → CODE → codex
+[2026-06-25T01:19:48Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:48Z] Project b8649208 → BUILD → windsurf
+[2026-06-25T01:19:48Z] Stage BUILD: completed (20ms)
+[2026-06-25T01:19:49Z] Project b8649208 → TEST → windsurf
+[2026-06-25T01:19:49Z] Stage TEST: completed (149ms)
+[2026-06-25T01:19:49Z] Project b8649208 → RECEIPT → windsurf
+[2026-06-25T01:19:49Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:49Z] Project b8649208 → SHIP → chatgpt
+[2026-06-25T01:19:49Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:52Z] Project d37486db: CronHelper
+[2026-06-25T01:19:52Z] Project d37486db → IDEA → chatgpt
+[2026-06-25T01:19:52Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:52Z] Project d37486db → SPEC → chatgpt
+[2026-06-25T01:19:52Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:52Z] Project d37486db → ARCHITECT → claude
+[2026-06-25T01:19:53Z] Stage ARCHITECT: failed (372ms)
+[2026-06-25T01:19:53Z] Project d37486db → ARCHITECT → claude
+[2026-06-25T01:19:53Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:53Z] Project d37486db → CODE → codex
+[2026-06-25T01:19:53Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:53Z] Project d37486db → BUILD → windsurf
+[2026-06-25T01:19:53Z] Stage BUILD: completed (20ms)
+[2026-06-25T01:19:54Z] Project d37486db → TEST → windsurf
+[2026-06-25T01:19:54Z] Stage TEST: completed (148ms)
+[2026-06-25T01:19:54Z] Project d37486db → RECEIPT → windsurf
+[2026-06-25T01:19:54Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:19:54Z] Project d37486db → SHIP → chatgpt
+[2026-06-25T01:19:54Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:19:57Z] Project 7f9c31de: Base64Tool
+[2026-06-25T01:19:57Z] Project 7f9c31de → IDEA → chatgpt
+[2026-06-25T01:19:57Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:19:57Z] Project 7f9c31de → SPEC → chatgpt
+[2026-06-25T01:19:57Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:19:57Z] Project 7f9c31de → ARCHITECT → claude
+[2026-06-25T01:19:58Z] Stage ARCHITECT: failed (429ms)
+[2026-06-25T01:19:58Z] Project 7f9c31de → ARCHITECT → claude
+[2026-06-25T01:19:58Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:19:58Z] Project 7f9c31de → CODE → codex
+[2026-06-25T01:19:58Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:19:58Z] Project 7f9c31de → BUILD → windsurf
+[2026-06-25T01:19:58Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:19:59Z] Project 7f9c31de → TEST → windsurf
+[2026-06-25T01:19:59Z] Stage TEST: completed (153ms)
+[2026-06-25T01:19:59Z] Project 7f9c31de → RECEIPT → windsurf
+[2026-06-25T01:19:59Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:20:00Z] Project 7f9c31de → SHIP → chatgpt
+[2026-06-25T01:20:00Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:02Z] Project 593386b4: HashDiff
+[2026-06-25T01:20:02Z] Project 593386b4 → IDEA → chatgpt
+[2026-06-25T01:20:02Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:02Z] Project 593386b4 → SPEC → chatgpt
+[2026-06-25T01:20:02Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:02Z] Project 593386b4 → ARCHITECT → claude
+[2026-06-25T01:20:03Z] Stage ARCHITECT: failed (380ms)
+[2026-06-25T01:20:03Z] Project 593386b4 → ARCHITECT → claude
+[2026-06-25T01:20:03Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:03Z] Project 593386b4 → CODE → codex
+[2026-06-25T01:20:03Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:03Z] Project 593386b4 → BUILD → windsurf
+[2026-06-25T01:20:03Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:20:04Z] Project 593386b4 → TEST → windsurf
+[2026-06-25T01:20:04Z] Stage TEST: completed (152ms)
+[2026-06-25T01:20:04Z] Project 593386b4 → RECEIPT → windsurf
+[2026-06-25T01:20:04Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:05Z] Project 593386b4 → SHIP → chatgpt
+[2026-06-25T01:20:05Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:20:07Z] Project 2515bb36: JSONQuery
+[2026-06-25T01:20:07Z] Project 2515bb36 → IDEA → chatgpt
+[2026-06-25T01:20:07Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:07Z] Project 2515bb36 → SPEC → chatgpt
+[2026-06-25T01:20:07Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:07Z] Project 2515bb36 → ARCHITECT → claude
+[2026-06-25T01:20:08Z] Stage ARCHITECT: failed (443ms)
+[2026-06-25T01:20:08Z] Project 2515bb36 → ARCHITECT → claude
+[2026-06-25T01:20:08Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:08Z] Project 2515bb36 → CODE → codex
+[2026-06-25T01:20:08Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:09Z] Project 2515bb36 → BUILD → windsurf
+[2026-06-25T01:20:09Z] Stage BUILD: completed (17ms)
+[2026-06-25T01:20:09Z] Project 2515bb36 → TEST → windsurf
+[2026-06-25T01:20:09Z] Stage TEST: completed (150ms)
+[2026-06-25T01:20:09Z] Project 2515bb36 → RECEIPT → windsurf
+[2026-06-25T01:20:09Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:10Z] Project 2515bb36 → SHIP → chatgpt
+[2026-06-25T01:20:10Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:12Z] Project c3b9ee51: UptimeMonitor
+[2026-06-25T01:20:12Z] Project c3b9ee51 → IDEA → chatgpt
+[2026-06-25T01:20:12Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:12Z] Project c3b9ee51 → SPEC → chatgpt
+[2026-06-25T01:20:12Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:20:13Z] Project c3b9ee51 → ARCHITECT → claude
+[2026-06-25T01:20:13Z] Stage ARCHITECT: failed (620ms)
+[2026-06-25T01:20:13Z] Project c3b9ee51 → ARCHITECT → claude
+[2026-06-25T01:20:13Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:13Z] Project c3b9ee51 → CODE → codex
+[2026-06-25T01:20:13Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:14Z] Project c3b9ee51 → BUILD → windsurf
+[2026-06-25T01:20:14Z] Stage BUILD: completed (18ms)
+[2026-06-25T01:20:14Z] Project c3b9ee51 → TEST → windsurf
+[2026-06-25T01:20:14Z] Stage TEST: completed (169ms)
+[2026-06-25T01:20:15Z] Project c3b9ee51 → RECEIPT → windsurf
+[2026-06-25T01:20:15Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:15Z] Project c3b9ee51 → SHIP → chatgpt
+[2026-06-25T01:20:15Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:17Z] Project 49c13159: QRCoder
+[2026-06-25T01:20:17Z] Project 49c13159 → IDEA → chatgpt
+[2026-06-25T01:20:17Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:17Z] Project 49c13159 → SPEC → chatgpt
+[2026-06-25T01:20:17Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:18Z] Project 49c13159 → ARCHITECT → claude
+[2026-06-25T01:20:18Z] Stage ARCHITECT: failed (386ms)
+[2026-06-25T01:20:18Z] Project 49c13159 → ARCHITECT → claude
+[2026-06-25T01:20:18Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:18Z] Project 49c13159 → CODE → codex
+[2026-06-25T01:20:18Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:19Z] Project 49c13159 → BUILD → windsurf
+[2026-06-25T01:20:19Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:20:19Z] Project 49c13159 → TEST → windsurf
+[2026-06-25T01:20:19Z] Stage TEST: completed (152ms)
+[2026-06-25T01:20:20Z] Project 49c13159 → RECEIPT → windsurf
+[2026-06-25T01:20:20Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:20Z] Project 49c13159 → SHIP → chatgpt
+[2026-06-25T01:20:20Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:22Z] Project 25bf2825: CSVStat
+[2026-06-25T01:20:22Z] Project 25bf2825 → IDEA → chatgpt
+[2026-06-25T01:20:22Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:22Z] Project 25bf2825 → SPEC → chatgpt
+[2026-06-25T01:20:22Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:23Z] Project 25bf2825 → ARCHITECT → claude
+[2026-06-25T01:20:23Z] Stage ARCHITECT: failed (418ms)
+[2026-06-25T01:20:23Z] Project 25bf2825 → ARCHITECT → claude
+[2026-06-25T01:20:23Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:24Z] Project 25bf2825 → CODE → codex
+[2026-06-25T01:20:24Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:24Z] Project 25bf2825 → BUILD → windsurf
+[2026-06-25T01:20:24Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:20:24Z] Project 25bf2825 → TEST → windsurf
+[2026-06-25T01:20:24Z] Stage TEST: completed (149ms)
+[2026-06-25T01:20:25Z] Project 25bf2825 → RECEIPT → windsurf
+[2026-06-25T01:20:25Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:25Z] Project 25bf2825 → SHIP → chatgpt
+[2026-06-25T01:20:25Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:27Z] Project e54b6fa8: TextStats
+[2026-06-25T01:20:27Z] Project e54b6fa8 → IDEA → chatgpt
+[2026-06-25T01:20:27Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:28Z] Project e54b6fa8 → SPEC → chatgpt
+[2026-06-25T01:20:28Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:28Z] Project e54b6fa8 → ARCHITECT → claude
+[2026-06-25T01:20:28Z] Stage ARCHITECT: failed (398ms)
+[2026-06-25T01:20:28Z] Project e54b6fa8 → ARCHITECT → claude
+[2026-06-25T01:20:28Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:29Z] Project e54b6fa8 → CODE → codex
+[2026-06-25T01:20:29Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:29Z] Project e54b6fa8 → BUILD → windsurf
+[2026-06-25T01:20:29Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:20:29Z] Project e54b6fa8 → TEST → windsurf
+[2026-06-25T01:20:29Z] Stage TEST: completed (149ms)
+[2026-06-25T01:20:30Z] Project e54b6fa8 → RECEIPT → windsurf
+[2026-06-25T01:20:30Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:30Z] Project e54b6fa8 → SHIP → chatgpt
+[2026-06-25T01:20:30Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:32Z] Project e85715bb: GitLogFmt
+[2026-06-25T01:20:32Z] Project e85715bb → IDEA → chatgpt
+[2026-06-25T01:20:32Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:33Z] Project e85715bb → SPEC → chatgpt
+[2026-06-25T01:20:33Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:33Z] Project e85715bb → ARCHITECT → claude
+[2026-06-25T01:20:33Z] Stage ARCHITECT: failed (384ms)
+[2026-06-25T01:20:33Z] Project e85715bb → ARCHITECT → claude
+[2026-06-25T01:20:33Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:34Z] Project e85715bb → CODE → codex
+[2026-06-25T01:20:34Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:34Z] Project e85715bb → BUILD → windsurf
+[2026-06-25T01:20:34Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:20:34Z] Project e85715bb → TEST → windsurf
+[2026-06-25T01:20:34Z] Stage TEST: completed (148ms)
+[2026-06-25T01:20:35Z] Project e85715bb → RECEIPT → windsurf
+[2026-06-25T01:20:35Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:35Z] Project e85715bb → SHIP → chatgpt
+[2026-06-25T01:20:35Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:37Z] Project 08dca57a: EnvCheck
+[2026-06-25T01:20:37Z] Project 08dca57a → IDEA → chatgpt
+[2026-06-25T01:20:37Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:38Z] Project 08dca57a → SPEC → chatgpt
+[2026-06-25T01:20:38Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:38Z] Project 08dca57a → ARCHITECT → claude
+[2026-06-25T01:20:38Z] Stage ARCHITECT: failed (360ms)
+[2026-06-25T01:20:38Z] Project 08dca57a → ARCHITECT → claude
+[2026-06-25T01:20:38Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:39Z] Project 08dca57a → CODE → codex
+[2026-06-25T01:20:39Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:39Z] Project 08dca57a → BUILD → windsurf
+[2026-06-25T01:20:39Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:20:39Z] Project 08dca57a → TEST → windsurf
+[2026-06-25T01:20:39Z] Stage TEST: completed (153ms)
+[2026-06-25T01:20:40Z] Project 08dca57a → RECEIPT → windsurf
+[2026-06-25T01:20:40Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:40Z] Project 08dca57a → SHIP → chatgpt
+[2026-06-25T01:20:40Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:42Z] Project 69ca0b42: TimerCLI
+[2026-06-25T01:20:42Z] Project 69ca0b42 → IDEA → chatgpt
+[2026-06-25T01:20:42Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:43Z] Project 69ca0b42 → SPEC → chatgpt
+[2026-06-25T01:20:43Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:43Z] Project 69ca0b42 → ARCHITECT → claude
+[2026-06-25T01:20:43Z] Stage ARCHITECT: failed (369ms)
+[2026-06-25T01:20:43Z] Project 69ca0b42 → ARCHITECT → claude
+[2026-06-25T01:20:43Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:44Z] Project 69ca0b42 → CODE → codex
+[2026-06-25T01:20:44Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:44Z] Project 69ca0b42 → BUILD → windsurf
+[2026-06-25T01:20:44Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:20:44Z] Project 69ca0b42 → TEST → windsurf
+[2026-06-25T01:20:44Z] Stage TEST: completed (148ms)
+[2026-06-25T01:20:45Z] Project 69ca0b42 → RECEIPT → windsurf
+[2026-06-25T01:20:45Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:45Z] Project 69ca0b42 → SHIP → chatgpt
+[2026-06-25T01:20:45Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:47Z] Project ef718a4d: SnippetMgr
+[2026-06-25T01:20:47Z] Project ef718a4d → IDEA → chatgpt
+[2026-06-25T01:20:47Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:48Z] Project ef718a4d → SPEC → chatgpt
+[2026-06-25T01:20:48Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:48Z] Project ef718a4d → ARCHITECT → claude
+[2026-06-25T01:20:48Z] Stage ARCHITECT: failed (438ms)
+[2026-06-25T01:20:48Z] Project ef718a4d → ARCHITECT → claude
+[2026-06-25T01:20:48Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:49Z] Project ef718a4d → CODE → codex
+[2026-06-25T01:20:49Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:49Z] Project ef718a4d → BUILD → windsurf
+[2026-06-25T01:20:49Z] Stage BUILD: completed (24ms)
+[2026-06-25T01:20:49Z] Project ef718a4d → TEST → windsurf
+[2026-06-25T01:20:49Z] Stage TEST: completed (147ms)
+[2026-06-25T01:20:50Z] Project ef718a4d → RECEIPT → windsurf
+[2026-06-25T01:20:50Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:50Z] Project ef718a4d → SHIP → chatgpt
+[2026-06-25T01:20:50Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:52Z] Project 8d969faa: LogTail
+[2026-06-25T01:20:52Z] Project 8d969faa → IDEA → chatgpt
+[2026-06-25T01:20:52Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:53Z] Project 8d969faa → SPEC → chatgpt
+[2026-06-25T01:20:53Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:53Z] Project 8d969faa → ARCHITECT → claude
+[2026-06-25T01:20:53Z] Stage ARCHITECT: failed (438ms)
+[2026-06-25T01:20:53Z] Project 8d969faa → ARCHITECT → claude
+[2026-06-25T01:20:53Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:54Z] Project 8d969faa → CODE → codex
+[2026-06-25T01:20:54Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:54Z] Project 8d969faa → BUILD → windsurf
+[2026-06-25T01:20:54Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:20:54Z] Project 8d969faa → TEST → windsurf
+[2026-06-25T01:20:54Z] Stage TEST: completed (146ms)
+[2026-06-25T01:20:55Z] Project 8d969faa → RECEIPT → windsurf
+[2026-06-25T01:20:55Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:20:55Z] Project 8d969faa → SHIP → chatgpt
+[2026-06-25T01:20:55Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:20:57Z] Project 9fc0a82c: TodoCLI
+[2026-06-25T01:20:57Z] Project 9fc0a82c → IDEA → chatgpt
+[2026-06-25T01:20:57Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:20:58Z] Project 9fc0a82c → SPEC → chatgpt
+[2026-06-25T01:20:58Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:20:58Z] Project 9fc0a82c → ARCHITECT → claude
+[2026-06-25T01:20:58Z] Stage ARCHITECT: failed (382ms)
+[2026-06-25T01:20:58Z] Project 9fc0a82c → ARCHITECT → claude
+[2026-06-25T01:20:58Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:20:59Z] Project 9fc0a82c → CODE → codex
+[2026-06-25T01:20:59Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:20:59Z] Project 9fc0a82c → BUILD → windsurf
+[2026-06-25T01:20:59Z] Stage BUILD: completed (24ms)
+[2026-06-25T01:20:59Z] Project 9fc0a82c → TEST → windsurf
+[2026-06-25T01:20:59Z] Stage TEST: completed (152ms)
+[2026-06-25T01:21:00Z] Project 9fc0a82c → RECEIPT → windsurf
+[2026-06-25T01:21:00Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:21:00Z] Project 9fc0a82c → SHIP → chatgpt
+[2026-06-25T01:21:00Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:02Z] Project 2e451e9a: WeatherFetch
+[2026-06-25T01:21:02Z] Project 2e451e9a → IDEA → chatgpt
+[2026-06-25T01:21:02Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:03Z] Project 2e451e9a → SPEC → chatgpt
+[2026-06-25T01:21:03Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:03Z] Project 2e451e9a → ARCHITECT → claude
+[2026-06-25T01:21:03Z] Stage ARCHITECT: failed (410ms)
+[2026-06-25T01:21:03Z] Project 2e451e9a → ARCHITECT → claude
+[2026-06-25T01:21:03Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:04Z] Project 2e451e9a → CODE → codex
+[2026-06-25T01:21:04Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:04Z] Project 2e451e9a → BUILD → windsurf
+[2026-06-25T01:21:04Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:21:04Z] Project 2e451e9a → TEST → windsurf
+[2026-06-25T01:21:04Z] Stage TEST: completed (147ms)
+[2026-06-25T01:21:05Z] Project 2e451e9a → RECEIPT → windsurf
+[2026-06-25T01:21:05Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:21:05Z] Project 2e451e9a → SHIP → chatgpt
+[2026-06-25T01:21:05Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:07Z] Project 34cfd71a: PassGen
+[2026-06-25T01:21:07Z] Project 34cfd71a → IDEA → chatgpt
+[2026-06-25T01:21:07Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:08Z] Project 34cfd71a → SPEC → chatgpt
+[2026-06-25T01:21:08Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:08Z] Project 34cfd71a → ARCHITECT → claude
+[2026-06-25T01:21:08Z] Stage ARCHITECT: failed (367ms)
+[2026-06-25T01:21:08Z] Project 34cfd71a → ARCHITECT → claude
+[2026-06-25T01:21:08Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:09Z] Project 34cfd71a → CODE → codex
+[2026-06-25T01:21:09Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:09Z] Project 34cfd71a → BUILD → windsurf
+[2026-06-25T01:21:09Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:21:09Z] Project 34cfd71a → TEST → windsurf
+[2026-06-25T01:21:09Z] Stage TEST: failed (151ms)
+[2026-06-25T01:21:10Z] Project 34cfd71a → RECEIPT → windsurf
+[2026-06-25T01:21:10Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:21:10Z] Project 34cfd71a → SHIP → chatgpt
+[2026-06-25T01:21:10Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:12Z] Project e2a269b3: FileWatcher
+[2026-06-25T01:21:12Z] Project e2a269b3 → IDEA → chatgpt
+[2026-06-25T01:21:12Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:13Z] Project e2a269b3 → SPEC → chatgpt
+[2026-06-25T01:21:13Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:13Z] Project e2a269b3 → ARCHITECT → claude
+[2026-06-25T01:21:13Z] Stage ARCHITECT: failed (379ms)
+[2026-06-25T01:21:13Z] Project e2a269b3 → ARCHITECT → claude
+[2026-06-25T01:21:13Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:14Z] Project e2a269b3 → CODE → codex
+[2026-06-25T01:21:14Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:14Z] Project e2a269b3 → BUILD → windsurf
+[2026-06-25T01:21:14Z] Stage BUILD: completed (24ms)
+[2026-06-25T01:21:14Z] Project e2a269b3 → TEST → windsurf
+[2026-06-25T01:21:14Z] Stage TEST: completed (150ms)
+[2026-06-25T01:21:15Z] Project e2a269b3 → RECEIPT → windsurf
+[2026-06-25T01:21:15Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:21:15Z] Project e2a269b3 → SHIP → chatgpt
+[2026-06-25T01:21:15Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:17Z] Project 64f68a14: PortScanner
+[2026-06-25T01:21:17Z] Project 64f68a14 → IDEA → chatgpt
+[2026-06-25T01:21:17Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:18Z] Project 64f68a14 → SPEC → chatgpt
+[2026-06-25T01:21:18Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:18Z] Project 64f68a14 → ARCHITECT → claude
+[2026-06-25T01:21:18Z] Stage ARCHITECT: failed (381ms)
+[2026-06-25T01:21:18Z] Project 64f68a14 → ARCHITECT → claude
+[2026-06-25T01:21:18Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:19Z] Project 64f68a14 → CODE → codex
+[2026-06-25T01:21:19Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:19Z] Project 64f68a14 → BUILD → windsurf
+[2026-06-25T01:21:19Z] Stage BUILD: completed (24ms)
+[2026-06-25T01:21:19Z] Project 64f68a14 → TEST → windsurf
+[2026-06-25T01:21:19Z] Stage TEST: completed (145ms)
+[2026-06-25T01:21:20Z] Project 64f68a14 → RECEIPT → windsurf
+[2026-06-25T01:21:20Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:21:20Z] Project 64f68a14 → SHIP → chatgpt
+[2026-06-25T01:21:20Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:22Z] Project 9db1afbe: MarkdownNotes
+[2026-06-25T01:21:22Z] Project 9db1afbe → IDEA → chatgpt
+[2026-06-25T01:21:22Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:23Z] Project 9db1afbe → SPEC → chatgpt
+[2026-06-25T01:21:23Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:23Z] Project 9db1afbe → ARCHITECT → claude
+[2026-06-25T01:21:23Z] Stage ARCHITECT: failed (432ms)
+[2026-06-25T01:21:23Z] Project 9db1afbe → ARCHITECT → claude
+[2026-06-25T01:21:23Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:24Z] Project 9db1afbe → CODE → codex
+[2026-06-25T01:21:24Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:24Z] Project 9db1afbe → BUILD → windsurf
+[2026-06-25T01:21:24Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:21:24Z] Project 9db1afbe → TEST → windsurf
+[2026-06-25T01:21:24Z] Stage TEST: completed (149ms)
+[2026-06-25T01:21:25Z] Project 9db1afbe → RECEIPT → windsurf
+[2026-06-25T01:21:25Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:21:25Z] Project 9db1afbe → SHIP → chatgpt
+[2026-06-25T01:21:25Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:27Z] Project 1977d6b3: ColorPicker
+[2026-06-25T01:21:27Z] Project 1977d6b3 → IDEA → chatgpt
+[2026-06-25T01:21:27Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:28Z] Project 1977d6b3 → SPEC → chatgpt
+[2026-06-25T01:21:28Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:28Z] Project 1977d6b3 → ARCHITECT → claude
+[2026-06-25T01:21:28Z] Stage ARCHITECT: failed (375ms)
+[2026-06-25T01:21:28Z] Project 1977d6b3 → ARCHITECT → claude
+[2026-06-25T01:21:28Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:29Z] Project 1977d6b3 → CODE → codex
+[2026-06-25T01:21:29Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:29Z] Project 1977d6b3 → BUILD → windsurf
+[2026-06-25T01:21:29Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:21:29Z] Project 1977d6b3 → TEST → windsurf
+[2026-06-25T01:21:29Z] Stage TEST: completed (146ms)
+[2026-06-25T01:21:30Z] Project 1977d6b3 → RECEIPT → windsurf
+[2026-06-25T01:21:30Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:21:30Z] Project 1977d6b3 → SHIP → chatgpt
+[2026-06-25T01:21:30Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:32Z] Project 569b0824: CronHelper
+[2026-06-25T01:21:32Z] Project 569b0824 → IDEA → chatgpt
+[2026-06-25T01:21:32Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:33Z] Project 569b0824 → SPEC → chatgpt
+[2026-06-25T01:21:33Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:33Z] Project 569b0824 → ARCHITECT → claude
+[2026-06-25T01:21:33Z] Stage ARCHITECT: failed (426ms)
+[2026-06-25T01:21:33Z] Project 569b0824 → ARCHITECT → claude
+[2026-06-25T01:21:33Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:34Z] Project 569b0824 → CODE → codex
+[2026-06-25T01:21:34Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:34Z] Project 569b0824 → BUILD → windsurf
+[2026-06-25T01:21:34Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:21:34Z] Project 569b0824 → TEST → windsurf
+[2026-06-25T01:21:35Z] Stage TEST: completed (176ms)
+[2026-06-25T01:21:35Z] Project 569b0824 → RECEIPT → windsurf
+[2026-06-25T01:21:35Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:21:35Z] Project 569b0824 → SHIP → chatgpt
+[2026-06-25T01:21:35Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:37Z] Project 4fa70946: Base64Tool
+[2026-06-25T01:21:37Z] Project 4fa70946 → IDEA → chatgpt
+[2026-06-25T01:21:37Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:38Z] Project 4fa70946 → SPEC → chatgpt
+[2026-06-25T01:21:38Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:38Z] Project 4fa70946 → ARCHITECT → claude
+[2026-06-25T01:21:38Z] Stage ARCHITECT: failed (404ms)
+[2026-06-25T01:21:38Z] Project 4fa70946 → ARCHITECT → claude
+[2026-06-25T01:21:38Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:39Z] Project 4fa70946 → CODE → codex
+[2026-06-25T01:21:39Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:39Z] Project 4fa70946 → BUILD → windsurf
+[2026-06-25T01:21:39Z] Stage BUILD: completed (18ms)
+[2026-06-25T01:21:39Z] Project 4fa70946 → TEST → windsurf
+[2026-06-25T01:21:40Z] Stage TEST: completed (147ms)
+[2026-06-25T01:21:40Z] Project 4fa70946 → RECEIPT → windsurf
+[2026-06-25T01:21:40Z] Stage RECEIPT: completed (3ms)
+[2026-06-25T01:21:40Z] Project 4fa70946 → SHIP → chatgpt
+[2026-06-25T01:21:40Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:42Z] Project dbef505b: HashDiff
+[2026-06-25T01:21:42Z] Project dbef505b → IDEA → chatgpt
+[2026-06-25T01:21:42Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:43Z] Project dbef505b → SPEC → chatgpt
+[2026-06-25T01:21:43Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:43Z] Project dbef505b → ARCHITECT → claude
+[2026-06-25T01:21:43Z] Stage ARCHITECT: failed (376ms)
+[2026-06-25T01:21:43Z] Project dbef505b → ARCHITECT → claude
+[2026-06-25T01:21:43Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:44Z] Project dbef505b → CODE → codex
+[2026-06-25T01:21:44Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:44Z] Project dbef505b → BUILD → windsurf
+[2026-06-25T01:21:44Z] Stage BUILD: completed (20ms)
+[2026-06-25T01:21:44Z] Project dbef505b → TEST → windsurf
+[2026-06-25T01:21:45Z] Stage TEST: completed (150ms)
+[2026-06-25T01:21:45Z] Project dbef505b → RECEIPT → windsurf
+[2026-06-25T01:21:45Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:21:45Z] Project dbef505b → SHIP → chatgpt
+[2026-06-25T01:21:45Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:48Z] Project fc96dceb: JSONQuery
+[2026-06-25T01:21:48Z] Project fc96dceb → IDEA → chatgpt
+[2026-06-25T01:21:48Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:48Z] Project fc96dceb → SPEC → chatgpt
+[2026-06-25T01:21:48Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:48Z] Project fc96dceb → ARCHITECT → claude
+[2026-06-25T01:21:49Z] Stage ARCHITECT: failed (475ms)
+[2026-06-25T01:21:49Z] Project fc96dceb → ARCHITECT → claude
+[2026-06-25T01:21:49Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:49Z] Project fc96dceb → CODE → codex
+[2026-06-25T01:21:49Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:21:49Z] Project fc96dceb → BUILD → windsurf
+[2026-06-25T01:21:49Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:21:50Z] Project fc96dceb → TEST → windsurf
+[2026-06-25T01:21:50Z] Stage TEST: completed (150ms)
+[2026-06-25T01:21:50Z] Project fc96dceb → RECEIPT → windsurf
+[2026-06-25T01:21:50Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:21:50Z] Project fc96dceb → SHIP → chatgpt
+[2026-06-25T01:21:50Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:53Z] Project 2bf3a70f: UptimeMonitor
+[2026-06-25T01:21:53Z] Project 2bf3a70f → IDEA → chatgpt
+[2026-06-25T01:21:53Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:53Z] Project 2bf3a70f → SPEC → chatgpt
+[2026-06-25T01:21:53Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:53Z] Project 2bf3a70f → ARCHITECT → claude
+[2026-06-25T01:21:54Z] Stage ARCHITECT: failed (427ms)
+[2026-06-25T01:21:54Z] Project 2bf3a70f → ARCHITECT → claude
+[2026-06-25T01:21:54Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:54Z] Project 2bf3a70f → CODE → codex
+[2026-06-25T01:21:54Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:54Z] Project 2bf3a70f → BUILD → windsurf
+[2026-06-25T01:21:54Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:21:55Z] Project 2bf3a70f → TEST → windsurf
+[2026-06-25T01:21:55Z] Stage TEST: completed (168ms)
+[2026-06-25T01:21:55Z] Project 2bf3a70f → RECEIPT → windsurf
+[2026-06-25T01:21:55Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:21:55Z] Project 2bf3a70f → SHIP → chatgpt
+[2026-06-25T01:21:55Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:21:58Z] Project a5506e89: QRCoder
+[2026-06-25T01:21:58Z] Project a5506e89 → IDEA → chatgpt
+[2026-06-25T01:21:58Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:21:58Z] Project a5506e89 → SPEC → chatgpt
+[2026-06-25T01:21:58Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:21:58Z] Project a5506e89 → ARCHITECT → claude
+[2026-06-25T01:21:59Z] Stage ARCHITECT: failed (366ms)
+[2026-06-25T01:21:59Z] Project a5506e89 → ARCHITECT → claude
+[2026-06-25T01:21:59Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:21:59Z] Project a5506e89 → CODE → codex
+[2026-06-25T01:21:59Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:21:59Z] Project a5506e89 → BUILD → windsurf
+[2026-06-25T01:21:59Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:22:00Z] Project a5506e89 → TEST → windsurf
+[2026-06-25T01:22:00Z] Stage TEST: completed (148ms)
+[2026-06-25T01:22:00Z] Project a5506e89 → RECEIPT → windsurf
+[2026-06-25T01:22:00Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:22:00Z] Project a5506e89 → SHIP → chatgpt
+[2026-06-25T01:22:00Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:03Z] Project f00e0cd9: CSVStat
+[2026-06-25T01:22:03Z] Project f00e0cd9 → IDEA → chatgpt
+[2026-06-25T01:22:03Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:03Z] Project f00e0cd9 → SPEC → chatgpt
+[2026-06-25T01:22:03Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:03Z] Project f00e0cd9 → ARCHITECT → claude
+[2026-06-25T01:22:04Z] Stage ARCHITECT: failed (404ms)
+[2026-06-25T01:22:04Z] Project f00e0cd9 → ARCHITECT → claude
+[2026-06-25T01:22:04Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:04Z] Project f00e0cd9 → CODE → codex
+[2026-06-25T01:22:04Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:04Z] Project f00e0cd9 → BUILD → windsurf
+[2026-06-25T01:22:04Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:22:05Z] Project f00e0cd9 → TEST → windsurf
+[2026-06-25T01:22:05Z] Stage TEST: completed (150ms)
+[2026-06-25T01:22:05Z] Project f00e0cd9 → RECEIPT → windsurf
+[2026-06-25T01:22:05Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:22:05Z] Project f00e0cd9 → SHIP → chatgpt
+[2026-06-25T01:22:05Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:08Z] Project 4f2f9bcc: TextStats
+[2026-06-25T01:22:08Z] Project 4f2f9bcc → IDEA → chatgpt
+[2026-06-25T01:22:08Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:08Z] Project 4f2f9bcc → SPEC → chatgpt
+[2026-06-25T01:22:08Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:08Z] Project 4f2f9bcc → ARCHITECT → claude
+[2026-06-25T01:22:09Z] Stage ARCHITECT: failed (381ms)
+[2026-06-25T01:22:09Z] Project 4f2f9bcc → ARCHITECT → claude
+[2026-06-25T01:22:09Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:09Z] Project 4f2f9bcc → CODE → codex
+[2026-06-25T01:22:09Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:09Z] Project 4f2f9bcc → BUILD → windsurf
+[2026-06-25T01:22:09Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:22:10Z] Project 4f2f9bcc → TEST → windsurf
+[2026-06-25T01:22:10Z] Stage TEST: completed (147ms)
+[2026-06-25T01:22:10Z] Project 4f2f9bcc → RECEIPT → windsurf
+[2026-06-25T01:22:10Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:22:10Z] Project 4f2f9bcc → SHIP → chatgpt
+[2026-06-25T01:22:10Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:13Z] Project f43e35fb: GitLogFmt
+[2026-06-25T01:22:13Z] Project f43e35fb → IDEA → chatgpt
+[2026-06-25T01:22:13Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:13Z] Project f43e35fb → SPEC → chatgpt
+[2026-06-25T01:22:13Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:13Z] Project f43e35fb → ARCHITECT → claude
+[2026-06-25T01:22:14Z] Stage ARCHITECT: failed (398ms)
+[2026-06-25T01:22:14Z] Project f43e35fb → ARCHITECT → claude
+[2026-06-25T01:22:14Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:14Z] Project f43e35fb → CODE → codex
+[2026-06-25T01:22:14Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:14Z] Project f43e35fb → BUILD → windsurf
+[2026-06-25T01:22:14Z] Stage BUILD: completed (26ms)
+[2026-06-25T01:22:15Z] Project f43e35fb → TEST → windsurf
+[2026-06-25T01:22:15Z] Stage TEST: completed (146ms)
+[2026-06-25T01:22:15Z] Project f43e35fb → RECEIPT → windsurf
+[2026-06-25T01:22:15Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:22:16Z] Project f43e35fb → SHIP → chatgpt
+[2026-06-25T01:22:16Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:22:18Z] Project b965f267: EnvCheck
+[2026-06-25T01:22:18Z] Project b965f267 → IDEA → chatgpt
+[2026-06-25T01:22:18Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:18Z] Project b965f267 → SPEC → chatgpt
+[2026-06-25T01:22:18Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:18Z] Project b965f267 → ARCHITECT → claude
+[2026-06-25T01:22:19Z] Stage ARCHITECT: failed (383ms)
+[2026-06-25T01:22:19Z] Project b965f267 → ARCHITECT → claude
+[2026-06-25T01:22:19Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:19Z] Project b965f267 → CODE → codex
+[2026-06-25T01:22:19Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:19Z] Project b965f267 → BUILD → windsurf
+[2026-06-25T01:22:19Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:22:20Z] Project b965f267 → TEST → windsurf
+[2026-06-25T01:22:20Z] Stage TEST: completed (150ms)
+[2026-06-25T01:22:20Z] Project b965f267 → RECEIPT → windsurf
+[2026-06-25T01:22:20Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:22:21Z] Project b965f267 → SHIP → chatgpt
+[2026-06-25T01:22:21Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:23Z] Project c15ddb0f: TimerCLI
+[2026-06-25T01:22:23Z] Project c15ddb0f → IDEA → chatgpt
+[2026-06-25T01:22:23Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:23Z] Project c15ddb0f → SPEC → chatgpt
+[2026-06-25T01:22:23Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:23Z] Project c15ddb0f → ARCHITECT → claude
+[2026-06-25T01:22:24Z] Stage ARCHITECT: failed (387ms)
+[2026-06-25T01:22:24Z] Project c15ddb0f → ARCHITECT → claude
+[2026-06-25T01:22:24Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:24Z] Project c15ddb0f → CODE → codex
+[2026-06-25T01:22:24Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:25Z] Project c15ddb0f → BUILD → windsurf
+[2026-06-25T01:22:25Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:22:25Z] Project c15ddb0f → TEST → windsurf
+[2026-06-25T01:22:25Z] Stage TEST: completed (147ms)
+[2026-06-25T01:22:25Z] Project c15ddb0f → RECEIPT → windsurf
+[2026-06-25T01:22:25Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:22:26Z] Project c15ddb0f → SHIP → chatgpt
+[2026-06-25T01:22:26Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:28Z] Project 44003b85: SnippetMgr
+[2026-06-25T01:22:28Z] Project 44003b85 → IDEA → chatgpt
+[2026-06-25T01:22:28Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:28Z] Project 44003b85 → SPEC → chatgpt
+[2026-06-25T01:22:28Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:29Z] Project 44003b85 → ARCHITECT → claude
+[2026-06-25T01:22:29Z] Stage ARCHITECT: failed (449ms)
+[2026-06-25T01:22:29Z] Project 44003b85 → ARCHITECT → claude
+[2026-06-25T01:22:29Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:29Z] Project 44003b85 → CODE → codex
+[2026-06-25T01:22:29Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:30Z] Project 44003b85 → BUILD → windsurf
+[2026-06-25T01:22:30Z] Stage BUILD: completed (25ms)
+[2026-06-25T01:22:30Z] Project 44003b85 → TEST → windsurf
+[2026-06-25T01:22:30Z] Stage TEST: completed (149ms)
+[2026-06-25T01:22:30Z] Project 44003b85 → RECEIPT → windsurf
+[2026-06-25T01:22:30Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:22:31Z] Project 44003b85 → SHIP → chatgpt
+[2026-06-25T01:22:31Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:33Z] Project cbda2a1d: LogTail
+[2026-06-25T01:22:33Z] Project cbda2a1d → IDEA → chatgpt
+[2026-06-25T01:22:33Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:33Z] Project cbda2a1d → SPEC → chatgpt
+[2026-06-25T01:22:33Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:34Z] Project cbda2a1d → ARCHITECT → claude
+[2026-06-25T01:22:34Z] Stage ARCHITECT: failed (419ms)
+[2026-06-25T01:22:34Z] Project cbda2a1d → ARCHITECT → claude
+[2026-06-25T01:22:34Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:34Z] Project cbda2a1d → CODE → codex
+[2026-06-25T01:22:34Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:35Z] Project cbda2a1d → BUILD → windsurf
+[2026-06-25T01:22:35Z] Stage BUILD: completed (24ms)
+[2026-06-25T01:22:35Z] Project cbda2a1d → TEST → windsurf
+[2026-06-25T01:22:35Z] Stage TEST: completed (149ms)
+[2026-06-25T01:22:35Z] Project cbda2a1d → RECEIPT → windsurf
+[2026-06-25T01:22:35Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:22:36Z] Project cbda2a1d → SHIP → chatgpt
+[2026-06-25T01:22:36Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:38Z] Project 06b734f3: TodoCLI
+[2026-06-25T01:22:38Z] Project 06b734f3 → IDEA → chatgpt
+[2026-06-25T01:22:38Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:38Z] Project 06b734f3 → SPEC → chatgpt
+[2026-06-25T01:22:38Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:39Z] Project 06b734f3 → ARCHITECT → claude
+[2026-06-25T01:22:39Z] Stage ARCHITECT: failed (389ms)
+[2026-06-25T01:22:39Z] Project 06b734f3 → ARCHITECT → claude
+[2026-06-25T01:22:39Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:39Z] Project 06b734f3 → CODE → codex
+[2026-06-25T01:22:39Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:22:40Z] Project 06b734f3 → BUILD → windsurf
+[2026-06-25T01:22:40Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:22:40Z] Project 06b734f3 → TEST → windsurf
+[2026-06-25T01:22:40Z] Stage TEST: completed (152ms)
+[2026-06-25T01:22:40Z] Project 06b734f3 → RECEIPT → windsurf
+[2026-06-25T01:22:40Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:22:41Z] Project 06b734f3 → SHIP → chatgpt
+[2026-06-25T01:22:41Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:22:43Z] Project 001dab96: WeatherFetch
+[2026-06-25T01:22:43Z] Project 001dab96 → IDEA → chatgpt
+[2026-06-25T01:22:43Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:22:43Z] Project 001dab96 → SPEC → chatgpt
+[2026-06-25T01:22:43Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:22:44Z] Project 001dab96 → ARCHITECT → claude
+[2026-06-25T01:22:44Z] Stage ARCHITECT: failed (427ms)
+[2026-06-25T01:22:44Z] Project 001dab96 → ARCHITECT → claude
+[2026-06-25T01:22:44Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:22:44Z] Project 001dab96 → CODE → codex
+[2026-06-25T01:22:44Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:22:45Z] Project 001dab96 → BUILD → windsurf
+[2026-06-25T01:22:45Z] Stage BUILD: completed (25ms)
+[2026-06-25T01:22:45Z] Project 001dab96 → TEST → windsurf
+[2026-06-25T01:22:45Z] Stage TEST: completed (158ms)
+[2026-06-25T01:22:46Z] Project 001dab96 → RECEIPT → windsurf
+[2026-06-25T01:22:46Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:22:46Z] Project 001dab96 → SHIP → chatgpt
+[2026-06-25T01:22:46Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:33:52Z] Project 89977216: TodoCLI
+[2026-06-25T01:33:52Z] Project 89977216 → IDEA → chatgpt
+[2026-06-25T01:33:52Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:33:52Z] Project 89977216 → SPEC → chatgpt
+[2026-06-25T01:33:52Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:33:52Z] Project 89977216 → ARCHITECT → claude
+[2026-06-25T01:33:53Z] Stage ARCHITECT: failed (735ms)
+[2026-06-25T01:33:53Z] Project 89977216 → ARCHITECT → claude
+[2026-06-25T01:33:53Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:33:53Z] Project 89977216 → CODE → codex
+[2026-06-25T01:33:53Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:33:53Z] Project 89977216 → BUILD → windsurf
+[2026-06-25T01:33:54Z] Stage BUILD: completed (30ms)
+[2026-06-25T01:33:54Z] Project 89977216 → TEST → windsurf
+[2026-06-25T01:33:54Z] Stage TEST: completed (284ms)
+[2026-06-25T01:33:54Z] Project 89977216 → RECEIPT → windsurf
+[2026-06-25T01:33:54Z] Stage RECEIPT: completed (18ms)
+[2026-06-25T01:33:55Z] Project 89977216 → SHIP → chatgpt
+[2026-06-25T01:33:55Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:33:57Z] Project 5b77c440: WeatherFetch
+[2026-06-25T01:33:57Z] Project 5b77c440 → IDEA → chatgpt
+[2026-06-25T01:33:57Z] Stage IDEA: skipped (1ms)
+[2026-06-25T01:33:57Z] Project 5b77c440 → SPEC → chatgpt
+[2026-06-25T01:33:57Z] Stage SPEC: skipped (2ms)
+[2026-06-25T01:33:58Z] Project 5b77c440 → ARCHITECT → claude
+[2026-06-25T01:33:58Z] Stage ARCHITECT: failed (491ms)
+[2026-06-25T01:33:58Z] Project 5b77c440 → ARCHITECT → claude
+[2026-06-25T01:33:58Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:33:58Z] Project 5b77c440 → CODE → codex
+[2026-06-25T01:33:58Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:33:59Z] Project 5b77c440 → BUILD → windsurf
+[2026-06-25T01:33:59Z] Stage BUILD: completed (26ms)
+[2026-06-25T01:33:59Z] Project 5b77c440 → TEST → windsurf
+[2026-06-25T01:33:59Z] Stage TEST: completed (223ms)
+[2026-06-25T01:34:00Z] Project 5b77c440 → RECEIPT → windsurf
+[2026-06-25T01:34:00Z] Stage RECEIPT: completed (6ms)
+[2026-06-25T01:34:00Z] Project 5b77c440 → SHIP → chatgpt
+[2026-06-25T01:34:00Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:34:02Z] Project 3766098a: PassGen
+[2026-06-25T01:34:02Z] Project 3766098a → IDEA → chatgpt
+[2026-06-25T01:34:02Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:03Z] Project 3766098a → SPEC → chatgpt
+[2026-06-25T01:34:03Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:34:03Z] Project 3766098a → ARCHITECT → claude
+[2026-06-25T01:34:03Z] Stage ARCHITECT: failed (403ms)
+[2026-06-25T01:34:03Z] Project 3766098a → ARCHITECT → claude
+[2026-06-25T01:34:03Z] Stage ARCHITECT: skipped (1ms)
+[2026-06-25T01:34:04Z] Project 3766098a → CODE → codex
+[2026-06-25T01:34:04Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:34:04Z] Project 3766098a → BUILD → windsurf
+[2026-06-25T01:34:04Z] Stage BUILD: completed (25ms)
+[2026-06-25T01:34:04Z] Project 3766098a → TEST → windsurf
+[2026-06-25T01:34:04Z] Stage TEST: failed (228ms)
+[2026-06-25T01:34:05Z] Project 3766098a → RECEIPT → windsurf
+[2026-06-25T01:34:05Z] Stage RECEIPT: completed (6ms)
+[2026-06-25T01:34:05Z] Project 3766098a → SHIP → chatgpt
+[2026-06-25T01:34:05Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:34:07Z] Project 926a0d5e: FileWatcher
+[2026-06-25T01:34:07Z] Project 926a0d5e → IDEA → chatgpt
+[2026-06-25T01:34:07Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:08Z] Project 926a0d5e → SPEC → chatgpt
+[2026-06-25T01:34:08Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:34:08Z] Project 926a0d5e → ARCHITECT → claude
+[2026-06-25T01:34:08Z] Stage ARCHITECT: failed (446ms)
+[2026-06-25T01:34:08Z] Project 926a0d5e → ARCHITECT → claude
+[2026-06-25T01:34:08Z] Stage ARCHITECT: skipped (1ms)
+[2026-06-25T01:34:09Z] Project 926a0d5e → CODE → codex
+[2026-06-25T01:34:09Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:34:09Z] Project 926a0d5e → BUILD → windsurf
+[2026-06-25T01:34:09Z] Stage BUILD: completed (20ms)
+[2026-06-25T01:34:09Z] Project 926a0d5e → TEST → windsurf
+[2026-06-25T01:34:10Z] Stage TEST: completed (215ms)
+[2026-06-25T01:34:10Z] Project 926a0d5e → RECEIPT → windsurf
+[2026-06-25T01:34:10Z] Stage RECEIPT: completed (7ms)
+[2026-06-25T01:34:10Z] Project 926a0d5e → SHIP → chatgpt
+[2026-06-25T01:34:10Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:34:13Z] Project 3ceb98dd: PortScanner
+[2026-06-25T01:34:13Z] Project 3ceb98dd → IDEA → chatgpt
+[2026-06-25T01:34:13Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:13Z] Project 3ceb98dd → SPEC → chatgpt
+[2026-06-25T01:34:13Z] Stage SPEC: skipped (3ms)
+[2026-06-25T01:34:13Z] Project 3ceb98dd → ARCHITECT → claude
+[2026-06-25T01:34:14Z] Stage ARCHITECT: failed (469ms)
+[2026-06-25T01:34:14Z] Project 3ceb98dd → ARCHITECT → claude
+[2026-06-25T01:34:14Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:34:14Z] Project 3ceb98dd → CODE → codex
+[2026-06-25T01:34:14Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:34:14Z] Project 3ceb98dd → BUILD → windsurf
+[2026-06-25T01:34:14Z] Stage BUILD: completed (23ms)
+[2026-06-25T01:34:15Z] Project 3ceb98dd → TEST → windsurf
+[2026-06-25T01:34:15Z] Stage TEST: completed (186ms)
+[2026-06-25T01:34:15Z] Project 3ceb98dd → RECEIPT → windsurf
+[2026-06-25T01:34:15Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:34:15Z] Project 3ceb98dd → SHIP → chatgpt
+[2026-06-25T01:34:15Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:34:18Z] Project fba49d9a: MarkdownNotes
+[2026-06-25T01:34:18Z] Project fba49d9a → IDEA → chatgpt
+[2026-06-25T01:34:18Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:18Z] Project fba49d9a → SPEC → chatgpt
+[2026-06-25T01:34:18Z] Stage SPEC: skipped (3ms)
+[2026-06-25T01:34:18Z] Project fba49d9a → ARCHITECT → claude
+[2026-06-25T01:34:19Z] Stage ARCHITECT: failed (460ms)
+[2026-06-25T01:34:19Z] Project fba49d9a → ARCHITECT → claude
+[2026-06-25T01:34:19Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:34:19Z] Project fba49d9a → CODE → codex
+[2026-06-25T01:34:19Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:34:19Z] Project fba49d9a → BUILD → windsurf
+[2026-06-25T01:34:19Z] Stage BUILD: completed (26ms)
+[2026-06-25T01:34:20Z] Project fba49d9a → TEST → windsurf
+[2026-06-25T01:34:20Z] Stage TEST: completed (180ms)
+[2026-06-25T01:34:20Z] Project fba49d9a → RECEIPT → windsurf
+[2026-06-25T01:34:20Z] Stage RECEIPT: completed (6ms)
+[2026-06-25T01:34:21Z] Project fba49d9a → SHIP → chatgpt
+[2026-06-25T01:34:21Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:34:23Z] Project 02b1695b: ColorPicker
+[2026-06-25T01:34:23Z] Project 02b1695b → IDEA → chatgpt
+[2026-06-25T01:34:23Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:23Z] Project 02b1695b → SPEC → chatgpt
+[2026-06-25T01:34:23Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:34:23Z] Project 02b1695b → ARCHITECT → claude
+[2026-06-25T01:34:24Z] Stage ARCHITECT: failed (407ms)
+[2026-06-25T01:34:24Z] Project 02b1695b → ARCHITECT → claude
+[2026-06-25T01:34:24Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:34:24Z] Project 02b1695b → CODE → codex
+[2026-06-25T01:34:24Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:34:24Z] Project 02b1695b → BUILD → windsurf
+[2026-06-25T01:34:24Z] Stage BUILD: completed (26ms)
+[2026-06-25T01:34:25Z] Project 02b1695b → TEST → windsurf
+[2026-06-25T01:34:25Z] Stage TEST: completed (211ms)
+[2026-06-25T01:34:25Z] Project 02b1695b → RECEIPT → windsurf
+[2026-06-25T01:34:25Z] Stage RECEIPT: completed (12ms)
+[2026-06-25T01:34:26Z] Project 02b1695b → SHIP → chatgpt
+[2026-06-25T01:34:26Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:34:28Z] Project 62fd42f4: CronHelper
+[2026-06-25T01:34:28Z] Project 62fd42f4 → IDEA → chatgpt
+[2026-06-25T01:34:28Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:28Z] Project 62fd42f4 → SPEC → chatgpt
+[2026-06-25T01:34:28Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:34:29Z] Project 62fd42f4 → ARCHITECT → claude
+[2026-06-25T01:34:29Z] Stage ARCHITECT: failed (500ms)
+[2026-06-25T01:34:29Z] Project 62fd42f4 → ARCHITECT → claude
+[2026-06-25T01:34:29Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:34:29Z] Project 62fd42f4 → CODE → codex
+[2026-06-25T01:34:29Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:34:30Z] Project 62fd42f4 → BUILD → windsurf
+[2026-06-25T01:34:30Z] Stage BUILD: completed (20ms)
+[2026-06-25T01:34:30Z] Project 62fd42f4 → TEST → windsurf
+[2026-06-25T01:34:30Z] Stage TEST: completed (176ms)
+[2026-06-25T01:34:30Z] Project 62fd42f4 → RECEIPT → windsurf
+[2026-06-25T01:34:30Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:34:31Z] Project 62fd42f4 → SHIP → chatgpt
+[2026-06-25T01:34:31Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:34:33Z] Project 2f4fcf43: Base64Tool
+[2026-06-25T01:34:33Z] Project 2f4fcf43 → IDEA → chatgpt
+[2026-06-25T01:34:33Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:33Z] Project 2f4fcf43 → SPEC → chatgpt
+[2026-06-25T01:34:33Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:34:34Z] Project 2f4fcf43 → ARCHITECT → claude
+[2026-06-25T01:34:34Z] Stage ARCHITECT: failed (464ms)
+[2026-06-25T01:34:34Z] Project 2f4fcf43 → ARCHITECT → claude
+[2026-06-25T01:34:34Z] Stage ARCHITECT: skipped (1ms)
+[2026-06-25T01:34:34Z] Project 2f4fcf43 → CODE → codex
+[2026-06-25T01:34:34Z] Stage CODE: skipped (2ms)
+[2026-06-25T01:34:35Z] Project 2f4fcf43 → BUILD → windsurf
+[2026-06-25T01:34:35Z] Stage BUILD: completed (22ms)
+[2026-06-25T01:34:35Z] Project 2f4fcf43 → TEST → windsurf
+[2026-06-25T01:34:35Z] Stage TEST: completed (178ms)
+[2026-06-25T01:34:36Z] Project 2f4fcf43 → RECEIPT → windsurf
+[2026-06-25T01:34:36Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:34:36Z] Project 2f4fcf43 → SHIP → chatgpt
+[2026-06-25T01:34:36Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:34:38Z] Project 5ae6dcee: HashDiff
+[2026-06-25T01:34:38Z] Project 5ae6dcee → IDEA → chatgpt
+[2026-06-25T01:34:38Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:34:39Z] Project 5ae6dcee → SPEC → chatgpt
+[2026-06-25T01:34:39Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:34:39Z] Project 5ae6dcee → ARCHITECT → claude
+[2026-06-25T01:34:39Z] Stage ARCHITECT: failed (501ms)
+[2026-06-25T01:34:39Z] Project 5ae6dcee → ARCHITECT → claude
+[2026-06-25T01:34:39Z] Stage ARCHITECT: skipped (1ms)
+[2026-06-25T01:34:40Z] Project 5ae6dcee → CODE → codex
+[2026-06-25T01:34:40Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:34:40Z] Project 5ae6dcee → BUILD → windsurf
+[2026-06-25T01:34:40Z] Stage BUILD: completed (25ms)
+[2026-06-25T01:34:40Z] Project 5ae6dcee → TEST → windsurf
+[2026-06-25T01:34:41Z] Stage TEST: completed (214ms)
+[2026-06-25T01:34:41Z] Project 5ae6dcee → RECEIPT → windsurf
+[2026-06-25T01:34:41Z] Stage RECEIPT: completed (5ms)
+[2026-06-25T01:34:41Z] Project 5ae6dcee → SHIP → chatgpt
+[2026-06-25T01:34:41Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:34:43Z] Project 8dae7d20: JSONQuery
+[2026-06-25T01:34:43Z] Project 8dae7d20 → IDEA → chatgpt
+[2026-06-25T01:34:43Z] Stage IDEA: skipped (1ms)
+[2026-06-25T01:34:44Z] Project 8dae7d20 → SPEC → chatgpt
+[2026-06-25T01:34:44Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:34:44Z] Project 8dae7d20 → ARCHITECT → claude
+[2026-06-25T01:34:45Z] Stage ARCHITECT: failed (461ms)
+[2026-06-25T01:34:45Z] Project 8dae7d20 → ARCHITECT → claude
+[2026-06-25T01:34:45Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:34:45Z] Project 8dae7d20 → CODE → codex
+[2026-06-25T01:34:45Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:34:45Z] Project 8dae7d20 → BUILD → windsurf
+[2026-06-25T01:34:45Z] Stage BUILD: completed (21ms)
+[2026-06-25T01:34:45Z] Project 8dae7d20 → TEST → windsurf
+[2026-06-25T01:34:46Z] Stage TEST: completed (241ms)
+[2026-06-25T01:34:46Z] Project 8dae7d20 → RECEIPT → windsurf
+[2026-06-25T01:34:46Z] Stage RECEIPT: completed (4ms)
+[2026-06-25T01:34:46Z] Project 8dae7d20 → SHIP → chatgpt
+[2026-06-25T01:34:46Z] Stage SHIP: skipped (3ms)
+[2026-06-25T01:36:25Z] Project 5c630fa3: TodoCLI
+[2026-06-25T01:36:35Z] Project 5c630fa3 → IDEA → chatgpt
+[2026-06-25T01:36:35Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:36:35Z] Project 5c630fa3 → SPEC → chatgpt
+[2026-06-25T01:36:35Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:36:36Z] Project 5c630fa3 → ARCHITECT → claude
+[2026-06-25T01:36:36Z] Stage ARCHITECT: failed (744ms)
+[2026-06-25T01:36:36Z] Project 5c630fa3 → ARCHITECT → claude
+[2026-06-25T01:36:36Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:36:42Z] Project 5c630fa3 → CODE → codex
+[2026-06-25T01:36:42Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:36:42Z] Project 5c630fa3 → BUILD → windsurf
+[2026-06-25T01:36:42Z] Stage BUILD: completed (38ms)
+[2026-06-25T01:36:43Z] Project 5c630fa3 → TEST → windsurf
+[2026-06-25T01:36:43Z] Stage TEST: completed (392ms)
+[2026-06-25T01:36:44Z] Project 5c630fa3 → RECEIPT → windsurf
+[2026-06-25T01:36:44Z] Stage RECEIPT: failed (1ms)
+[2026-06-25T01:36:44Z] Project 5c630fa3 → SHIP → chatgpt
+[2026-06-25T01:36:44Z] Stage SHIP: skipped (0ms)
+[2026-06-25T01:36:47Z] Project 050f2596: PassGen
+[2026-06-25T01:36:57Z] Project 050f2596 → IDEA → chatgpt
+[2026-06-25T01:36:57Z] Stage IDEA: skipped (1ms)
+[2026-06-25T01:36:57Z] Project 050f2596 → SPEC → chatgpt
+[2026-06-25T01:36:57Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:36:58Z] Project 050f2596 → ARCHITECT → claude
+[2026-06-25T01:36:58Z] Stage ARCHITECT: failed (775ms)
+[2026-06-25T01:36:58Z] Project 050f2596 → ARCHITECT → claude
+[2026-06-25T01:36:58Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:37:04Z] Project 050f2596 → CODE → codex
+[2026-06-25T01:37:04Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:37:04Z] Project 050f2596 → BUILD → windsurf
+[2026-06-25T01:37:04Z] Stage BUILD: completed (29ms)
+[2026-06-25T01:37:05Z] Project 050f2596 → TEST → windsurf
+[2026-06-25T01:37:05Z] Stage TEST: completed (367ms)
+[2026-06-25T01:37:05Z] Project 050f2596 → RECEIPT → windsurf
+[2026-06-25T01:37:05Z] Stage RECEIPT: failed (1ms)
+[2026-06-25T01:37:06Z] Project 050f2596 → SHIP → chatgpt
+[2026-06-25T01:37:06Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:37:09Z] Project 338edf19: Base64Tool
+[2026-06-25T01:37:18Z] Project 338edf19 → IDEA → chatgpt
+[2026-06-25T01:37:18Z] Stage IDEA: skipped (0ms)
+[2026-06-25T01:37:19Z] Project 338edf19 → SPEC → chatgpt
+[2026-06-25T01:37:19Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:37:19Z] Project 338edf19 → ARCHITECT → claude
+[2026-06-25T01:37:20Z] Stage ARCHITECT: failed (891ms)
+[2026-06-25T01:37:20Z] Project 338edf19 → ARCHITECT → claude
+[2026-06-25T01:37:20Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:37:25Z] Project 338edf19 → CODE → codex
+[2026-06-25T01:37:25Z] Stage CODE: skipped (0ms)
+[2026-06-25T01:37:26Z] Project 338edf19 → BUILD → windsurf
+[2026-06-25T01:37:26Z] Stage BUILD: completed (25ms)
+[2026-06-25T01:37:26Z] Project 338edf19 → TEST → windsurf
+[2026-06-25T01:37:27Z] Stage TEST: completed (265ms)
+[2026-06-25T01:37:27Z] Project 338edf19 → RECEIPT → windsurf
+[2026-06-25T01:37:27Z] Stage RECEIPT: failed (1ms)
+[2026-06-25T01:37:28Z] Project 338edf19 → SHIP → chatgpt
+[2026-06-25T01:37:28Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:37:30Z] Project a23c3725: HashDiff
+[2026-06-25T01:37:40Z] Project a23c3725 → IDEA → chatgpt
+[2026-06-25T01:37:40Z] Stage IDEA: skipped (2ms)
+[2026-06-25T01:37:40Z] Project a23c3725 → SPEC → chatgpt
+[2026-06-25T01:37:40Z] Stage SPEC: skipped (1ms)
+[2026-06-25T01:37:41Z] Project a23c3725 → ARCHITECT → claude
+[2026-06-25T01:37:42Z] Stage ARCHITECT: failed (714ms)
+[2026-06-25T01:37:42Z] Project a23c3725 → ARCHITECT → claude
+[2026-06-25T01:37:42Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:37:47Z] Project a23c3725 → CODE → codex
+[2026-06-25T01:37:47Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:37:47Z] Project a23c3725 → BUILD → windsurf
+[2026-06-25T01:37:47Z] Stage BUILD: completed (29ms)
+[2026-06-25T01:37:48Z] Project a23c3725 → TEST → windsurf
+[2026-06-25T01:37:48Z] Stage TEST: completed (283ms)
+[2026-06-25T01:37:49Z] Project a23c3725 → RECEIPT → windsurf
+[2026-06-25T01:37:49Z] Stage RECEIPT: failed (1ms)
+[2026-06-25T01:37:49Z] Project a23c3725 → SHIP → chatgpt
+[2026-06-25T01:37:49Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:37:52Z] Project 06c967fe: TextStats
+[2026-06-25T01:38:01Z] Project 06c967fe → IDEA → chatgpt
+[2026-06-25T01:38:01Z] Stage IDEA: skipped (4ms)
+[2026-06-25T01:38:02Z] Project 06c967fe → SPEC → chatgpt
+[2026-06-25T01:38:02Z] Stage SPEC: skipped (0ms)
+[2026-06-25T01:38:02Z] Project 06c967fe → ARCHITECT → claude
+[2026-06-25T01:38:03Z] Stage ARCHITECT: failed (854ms)
+[2026-06-25T01:38:03Z] Project 06c967fe → ARCHITECT → claude
+[2026-06-25T01:38:03Z] Stage ARCHITECT: skipped (0ms)
+[2026-06-25T01:38:09Z] Project 06c967fe → CODE → codex
+[2026-06-25T01:38:09Z] Stage CODE: skipped (1ms)
+[2026-06-25T01:38:09Z] Project 06c967fe → BUILD → windsurf
+[2026-06-25T01:38:09Z] Stage BUILD: completed (30ms)
+[2026-06-25T01:38:10Z] Project 06c967fe → TEST → windsurf
+[2026-06-25T01:38:10Z] Stage TEST: completed (430ms)
+[2026-06-25T01:38:11Z] Project 06c967fe → RECEIPT → windsurf
+[2026-06-25T01:38:11Z] Stage RECEIPT: failed (1ms)
+[2026-06-25T01:38:11Z] Project 06c967fe → SHIP → chatgpt
+[2026-06-25T01:38:11Z] Stage SHIP: skipped (1ms)
+[2026-06-25T01:38:14Z] Project 5d0de16f: ColorPicker

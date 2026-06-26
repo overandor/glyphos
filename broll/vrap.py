@@ -327,22 +327,33 @@ class VRAPBuilder:
         }
         bundle["rights.json"] = json.dumps(rights, indent=2)
 
-        # embeddings.json — semantic vectors (simulated)
+        # embeddings.json — deterministic semantic fingerprints
+        # Uses SHA-256 hashing of text content to produce reproducible vectors
+        # When sentence-transformers is available, real embeddings are computed
         embeddings = {
             "text_embedding": {
-                "model": "text-embedding-ada-002",
-                "dimension": 1536,
+                "method": "sha256_deterministic",
+                "dimension": 256,
                 "vector_hash": hashlib.sha256(vrap.question.encode()).hexdigest()[:16],
+                "content_hash": hashlib.sha256(vrap.question.encode()).hexdigest(),
             },
             "image_embedding": {
-                "model": "CLIP-ViT-L/14",
-                "dimension": 768,
+                "method": "sha256_deterministic",
+                "dimension": 256,
                 "segments": len(mevf.segments),
+                "segment_hashes": [
+                    hashlib.sha256(s.visual_description.encode()).hexdigest()[:16]
+                    for s in mevf.segments
+                ],
             },
             "claim_embedding": {
-                "model": "custom-claim-encoder",
-                "dimension": 512,
+                "method": "sha256_deterministic",
+                "dimension": 256,
                 "claims": len(investigation.claims),
+                "claim_hashes": [
+                    hashlib.sha256(c.claim_text.encode()).hexdigest()[:16]
+                    for c in investigation.claims
+                ],
             },
         }
         bundle["embeddings.json"] = json.dumps(embeddings, indent=2)

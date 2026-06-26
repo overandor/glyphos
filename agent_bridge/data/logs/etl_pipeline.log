@@ -1,0 +1,46 @@
+2026-06-25 19:57:24,234 [INFO] === ETL CYCLE etl_1782431844 START ===
+2026-06-25 19:57:24,248 [INFO] EXTRACT git: 0 commits
+2026-06-25 19:57:24,277 [INFO] EXTRACT code: 10 files
+2026-06-25 19:57:24,287 [INFO] EXTRACT bridge: 5 pending tasks, stats={"tasks_pending": 5, "tasks_claimed": 3, "tasks_completed": 14, "tasks_failed": 5, "responses_total": 14, "responses_unread": 12, "timestamp": "2026-06-25T23:57:24Z"}
+2026-06-25 19:57:24,881 [INFO] EXTRACT tests: 1 passed, 0 failed, 0 errors
+2026-06-25 19:57:24,882 [INFO] EXTRACT chatgpt: 12 unread responses
+2026-06-25 19:57:28,476 [INFO] LOAD bridge: code_analysis -> task task_0dd288b759e0c9d2
+2026-06-25 19:57:28,477 [INFO] LOAD bridge: test_analysis -> task task_4663df98c552989e
+2026-06-25 19:57:28,479 [INFO] LOAD bridge: chatgpt_summary -> task task_7a4fee1b4a187ee7
+2026-06-25 19:57:28,480 [INFO] LOAD bridge: queue_summary -> task task_b3ae5a70a573b2cc
+2026-06-25 19:57:37,279 [INFO] === ETL CYCLE etl_1782431857 START ===
+2026-06-25 19:57:37,293 [INFO] EXTRACT git: 0 commits
+2026-06-25 19:57:37,306 [INFO] EXTRACT code: 10 files
+2026-06-25 19:57:37,317 [INFO] EXTRACT bridge: 8 pending tasks, stats={"tasks_pending": 8, "tasks_claimed": 3, "tasks_completed": 14, "tasks_failed": 6, "responses_total": 14, "responses_unread": 12, "timestamp": "2026-06-25T23:57:37Z"}
+2026-06-25 19:57:37,910 [INFO] EXTRACT tests: 1 passed, 0 failed, 0 errors
+2026-06-25 19:57:37,911 [INFO] EXTRACT chatgpt: 12 unread responses
+2026-06-25 19:57:40,773 [INFO] LOAD bridge: code_analysis -> task task_5529de1bbdf06be7
+2026-06-25 19:57:40,774 [INFO] LOAD bridge: test_analysis -> task task_09d1ed8d08928441
+2026-06-25 19:57:40,775 [INFO] LOAD bridge: chatgpt_summary -> task task_79e5852edbaa7311
+2026-06-25 19:57:40,777 [INFO] LOAD bridge: queue_summary -> task task_da129a0e233290e1
+2026-06-25 19:57:40,777 [INFO] LOAD record: etl_1782431857 -> /Users/alep/Downloads/windsurf-smoke/agent_bridge/data/etl_records.jsonl
+2026-06-25 19:57:40,777 [INFO] === ETL CYCLE etl_1782431857 DONE (3.5s) ===
+2026-06-25 20:02:50,813 [INFO] === ETL CYCLE etl_1782432170 START ===
+2026-06-25 20:02:50,840 [INFO] EXTRACT git: 0 commits
+2026-06-25 20:02:50,885 [INFO] EXTRACT code: 10 files
+2026-06-25 20:02:50,896 [INFO] EXTRACT bridge: 15 pending tasks, stats={"tasks_pending": 15, "tasks_claimed": 6, "tasks_completed": 18, "tasks_failed": 8, "responses_total": 18, "responses_unread": 15, "timestamp": "2026-06-26T00:02:50Z"}
+2026-06-25 20:02:51,520 [INFO] EXTRACT tests: 1 passed, 0 failed, 0 errors
+2026-06-25 20:02:51,521 [INFO] EXTRACT chatgpt: 15 unread responses
+2026-06-25 20:02:55,913 [INFO] LOAD bridge: code_analysis -> task task_34863dcfa287ad84
+2026-06-25 20:02:55,914 [INFO] LOAD bridge: test_analysis -> task task_ade4b4f6637f3a12
+2026-06-25 20:02:55,915 [INFO] LOAD bridge: chatgpt_summary -> task task_6875d80c7803c991
+2026-06-25 20:02:55,916 [INFO] LOAD bridge: queue_summary -> task task_35309b0a4c79d452
+2026-06-25 20:02:55,916 [INFO] LOAD record: etl_1782432170 -> /Users/alep/Downloads/windsurf-smoke/agent_bridge/data/etl_records.jsonl
+2026-06-25 20:02:55,916 [INFO] === ETL CYCLE etl_1782432170 DONE (5.1s) ===
+2026-06-25 22:55:13,071 [INFO] === ETL CYCLE etl_1782442513 START ===
+2026-06-25 22:55:13,109 [INFO] EXTRACT git: 0 commits
+2026-06-25 22:55:13,152 [INFO] EXTRACT code: 10 files
+2026-06-25 22:55:13,166 [INFO] EXTRACT bridge: 16 pending tasks, stats={"tasks_pending": 16, "tasks_claimed": 6, "tasks_completed": 21, "tasks_failed": 8, "responses_total": 21, "responses_unread": 15, "timestamp": "2026-06-26T02:55:13Z"}
+2026-06-25 22:55:14,030 [INFO] EXTRACT tests: 1 passed, 0 failed, 0 errors
+2026-06-25 22:55:14,031 [INFO] EXTRACT chatgpt: 15 unread responses
+2026-06-25 22:55:17,005 [INFO] LOAD bridge: code_analysis -> task task_4930ee400168bd8a
+2026-06-25 22:55:17,006 [INFO] LOAD bridge: test_analysis -> task task_19090ed22e6b8450
+2026-06-25 22:55:17,006 [INFO] LOAD bridge: chatgpt_summary -> task task_da2b860878334436
+2026-06-25 22:55:17,008 [INFO] LOAD bridge: queue_summary -> task task_f6584bb5c00eaad7
+2026-06-25 22:55:17,008 [INFO] LOAD record: etl_1782442513 -> /Users/alep/Downloads/windsurf-smoke/agent_bridge/data/etl_records.jsonl
+2026-06-25 22:55:17,008 [INFO] === ETL CYCLE etl_1782442513 DONE (3.94s) ===

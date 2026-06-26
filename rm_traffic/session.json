@@ -1,0 +1,12 @@
+{
+  "url": "https://rentmasseur.com",
+  "cookies": [
+    {
+      "name": "isGlobalLocations",
+      "value": "0",
+      "domain": "rentmasseur.com",
+      "path": "/"
+    }
+  ],
+  "token": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE3ODI0Njk2MjgsIm5iZiI6MTc4MjQ2OTQ0OCwic3ViIjoiMjQ4NDc5IiwidXNlcm5hbWUiOiJLYXJwYXRoaWFud29sZiIsInVzZXJUeXBlIjoxLCJzdGFnZU5hbWUiOiJKb3NlcGgiLCJhcHByb3ZlZCI6MSwibG9jYXRpb25JZCI6MTAzNiwic2VhcmNoQ2l0eSI6Im1hbmhhdHRhbi1ueSIsImNvdW50cnlTaG9ydCI6IlVTIiwic2Vzc2lvbkNvdW50cnlDb250aW5lbnQiOiJFVSIsImlzRnJvemVuIjowLCJsb2NhdGlvbkxhYmVsIjoiTWFuaGF0dGFuLCBOWSIsImlzcyI6Imh0dHBzOi8vcmVudG1hc3NldXIuY29tIiwiaWF0IjoxNzgyNDY5NTA4fQ.rho5jF6lGnx6UlyTgX8n1_U4u1F1Cd4jJZ09CnyRnLerJfGOuTrqBQM4WKd9za-TBH1Mf-iuAny4NIu_YbPBgw"
+}
