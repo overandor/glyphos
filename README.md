@@ -1,7 +1,7 @@
 ---
 title: HyperFlow Ledger OS
 emoji: ⚡
-colorFrom: dark
+colorFrom: purple
 colorTo: blue
 sdk: docker
 app_file: app.py

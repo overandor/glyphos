@@ -27,7 +27,7 @@ import uvicorn
 from blurhash64 import BlurHash64Encoder, Glyph
 from glyphforge import GlyphForge, MASTER_GLYPH
 from overlanguage import OverLanguageCompiler, Layer4Meter
-from glyphlang import GlyphCompiler, InkStream
+from glyphlang import GlyphCompiler, InkStream, QuantumGlyphFactory
 from afc_protocol import (
     app as afc_app, create_claim, get_claim, list_claims,
     escrow_payment, reveal_answer, submit_hidden_tests,
@@ -49,6 +49,7 @@ compiler = OverLanguageCompiler()
 l4meter = Layer4Meter()
 glyph_compiler = GlyphCompiler()
 ink_stream = InkStream(target_count=234322, rate_per_min=34)
+quantum_factory = QuantumGlyphFactory(target_count=398989889)
 
 
 @app.get("/health")
@@ -417,6 +418,52 @@ async def ink_search(q: str = "", limit: int = 20):
     """Search ink stream glyphs by symbol fragment."""
     results = [g for g in ink_stream.glyphs if q in g["symbol"]] if q else ink_stream.stream(limit)
     return {"query": q, "results": results[:limit], "total_matches": len(results) if q else len(ink_stream.glyphs)}
+
+
+# --- Quantum Glyph Superposition ---
+# Each glyph = 3 characters simultaneously. 345x compression. 39.9B target.
+# Shadow is irreducible. Pen never lifts.
+
+@app.get("/quantum/stats")
+async def quantum_stats():
+    """Quantum glyph factory stats — superposition state, compression, pico scale."""
+    return quantum_factory.stats()
+
+@app.post("/quantum/burst")
+async def quantum_burst(body: dict = Body(...)):
+    """Burst generate quantum superposition glyphs."""
+    count = body.get("count", 10000)
+    result = quantum_factory.burst(count)
+    return result
+
+@app.get("/quantum/stream")
+async def quantum_stream(n: int = 20):
+    """Get the last N quantum glyphs in unresolved superposition."""
+    return {"glyphs": quantum_factory.stream(n), "stats": quantum_factory.stats()}
+
+@app.get("/quantum/observe/{index}")
+async def quantum_observe(index: int, layer: int = None):
+    """Observe a quantum glyph, collapsing its superposition to one layer.
+    layer=0: structural, layer=1: semantic, layer=2: shadow, None: unresolved.
+    """
+    result = quantum_factory.observe_glyph(index, layer)
+    if result is None:
+        raise HTTPException(404, "glyph not found")
+    return {
+        "index": index,
+        "layer_observed": layer,
+        "collapsed_value": result,
+        "state": "collapsed" if layer is not None else "unresolved",
+        "note": "Observation collapses superposition. Unobserved = all 3 at once.",
+    }
+
+@app.post("/quantum/compress")
+async def quantum_compress(body: dict = Body(...)):
+    """Compress data using quantum glyph superposition. 345x density per glyph-bit."""
+    data = body.get("data", "")
+    if not data:
+        raise HTTPException(400, "data required")
+    return quantum_factory.compress_data(data)
 
 
 # --- Grammar stats ---
