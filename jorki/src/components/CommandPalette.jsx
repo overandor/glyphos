@@ -1,15 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Search, ArrowRight, Home, FileText, Code, Settings, Database } from 'lucide-react'
+import { Search, ArrowRight, Home, FileText, Code, Settings, Database, Rocket } from 'lucide-react'
 
 const commands = [
   { label: 'Dashboard', section: 'Navigate', panel: 'dashboard', icon: Home },
   { label: 'Files', section: 'Navigate', panel: 'files', icon: FileText },
   { label: 'Query', section: 'Navigate', panel: 'query', icon: Search },
+  { label: 'Pipeline', section: 'Navigate', panel: 'pipeline', icon: Rocket },
   { label: 'API Reference', section: 'Navigate', panel: 'api', icon: Code },
   { label: 'Settings', section: 'Navigate', panel: 'settings', icon: Settings },
   { label: 'SQL Query', section: 'Actions', panel: 'query', icon: Database },
   { label: 'Search Files', section: 'Actions', panel: 'files', icon: Search },
+  { label: 'Run Clipboard Pipeline', section: 'Actions', panel: 'pipeline', icon: Rocket },
 ]
 
 export default function CommandPalette({ onClose, onSelect }) {

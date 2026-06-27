@@ -1,20 +1,29 @@
 import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
-  Home, FileText, Search, Code, Settings, Shield, ArrowLeft,
+  Home, FileText, Search, Code, Settings, Shield, ArrowLeft, Rocket,
+  Dna, BookOpen,
 } from 'lucide-react'
 import Dashboard from './Dashboard.jsx'
 import FileDetail from './FileDetail.jsx'
+import FileIntelligence from './FileIntelligence.jsx'
+import FileDossier from './FileDossier.jsx'
+import FormulasPanel from './FormulasPanel.jsx'
 import QueryPanel from './QueryPanel.jsx'
 import APIPanel from './APIPanel.jsx'
 import SettingsPanel from './SettingsPanel.jsx'
+import PipelinePanel from './PipelinePanel.jsx'
 
 const API_BASE = ''
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: Home },
   { id: 'files', label: 'Files', icon: FileText },
+  { id: 'intel', label: 'Intelligence', icon: Dna },
+  { id: 'dossier', label: 'Dossier', icon: FileText },
+  { id: 'formulas', label: 'Formulas', icon: BookOpen },
   { id: 'query', label: 'Query', icon: Search },
+  { id: 'pipeline', label: 'Pipeline', icon: Rocket },
   { id: 'api', label: 'API', icon: Code },
   { id: 'settings', label: 'Settings', icon: Settings },
 ]
@@ -48,8 +57,18 @@ export default function CommandCenter({ activePanel, setActivePanel, onExit }) {
         return <Dashboard setActivePanel={setActivePanel} onSelectFile={(id) => { setSelectedFileId(id); setActivePanel('files') }} />
       case 'files':
         return <FileDetail fileId={selectedFileId} onClear={() => setSelectedFileId(null)} />
+      case 'intel':
+        return <FileIntelligence fileId={selectedFileId} onBack={() => { setSelectedFileId(null); setActivePanel('dashboard') }} />
+      case 'dossier':
+        return selectedFileId
+          ? <FileDossier fileId={selectedFileId} onClose={() => { setSelectedFileId(null); setActivePanel('dashboard') }} />
+          : <FileSelector onFileSelect={(id) => { setSelectedFileId(id); setActivePanel('dossier') }} />
+      case 'formulas':
+        return <FormulasPanel />
       case 'query':
         return <QueryPanel />
+      case 'pipeline':
+        return <PipelinePanel />
       case 'api':
         return <APIPanel />
       case 'settings':
@@ -82,8 +101,8 @@ export default function CommandCenter({ activePanel, setActivePanel, onExit }) {
               key={item.id}
               onClick={() => setActivePanel(item.id)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all mb-0.5 ${activePanel === item.id
-                  ? 'glass-orange text-primary font-medium'
-                  : 'text-secondary hover:text-text hover:bg-white/5'
+                ? 'glass-orange text-primary font-medium'
+                : 'text-secondary hover:text-text hover:bg-white/5'
                 }`}
             >
               <item.icon className="w-4 h-4 flex-shrink-0" />
@@ -152,6 +171,37 @@ export default function CommandCenter({ activePanel, setActivePanel, onExit }) {
             </motion.div>
           </AnimatePresence>
         </div>
+      </div>
+    </div>
+  )
+}
+
+function FileSelector({ onFileSelect }) {
+  const [files, setFiles] = useState([])
+  useEffect(() => {
+    fetch(`${API_BASE}/files`).then(r => r.json()).then(d => setFiles(d.files || [])).catch(() => { })
+  }, [])
+  return (
+    <div className="p-6">
+      <div className="glass rounded-2xl p-5">
+        <div className="text-sm font-semibold mb-4">Select a file to view dossier</div>
+        {files.length === 0 ? (
+          <div className="text-xs text-secondary/40 py-4 text-center">No files indexed. Upload from Dashboard.</div>
+        ) : (
+          <div className="space-y-1">
+            {files.map(f => (
+              <button
+                key={f.file_id}
+                onClick={() => onFileSelect(f.file_id)}
+                className="w-full flex items-center gap-3 py-2.5 px-3 rounded-xl glass hover:glass-orange text-secondary hover:text-primary transition-all"
+              >
+                <FileText className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs font-mono flex-1 text-left">{f.filename}</span>
+                <span className="text-[10px] font-mono text-secondary/40">{f.size}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

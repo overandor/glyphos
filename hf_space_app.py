@@ -55,10 +55,23 @@ from fastapi.staticfiles import StaticFiles
 
 # ─── Configuration ──────────────────────────────────────────────────────
 
+# Auto-load .env if present (local dev)
+_env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+if os.path.exists(_env_path):
+    with open(_env_path) as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _v = _line.split("=", 1)
+                os.environ.setdefault(_k.strip(), _v.strip())
+
 DATA_DIR = os.environ.get("SYSTEMLAKE_DATA_DIR", "/app/audit_data")
 UPLOAD_DIR = os.environ.get("SYSTEMLAKE_UPLOAD_DIR", "/tmp/systemlake_uploads")
 RESULTS_DIR = os.environ.get("SYSTEMLAKE_RESULTS_DIR", "/tmp/systemlake_results")
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODELS = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "mixtral-8x7b-32768"]
 HF_TOKEN = os.environ.get("HF_TOKEN", "")
 PORT = int(os.environ.get("PORT", 7860))
 
@@ -495,14 +508,7 @@ def _run_evaluation_sync(eval_id: str, extract_dir: str, filename: str):
 
 # ─── FastAPI App ────────────────────────────────────────────────────────
 
-app = FastAPI(title="SystemLake Underwriter", version="2.0.0")
-
-@app.get("/health")
-async def health():
-    data = _load_all()
-    return {"status": "ok", "data_dir": DATA_DIR, "has_audit_data": data["systems"] is not None,
-            "openai_configured": bool(OPENAI_API_KEY), "hf_token_configured": bool(HF_TOKEN),
-            "evaluations_run": len(_evaluations)}
+app = FastAPI(title="Jorki File Gateway", version="2.0.0")
 
 @app.get("/telemetry")
 async def telemetry():
@@ -652,192 +658,9 @@ async def root():
     return HTMLResponse("<h1>Jorki</h1><p>UI not built. Visit /systemlake for the legacy dashboard.</p>")
 
 @app.get("/systemlake", response_class=HTMLResponse)
+@app.get("/systemlake", response_class=HTMLResponse)
 async def dashboard():
-    data = _load_all()
-    has_telemetry = data["systems"] is not None
-    if has_telemetry:
-        systems = data["systems"].get("systems", [])
-        bb = data["borrowing"] or {}
-        merkle = data["merkle"] or {}
-        receipt = data["receipt"] or {}
-        tel_block = f"""
-        <div class="section-title">Reference Audit (Pre-computed)</div>
-        <div class="grid">
-            <div class="card"><h2>Borrowing Base</h2><div class="big-number green">${bb.get('total_mid', 0):,.0f}</div>
-            <div class="stat-row"><span class="stat-label">Low</span><span class="stat-value">${bb.get('total_low', 0):,.0f}</span></div>
-            <div class="stat-row"><span class="stat-label">High</span><span class="stat-value">${bb.get('total_high', 0):,.0f}</span></div></div>
-            <div class="card"><h2>Systems Scored</h2><div class="big-number">{len(systems)}</div>
-            <div class="stat-row"><span class="stat-label">Merkle root</span><span class="stat-value mono">{merkle.get('root', 'N/A')[:16]}...</span></div>
-            <div class="stat-row"><span class="stat-label">Receipt</span><span class="stat-value mono">{receipt.get('receipt_id', 'N/A')[:16]}...</span></div></div>
-        </div>
-        <div class="api-list" style="margin-bottom:24px">
-            <a href="/telemetry">/telemetry</a> · <a href="/systems">/systems</a> · <a href="/risks">/risks</a> · <a href="/borrowing">/borrowing</a>
-        </div>"""
-    else:
-        tel_block = ""
-
-    return HTMLResponse(f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SystemLake Underwriter — Privacy-Preserving Code Evaluation</title>
-<style>
-* {{ margin:0; padding:0; box-sizing:border-box; }}
-body {{ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background:#0d1117; color:#c9d1d9; padding:20px; max-width:1200px; margin:0 auto; }}
-h1 {{ color:#58a6ff; font-size:24px; margin-bottom:4px; }}
-.subtitle {{ color:#8b949e; font-size:14px; margin-bottom:24px; }}
-.grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-bottom:24px; }}
-.card {{ background:#161b22; border:1px solid #30363d; border-radius:8px; padding:20px; }}
-.card h2 {{ font-size:14px; color:#8b949e; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:12px; }}
-.big-number {{ font-size:32px; font-weight:700; color:#58a6ff; }}
-.big-number.green {{ color:#3fb950; }}
-.stat-row {{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid #21262d; font-size:14px; }}
-.stat-row:last-child {{ border-bottom:none; }}
-.stat-label {{ color:#8b949e; }} .stat-value {{ color:#c9d1d9; font-weight:600; }}
-.section-title {{ font-size:18px; color:#58a6ff; margin:24px 0 12px; }}
-.mono {{ font-family:'SF Mono',Monaco,monospace; font-size:12px; color:#8b949e; }}
-a {{ color:#58a6ff; text-decoration:none; }} a:hover {{ text-decoration:underline; }}
-.api-list {{ font-family:monospace; font-size:12px; padding:12px; }}
-.footer {{ margin-top:32px; padding-top:16px; border-top:1px solid #30363d; color:#8b949e; font-size:12px; }}
-.upload-zone {{ border:2px dashed #30363d; border-radius:12px; padding:48px 24px; text-align:center; margin-bottom:24px; transition:border-color 0.3s,background 0.3s; cursor:pointer; }}
-.upload-zone:hover,.upload-zone.dragover {{ border-color:#58a6ff; background:#161b22; }}
-.upload-zone h3 {{ color:#58a6ff; font-size:20px; margin-bottom:8px; }}
-.upload-zone p {{ color:#8b949e; font-size:14px; margin-bottom:16px; }}
-.upload-btn {{ display:inline-block; padding:10px 24px; background:#238636; color:#fff; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; border:none; }}
-.upload-btn:hover {{ background:#2ea043; }}
-#file-input {{ display:none; }} .file-info {{ margin-top:12px; font-size:13px; color:#8b949e; }}
-.pipeline {{ display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }}
-.pipeline-step {{ padding:8px 16px; background:#161b22; border:1px solid #30363d; border-radius:6px; font-size:12px; display:flex; align-items:center; gap:6px; }}
-.pipeline-step.active {{ border-color:#58a6ff; background:#0d1117; }}
-.pipeline-step.complete {{ border-color:#238636; }}
-.pipeline-step.error {{ border-color:#f85149; }}
-.result-box {{ background:#161b22; border:1px solid #30363d; border-radius:8px; padding:20px; margin:16px 0; display:none; }}
-.result-box.visible {{ display:block; }}
-.result-box h3 {{ color:#58a6ff; margin-bottom:12px; font-size:16px; }}
-.result-pre {{ background:#0d1117; border:1px solid #21262d; border-radius:6px; padding:16px; font-family:'SF Mono',Monaco,monospace; font-size:12px; white-space:pre-wrap; word-wrap:break-word; max-height:600px; overflow-y:auto; }}
-.safety-badge {{ display:inline-block; padding:4px 12px; border-radius:4px; font-size:11px; font-weight:600; margin-bottom:4px; margin-right:8px; }}
-.grade-display {{ font-size:48px; font-weight:700; display:inline-block; width:64px; height:64px; line-height:64px; text-align:center; border-radius:8px; margin-right:16px; }}
-.grade-A {{ background:#2ecc71; color:#fff; }} .grade-B {{ background:#27ae60; color:#fff; }}
-.grade-C {{ background:#f39c12; color:#fff; }} .grade-D {{ background:#e67e22; color:#fff; }}
-.grade-F {{ background:#e74c3c; color:#fff; }}
-</style>
-</head>
-<body>
-<h1>SystemLake Underwriter</h1>
-<p class="subtitle">Privacy-preserving code evaluation gateway · Upload your repo → get an underwriting verdict · Your source code never leaves your control</p>
-
-<div class="card" style="margin-bottom:24px;">
-    <div class="safety-badge" style="background:#238636">PRIVACY GATE: No source code sent to LLM · Only metadata, hashes, and structure</div>
-    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
-        <h3>Upload Your Repository</h3>
-        <p>Drop a .zip or .tar.gz of your codebase here, or click to browse</p>
-        <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('file-input').click()">Choose File</button>
-        <div class="file-info" id="file-info"></div>
-    </div>
-    <input type="file" id="file-input" accept=".zip,.tar.gz,.tgz,.tar" />
-    <div class="pipeline" id="pipeline" style="display:none">
-        <div class="pipeline-step" id="step-upload"><span class="icon">📤</span> Upload</div>
-        <div class="pipeline-step" id="step-crawl"><span class="icon">🔍</span> Crawl+Hash</div>
-        <div class="pipeline-step" id="step-merkle"><span class="icon">🌳</span> Merkle</div>
-        <div class="pipeline-step" id="step-score"><span class="icon">📊</span> Score</div>
-        <div class="pipeline-step" id="step-llm"><span class="icon">🤖</span> LLM</div>
-        <div class="pipeline-step" id="step-receipt"><span class="icon">🧾</span> Receipt</div>
-    </div>
-    <div class="result-box" id="result-box"><h3>Evaluation Result</h3><div id="result-content"></div></div>
-</div>
-
-{tel_block}
-
-<div class="section-title">How It Works</div>
-<div class="card">
-    <div class="stat-row"><span class="stat-label">1. Upload</span><span class="stat-value">You upload a zip/tar of your repo</span></div>
-    <div class="stat-row"><span class="stat-label">2. Crawl + Hash</span><span class="stat-value">System hashes every file (SHA-256)</span></div>
-    <div class="stat-row"><span class="stat-label">3. Redact</span><span class="stat-value">Source code stripped — only metadata kept</span></div>
-    <div class="stat-row"><span class="stat-label">4. Merkle Root</span><span class="stat-value">Tamper-evident state proof computed</span></div>
-    <div class="stat-row"><span class="stat-label">5. Score</span><span class="stat-value">10-dimension collateral scoring</span></div>
-    <div class="stat-row"><span class="stat-label">6. Cognition Packet</span><span class="stat-value">Redacted packet = hashes + sizes + structure + scores</span></div>
-    <div class="stat-row"><span class="stat-label">7. LLM Evaluate</span><span class="stat-value">ONLY the packet sent to GPT — never your code</span></div>
-    <div class="stat-row"><span class="stat-label">8. Receipt</span><span class="stat-value">Cryptographic receipt proving the evaluation occurred</span></div>
-</div>
-
-<div class="section-title">API Endpoints</div>
-<div class="card api-list">
-    <a href="/health">GET /health</a> — Service status<br>
-    <a href="/telemetry">GET /telemetry</a> — Reference audit telemetry<br>
-    POST /upload — Upload zip/tar.gz (multipart form, field: "file")<br>
-    GET /result/{{id}} — Full evaluation result<br>
-    GET /result/{{id}}/packet — Redacted cognition packet only<br>
-    GET /result/{{id}}/evaluation — LLM evaluation text only<br>
-    GET /result/{{id}}/receipt — Cryptographic receipt only
-</div>
-
-<div class="footer">
-    SystemLake Underwriter v2.0 · Privacy-preserving code evaluation ·
-    No source code sent to LLM · Only metadata, hashes, and structure ·
-    Secrets, keys, and credentials filtered out entirely
-</div>
-
-<script>
-const uploadZone=document.getElementById('upload-zone'),fileInput=document.getElementById('file-input'),
-      fileInfo=document.getElementById('file-info'),pipeline=document.getElementById('pipeline'),
-      resultBox=document.getElementById('result-box'),resultContent=document.getElementById('result-content');
-let evalId=null,pollTimer=null;
-
-uploadZone.addEventListener('dragover',e=>{{e.preventDefault();uploadZone.classList.add('dragover');}});
-uploadZone.addEventListener('dragleave',()=>uploadZone.classList.remove('dragover'));
-uploadZone.addEventListener('drop',e=>{{e.preventDefault();uploadZone.classList.remove('dragover');if(e.dataTransfer.files.length)handleFile(e.dataTransfer.files[0]);}});
-fileInput.addEventListener('change',e=>{{if(e.target.files.length)handleFile(e.target.files[0]);}});
-
-function handleFile(file){{
-    fileInfo.textContent=`Selected: ${{file.name}} (${{(file.size/1024).toFixed(1)}} KB)`;
-    const fd=new FormData();fd.append('file',file);
-    pipeline.style.display='flex';setStep('step-upload','active');
-    fetch('/upload',{{method:'POST',body:fd}}).then(r=>r.json()).then(data=>{{
-        setStep('step-upload','complete');evalId=data.eval_id;pollResult();
-    }}).catch(err=>{{setStep('step-upload','error');fileInfo.textContent=`Error: ${{err}}`;}});
-}}
-
-function setStep(id,s){{const e=document.getElementById(id);e.classList.remove('active','complete','error');e.classList.add(s);
-    if(s==='complete')e.querySelector('.icon').textContent='✓';if(s==='active')e.querySelector('.icon').textContent='⏳';}}
-
-function pollResult(){{pollTimer=setInterval(()=>{
-    fetch(`/result/${{evalId}}`).then(r=>r.json()).then(data=>{{
-        updatePipeline(data);
-        if(data.status==='complete'||data.status==='error'){{clearInterval(pollTimer);showResult(data);}}
-    }}).catch(()=>{{}});
-}},2000);}}
-
-function updatePipeline(data){{
-    const m={{'crawling':['step-crawl'],'building_cognition_packet':['step-crawl','step-merkle','step-score'],
-        'building_llm_prompt':['step-crawl','step-merkle','step-score'],
-        'evaluating_with_llm':['step-crawl','step-merkle','step-score','step-llm'],
-        'writing_receipt':['step-crawl','step-merkle','step-score','step-llm'],
-        'complete':['step-crawl','step-merkle','step-score','step-llm','step-receipt']}};
-    const steps=m[data.status]||[];const all=['step-crawl','step-merkle','step-score','step-llm','step-receipt'];
-    all.forEach(s=>{{const e=document.getElementById(s);e.classList.remove('active','complete','error');}});
-    steps.forEach((s,i)=>setStep(s,i<steps.length-1||data.status==='complete'?'complete':'active'));
-}}
-
-function showResult(data){{
-    resultBox.classList.add('visible');
-    if(data.status==='error'){{resultContent.innerHTML=`<pre class="result-pre">Error: ${{data.error}}</pre>`;return;}}
-    const p=data.packet||{{}},s=p.collateral_scores||{{}},g=s.grade||'F',r=data.receipt||{{}};
-    let h=`<div style="display:flex;align-items:center;margin-bottom:16px">
-        <div class="grade-display grade-${{g}}">${{g}}</div>
-        <div><div style="font-size:24px;font-weight:700">Score: ${{s.final_score||0}}/100</div>
-        <div style="color:#8b949e;font-size:14px">Borrowing base: $${{(s.borrowing_base_estimate_usd||{{}}).mid||0}}</div></div></div>
-        <div class="safety-badge" style="background:#1f6feb">RECEIPT: ${{r.receipt_id||'N/A'}}</div>
-        <div class="safety-badge" style="background:#238636">SOURCE CODE SENT TO LLM: NO</div>
-        <div class="safety-badge" style="background:#238636">SECRETS FILTERED: ${{r.files_denied||0}} files</div>
-        <div class="safety-badge" style="background:#238636">MERKLE: ${{(r.merkle_root||'').substring(0,16)}}...</div>`;
-    h+=`<h3 style="margin-top:16px;color:#58a6ff">LLM Underwriting Verdict</h3><pre class="result-pre">${{data.llm_evaluation||'No evaluation'}}</pre>`;
-    h+=`<h3 style="margin-top:16px;color:#58a6ff">Cognition Packet (sent to LLM)</h3><pre class="result-pre">${{JSON.stringify({{stats:p.stats,systems:p.systems,collateral_scores:p.collateral_scores,risks:p.risks,merkle_root:(p.merkle_root||'').substring(0,32)+'...'}},null,2)}}</pre>`;
-    h+=`<h3 style="margin-top:16px;color:#58a6ff">Receipt</h3><pre class="result-pre">${{JSON.stringify(r,null,2)}}</pre>`;
-    h+=`<div style="margin-top:16px"><a href="/result/${{evalId}}/packet" style="margin-right:12px">[Packet]</a><a href="/result/${{evalId}}/evaluation" style="margin-right:12px">[Evaluation]</a><a href="/result/${{evalId}}/receipt">[Receipt]</a></div>`;
-    resultContent.innerHTML=h;
-}}
-</script>
-</body></html>""")
+    return HTMLResponse("<meta http-equiv=refresh content=0 url=/>")
 
 # ─── JORKI API Endpoints ─────────────────────────────────────────────────
 
@@ -904,6 +727,12 @@ def _jorki_index_file(filepath):
                 name = stripped[len(prefix):].split("(")[0].split(":")[0].strip()
                 symbols.append({"line": i + 1, "name": name, "type": prefix.strip()})
 
+    # ── KPI Extraction ──
+    kpis = _jorki_extract_kpis(text, lines, word_freq)
+
+    # ── DNA Fingerprint ──
+    dna = _jorki_compute_dna(content, text, lines, symbols, word_freq, chunks, path.name)
+
     idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
     conn = sqlite3.connect(str(idx_path))
     conn.execute("CREATE TABLE IF NOT EXISTS file_meta (key TEXT, value TEXT)")
@@ -911,11 +740,17 @@ def _jorki_index_file(filepath):
     conn.execute("CREATE TABLE IF NOT EXISTS word_freq (word TEXT, count INTEGER)")
     conn.execute("CREATE TABLE IF NOT EXISTS symbols (line INTEGER, name TEXT, type TEXT)")
     conn.execute("CREATE TABLE IF NOT EXISTS capabilities (id INTEGER, name TEXT)")
+    conn.execute("CREATE TABLE IF NOT EXISTS kpis (id INTEGER, name TEXT, value TEXT, line INTEGER, category TEXT, confidence REAL)")
+    conn.execute("CREATE TABLE IF NOT EXISTS dna (key TEXT, value TEXT)")
+    conn.execute("CREATE TABLE IF NOT EXISTS access_control (password_hash TEXT, salt TEXT, hint TEXT, created_at REAL)")
     conn.execute("DELETE FROM file_meta")
     conn.execute("DELETE FROM chunks")
     conn.execute("DELETE FROM word_freq")
     conn.execute("DELETE FROM symbols")
     conn.execute("DELETE FROM capabilities")
+    conn.execute("DELETE FROM kpis")
+    conn.execute("DELETE FROM dna")
+    conn.execute("DELETE FROM access_control")
     meta = {"filename": path.name, "size_bytes": str(size), "total_lines": str(line_count),
             "total_words": str(len(words)), "merkle_root": merkle_root,
             "total_chunks": str(len(chunks)), "total_symbols": str(len(symbols)),
@@ -928,8 +763,12 @@ def _jorki_index_file(filepath):
         conn.execute("INSERT INTO word_freq VALUES (?,?)", (w, cnt))
     for s in symbols:
         conn.execute("INSERT INTO symbols VALUES (?,?,?)", (s["line"], s["name"], s["type"]))
-    caps = [(i, name) for i, name in enumerate(["sql", "nosql", "search", "chunk", "summary", "meta", "mcp", "word_freq", "symbols", "chunks", "merkle", "sha256", "capabilities", "revocation"])]
+    caps = [(i, name) for i, name in enumerate(["sql", "nosql", "search", "chunk", "summary", "meta", "mcp", "word_freq", "symbols", "chunks", "merkle", "sha256", "capabilities", "revocation", "kpi", "dna", "password"])]
     conn.executemany("INSERT INTO capabilities VALUES (?,?)", caps)
+    for k in kpis:
+        conn.execute("INSERT INTO kpis VALUES (?,?,?,?,?,?)", (k["id"], k["name"], k["value"], k["line"], k["category"], k["confidence"]))
+    for k, v in dna.items():
+        conn.execute("INSERT INTO dna VALUES (?,?)", (k, json.dumps(v) if isinstance(v, dict) else str(v)))
     conn.commit()
     conn.close()
 
@@ -939,7 +778,151 @@ def _jorki_index_file(filepath):
             "total_lines": line_count, "total_words": len(words),
             "total_chunks": len(chunks), "total_symbols": len(symbols),
             "merkle_root": merkle_root, "index_size_bytes": index_size,
-            "index_ratio": round(index_size / max(size, 1) * 100, 1)}
+            "index_ratio": round(index_size / max(size, 1) * 100, 1),
+            "kpi_count": len(kpis), "dna": dna.get("dna_sequence", "")[:32]}
+
+# ─── KPI Extraction ─────────────────────────────────────────────────────
+
+def _jorki_extract_kpis(text, lines, word_freq):
+    kpis = []
+    kid = 0
+
+    # Financial patterns
+    money_re = re.compile(r'\$[\d,]{3,}(?:\.\d{2})?|\bUSD\s*[\d,]{3,}|\bEUR\s*[\d,]{3,}|\bGBP\s*[\d,]{3,}', re.I)
+    pct_re = re.compile(r'\b(\d+\.?\d*)\s*%', re.I)
+    rev_re = re.compile(r'\b(revenue|income|profit|loss|ebitda|margin|cost|budget|spend|valuation|capex|opex|mrr|arr|ltv|cac|churn|burn\s*rate|runway)\s*[:=]?\s*\$?[\d,]{3,}(?:\.\d+)?', re.I)
+    date_re = re.compile(r'\b(20\d{2}[-/]\d{1,2}[-/]\d{1,2}|\d{1,2}[-/]\d{1,2}[-/]20\d{2}|Q[1-4]\s*20\d{2}|FY20\d{2})\b', re.I)
+    metric_re = re.compile(r'(users|customers|sessions|requests|latency|uptime|throughput|qps|rps|errors|failures|success\s*rate)\s*[:=]?\s*[\d,]+(?:\.\d+)?', re.I)
+    table_re = re.compile(r'^\s*\|.*\|.*\|', re.MULTILINE)
+    api_re = re.compile(r'(GET|POST|PUT|DELETE|PATCH)\s+(/[^\s]+)', re.I)
+    key_val_re = re.compile(r'^\s*([A-Z][A-Z_]{2,30})\s*[:=]\s*(.+)$', re.MULTILINE)
+
+    for i, line in enumerate(lines):
+        for m in money_re.finditer(line):
+            kpis.append({"id": kid, "name": "monetary_value", "value": m.group(), "line": i + 1, "category": "financial", "confidence": 0.9})
+            kid += 1
+        for m in rev_re.finditer(line):
+            kpis.append({"id": kid, "name": "revenue_metric", "value": m.group().strip(), "line": i + 1, "category": "financial", "confidence": 0.85})
+            kid += 1
+        for m in pct_re.finditer(line):
+            val = float(m.group(1))
+            if val > 0 and val <= 100:
+                kpis.append({"id": kid, "name": "percentage", "value": m.group(), "line": i + 1, "category": "financial", "confidence": 0.7})
+                kid += 1
+        for m in metric_re.finditer(line):
+            kpis.append({"id": kid, "name": "operational_metric", "value": m.group().strip(), "line": i + 1, "category": "operational", "confidence": 0.8})
+            kid += 1
+        for m in api_re.finditer(line):
+            kpis.append({"id": kid, "name": "api_endpoint", "value": f"{m.group(1)} {m.group(2)}", "line": i + 1, "category": "technical", "confidence": 0.9})
+            kid += 1
+        for m in key_val_re.finditer(line):
+            val = m.group(2).strip()
+            if len(val) < 100 and not val.lower() in ("true", "false", "none", "null"):
+                kpis.append({"id": kid, "name": "config_value", "value": f"{m.group(1)}={val}", "line": i + 1, "category": "config", "confidence": 0.6})
+                kid += 1
+
+    for m in date_re.finditer(text):
+        kpis.append({"id": kid, "name": "date_reference", "value": m.group(), "line": text[:m.start()].count("\n") + 1, "category": "temporal", "confidence": 0.75})
+        kid += 1
+
+    if table_re.search(text):
+        table_count = len(table_re.findall(text))
+        kpis.append({"id": kid, "name": "table_count", "value": str(table_count), "line": 0, "category": "structural", "confidence": 0.9})
+        kid += 1
+
+    # Top words as KPIs
+    for w, cnt in sorted(word_freq.items(), key=lambda x: -x[1])[:5]:
+        if len(w) > 3 and cnt > 2:
+            kpis.append({"id": kid, "name": "dominant_term", "value": f"{w} ({cnt}x)", "line": 0, "category": "linguistic", "confidence": 0.5})
+            kid += 1
+
+    # Deduplicate by value
+    seen = set()
+    unique = []
+    for k in kpis:
+        key = (k["name"], k["value"])
+        if key not in seen:
+            seen.add(key)
+            unique.append(k)
+    for i, k in enumerate(unique):
+        k["id"] = i
+    return unique
+
+# ─── DNA Fingerprint ────────────────────────────────────────────────────
+
+def _jorki_compute_dna(content, text, lines, symbols, word_freq, chunks, filename=""):
+    h = hashlib.sha256(content).hexdigest()
+    # Structural genes
+    gene_1 = len(lines)          # height
+    gene_2 = max(len(l) for l in lines) if lines else 0  # max width
+    gene_3 = len(symbols)        # symbol density
+    gene_4 = len(chunks)         # chunk count
+    gene_5 = len(word_freq)      # vocabulary richness
+    gene_6 = sum(len(l) for l in lines) / max(len(lines), 1)  # avg line length
+    gene_7 = len([l for l in lines if l.strip() == ""]) / max(len(lines), 1)  # blank ratio
+    gene_8 = len([l for l in lines if l.strip().startswith("#")]) / max(len(lines), 1)  # comment ratio
+    # Entropy
+    from collections import Counter
+    byte_counts = Counter(content[:4096])
+    total = sum(byte_counts.values())
+    import math
+    entropy = -sum((c / total) * math.log2(c / total) for c in byte_counts.values() if c > 0) if total > 0 else 0
+
+    # DNA sequence: 16-gene hex string
+    genes = [
+        f"{gene_1:04x}",     # height
+        f"{gene_2:04x}",     # max width
+        f"{gene_3:04x}",     # symbols
+        f"{gene_4:04x}",     # chunks
+        f"{gene_5:04x}",     # vocab
+        f"{int(gene_6 * 100):04x}",  # avg line len
+        f"{int(gene_7 * 65535):04x}",  # blank ratio
+        f"{int(gene_8 * 65535):04x}",  # comment ratio
+        f"{int(entropy * 1000):04x}",  # entropy
+        h[:4],               # first 4 of merkle
+    ]
+    dna_seq = "".join(genes)
+
+    # Species classification — prefer file extension, fall back to content
+    file_ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
+    ext_map = {"py": "pythonicus", "js": "javascriptus", "jsx": "javascriptus", "ts": "javascriptus",
+               "tsx": "javascriptus", "json": "jsonicus", "html": "markupus", "xml": "markupus",
+               "svg": "markupus", "csv": "tabularis", "tsv": "tabularis", "md": "textus",
+               "txt": "textus", "yml": "configus", "yaml": "configus", "toml": "configus",
+               "sh": "scripticus", "go": "golangus", "rs": "rusticus", "c": "ceplusplus", "cpp": "ceplusplus"}
+    if file_ext in ext_map:
+        species = ext_map[file_ext]
+    elif "import " in text or "def " in text or "class " in text:
+        species = "pythonicus"
+    elif "function " in text or "const " in text or "=>" in text:
+        species = "javascriptus"
+    elif text.strip().startswith("{") or text.strip().startswith("["):
+        species = "jsonicus"
+    elif "<html" in text[:200].lower() or "<!doctype" in text[:200].lower():
+        species = "markupus"
+    elif "|" in text and text.count("|") > 10:
+        species = "tabularis"
+    else:
+        species = "textus"
+
+    return {
+        "dna_sequence": dna_seq,
+        "species": species,
+        "genes": {
+            "height": gene_1,
+            "max_width": gene_2,
+            "symbol_density": gene_3,
+            "chunk_count": gene_4,
+            "vocab_richness": gene_5,
+            "avg_line_length": round(gene_6, 1),
+            "blank_ratio": round(gene_7, 3),
+            "comment_ratio": round(gene_8, 3),
+            "entropy": round(entropy, 2),
+            "merkle_prefix": h[:8],
+        },
+        "complexity_score": round(min((gene_3 * 10 + gene_4 * 0.5 + min(gene_5, 500) * 0.01 + entropy * 0.5 + gene_6 * 0.1) / max(gene_1, 1) * 100, 100), 1),
+        "genome_size": len(dna_seq),
+    }
 
 # JORKI query tracking
 _jorki_query_log = {}
@@ -951,6 +934,77 @@ def _jorki_track_query(file_id, query_type):
     _jorki_query_log[file_id]["query_breakdown"][query_type] = _jorki_query_log[file_id]["query_breakdown"].get(query_type, 0) + 1
     _jorki_query_log[file_id]["last_access"] = time.time()
 
+@app.post("/index")
+async def jorki_index_upload(file: UploadFile = File(...)):
+    content = await file.read()
+    upload_path = JORKI_DATA_DIR / "uploads" / file.filename
+    upload_path.parent.mkdir(parents=True, exist_ok=True)
+    upload_path.write_bytes(content)
+    result = _jorki_index_file(str(upload_path))
+    reg = _jorki_load_registry()
+    reg[result["file_id"]] = {
+        "filename": result["filename"],
+        "size_bytes": result["size_bytes"],
+        "size_human": result["size_human"],
+        "format": upload_path.suffix.lstrip("."),
+        "status": "active",
+        "indexed_at": time.time(),
+    }
+    _jorki_save_registry(reg)
+    return result
+
+@app.post("/index/path")
+async def jorki_index_path(body: dict = Body(...)):
+    filepath = body.get("filepath", "")
+    if not os.path.exists(filepath):
+        return {"error": f"File not found: {filepath}"}
+    result = _jorki_index_file(filepath)
+    reg = _jorki_load_registry()
+    reg[result["file_id"]] = {
+        "filename": result["filename"],
+        "size_bytes": result["size_bytes"],
+        "size_human": result["size_human"],
+        "format": _Path(filepath).suffix.lstrip("."),
+        "status": "active",
+        "indexed_at": time.time(),
+    }
+    _jorki_save_registry(reg)
+    return result
+
+@app.post("/reindex/{file_id}")
+async def jorki_reindex(file_id: str):
+    """Re-index an already uploaded file. Fixes stale indexes after code updates."""
+    reg = _jorki_load_registry()
+    entry = reg.get(file_id)
+    if not entry:
+        return {"error": f"File {file_id} not in registry"}
+    # Find the uploaded file
+    upload_path = JORKI_DATA_DIR / "uploads" / entry.get("filename", "")
+    if not upload_path.exists():
+        # Try pipeline_uploads
+        upload_path = JORKI_DATA_DIR / "pipeline_uploads" / entry.get("filename", "")
+    if not upload_path.exists():
+        return {"error": f"Source file not found for {file_id}"}
+    # Delete old index
+    old_idx = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if old_idx.exists():
+        old_idx.unlink()
+    # Re-index
+    result = _jorki_index_file(str(upload_path))
+    reg[result["file_id"]] = {
+        "filename": result["filename"],
+        "size_bytes": result["size_bytes"],
+        "size_human": result["size_human"],
+        "format": upload_path.suffix.lstrip("."),
+        "status": "active",
+        "indexed_at": time.time(),
+    }
+    # If file_id changed (content changed), clean up old entry
+    if result["file_id"] != file_id:
+        reg.pop(file_id, None)
+    _jorki_save_registry(reg)
+    return {"status": "reindexed", "old_file_id": file_id, "new_file_id": result["file_id"], **result}
+
 @app.get("/health")
 async def jorki_health():
     reg = _jorki_load_registry()
@@ -959,7 +1013,16 @@ async def jorki_health():
             "persistent_storage": os.path.exists("/data"),
             "endpoints": ["/health", "/files", "/meta/{id}", "/summary/{id}",
                           "/capabilities/{id}", "/superpose/state/{id}",
-                          "/search/{id}", "/chunk/{id}/{idx}", "/query/sql/{id}", "/stats/{id}"]}
+                          "/search/{id}", "/chunk/{id}/{idx}", "/query/sql/{id}", "/stats/{id}",
+                          "/kpi/{id}", "/kpi/{id}/gif", "/dna/{id}", "/password/{id}", "/password/{id}/verify", "/password/{id}/status",
+                          "/profile/{id}",
+                          "/ml/{id}",
+                          "/valuation/{id}",
+                          "/resume/{id}",
+                          "/video/{id}",
+                          "/formulas",
+                          "/reindex/{id}",
+                          "/pipeline/trigger", "/pipeline/status/{id}", "/pipeline/latest"]}
 
 @app.get("/files")
 async def jorki_files():
@@ -1087,6 +1150,3240 @@ async def jorki_stats(file_id: str):
     return {"file_id": file_id, "stats": [{"type": k, "count": v} for k, v in ql.get("query_breakdown", {}).items()],
             "total_queries": ql.get("total_queries", 0)}
 
+# ─── KPI Endpoint ───────────────────────────────────────────────────────
+
+@app.get("/kpi/{file_id}")
+async def jorki_kpi(file_id: str):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis ORDER BY confidence DESC, category").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "kpi")
+    by_category = {}
+    for r in rows:
+        cat = r[4]
+        if cat not in by_category:
+            by_category[cat] = []
+        by_category[cat].append({"id": r[0], "name": r[1], "value": r[2], "line": r[3], "confidence": r[5]})
+    return {"file_id": file_id, "total_kpis": len(rows),
+            "by_category": by_category,
+            "kpis": [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in rows]}
+
+# ─── KPI → Animated GIF ─────────────────────────────────────────────────
+
+def _jorki_kpi_gif(file_id, filename, kpis, by_category):
+    """Render KPIs as an animated GIF with charts, bars, and transitions."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+    from matplotlib.patches import FancyBboxPatch, Wedge, Circle
+    import numpy as np
+    import re as _re
+
+    BG = "#0a0a0a"
+    ORANGE = "#ff8c00"
+    WHITE = "#e0e0e0"
+    DIM = "#555555"
+    GREEN = "#00ff88"
+    RED = "#ff4444"
+    YELLOW = "#ffcc00"
+    BLUE = "#4488ff"
+    PURPLE = "#aa44ff"
+    CYAN = "#44ddff"
+
+    CAT_COLORS = {
+        "financial": GREEN,
+        "operational": BLUE,
+        "technical": ORANGE,
+        "config": PURPLE,
+        "temporal": CYAN,
+        "structural": YELLOW,
+        "linguistic": DIM,
+    }
+
+    scenes = []
+
+    # Scene 1: Title
+    scenes.append({
+        "type": "title",
+        "title": filename or "unknown",
+        "subtitle": f"{len(kpis)} KPIs EXTRACTED",
+        "info": f"ID: {file_id}",
+    })
+
+    # Scene 2: Category distribution donut
+    cat_counts = {cat: len(items) for cat, items in by_category.items()}
+    scenes.append({
+        "type": "donut",
+        "title": "KPI DISTRIBUTION",
+        "data": cat_counts,
+        "colors": {cat: CAT_COLORS.get(cat, ORANGE) for cat in cat_counts},
+    })
+
+    # Scene 3: Confidence distribution
+    conf_buckets = {"0.9+": 0, "0.7-0.9": 0, "0.5-0.7": 0, "<0.5": 0}
+    for k in kpis:
+        c = k["confidence"]
+        if c >= 0.9: conf_buckets["0.9+"] += 1
+        elif c >= 0.7: conf_buckets["0.7-0.9"] += 1
+        elif c >= 0.5: conf_buckets["0.5-0.7"] += 1
+        else: conf_buckets["<0.5"] += 1
+    scenes.append({
+        "type": "bars",
+        "title": "CONFIDENCE LEVELS",
+        "data": conf_buckets,
+        "colors": {"0.9+": GREEN, "0.7-0.9": BLUE, "0.5-0.7": YELLOW, "<0.5": RED},
+    })
+
+    # Scene 4-6: Top KPIs per category (one scene per major category)
+    for cat, items in by_category.items():
+        if len(items) < 1:
+            continue
+        top_items = sorted(items, key=lambda x: -x["confidence"])[:8]
+        scenes.append({
+            "type": "kpi_list",
+            "title": f"{cat.upper()} KPIs ({len(items)})",
+            "items": top_items,
+            "color": CAT_COLORS.get(cat, ORANGE),
+        })
+
+    # Scene 7: Financial values extracted (if any)
+    fin_kpis = [k for k in kpis if k["category"] == "financial"]
+    if fin_kpis:
+        # Try to parse monetary values
+        monetary = []
+        for k in fin_kpis:
+            val = k["value"]
+            m = _re.search(r'\$?([\d,]+(?:\.\d+)?)', val.replace(",", ""))
+            if m:
+                try:
+                    num = float(m.group(1).replace(",", ""))
+                    monetary.append({"name": k["name"], "value": num, "raw": val, "line": k["line"]})
+                except:
+                    pass
+        if monetary:
+            monetary.sort(key=lambda x: -x["value"])
+            scenes.append({
+                "type": "money_bars",
+                "title": "MONETARY VALUES",
+                "items": monetary[:8],
+            })
+
+    # Scene 8: Line distribution (where KPIs appear in the file)
+    if kpis:
+        line_nums = [k["line"] for k in kpis if k["line"] > 0]
+        if line_nums:
+            max_line = max(line_nums)
+            histogram = [0] * min(20, max_line + 1)
+            for ln in line_nums:
+                bucket = min(int(ln / max(max_line, 1) * 19), 19)
+                histogram[bucket] += 1
+            scenes.append({
+                "type": "histogram",
+                "title": "KPI DENSITY BY LINE",
+                "data": histogram,
+                "max_line": max_line,
+            })
+
+    # Scene 9: Confidence heatmap (KPIs as grid)
+    if len(kpis) > 4:
+        grid_size = min(len(kpis), 24)
+        grid_w = 6
+        grid_h = (grid_size + grid_w - 1) // grid_w
+        grid = []
+        for i in range(grid_size):
+            k = kpis[i]
+            grid.append({"name": k["name"][:15], "confidence": k["confidence"], "category": k["category"]})
+        scenes.append({
+            "type": "heatmap",
+            "title": "KPI HEATMAP",
+            "grid": grid,
+            "grid_w": grid_w,
+            "grid_h": grid_h,
+        })
+
+    # Scene 10: Closing
+    scenes.append({
+        "type": "closing",
+        "title": f"{len(kpis)} KPIs",
+        "subtitle": "JORKI KPI SCAN COMPLETE",
+        "info": f"{len(by_category)} categories  ·  {sum(1 for k in kpis if k['confidence'] >= 0.7)} high-confidence",
+    })
+
+    if not scenes:
+        scenes.append({"type": "closing", "title": "No KPIs", "subtitle": "JORKI", "info": "empty"})
+
+    fig, ax = plt.subplots(figsize=(10, 5.625), facecolor=BG)
+    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+    def draw_frame(frame_idx):
+        ax.clear()
+        ax.set_xlim(0, 10)
+        ax.set_ylim(0, 5.625)
+        ax.set_facecolor(BG)
+        ax.axis("off")
+
+        frames_per_scene = 18
+        scene_idx = frame_idx // frames_per_scene
+        local_frame = frame_idx % frames_per_scene
+
+        if scene_idx >= len(scenes):
+            scene_idx = scene_idx % len(scenes)
+
+        scene = scenes[scene_idx]
+        stype = scene["type"]
+
+        if local_frame < 3:
+            alpha = local_frame / 3.0
+        elif local_frame > frames_per_scene - 3:
+            alpha = (frames_per_scene - local_frame) / 3.0
+        else:
+            alpha = 1.0
+
+        if stype == "title":
+            ax.text(5, 3.8, scene["title"], ha="center", va="center",
+                    fontsize=24, color=ORANGE, fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.text(5, 2.8, scene["subtitle"], ha="center", va="center",
+                    fontsize=14, color=GREEN, alpha=alpha, fontfamily="monospace")
+            ax.text(5, 2.0, scene["info"], ha="center", va="center",
+                    fontsize=10, color=DIM, alpha=alpha * 0.7, fontfamily="monospace")
+            ax.plot([2, 8], [2.4, 2.4], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+
+        elif stype == "donut":
+            ax.text(0.5, 5.0, scene["title"], fontsize=14, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([0.5, 9.5], [4.7, 4.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            data = scene["data"]
+            colors = scene["colors"]
+            if data:
+                total = sum(data.values())
+                # Animated donut — grows with frames
+                progress = min(local_frame / (frames_per_scene - 3), 1.0)
+                drawn = 0
+                start_angle = 90
+                for cat, count in data.items():
+                    frac = count / total
+                    end_angle = start_angle - frac * 360 * progress
+                    color = colors.get(cat, ORANGE)
+                    wedge = Wedge((5, 2.5), 1.5, end_angle, start_angle,
+                                 width=0.6, facecolor=color, alpha=alpha * 0.8)
+                    ax.add_patch(wedge)
+                    # Label
+                    mid_angle = (start_angle + end_angle) / 2
+                    lx = 5 + 2.2 * np.cos(np.radians(mid_angle))
+                    ly = 2.5 + 2.2 * np.sin(np.radians(mid_angle))
+                    ax.text(lx, ly, f"{cat[:6]}\n{count}", fontsize=7, color=color,
+                            ha="center", va="center", alpha=alpha, fontfamily="monospace")
+                    start_angle = end_angle
+                # Center text
+                ax.text(5, 2.5, str(total), ha="center", va="center",
+                        fontsize=20, color=WHITE, fontweight="bold", alpha=alpha, fontfamily="monospace")
+                ax.text(5, 1.8, "total", ha="center", va="center",
+                        fontsize=8, color=DIM, alpha=alpha, fontfamily="monospace")
+
+        elif stype == "bars":
+            ax.text(0.5, 5.0, scene["title"], fontsize=14, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([0.5, 9.5], [4.7, 4.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            data = scene["data"]
+            colors = scene["colors"]
+            max_val = max(data.values()) if data else 1
+            progress = min(local_frame / (frames_per_scene - 3), 1.0)
+            for i, (label, val) in enumerate(data.items()):
+                y = 4.0 - i * 0.7
+                bar_w = val / max_val * 6 * progress
+                color = colors.get(label, ORANGE)
+                ax.add_patch(FancyBboxPatch((2.5, y - 0.2), max(bar_w, 0.01), 0.35,
+                                             boxstyle="round,pad=0.02", facecolor=color, alpha=alpha * 0.7))
+                ax.text(0.5, y, label, fontsize=10, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(2.5 + bar_w + 0.2, y, str(val), fontsize=10, color=color,
+                        alpha=alpha, fontfamily="monospace")
+
+        elif stype == "kpi_list":
+            ax.text(0.5, 5.0, scene["title"], fontsize=14, color=scene["color"],
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([0.5, 9.5], [4.7, 4.7], color=scene["color"], linewidth=0.5, alpha=alpha * 0.3)
+            items = scene["items"]
+            color = scene["color"]
+            for i, item in enumerate(items[:8]):
+                y = 4.2 - i * 0.5
+                # Confidence bar
+                conf = item["confidence"]
+                ax.add_patch(FancyBboxPatch((0.5, y - 0.08), conf * 1.5, 0.16,
+                                             boxstyle="round,pad=0.01", facecolor=color, alpha=alpha * 0.5))
+                ax.text(2.2, y, item["name"][:20], fontsize=9, color=WHITE,
+                        alpha=alpha, fontfamily="monospace")
+                ax.text(6.5, y, str(item["value"])[:25], fontsize=8, color=color,
+                        alpha=alpha, fontfamily="monospace")
+                ax.text(9.2, y, f"L{item['line']}", fontsize=7, color=DIM,
+                        alpha=alpha, fontfamily="monospace")
+
+        elif stype == "money_bars":
+            ax.text(0.5, 5.0, scene["title"], fontsize=14, color=GREEN,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([0.5, 9.5], [4.7, 4.7], color=GREEN, linewidth=0.5, alpha=alpha * 0.3)
+            items = scene["items"]
+            max_val = max(i["value"] for i in items) if items else 1
+            progress = min(local_frame / (frames_per_scene - 3), 1.0)
+            for i, item in enumerate(items[:8]):
+                y = 4.0 - i * 0.5
+                bar_w = item["value"] / max_val * 5 * progress
+                ax.add_patch(FancyBboxPatch((3, y - 0.15), max(bar_w, 0.01), 0.25,
+                                             boxstyle="round,pad=0.02", facecolor=GREEN, alpha=alpha * 0.6))
+                ax.text(0.5, y, item["name"][:15], fontsize=8, color=DIM,
+                        alpha=alpha, fontfamily="monospace")
+                val_str = f"${item['value']:,.0f}" if item["value"] < 1000000 else f"${item['value']/1e6:.1f}M"
+                ax.text(3 + bar_w + 0.2, y, val_str, fontsize=9, color=GREEN,
+                        alpha=alpha, fontfamily="monospace")
+
+        elif stype == "histogram":
+            ax.text(0.5, 5.0, scene["title"], fontsize=14, color=CYAN,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([0.5, 9.5], [4.7, 4.7], color=CYAN, linewidth=0.5, alpha=alpha * 0.3)
+            data = scene["data"]
+            max_line = scene["max_line"]
+            max_count = max(data) if data else 1
+            progress = min(local_frame / (frames_per_scene - 3), 1.0)
+            bar_w = 8.5 / len(data)
+            for i, count in enumerate(data):
+                h = count / max_count * 3.5 * progress
+                ax.add_patch(FancyBboxPatch((0.75 + i * bar_w, 0.8), bar_w * 0.85, max(h, 0.01),
+                                             boxstyle="round,pad=0.01", facecolor=CYAN, alpha=alpha * 0.6))
+            ax.text(0.75, 0.4, "Line 0", fontsize=7, color=DIM, alpha=alpha, fontfamily="monospace")
+            ax.text(9.0, 0.4, f"Line {max_line}", fontsize=7, color=DIM,
+                    alpha=alpha, ha="right", fontfamily="monospace")
+
+        elif stype == "heatmap":
+            ax.text(0.5, 5.0, scene["title"], fontsize=14, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([0.5, 9.5], [4.7, 4.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            grid = scene["grid"]
+            gw = scene["grid_w"]
+            gh = scene["grid_h"]
+            cell_w = 1.3
+            cell_h = 0.6
+            start_x = 1.0
+            start_y = 4.0
+            progress = min(local_frame / (frames_per_scene - 3), 1.0)
+            for i, cell in enumerate(grid):
+                row = i // gw
+                col = i % gw
+                x = start_x + col * cell_w
+                y = start_y - row * cell_h
+                conf = cell["confidence"]
+                color = CAT_COLORS.get(cell["category"], ORANGE)
+                # Animated reveal
+                reveal = min(progress * len(grid), i + 1)
+                if reveal > 0:
+                    cell_alpha = min(reveal - i, 1.0) * alpha
+                    ax.add_patch(FancyBboxPatch((x, y - cell_h * 0.8), cell_w * 0.9, cell_h * 0.7,
+                                                 boxstyle="round,pad=0.02",
+                                                 facecolor=color, alpha=cell_alpha * conf))
+                    ax.text(x + cell_w * 0.45, y - cell_h * 0.4, cell["name"][:8],
+                            fontsize=6, color=WHITE, ha="center", va="center",
+                            alpha=cell_alpha, fontfamily="monospace")
+
+        elif stype == "closing":
+            ax.text(5, 3.8, scene["title"], ha="center", va="center",
+                    fontsize=28, color=ORANGE, fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.text(5, 2.8, scene["subtitle"], ha="center", va="center",
+                    fontsize=14, color=GREEN, alpha=alpha, fontfamily="monospace")
+            ax.text(5, 2.0, scene["info"], ha="center", va="center",
+                    fontsize=10, color=DIM, alpha=alpha * 0.7, fontfamily="monospace")
+            ax.plot([3, 7], [2.4, 2.4], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+
+        ax.text(9.5, 0.15, "◆ JORKI KPI", fontsize=7, color=DIM, alpha=alpha * 0.3,
+                ha="right", fontfamily="monospace")
+
+    frames_per_scene = 18
+    total_frames = len(scenes) * frames_per_scene
+
+    anim = animation.FuncAnimation(
+        fig, draw_frame, frames=total_frames,
+        interval=180, blit=False, repeat=True
+    )
+
+    gif_dir = JORKI_DATA_DIR / "kpi_gifs"
+    gif_dir.mkdir(parents=True, exist_ok=True)
+    gif_path = gif_dir / f"{file_id}_kpi.gif"
+
+    try:
+        writer = animation.PillowWriter(fps=6)
+        anim.save(str(gif_path), writer=writer, dpi=80)
+    except Exception as e:
+        plt.close(fig)
+        return {"error": f"GIF generation failed: {str(e)}"}
+
+    plt.close(fig)
+    return {"gif_path": str(gif_path), "size_bytes": gif_path.stat().st_size,
+            "scenes": len(scenes), "frames": total_frames}
+
+
+@app.get("/kpi/{file_id}/gif")
+async def jorki_kpi_gif(file_id: str):
+    """Generate and return an animated GIF visualization of file KPIs."""
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    meta_rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    kpi_rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis ORDER BY confidence DESC").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "kpi_gif")
+
+    meta = {r[0]: r[1] for r in meta_rows}
+    kpis = [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in kpi_rows]
+    by_category = {}
+    for k in kpis:
+        cat = k["category"]
+        if cat not in by_category:
+            by_category[cat] = []
+        by_category[cat].append(k)
+
+    result = _jorki_kpi_gif(file_id, meta.get("filename", "unknown"), kpis, by_category)
+    if "error" in result:
+        return result
+
+    return FileResponse(
+        result["gif_path"],
+        media_type="image/gif",
+        filename=f"{file_id}_kpi.gif"
+    )
+
+# ─── DNA Endpoint ───────────────────────────────────────────────────────
+
+@app.get("/dna/{file_id}")
+async def jorki_dna(file_id: str):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    rows = conn.execute("SELECT key, value FROM dna").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "dna")
+    dna = {r[0]: r[1] for r in rows}
+    genes_str = dna.get("genes", "{}")
+    try:
+        genes = json.loads(genes_str)
+    except:
+        genes = {}
+    return {"file_id": file_id,
+            "dna_sequence": dna.get("dna_sequence", ""),
+            "species": dna.get("species", "unknown"),
+            "genes": genes,
+            "complexity_score": float(dna.get("complexity_score", 0)),
+            "genome_size": int(dna.get("genome_size", 0))}
+
+# ─── Password / Access Control ──────────────────────────────────────────
+
+@app.post("/password/{file_id}")
+async def jorki_set_password(file_id: str, body: dict = Body(...)):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    password = body.get("password", "")
+    hint = body.get("hint", "")
+    if len(password) < 4:
+        return {"error": "Password must be at least 4 characters"}
+    salt = os.urandom(16).hex()
+    pw_hash = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 100000).hex()
+    conn = sqlite3.connect(str(idx_path))
+    conn.execute("DELETE FROM access_control")
+    conn.execute("INSERT INTO access_control VALUES (?,?,?,?)", (pw_hash, salt, hint, time.time()))
+    conn.commit()
+    conn.close()
+    return {"file_id": file_id, "status": "password_set", "hint": hint}
+
+@app.post("/password/{file_id}/verify")
+async def jorki_verify_password(file_id: str, body: dict = Body(...)):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    password = body.get("password", "")
+    conn = sqlite3.connect(str(idx_path))
+    row = conn.execute("SELECT password_hash, salt, hint FROM access_control").fetchone()
+    conn.close()
+    if not row:
+        return {"file_id": file_id, "protected": False, "hint": ""}
+    pw_hash, salt, hint = row
+    test_hash = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 100000).hex()
+    if test_hash == pw_hash:
+        return {"file_id": file_id, "protected": True, "verified": True, "hint": hint}
+    return {"file_id": file_id, "protected": True, "verified": False, "hint": hint}
+
+@app.get("/password/{file_id}/status")
+async def jorki_password_status(file_id: str):
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    row = conn.execute("SELECT hint, created_at FROM access_control").fetchone()
+    conn.close()
+    if row:
+        return {"file_id": file_id, "protected": True, "hint": row[0], "created_at": row[1]}
+    return {"file_id": file_id, "protected": False}
+
+# ─── Semantic Knowledge: Finance, Law, Collateral, Liquidity ─────────────
+
+import math as _math
+
+def _jorki_compute_profile(text, lines, word_freq, kpis, dna):
+    """Build a semantic profile: accounting, finance, law, collateral, liquidity."""
+    text_lower = text.lower()
+    profile = {
+        "origin": {},
+        "accounting": {},
+        "finance": {},
+        "law": {},
+        "collateral": {},
+        "liquidity": {},
+        "risk": {},
+        "summary": "",
+    }
+
+    # ── Origin Detection ──
+    origin_signals = {
+        "source_code": ["import ", "def ", "class ", "function ", "const ", "require("],
+        "financial_statement": ["balance sheet", "income statement", "cash flow", "p&l", "profit and loss", "assets", "liabilities", "equity", "retained earnings"],
+        "invoice": ["invoice", "bill to", "payment terms", "due date", "subtotal", "tax", "total due"],
+        "contract": ["agreement", "party", "parties", "whereas", "hereby", "terms and conditions", "obligations", "warranties"],
+        "spreadsheet": ["\t", ",", "column", "row", "cell", "sum(", "average(", "vlookup"],
+        "research_report": ["abstract", "methodology", "findings", "conclusion", "references", "hypothesis"],
+        "api_doc": ["endpoint", "request", "response", "status code", "parameters", "authentication"],
+        "audit": ["audit", "compliance", "internal control", "risk assessment", "material weakness", "sox", "gaap"],
+        "dataset": ["dataset", "features", "labels", "training", "validation", "test set", "rows", "columns"],
+    }
+    detected_origins = []
+    for origin, signals in origin_signals.items():
+        hits = sum(1 for s in signals if s in text_lower)
+        if hits >= 2:
+            detected_origins.append({"type": origin, "confidence": min(hits / len(signals), 1.0), "signals": hits})
+    profile["origin"]["detected"] = detected_origins
+    profile["origin"]["primary"] = detected_origins[0]["type"] if detected_origins else "unknown"
+
+    # ── Accounting Signals ──
+    acct_patterns = {
+        "gaap": r'\bGAAP\b',
+        "ifrs": r'\bIFRS\b',
+        "accrual": r'\baccrual\b',
+        "depreciation": r'\bdepreciation\b',
+        "amortization": r'\bamortization\b',
+        "revenue_recognition": r'\brevenue\s+recognition\b',
+        "accounts_receivable": r'\baccounts?\s+receivable\b|\bAR\b',
+        "accounts_payable": r'\baccounts?\s+payable\b|\bAP\b',
+        "inventory": r'\binventory\b',
+        "goodwill": r'\bgoodwill\b',
+        "deferred_revenue": r'\bdeferred\s+revenue\b',
+        "working_capital": r'\bworking\s+capital\b',
+        "ebitda": r'\bEBITDA\b',
+        "fiscal_year": r'\bfiscal\s+year\b|\bFY\d{2,4}\b',
+    }
+    acct_found = {}
+    for name, pattern in acct_patterns.items():
+        matches = re.findall(pattern, text, re.I)
+        if matches:
+            acct_found[name] = len(matches)
+    profile["accounting"]["standards_detected"] = [k for k in acct_found if k in ("gaap", "ifrs")]
+    profile["accounting"]["concepts_found"] = acct_found
+    profile["accounting"]["has_financial_statements"] = any(s in text_lower for s in ["balance sheet", "income statement", "cash flow statement"])
+
+    # ── Finance Signals ──
+    fin_patterns = {
+        "revenue": r'\brevenue\b',
+        "ebitda_margin": r'\bEBITDA\s+margin\b',
+        "net_income": r'\bnet\s+income\b',
+        "gross_profit": r'\bgross\s+profit\b',
+        "operating_expense": r'\boperating\s+expense\b|\bOpEx\b',
+        "capex": r'\bcapital\s+expenditure\b|\bCapEx\b',
+        "free_cash_flow": r'\bfree\s+cash\s+flow\b|\bFCF\b',
+        "wacc": r'\bWACC\b',
+        "dcf": r'\bdiscounted\s+cash\s+flow\b|\bDCF\b',
+        "npv": r'\bNPV\b',
+        "irr": r'\bIRR\b',
+        "moic": r'\bMOIC\b',
+        "roi": r'\bROI\b',
+        "roe": r'\bROE\b',
+        "roa": r'\bROA\b',
+        "debt_to_equity": r'\bdebt[- ]to[- ]equity\b|\bD/E\b',
+        "current_ratio": r'\bcurrent\s+ratio\b',
+        "quick_ratio": r'\bquick\s+ratio\b',
+    }
+    fin_found = {}
+    for name, pattern in fin_patterns.items():
+        matches = re.findall(pattern, text, re.I)
+        if matches:
+            fin_found[name] = len(matches)
+    profile["finance"]["metrics_detected"] = fin_found
+
+    # Extract monetary values from KPIs
+    monetary_kpis = [k for k in kpis if k["category"] == "financial"]
+    total_monetary = len(monetary_kpis)
+    profile["finance"]["monetary_references"] = total_monetary
+    profile["finance"]["largest_values"] = sorted(
+        [{"value": k["value"], "line": k["line"]} for k in monetary_kpis if "monetary" in k["name"] or "revenue" in k["name"]],
+        key=lambda x: x["line"]
+    )[:10]
+
+    # ── Law / Legal Signals ──
+    law_patterns = {
+        "nda": r'\bnon[- ]disclosure\b|\bNDA\b',
+        "ip_assignment": r'\bintellectual\s+property\b|\bIP\s+assignment\b',
+        "indemnification": r'\bindemnif',
+        "liability": r'\bliability\b',
+        "jurisdiction": r'\bjurisdiction\b',
+        "governing_law": r'\bgoverning\s+law\b',
+        "arbitration": r'\barbitration\b',
+        "confidentiality": r'\bconfidential',
+        "termination": r'\btermination\b',
+        "warranty": r'\bwarrant',
+        "license": r'\blicense\b|\blicens',
+        "copyright": r'\bcopyright\b',
+        "patent": r'\bpatent\b',
+        "trademark": r'\btrademark\b',
+        "compliance": r'\bcompliance\b',
+        "gdpr": r'\bGDPR\b',
+        "sox": r'\bSarbanes[- ]Oxley\b|\bSOX\b',
+        "sec_filing": r'\bSEC\b|\b10[- ]K\b|\b10[- ]Q\b|\b8[- ]K\b',
+    }
+    law_found = {}
+    for name, pattern in law_patterns.items():
+        matches = re.findall(pattern, text, re.I)
+        if matches:
+            law_found[name] = len(matches)
+    profile["law"]["legal_concepts"] = law_found
+    profile["law"]["has_contract_language"] = any(s in text_lower for s in ["whereas", "hereby", "party of the first part", "obligations of"])
+    profile["law"]["regulatory_references"] = [k for k in law_found if k in ("gdpr", "sox", "sec_filing")]
+    profile["law"]["ip_references"] = [k for k in law_found if k in ("copyright", "patent", "trademark", "license", "ip_assignment")]
+
+    # ── Collateral Assessment ──
+    collateral_signals = 0
+    collateral_items = []
+    if fin_found:
+        collateral_signals += len(fin_found)
+        collateral_items.append({"type": "financial_metrics", "count": len(fin_found), "value": "quantifiable"})
+    if acct_found:
+        collateral_signals += len(acct_found)
+        collateral_items.append({"type": "accounting_concepts", "count": len(acct_found), "value": "verifiable"})
+    if law_found:
+        collateral_signals += len(law_found)
+        collateral_items.append({"type": "legal_concepts", "count": len(law_found), "value": "enforceable"})
+    if kpis:
+        collateral_signals += len(kpis)
+        collateral_items.append({"type": "extracted_kpis", "count": len(kpis), "value": "measurable"})
+    dna_complexity = float(dna.get("complexity_score", 0)) if isinstance(dna, dict) else 0
+    if dna_complexity > 5:
+        collateral_signals += int(dna_complexity)
+        collateral_items.append({"type": "structural_complexity", "score": dna_complexity, "value": "non-trivial"})
+    if detected_origins:
+        collateral_signals += 5
+        collateral_items.append({"type": "origin_clarity", "origin": detected_origins[0]["type"], "value": "identifiable"})
+
+    # Collateral score 0-100
+    collateral_score = min(collateral_signals * 3, 100)
+    profile["collateral"]["score"] = collateral_score
+    profile["collateral"]["grade"] = "A" if collateral_score >= 80 else "B" if collateral_score >= 60 else "C" if collateral_score >= 40 else "D" if collateral_score >= 20 else "F"
+    profile["collateral"]["items"] = collateral_items
+    profile["collateral"]["signal_count"] = collateral_signals
+    profile["collateral"]["verifiable"] = collateral_score >= 40
+    profile["collateral"]["has_monetary_evidence"] = total_monetary > 0
+    profile["collateral"]["has_legal_evidence"] = bool(law_found)
+    profile["collateral"]["has_accounting_evidence"] = bool(acct_found)
+
+    # ── Liquidity Profile ──
+    liquidity_signals = 0
+    liquidity_factors = []
+
+    # Cash-related terms
+    cash_terms = ["cash", "liquid", "liquidity", "current assets", "marketable securities", "treasury"]
+    cash_hits = sum(1 for t in cash_terms if t in text_lower)
+    if cash_hits:
+        liquidity_signals += cash_hits * 5
+        liquidity_factors.append({"factor": "cash_references", "count": cash_hits})
+
+    # Time-based liquidity (mentions of days, terms, due dates)
+    time_terms = ["net 30", "net 60", "net 90", "due date", "payment terms", "maturity", "expiration"]
+    time_hits = sum(1 for t in time_terms if t in text_lower)
+    if time_hits:
+        liquidity_signals += time_hits * 4
+        liquidity_factors.append({"factor": "time_constraints", "count": time_hits})
+
+    # Marketability
+    if any(t in text_lower for t in ["market", "exchange", "tradable", "fungible"]):
+        liquidity_signals += 8
+        liquidity_factors.append({"factor": "marketability"})
+
+    # Revenue flow indicators
+    if any(t in text_lower for t in ["recurring", "subscription", "mrr", "arr", "annuity"]):
+        liquidity_signals += 10
+        liquidity_factors.append({"factor": "recurring_revenue"})
+
+    # Asset backing
+    if any(t in text_lower for t in ["collateral", "secured", "asset-backed", "tangible", "real estate", "equipment"]):
+        liquidity_signals += 8
+        liquidity_factors.append({"factor": "asset_backing"})
+
+    # Convertibility (can this be turned into cash quickly?)
+    if detected_origins and detected_origins[0]["type"] in ("financial_statement", "invoice", "contract"):
+        liquidity_signals += 6
+        liquidity_factors.append({"factor": "financial_document_type"})
+
+    liquidity_score = min(liquidity_signals * 2, 100)
+    profile["liquidity"]["score"] = liquidity_score
+    profile["liquidity"]["grade"] = "A" if liquidity_score >= 80 else "B" if liquidity_score >= 60 else "C" if liquidity_score >= 40 else "D" if liquidity_score >= 20 else "F"
+    profile["liquidity"]["factors"] = liquidity_factors
+    profile["liquidity"]["time_to_liquidate"] = "days" if liquidity_score >= 60 else "weeks" if liquidity_score >= 30 else "months" if liquidity_score >= 15 else "illiquid"
+    profile["liquidity"]["has_revenue_flow"] = any(t in text_lower for t in ["recurring", "subscription", "mrr", "arr"])
+    profile["liquidity"]["has_asset_backing"] = any(t in text_lower for t in ["collateral", "secured", "tangible", "asset"])
+
+    # ── Risk Assessment ──
+    risk_signals = []
+    risk_score = 0
+    if any(t in text_lower for t in ["confidential", "proprietary", "trade secret"]):
+        risk_signals.append("confidentiality_exposure")
+        risk_score += 15
+    if any(t in text_lower for t in ["password", "api key", "secret", "token", "credential"]):
+        risk_signals.append("secret_exposure")
+        risk_score += 25
+    if any(t in text_lower for t in ["litigation", "lawsuit", "dispute", "claim", "damages"]):
+        risk_signals.append("litigation_risk")
+        risk_score += 20
+    if any(t in text_lower for t in ["default", "bankruptcy", "insolvency", "distressed"]):
+        risk_signals.append("credit_risk")
+        risk_score += 30
+    if any(t in text_lower for t in ["forward-looking", "projection", "forecast", "guidance"]):
+        risk_signals.append("forward_looking_statements")
+        risk_score += 10
+    if any(t in text_lower for t in ["unaudited", "preliminary", "draft", "subject to change"]):
+        risk_signals.append("unverified_data")
+        risk_score += 15
+    profile["risk"]["signals"] = risk_signals
+    profile["risk"]["score"] = min(risk_score, 100)
+    profile["risk"]["level"] = "high" if risk_score >= 50 else "medium" if risk_score >= 25 else "low"
+
+    # ── Summary ──
+    parts = []
+    origin = profile["origin"]["primary"]
+    if origin != "unknown":
+        parts.append(f"Origin: {origin}")
+    if acct_found:
+        parts.append(f"Accounting: {len(acct_found)} concepts ({', '.join(list(acct_found.keys())[:3])})")
+    if fin_found:
+        parts.append(f"Finance: {len(fin_found)} metrics ({', '.join(list(fin_found.keys())[:3])})")
+    if law_found:
+        parts.append(f"Legal: {len(law_found)} concepts ({', '.join(list(law_found.keys())[:3])})")
+    parts.append(f"Collateral: {profile['collateral']['grade']} ({collateral_score})")
+    parts.append(f"Liquidity: {profile['liquidity']['grade']} ({liquidity_score})")
+    parts.append(f"Risk: {profile['risk']['level']} ({profile['risk']['score']})")
+    profile["summary"] = " · ".join(parts)
+
+    return profile
+
+
+@app.get("/profile/{file_id}")
+async def jorki_profile(file_id: str):
+    """Full semantic profile: origin, accounting, finance, law, collateral, liquidity, risk."""
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    meta_rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    kpi_rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis").fetchall()
+    dna_rows = conn.execute("SELECT key, value FROM dna").fetchall()
+    word_rows = conn.execute("SELECT word, count FROM word_freq").fetchall()
+    chunk_rows = conn.execute("SELECT preview FROM chunks").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "profile")
+
+    meta = {r[0]: r[1] for r in meta_rows}
+    kpis = [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in kpi_rows]
+    dna = {r[0]: r[1] for r in dna_rows}
+    word_freq = {r[0]: r[1] for r in word_rows}
+    text = "\n".join(r[0] for r in chunk_rows)
+    lines = text.split("\n")
+
+    try:
+        dna_obj = json.loads(dna.get("genes", "{}")) if isinstance(dna.get("genes"), str) else {}
+        dna_dict = {"genes": dna_obj, "complexity_score": float(dna.get("complexity_score", 0)), "dna_sequence": dna.get("dna_sequence", ""), "species": dna.get("species", "")}
+    except:
+        dna_dict = {}
+
+    profile = _jorki_compute_profile(text, lines, word_freq, kpis, dna_dict)
+    return {"file_id": file_id, "filename": meta.get("filename", "unknown"), "profile": profile}
+
+# ─── Valuation: Production Readiness, Replacement Cost, Build Cost ───────
+
+def _jorki_valuate(text, lines, chunks, symbols, word_freq, kpis, dna, meta):
+    """Estimate production readiness, replacement cost, build cost, and purpose."""
+    text_lower = text.lower()
+    v = {
+        "purpose": {},
+        "production_readiness": {},
+        "replacement_cost": {},
+        "build_cost": {},
+        "depreciation": {},
+        "insurance_value": {},
+    }
+
+    # ── Purpose Detection ──
+    purposes = []
+    # By file extension / content patterns
+    ext = meta.get("filename", "").rsplit(".", 1)[-1].lower() if "." in meta.get("filename", "") else ""
+    purpose_map = {
+        "py": "Python application module",
+        "js": "JavaScript frontend/backend module",
+        "jsx": "React UI component",
+        "ts": "TypeScript module",
+        "tsx": "React+TypeScript component",
+        "go": "Go service/binary",
+        "rs": "Rust system/module",
+        "swift": "macOS/iOS application",
+        "cpp": "C++ system/native module",
+        "c": "C system/native module",
+        "json": "Configuration or data schema",
+        "yaml": "Infrastructure/config definition",
+        "yml": "Infrastructure/config definition",
+        "toml": "Project configuration",
+        "md": "Documentation/specification",
+        "sql": "Database schema/query",
+        "sh": "Shell automation script",
+        "html": "Web markup/template",
+        "css": "Stylesheet",
+        "csv": "Tabular data export",
+        "txt": "Plain text data",
+        "dockerfile": "Container build definition",
+    }
+    if ext in purpose_map:
+        purposes.append({"role": purpose_map[ext], "confidence": 0.8, "source": "extension"})
+
+    # By content analysis
+    if "import " in text_lower and "def " in text_lower:
+        purposes.append({"role": "library/module — reusable Python code", "confidence": 0.85, "source": "content"})
+    if "@app.get" in text_lower or "@app.post" in text_lower or "fastapi" in text_lower:
+        purposes.append({"role": "API server — HTTP endpoint provider", "confidence": 0.9, "source": "content"})
+    if "react" in text_lower or "usestate" in text_lower or "useeffect" in text_lower:
+        purposes.append({"role": "React UI — interactive frontend component", "confidence": 0.85, "source": "content"})
+    if "docker" in text_lower or "from " in text_lower and "run " in text_lower and ext == "dockerfile":
+        purposes.append({"role": "container image definition", "confidence": 0.9, "source": "content"})
+    if any(t in text_lower for t in ["balance sheet", "income statement", "cash flow", "ebitda", "revenue"]):
+        purposes.append({"role": "financial document — accounting/reporting", "confidence": 0.8, "source": "content"})
+    if any(t in text_lower for t in ["agreement", "whereas", "party", "obligations"]):
+        purposes.append({"role": "legal contract — binding agreement", "confidence": 0.8, "source": "content"})
+    if any(t in text_lower for t in ["test", "pytest", "assert", "expect", "describe"]):
+        purposes.append({"role": "test suite — quality assurance", "confidence": 0.75, "source": "content"})
+    if any(t in text_lower for t in ["readme", "documentation", "guide", "tutorial"]):
+        purposes.append({"role": "documentation — knowledge transfer", "confidence": 0.7, "source": "content"})
+
+    # Primary purpose = highest confidence
+    purposes.sort(key=lambda x: -x["confidence"])
+    v["purpose"]["detected"] = purposes
+    v["purpose"]["primary"] = purposes[0]["role"] if purposes else "unknown"
+    v["purpose"]["roles"] = [p["role"] for p in purposes]
+
+    # ── Production Readiness Score ──
+    pr_checks = []
+    pr_score = 0
+
+    # Has tests
+    has_tests = any(t in text_lower for t in ["test", "assert", "expect", "describe", "pytest"])
+    if has_tests:
+        pr_checks.append({"check": "has_tests", "status": "pass", "weight": 15})
+        pr_score += 15
+    else:
+        pr_checks.append({"check": "has_tests", "status": "fail", "weight": 0, "impact": "no test coverage detected"})
+
+    # Has error handling
+    has_errors = any(t in text_lower for t in ["try:", "except", "catch", "error", "raise", "throw"])
+    if has_errors:
+        pr_checks.append({"check": "error_handling", "status": "pass", "weight": 10})
+        pr_score += 10
+    else:
+        pr_checks.append({"check": "error_handling", "status": "fail", "weight": 0, "impact": "no error handling"})
+
+    # Has logging
+    has_logging = any(t in text_lower for t in ["log", "logger", "logging", "console.log", "print("])
+    if has_logging:
+        pr_checks.append({"check": "logging", "status": "pass", "weight": 8})
+        pr_score += 8
+    else:
+        pr_checks.append({"check": "logging", "status": "fail", "weight": 0})
+
+    # Has config separation
+    has_config = any(t in text_lower for t in ["environ", "config", "settings", ".env", "os.getenv"])
+    if has_config:
+        pr_checks.append({"check": "config_separation", "status": "pass", "weight": 10})
+        pr_score += 10
+    else:
+        pr_checks.append({"check": "config_separation", "status": "fail", "weight": 0})
+
+    # Has documentation
+    has_docs = any(t in text_lower for t in ['"""', "'''", "// ", "# ", "docstring", "readme"])
+    doc_ratio = len([l for l in lines if l.strip().startswith("#") or l.strip().startswith("//") or '"""' in l]) / max(len(lines), 1)
+    if doc_ratio > 0.05:
+        pr_checks.append({"check": "documentation", "status": "pass", "weight": 8, "ratio": round(doc_ratio, 3)})
+        pr_score += 8
+    else:
+        pr_checks.append({"check": "documentation", "status": "fail", "weight": 0})
+
+    # Has type hints / interfaces
+    has_types = any(t in text_lower for t in ["-> ", ": int", ": str", ": bool", ": float", "interface ", "type ", "typescript"])
+    if has_types:
+        pr_checks.append({"check": "type_safety", "status": "pass", "weight": 7})
+        pr_score += 7
+    else:
+        pr_checks.append({"check": "type_safety", "status": "fail", "weight": 0})
+
+    # Has security patterns
+    has_security = any(t in text_lower for t in ["auth", "password", "hash", "pbkdf2", "bcrypt", "jwt", "token", "sanitize", "validate"])
+    if has_security:
+        pr_checks.append({"check": "security_patterns", "status": "pass", "weight": 10})
+        pr_score += 10
+    else:
+        pr_checks.append({"check": "security_patterns", "status": "fail", "weight": 0})
+
+    # Complexity check (not too complex, not too simple)
+    complexity = float(dna.get("complexity_score", 0)) if isinstance(dna, dict) else 0
+    if 1 <= complexity <= 20:
+        pr_checks.append({"check": "complexity_balanced", "status": "pass", "weight": 7, "score": complexity})
+        pr_score += 7
+    elif complexity > 20:
+        pr_checks.append({"check": "complexity_balanced", "status": "warn", "weight": 3, "impact": "high complexity, hard to maintain"})
+        pr_score += 3
+    else:
+        pr_checks.append({"check": "complexity_balanced", "status": "warn", "weight": 3, "impact": "trivial code"})
+
+    # Has dependencies declared
+    has_deps = any(t in text_lower for t in ["import ", "require(", "from ", "use "])
+    if has_deps:
+        dep_count = len(re.findall(r'import |require\(|from ', text_lower))
+        pr_checks.append({"check": "dependencies_declared", "status": "pass", "weight": 5, "count": dep_count})
+        pr_score += 5
+    else:
+        pr_checks.append({"check": "dependencies_declared", "status": "fail", "weight": 0})
+
+    # Has deployment artifacts
+    has_deploy = any(t in text_lower for t in ["docker", "dockerfile", "deploy", "ci/cd", "github actions", "netlify", "vercel"])
+    if has_deploy:
+        pr_checks.append({"check": "deployment_artifacts", "status": "pass", "weight": 10})
+        pr_score += 10
+    else:
+        pr_checks.append({"check": "deployment_artifacts", "status": "fail", "weight": 0})
+
+    # Secret exposure (negative)
+    has_secrets = any(t in text_lower for t in ["api_key", "secret_key", "password =", "token ="])
+    if has_secrets:
+        pr_checks.append({"check": "no_hardcoded_secrets", "status": "fail", "weight": -15, "impact": "hardcoded secrets detected"})
+        pr_score -= 15
+    else:
+        pr_checks.append({"check": "no_hardcoded_secrets", "status": "pass", "weight": 10})
+        pr_score += 10
+
+    pr_score = max(0, min(pr_score, 100))
+    v["production_readiness"]["score"] = pr_score
+    v["production_readiness"]["grade"] = "A" if pr_score >= 80 else "B" if pr_score >= 60 else "C" if pr_score >= 40 else "D" if pr_score >= 20 else "F"
+    v["production_readiness"]["checks"] = pr_checks
+    v["production_readiness"]["distance_to_prod"] = "production ready" if pr_score >= 80 else "minor hardening needed" if pr_score >= 60 else "moderate work needed" if pr_score >= 40 else "significant work needed" if pr_score >= 20 else "not production ready"
+    v["production_readiness"]["blocking_issues"] = [c["check"] for c in pr_checks if c["status"] == "fail"]
+
+    # ── Build Cost Estimation ──
+    # Based on: lines of code, complexity, symbols, language
+    total_lines = int(meta.get("total_lines", len(lines)))
+    total_symbols = int(meta.get("total_symbols", len(symbols)))
+    total_chunks = int(meta.get("total_chunks", len(chunks)))
+
+    # Effective lines of code (non-blank, non-comment)
+    effective_loc = len([l for l in lines if l.strip() and not l.strip().startswith(("#", "//", "/*", "*"))])
+
+    # Species-aware cost model — documentation is NOT code
+    species = dna.get("species", "textus") if isinstance(dna, dict) else "textus"
+
+    # Different file types have fundamentally different cost structures
+    COST_MODEL = {
+        "pythonicus":     {"rate": 0.20, "complexity_cap": 3.0, "test_rate": 0.05, "type": "code"},
+        "javascriptus":  {"rate": 0.20, "complexity_cap": 3.0, "test_rate": 0.06, "type": "code"},
+        "golangus":      {"rate": 0.20, "complexity_cap": 3.0, "test_rate": 0.06, "type": "code"},
+        "rusticus":      {"rate": 0.20, "complexity_cap": 3.0, "test_rate": 0.07, "type": "code"},
+        "ceplusplus":    {"rate": 0.20, "complexity_cap": 3.0, "test_rate": 0.07, "type": "code"},
+        "scripticus":    {"rate": 0.15, "complexity_cap": 2.0, "test_rate": 0.03, "type": "script"},
+        "jsonicus":      {"rate": 0.02, "complexity_cap": 1.0, "test_rate": 0,    "type": "data"},
+        "markupus":      {"rate": 0.05, "complexity_cap": 1.5, "test_rate": 0,    "type": "markup"},
+        "tabularis":     {"rate": 0.03, "complexity_cap": 1.0, "test_rate": 0,    "type": "data"},
+        "configus":      {"rate": 0.08, "complexity_cap": 1.5, "test_rate": 0,    "type": "config"},
+        "textus":        {"rate": 0.000005, "complexity_cap": 1.0, "test_rate": 0,  "type": "documentation"},
+    }
+    model = COST_MODEL.get(species, COST_MODEL["textus"])
+    file_type = model["type"]
+    base_rate = model["rate"]
+    complexity_cap = model["complexity_cap"]
+
+    # Complexity factor — capped per file type
+    complexity_factor = min(1.0 + (complexity / 20.0), complexity_cap) if complexity > 0 else 1.0
+
+    # Build cost = effective LOC * rate * complexity
+    build_cost = int(effective_loc * base_rate * complexity_factor)
+
+    # Add cost for testing, docs, deployment setup (only for code)
+    test_cost = int(effective_loc * model["test_rate"]) if not has_tests and file_type == "code" else 0
+    deploy_cost = 2000 if not has_deploy and file_type == "code" else 0
+    security_audit_cost = 1500 if has_secrets and file_type in ("code", "config") else 0
+
+    total_build_cost = build_cost + test_cost + deploy_cost + security_audit_cost
+    # Hard cap at $3M
+    total_build_cost = min(total_build_cost, 3_000_000)
+
+    v["build_cost"]["estimated_usd"] = total_build_cost
+    v["build_cost"]["breakdown"] = {
+        "code_creation": build_cost,
+        "test_creation_needed": test_cost,
+        "deployment_setup_needed": deploy_cost,
+        "security_remediation_needed": security_audit_cost,
+        "effective_loc": effective_loc,
+        "rate_per_loc": base_rate,
+        "complexity_factor": round(complexity_factor, 2),
+        "file_type": file_type,
+        "species": species,
+    }
+    v["build_cost"]["time_estimate"] = {
+        "hours": round(effective_loc / 50, 1),  # ~50 LOC/hour
+        "days": round(effective_loc / 50 / 8, 1),  # 8 hour days
+        "developer_level": "mid" if complexity < 10 else "senior" if complexity < 25 else "staff",
+    }
+
+    # ── Replacement Cost ──
+    # What it would cost to rebuild from scratch (higher than build cost due to knowledge loss)
+    # Knowledge loss factor varies by file type
+    knowledge_loss_factor = 1.5 if file_type == "code" else 1.2 if file_type == "script" else 1.1
+    ramp_up_cost = 1000 if file_type == "code" else 500
+    replacement_cost = int(total_build_cost * knowledge_loss_factor) + ramp_up_cost
+    replacement_cost = min(replacement_cost, 3_000_000)
+
+    v["replacement_cost"]["estimated_usd"] = replacement_cost
+    v["replacement_cost"]["rationale"] = f"Build cost (${total_build_cost}) × knowledge loss factor ({knowledge_loss_factor}x) + ramp-up (${ramp_up_cost})"
+    v["replacement_cost"]["time_to_rebuild"] = {
+        "hours": round(effective_loc / 40, 1),  # slower due to lost context
+        "days": round(effective_loc / 40 / 8, 1),
+        "weeks": round(effective_loc / 40 / 8 / 5, 1),
+    }
+    v["replacement_cost"]["difficulty"] = "low" if complexity < 5 else "medium" if complexity < 15 else "high" if complexity < 30 else "very high"
+
+    # ── Depreciation ──
+    # Files depreciate based on: dependency staleness, code age signals, framework obsolescence
+    dep_signals = []
+    dep_score = 0  # 0 = no depreciation, 100 = fully deprecated
+
+    # Check for deprecated patterns
+    if any(t in text_lower for t in ["python 2", "print ", "xrange", "urllib2"]):
+        dep_signals.append("legacy_python2_patterns")
+        dep_score += 30
+    if any(t in text_lower for t in ["var ", "function ", "es5", "jquery"]):
+        dep_signals.append("legacy_javascript_patterns")
+        dep_score += 20
+    if any(t in text_lower for t in ["angularjs", "backbone", "ember"]):
+        dep_signals.append("deprecated_framework")
+        dep_score += 25
+    if any(t in text_lower for t in ["xml", "soap", "wsdl"]):
+        dep_signals.append("legacy_protocol")
+        dep_score += 15
+
+    # Comment ratio as maintenance signal
+    if doc_ratio < 0.02 and effective_loc > 100:
+        dep_signals.append("insufficient_documentation")
+        dep_score += 10
+
+    # No tests = harder to maintain = faster depreciation
+    if not has_tests and effective_loc > 50:
+        dep_signals.append("no_test_coverage")
+        dep_score += 15
+
+    dep_score = min(dep_score, 100)
+    v["depreciation"]["score"] = dep_score
+    v["depreciation"]["signals"] = dep_signals
+    v["depreciation"]["remaining_value_pct"] = max(0, 100 - dep_score)
+    v["depreciation"]["depreciated_value_usd"] = int(replacement_cost * (1 - dep_score / 100))
+
+    # ── Insurance Value ──
+    # What you'd insure this file for = replacement cost + business interruption
+    business_impact = 0
+    if has_security:
+        business_impact += 5000
+    if any(t in text_lower for t in ["payment", "transaction", "billing", "invoice"]):
+        business_impact += 10000
+    if any(t in text_lower for t in ["auth", "login", "password", "session"]):
+        business_impact += 8000
+    if pr_score >= 60:
+        business_impact += 3000  # production-grade = more at stake
+
+    insurance_value = min(replacement_cost + business_impact, 3_000_000)
+    v["insurance_value"]["estimated_usd"] = insurance_value
+    v["insurance_value"]["breakdown"] = {
+        "replacement_cost": replacement_cost,
+        "business_interruption_risk": business_impact,
+    }
+
+    return v
+
+
+@app.get("/valuation/{file_id}")
+async def jorki_valuation(file_id: str):
+    """Production readiness, replacement cost, build cost, depreciation, insurance value."""
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    meta_rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    kpi_rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis").fetchall()
+    dna_rows = conn.execute("SELECT key, value FROM dna").fetchall()
+    word_rows = conn.execute("SELECT word, count FROM word_freq").fetchall()
+    chunk_rows = conn.execute("SELECT idx, line_start, line_end, boundary_type, preview, line_count FROM chunks").fetchall()
+    sym_rows = conn.execute("SELECT line, name, type FROM symbols").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "valuation")
+
+    meta = {r[0]: r[1] for r in meta_rows}
+    kpis = [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in kpi_rows]
+    dna = {r[0]: r[1] for r in dna_rows}
+    word_freq = {r[0]: int(r[1]) for r in word_rows}
+    chunks = [{"idx": r[0], "line_start": r[1], "line_end": r[2], "boundary_type": r[3], "preview": r[4], "line_count": r[5]} for r in chunk_rows]
+    symbols = [{"line": r[0], "name": r[1], "type": r[2]} for r in sym_rows]
+    text = "\n".join(c["preview"] for c in chunks)
+    lines = text.split("\n")
+
+    try:
+        dna_obj = json.loads(dna.get("genes", "{}")) if isinstance(dna.get("genes"), str) else {}
+        dna_dict = {"genes": dna_obj, "complexity_score": float(dna.get("complexity_score", 0)),
+                    "dna_sequence": dna.get("dna_sequence", ""), "species": dna.get("species", "")}
+    except:
+        dna_dict = {}
+
+    valuation = _jorki_valuate(text, lines, chunks, symbols, word_freq, kpis, dna_dict, meta)
+    return {"file_id": file_id, "filename": meta.get("filename", "unknown"), "valuation": valuation}
+
+# ─── File Resume / Dossier Generator ─────────────────────────────────────
+
+def _jorki_generate_resume(file_id, meta, kpis, dna, word_freq, chunks, symbols, profile, valuation, ml_result):
+    """Generate a novel file resume — a complete dossier combining all analysis layers."""
+    import math as _m
+
+    r = {
+        "header": {},
+        "identity": {},
+        "structural_dna": {},
+        "kpi_summary": {},
+        "financial_profile": {},
+        "legal_profile": {},
+        "ml_insights": {},
+        "valuation_summary": {},
+        "risk_assessment": {},
+        "recommendations": [],
+        "llm_facts": [],
+        "narrative": "",
+        "dossier_text": "",
+    }
+
+    filename = meta.get("filename", "unknown")
+    size_human = meta.get("size_human", "?")
+    total_lines = int(meta.get("total_lines", 0))
+    total_words = int(meta.get("total_words", 0))
+    total_chunks = int(meta.get("total_chunks", 0))
+    total_symbols = int(meta.get("total_symbols", 0))
+    merkle = meta.get("merkle_root", "")
+    species = dna.get("species", "unknown") if isinstance(dna, dict) else "unknown"
+    dna_seq = dna.get("dna_sequence", "") if isinstance(dna, dict) else ""
+    complexity = float(dna.get("complexity_score", 0)) if isinstance(dna, dict) else 0
+
+    # ── Header ──
+    r["header"] = {
+        "title": filename,
+        "file_id": file_id,
+        "merkle_root": merkle,
+        "generated_at": time.time(),
+        "format": meta.get("filename", "").rsplit(".", 1)[-1].lower() if "." in meta.get("filename", "") else "unknown",
+        "dossier_version": "1.0",
+    }
+
+    # ── Identity ──
+    r["identity"] = {
+        "name": filename,
+        "species": species,
+        "dna_sequence": dna_seq[:40] if dna_seq else "",
+        "size": size_human,
+        "lines": total_lines,
+        "words": total_words,
+        "chunks": total_chunks,
+        "symbols": total_symbols,
+        "vocabulary": len(word_freq),
+        "merkle_prefix": merkle[:16] if merkle else "",
+        "primary_purpose": valuation.get("purpose", {}).get("primary", "unknown"),
+        "all_purposes": valuation.get("purpose", {}).get("roles", []),
+    }
+
+    # ── Structural DNA ──
+    genes = {}
+    if isinstance(dna, dict):
+        try:
+            genes = json.loads(dna.get("genes", "{}")) if isinstance(dna.get("genes"), str) else dna.get("genes", {})
+        except:
+            genes = dna.get("genes", {}) if isinstance(dna.get("genes"), dict) else {}
+    r["structural_dna"] = {
+        "species": species,
+        "complexity_score": complexity,
+        "genes": genes,
+        "genome_size": len(dna_seq) if dna_seq else 0,
+        "interpretation": (
+            "highly structured, symbol-dense" if complexity > 20 else
+            "moderately structured" if complexity > 5 else
+            "lightly structured" if complexity > 1 else
+            "flat/plain text"
+        ),
+    }
+
+    # ── KPI Summary ──
+    kpi_by_cat = {}
+    for k in kpis:
+        cat = k["category"]
+        if cat not in kpi_by_cat:
+            kpi_by_cat[cat] = []
+        kpi_by_cat[cat].append(k)
+    r["kpi_summary"] = {
+        "total": len(kpis),
+        "by_category": {cat: len(items) for cat, items in kpi_by_cat.items()},
+        "top_financial": [{"name": k["name"], "value": k["value"], "line": k["line"]} for k in kpis if k["category"] == "financial"][:5],
+        "top_technical": [{"name": k["name"], "value": k["value"], "line": k["line"]} for k in kpis if k["category"] == "technical"][:5],
+        "top_operational": [{"name": k["name"], "value": k["value"], "line": k["line"]} for k in kpis if k["category"] == "operational"][:5],
+    }
+
+    # ── Financial Profile ──
+    prof = profile if isinstance(profile, dict) else {}
+    r["financial_profile"] = {
+        "accounting_concepts": prof.get("accounting", {}).get("concepts_found", {}),
+        "standards": prof.get("accounting", {}).get("standards_detected", []),
+        "has_financial_statements": prof.get("accounting", {}).get("has_financial_statements", False),
+        "finance_metrics": prof.get("finance", {}).get("metrics_detected", {}),
+        "monetary_references": prof.get("finance", {}).get("monetary_references", 0),
+        "collateral_grade": prof.get("collateral", {}).get("grade", "F"),
+        "collateral_score": prof.get("collateral", {}).get("score", 0),
+        "liquidity_grade": prof.get("liquidity", {}).get("grade", "F"),
+        "liquidity_score": prof.get("liquidity", {}).get("score", 0),
+        "time_to_liquidate": prof.get("liquidity", {}).get("time_to_liquidate", "illiquid"),
+    }
+
+    # ── Legal Profile ──
+    r["legal_profile"] = {
+        "concepts": prof.get("law", {}).get("legal_concepts", {}),
+        "has_contract_language": prof.get("law", {}).get("has_contract_language", False),
+        "regulatory": prof.get("law", {}).get("regulatory_references", []),
+        "ip_references": prof.get("law", {}).get("ip_references", []),
+    }
+
+    # ── ML Insights ──
+    ml = ml_result if isinstance(ml_result, dict) else {}
+    r["ml_insights"] = {
+        "available": ml.get("available", False),
+        "topics": [{"id": t.get("topic_id", 0), "keywords": t.get("keywords", [])[:5], "strength": t.get("strength", 0)} for t in ml.get("topics", [])],
+        "tfidf_top": [t.get("term", "") for t in ml.get("tfidf_top_terms", [])[:8]],
+        "anomaly_count": len(ml.get("anomalies", [])),
+        "inferred_kpis": ml.get("inferred_kpis", []),
+        "semantic_dimensions": ml.get("latent_features", {}).get("lsa_components", 0),
+        "llm_extrapolation": ml.get("llm_extrapolation", None),
+    }
+
+    # ── Valuation Summary ──
+    val = valuation if isinstance(valuation, dict) else {}
+    r["valuation_summary"] = {
+        "production_readiness_grade": val.get("production_readiness", {}).get("grade", "F"),
+        "production_readiness_score": val.get("production_readiness", {}).get("score", 0),
+        "distance_to_prod": val.get("production_readiness", {}).get("distance_to_prod", "unknown"),
+        "blocking_issues": val.get("production_readiness", {}).get("blocking_issues", []),
+        "build_cost_usd": val.get("build_cost", {}).get("estimated_usd", 0),
+        "replacement_cost_usd": val.get("replacement_cost", {}).get("estimated_usd", 0),
+        "depreciation_score": val.get("depreciation", {}).get("score", 0),
+        "remaining_value_pct": val.get("depreciation", {}).get("remaining_value_pct", 100),
+        "depreciated_value_usd": val.get("depreciation", {}).get("depreciated_value_usd", 0),
+        "insurance_value_usd": val.get("insurance_value", {}).get("estimated_usd", 0),
+        "time_to_rebuild_days": val.get("replacement_cost", {}).get("time_to_rebuild", {}).get("days", 0),
+        "difficulty": val.get("replacement_cost", {}).get("difficulty", "unknown"),
+    }
+
+    # ── Risk Assessment ──
+    r["risk_assessment"] = {
+        "level": prof.get("risk", {}).get("level", "low"),
+        "score": prof.get("risk", {}).get("score", 0),
+        "signals": prof.get("risk", {}).get("signals", []),
+        "origin": prof.get("origin", {}).get("primary", "unknown"),
+        "origin_confidence": prof.get("origin", {}).get("detected", [{}])[0].get("confidence", 0) if prof.get("origin", {}).get("detected") else 0,
+    }
+
+    # ── Recommendations ──
+    recs = []
+    pr_score = val.get("production_readiness", {}).get("score", 0)
+    if pr_score < 40:
+        recs.append({"priority": "critical", "action": "add_tests", "reason": "no test coverage detected, production risk"})
+    if val.get("production_readiness", {}).get("blocking_issues"):
+        for issue in val.get("production_readiness", {}).get("blocking_issues", [])[:5]:
+            recs.append({"priority": "high", "action": f"fix_{issue}", "reason": f"blocking issue: {issue}"})
+    dep_score = val.get("depreciation", {}).get("score", 0)
+    if dep_score > 30:
+        recs.append({"priority": "medium", "action": "modernize_codebase", "reason": f"depreciation score {dep_score}/100, legacy patterns detected"})
+    if prof.get("risk", {}).get("level") == "high":
+        recs.append({"priority": "critical", "action": "security_review", "reason": "high risk score, potential secret or compliance exposure"})
+    liq_grade = prof.get("liquidity", {}).get("grade", "F")
+    if liq_grade in ("D", "F"):
+        recs.append({"priority": "low", "action": "improve_liquidity", "reason": "low liquidity, hard to convert to value quickly"})
+    coll_grade = prof.get("collateral", {}).get("grade", "F")
+    if coll_grade in ("A", "B"):
+        recs.append({"priority": "info", "action": "consider_collateralization", "reason": f"strong collateral profile (grade {coll_grade}), could be used as backing"})
+    if ml.get("anomalies") and len(ml.get("anomalies", [])) > 2:
+        recs.append({"priority": "medium", "action": "review_anomalies", "reason": f"{len(ml['anomalies'])} anomalous chunks detected by isolation forest"})
+    if val.get("build_cost", {}).get("estimated_usd", 0) > 50000:
+        recs.append({"priority": "info", "action": "document_knowledge", "reason": "high build cost, critical to preserve domain knowledge"})
+    if prof.get("law", {}).get("has_contract_language"):
+        recs.append({"priority": "info", "action": "legal_review", "reason": "contract language detected, ensure enforceability"})
+    recs.sort(key=lambda x: {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4}.get(x["priority"], 5))
+    r["recommendations"] = recs
+
+    # ── Narrative ──
+    parts = []
+    parts.append(f"FILE: {filename} ({file_id})")
+    parts.append(f"Species: {species} | Complexity: {complexity:.1f} | {total_lines} lines, {total_chunks} chunks, {total_symbols} symbols")
+    parts.append(f"Purpose: {valuation.get('purpose', {}).get('primary', 'unknown')}")
+    parts.append(f"Merkle: {merkle[:32]}...")
+    parts.append("")
+    parts.append(f"PRODUCTION READINESS: {val.get('production_readiness', {}).get('grade', 'F')} ({pr_score}/100) — {val.get('production_readiness', {}).get('distance_to_prod', 'unknown')}")
+    if val.get("production_readiness", {}).get("blocking_issues"):
+        parts.append(f"  Blocking: {', '.join(val['production_readiness']['blocking_issues'][:5])}")
+    parts.append("")
+    parts.append(f"VALUATION:")
+    parts.append(f"  Build cost: ${val.get('build_cost', {}).get('estimated_usd', 0):,}")
+    parts.append(f"  Replacement cost: ${val.get('replacement_cost', {}).get('estimated_usd', 0):,}")
+    parts.append(f"  Depreciated value: ${val.get('depreciation', {}).get('depreciated_value_usd', 0):,} ({val.get('depreciation', {}).get('remaining_value_pct', 100)}% remaining)")
+    parts.append(f"  Insurance value: ${val.get('insurance_value', {}).get('estimated_usd', 0):,}")
+    parts.append(f"  Time to rebuild: {val.get('replacement_cost', {}).get('time_to_rebuild', {}).get('days', 0)} days ({val.get('replacement_cost', {}).get('difficulty', '?')})")
+    parts.append("")
+    parts.append(f"FINANCIAL PROFILE:")
+    parts.append(f"  Collateral: {prof.get('collateral', {}).get('grade', 'F')} ({prof.get('collateral', {}).get('score', 0)}/100)")
+    parts.append(f"  Liquidity: {prof.get('liquidity', {}).get('grade', 'F')} ({prof.get('liquidity', {}).get('score', 0)}/100) — {prof.get('liquidity', {}).get('time_to_liquidate', 'illiquid')}")
+    fin_metrics = prof.get("finance", {}).get("metrics_detected", {})
+    if fin_metrics:
+        parts.append(f"  Metrics: {', '.join(list(fin_metrics.keys())[:5])}")
+    parts.append("")
+    parts.append(f"LEGAL: {prof.get('law', {}).get('legal_concepts', {})}")
+    parts.append(f"RISK: {prof.get('risk', {}).get('level', 'low')} ({prof.get('risk', {}).get('score', 0)}/100) — {', '.join(prof.get('risk', {}).get('signals', [])[:3])}")
+    parts.append("")
+    if ml.get("available"):
+        parts.append(f"ML INSIGHTS:")
+        for t in ml.get("topics", [])[:3]:
+            parts.append(f"  Topic {t.get('topic_id', 0)}: {', '.join(t.get('keywords', [])[:5])} (strength: {t.get('strength', 0)})")
+        if ml.get("inferred_kpis"):
+            parts.append(f"  Inferred: {', '.join(k.get('name', '') + '=' + k.get('value', '') for k in ml['inferred_kpis'][:5])}")
+        if ml.get("anomalies"):
+            parts.append(f"  Anomalies: {len(ml['anomalies'])} chunks flagged")
+        if ml.get("llm_extrapolation"):
+            llm = ml["llm_extrapolation"]
+            if isinstance(llm, dict):
+                parts.append(f"  LLM: {llm.get('inferred_purpose', '')} | Hidden value: {llm.get('hidden_value', '')}")
+    parts.append("")
+    parts.append(f"KPIs: {len(kpis)} total ({', '.join(f'{cat}:{cnt}' for cat, cnt in r['kpi_summary']['by_category'].items())})")
+    parts.append("")
+    parts.append(f"RECOMMENDATIONS ({len(recs)}):")
+    for rec in recs[:8]:
+        parts.append(f"  [{rec['priority'].upper()}] {rec['action']}: {rec['reason']}")
+    r["narrative"] = "\n".join(parts)
+
+    # ── Dossier text (novel format) ──
+    dossier = f"""
+╔══════════════════════════════════════════════════════════════════════════╗
+║  JORKI FILE DOSSIER — {filename[:40]:<40s}  ║
+║  ID: {file_id}  ·  Merkle: {merkle[:20]}...{'':>{20}}  ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+┌─ IDENTITY ────────────────────────────────────────────────────────────────┐
+│  Species:    {species:<20s}  DNA: {dna_seq[:24]:<24s}           │
+│  Size:       {size_human:<20s}  Lines: {total_lines:<8d}  Words: {total_words:<8d}        │
+│  Chunks:     {total_chunks:<20d}  Symbols: {total_symbols:<8d}  Vocab: {len(word_freq):<8d}       │
+│  Purpose:    {str(valuation.get('purpose', {}).get('primary', 'unknown'))[:60]:<60s}│
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ STRUCTURAL DNA ──────────────────────────────────────────────────────────┐
+│  Complexity: {complexity:.1f}/100  ·  {r['structural_dna']['interpretation']:<40s}   │
+│  Genome:     {len(dna_seq) if dna_seq else 0} bytes  ·  Species: {species:<20s}              │
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ VALUATION ───────────────────────────────────────────────────────────────┐
+│  Build Cost:      ${val.get('build_cost', {}).get('estimated_usd', 0):>10,}  ·  {val.get('build_cost', {}).get('time_estimate', {}).get('days', 0)} days  │
+│  Replacement:     ${val.get('replacement_cost', {}).get('estimated_usd', 0):>10,}  ·  {val.get('replacement_cost', {}).get('difficulty', '?'):<10s}     │
+│  Depreciated:     ${val.get('depreciation', {}).get('depreciated_value_usd', 0):>10,}  ·  {val.get('depreciation', {}).get('remaining_value_pct', 100)}% value   │
+│  Insurance:       ${val.get('insurance_value', {}).get('estimated_usd', 0):>10,}  ·  incl. business risk │
+│  Prod Readiness:  {val.get('production_readiness', {}).get('grade', 'F')} ({pr_score}/100)  ·  {val.get('production_readiness', {}).get('distance_to_prod', '?'):<30s}│
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ FINANCIAL & LEGAL ───────────────────────────────────────────────────────┐
+│  Collateral:  {prof.get('collateral', {}).get('grade', 'F')} ({prof.get('collateral', {}).get('score', 0):>3}/100)  ·  Liquidity: {prof.get('liquidity', {}).get('grade', 'F')} ({prof.get('liquidity', {}).get('score', 0):>3}/100)  │
+│  Time→Cash:   {prof.get('liquidity', {}).get('time_to_liquidate', 'illiquid'):<12s}  ·  Origin: {prof.get('origin', {}).get('primary', 'unknown'):<16s}│
+│  Risk Level:  {prof.get('risk', {}).get('level', 'low'):<6s} ({prof.get('risk', {}).get('score', 0):>3}/100)  ·  Signals: {', '.join(prof.get('risk', {}).get('signals', [])[:3])[:30]}│
+└──────────────────────────────────────────────────────────────────────────┘
+
+┌─ KPIs ({len(kpis)} total) ───────────────────────────────────────────────────┐"""
+    for cat, items in kpi_by_cat.items():
+        top = items[:3]
+        vals = ", ".join(f"{k['name']}={k['value']}" for k in top)
+        dossier += f"\n│  {cat:<14s} ({len(items):>2d}): {vals[:55]:<55s}│"
+    dossier += "\n└──────────────────────────────────────────────────────────────────────────┘"
+
+    if ml.get("available"):
+        dossier += "\n\n┌─ ML INSIGHTS ────────────────────────────────────────────────────────────┐"
+        for t in ml.get("topics", [])[:3]:
+            dossier += f"\n│  Topic {t.get('topic_id', 0)}: {', '.join(t.get('keywords', [])[:6])[:55]:<55s}│"
+        if ml.get("inferred_kpis"):
+            for k in ml["inferred_kpis"][:4]:
+                dossier += f"\n│  {k.get('name', ''):<20s} = {k.get('value', '')[:30]:<30s} ({k.get('method', '')[:8]})│"
+        if ml.get("anomalies"):
+            dossier += f"\n│  Anomalies: {len(ml['anomalies'])} chunks flagged by Isolation Forest{'':>16}│"
+        dossier += "\n└──────────────────────────────────────────────────────────────────────────┘"
+
+    dossier += f"\n\n┌─ RECOMMENDATIONS ({len(recs)}) ───────────────────────────────────────────────┐"
+    for rec in recs[:8]:
+        dossier += f"\n│  [{rec['priority'].upper():>8s}] {rec['action']:<20s} — {rec['reason'][:35]:<35s}│"
+    dossier += "\n└──────────────────────────────────────────────────────────────────────────┘"
+    dossier += f"\n\n◆ Jorki Dossier v1.0 · Generated from {len(kpis)} KPIs, {total_chunks} chunks, {total_symbols} symbols"
+    dossier += f"\n◆ DNA: {dna_seq[:40] if dna_seq else 'N/A'} · Merkle: {merkle[:32]}..."
+
+    r["dossier_text"] = dossier
+    return r
+
+
+@app.get("/resume/{file_id}")
+async def jorki_resume(file_id: str, format: str = "json"):
+    """Complete file dossier — combines all analysis layers into one document."""
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    meta_rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    kpi_rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis").fetchall()
+    dna_rows = conn.execute("SELECT key, value FROM dna").fetchall()
+    word_rows = conn.execute("SELECT word, count FROM word_freq").fetchall()
+    chunk_rows = conn.execute("SELECT idx, line_start, line_end, boundary_type, preview, line_count FROM chunks").fetchall()
+    sym_rows = conn.execute("SELECT line, name, type FROM symbols").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "resume")
+
+    meta = {r[0]: r[1] for r in meta_rows}
+    kpis = [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in kpi_rows]
+    dna = {r[0]: r[1] for r in dna_rows}
+    word_freq = {r[0]: int(r[1]) for r in word_rows}
+    chunks = [{"idx": r[0], "line_start": r[1], "line_end": r[2], "boundary_type": r[3], "preview": r[4], "line_count": r[5]} for r in chunk_rows]
+    symbols = [{"line": r[0], "name": r[1], "type": r[2]} for r in sym_rows]
+    text = "\n".join(c["preview"] for c in chunks)
+    lines = text.split("\n")
+
+    try:
+        dna_obj = json.loads(dna.get("genes", "{}")) if isinstance(dna.get("genes"), str) else {}
+        dna_dict = {"genes": dna_obj, "complexity_score": float(dna.get("complexity_score", 0)),
+                    "dna_sequence": dna.get("dna_sequence", ""), "species": dna.get("species", "")}
+    except:
+        dna_dict = {}
+
+    profile = _jorki_compute_profile(text, lines, word_freq, kpis, dna_dict)
+    valuation = _jorki_valuate(text, lines, chunks, symbols, word_freq, kpis, dna_dict, meta)
+    try:
+        ml_result = _jorki_ml_extract(text, lines, chunks, word_freq, kpis, dna_dict)
+    except Exception as e:
+        ml_result = {"available": False, "error": str(e), "topics": [], "clusters": {}, "anomalies": [], "inferred_kpis": [], "tfidf_top_terms": []}
+
+    resume = _jorki_generate_resume(file_id, meta, kpis, dna_dict, word_freq, chunks, symbols, profile, valuation, ml_result)
+
+    # ── LLM 30 Facts (served as KPIs) ──
+    llm_facts = _jorki_llm_30_facts(text, kpis, dna_dict, ml_result, meta)
+    if llm_facts:
+        resume["llm_facts"] = llm_facts
+
+    if format == "text":
+        return PlainTextResponse(resume["dossier_text"])
+    return {"file_id": file_id, "resume": resume}
+
+# ─── Formulas API: All KPI, Valuation, ML, and Scoring Formulas ──────────
+
+@app.get("/formulas")
+async def jorki_formulas():
+    """Complete documentation of all formulas, algorithms, and scoring models used by Jorki."""
+    return {
+        "service": "jorki",
+        "version": "2.0",
+        "description": "Every formula, algorithm, and scoring model used across all Jorki analysis endpoints",
+        "categories": {
+            "kpi_extraction": {
+                "endpoint": "/kpi/{file_id}",
+                "formulas": [
+                    {
+                        "name": "monetary_value",
+                        "pattern": r"\\$[\\d,]+(?:\\.\\d+)?|\\b\\d{1,3}(?:,\\d{3})+(?:\\.\\d+)?\\s*(?:USD|dollars?)\\b",
+                        "formula": "regex_match(text) → extract $ amounts, revenue figures, dollar values",
+                        "confidence": "1.0 if exact $ match, 0.8 if contextual",
+                        "category": "financial",
+                    },
+                    {
+                        "name": "percentage",
+                        "pattern": r"\\b\\d+(?:\\.\\d+)?%\\b|\\b\\d+(?:\\.\\d+)?\\s*(?:percent|bps|basis points)\\b",
+                        "formula": "regex_match(text) → extract percentage values",
+                        "confidence": "0.9",
+                        "category": "financial",
+                    },
+                    {
+                        "name": "revenue",
+                        "pattern": r"\\b(?:revenue|MRR|ARR|GMV|LTV|CAC|ARPU|churn rate|burn rate|net retention|gross retention|EBITDA|EBIT|net income|gross profit|operating income|free cash flow)\\b",
+                        "formula": "keyword_match(text) → extract SaaS/financial metric references",
+                        "confidence": "0.85",
+                        "category": "financial",
+                    },
+                    {
+                        "name": "valuation",
+                        "pattern": r"\\b(?:valuation|market cap|enterprise value|equity value|pre-money|post-money|wacc|dcf|npv|irr|moic|roi|roe|roa|roic)\\b",
+                        "formula": "keyword_match(text) → extract valuation/investment terms",
+                        "confidence": "0.8",
+                        "category": "financial",
+                    },
+                    {
+                        "name": "date_temporal",
+                        "pattern": r"\\b(?:Q[1-4]\\s*\\d{4}|FY\\d{2,4}|fiscal year|quarter ending|\\d{4}-\\d{2}-\\d{2}|\\d{1,2}/\\d{1,2}/\\d{4})\\b",
+                        "formula": "regex_match(text) → extract fiscal periods and dates",
+                        "confidence": "0.9",
+                        "category": "temporal",
+                    },
+                    {
+                        "name": "operational_metrics",
+                        "pattern": r"\\b(?:users|customers|sessions|requests|latency|uptime|throughput|errors|QPS|RPS|concurrent|active users|MAU|DAU|WAU)\\b",
+                        "formula": "keyword_match(text) → extract operational KPIs",
+                        "confidence": "0.75",
+                        "category": "operational",
+                    },
+                    {
+                        "name": "api_endpoint",
+                        "pattern": r"\\b(?:GET|POST|PUT|DELETE|PATCH)\\s+/[\\w/{}-]+",
+                        "formula": "regex_match(text) → extract REST API endpoints",
+                        "confidence": "0.95",
+                        "category": "technical",
+                    },
+                    {
+                        "name": "config_value",
+                        "pattern": r"\\b[A-Z_]{3,}\\s*=\\s*\\S+",
+                        "formula": "regex_match(text) → extract configuration key=value pairs",
+                        "confidence": "0.7",
+                        "category": "config",
+                    },
+                    {
+                        "name": "table_count",
+                        "formula": "count(occurrences of '|---' or markdown table separators)",
+                        "confidence": "0.6",
+                        "category": "structural",
+                    },
+                    {
+                        "name": "dominant_terms",
+                        "formula": "word_freq → sort by count → top 5 non-stopwords",
+                        "confidence": "0.5",
+                        "category": "structural",
+                    },
+                ],
+            },
+            "dna_fingerprinting": {
+                "endpoint": "/dna/{file_id}",
+                "formulas": [
+                    {
+                        "name": "gene_height",
+                        "formula": "len(text.split('\\n')) / 1000  →  normalized line count",
+                        "range": "0.0 - 1.0+",
+                    },
+                    {
+                        "name": "gene_max_width",
+                        "formula": "max(len(line) for line in lines) / 200  →  normalized max line width",
+                        "range": "0.0 - 1.0+",
+                    },
+                    {
+                        "name": "gene_symbol_density",
+                        "formula": "len(symbols) / max(len(lines), 1)  →  symbols per line",
+                        "range": "0.0 - 1.0+",
+                    },
+                    {
+                        "name": "gene_chunk_count",
+                        "formula": "len(chunks) / 100  →  normalized chunk count",
+                        "range": "0.0 - 1.0+",
+                    },
+                    {
+                        "name": "gene_vocab_richness",
+                        "formula": "len(unique_words) / max(len(total_words), 1)  →  type-token ratio",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "gene_avg_line_length",
+                        "formula": "mean(len(line) for line in lines) / 100  →  normalized avg line length",
+                        "range": "0.0 - 1.0+",
+                    },
+                    {
+                        "name": "gene_blank_ratio",
+                        "formula": "count(empty_lines) / max(total_lines, 1)  →  proportion of blank lines",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "gene_comment_ratio",
+                        "formula": "count(comment_lines) / max(total_lines, 1)  →  proportion of comments",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "gene_entropy",
+                        "formula": "-Σ(p_i * log2(p_i)) for byte frequencies in first 4096 bytes  →  Shannon entropy",
+                        "range": "0.0 - 8.0",
+                    },
+                    {
+                        "name": "gene_merkle_prefix",
+                        "formula": "int(merkle_root[:4], 16) / 65535  →  normalized first 16 bits of SHA-256 merkle root",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "dna_sequence",
+                        "formula": "concat(hex(gene_value)[:4] for each gene)  →  40-char hex string encoding all 10 genes",
+                    },
+                    {
+                        "name": "species_classification",
+                        "formula": "if ext in (.py) → pythonicus; (.js/.jsx) → javascriptus; (.json) → jsonicus; (.html/.xml/.svg) → markupus; (.csv/.tsv) → tabularis; else → textus",
+                    },
+                    {
+                        "name": "complexity_score",
+                        "formula": "symbol_density * 10 + chunk_count * 0.5 + vocab_richness * 5 + entropy * 0.5 + avg_line_length * 2",
+                        "range": "0.0 - 30+",
+                    },
+                ],
+            },
+            "semantic_profile": {
+                "endpoint": "/profile/{file_id}",
+                "formulas": [
+                    {
+                        "name": "origin_detection",
+                        "formula": "for each origin_type: count(signal_keyword_hits) → if hits >= 2: confidence = min(hits / total_signals, 1.0)",
+                        "signals": ["source_code", "financial_statement", "invoice", "contract", "spreadsheet", "research_report", "api_doc", "audit", "dataset"],
+                    },
+                    {
+                        "name": "accounting_concepts",
+                        "formula": "regex_match(text) for each of 14 accounting patterns (GAAP, IFRS, accrual, depreciation, amortization, revenue_recognition, AR, AP, inventory, goodwill, deferred_revenue, working_capital, EBITDA, fiscal_year)",
+                    },
+                    {
+                        "name": "finance_metrics",
+                        "formula": "regex_match(text) for each of 17 finance patterns (revenue, EBITDA_margin, net_income, gross_profit, OpEx, CapEx, FCF, WACC, DCF, NPV, IRR, MOIC, ROI, ROE, ROA, D/E, current_ratio, quick_ratio)",
+                    },
+                    {
+                        "name": "legal_concepts",
+                        "formula": "regex_match(text) for each of 18 legal patterns (NDA, IP_assignment, indemnification, liability, jurisdiction, governing_law, arbitration, confidentiality, termination, warranty, license, copyright, patent, trademark, compliance, GDPR, SOX, SEC_filing)",
+                    },
+                    {
+                        "name": "collateral_score",
+                        "formula": "signal_count = len(financial_metrics) + len(accounting_concepts) + len(legal_concepts) + len(kpis) + int(dna_complexity > 5 ? complexity : 0) + (origin_detected ? 5 : 0) → score = min(signal_count * 3, 100)",
+                        "grade": "A≥80, B≥60, C≥40, D≥20, F<20",
+                    },
+                    {
+                        "name": "liquidity_score",
+                        "formula": "signals = cash_hits*5 + time_hits*4 + (marketable?8:0) + (recurring_revenue?10:0) + (asset_backed?8:0) + (financial_doc?6:0) → score = min(signals * 2, 100)",
+                        "grade": "A≥80, B≥60, C≥40, D≥20, F<20",
+                        "time_to_liquidate": "days if ≥60, weeks if ≥30, months if ≥15, illiquid if <15",
+                    },
+                    {
+                        "name": "risk_score",
+                        "formula": "confidentiality(+15) + secret_exposure(+25) + litigation(+20) + credit_risk(+30) + forward_looking(+10) + unverified(+15) → min(sum, 100)",
+                        "level": "high≥50, medium≥25, low<25",
+                    },
+                ],
+            },
+            "valuation": {
+                "endpoint": "/valuation/{file_id}",
+                "formulas": [
+                    {
+                        "name": "effective_loc",
+                        "formula": "count(lines where line.strip() and not line.startswith('#', '//', '/*', '*'))  →  non-blank, non-comment lines",
+                    },
+                    {
+                        "name": "complexity_factor",
+                        "formula": "1.0 + (dna_complexity / 20.0), capped at 3.0",
+                        "range": "1.0 - 3.0",
+                    },
+                    {
+                        "name": "language_factor",
+                        "formula": "pythonicus=1.0, javascriptus=1.1, jsonicus=0.3, markupus=0.5, tabularis=0.4, textus=0.2",
+                    },
+                    {
+                        "name": "build_cost",
+                        "formula": "effective_loc × species_rate × complexity_factor + test_cost(code only) + deploy_cost(code only) + security_audit(code/config only), capped at $3M",
+                        "unit": "USD",
+                        "rates": "pythonicus=$0.20/LOC, javascriptus=$0.20, golangus=$0.20, rusticus=$0.20, ceplusplus=$0.20, scripticus=$0.15, jsonicus=$0.02, markupus=$0.05, tabularis=$0.03, configus=$0.08, textus=$0.000005", "max_rate": "$0.20/LOC"
+                    },
+                    {
+                        "name": "build_time",
+                        "formula": "hours = effective_loc / 50, days = hours / 8",
+                        "developer_level": "mid if complexity<10, senior if <25, staff if ≥25",
+                    },
+                    {
+                        "name": "replacement_cost",
+                        "formula": "build_cost × knowledge_loss_factor (1.5 for code, 1.2 for script, 1.1 for docs) + ramp_up ($1000 code, $500 other), capped at $3M",
+                        "unit": "USD",
+                    },
+                    {
+                        "name": "rebuild_time",
+                        "formula": "hours = effective_loc / 40 (slower due to lost context), days = hours / 8, weeks = days / 5",
+                    },
+                    {
+                        "name": "depreciation_score",
+                        "formula": "legacy_python2(+30) + legacy_js(+20) + deprecated_framework(+25) + legacy_protocol(+15) + insufficient_docs(+10) + no_tests(+15) → min(sum, 100)",
+                    },
+                    {
+                        "name": "depreciated_value",
+                        "formula": "replacement_cost × (1 - depreciation_score/100)",
+                    },
+                    {
+                        "name": "insurance_value",
+                        "formula": "replacement_cost + business_interruption_risk",
+                        "business_risk": "has_security(+$5000) + payments(+$10000) + auth(+$8000) + production_grade(+$3000)",
+                    },
+                    {
+                        "name": "production_readiness_score",
+                        "formula": "has_tests(+15) + error_handling(+10) + logging(+8) + config_separation(+10) + documentation(+8) + type_safety(+7) + security_patterns(+10) + complexity_balanced(+7) + dependencies(+5) + deployment(+10) + no_secrets(+10 or -15) → clamp(0, 100)",
+                        "grade": "A≥80, B≥60, C≥40, D≥20, F<20",
+                    },
+                ],
+            },
+            "ml_inference": {
+                "endpoint": "/ml/{file_id}",
+                "formulas": [
+                    {
+                        "name": "tfidf",
+                        "formula": "TF-IDF = TF(term, chunk) × log(N / DF(term)) where N=total_chunks, DF=chunks containing term",
+                        "params": "max_features=100, stop_words=english, ngram_range=(1,2)",
+                    },
+                    {
+                        "name": "nmf_topic_modeling",
+                        "formula": "minimize ||V - WH||_F where V=tfidf_matrix, W=topic_weights, H=topic_terms",
+                        "params": "n_components=min(3, chunks-1), random_state=42, max_iter=200",
+                        "output": "topics with keywords, chunk assignments, strength = Σ(W[:,k]) / Σ(W)",
+                    },
+                    {
+                        "name": "lsa_svd",
+                        "formula": "TruncatedSVD: X = UΣV^T, take top k components → latent semantic space",
+                        "params": "n_components=min(5, features-1, chunks-1), random_state=42",
+                        "output": "explained_variance_ratio, semantic_dimensions with top terms, file_embedding = mean(chunk_embeddings)",
+                    },
+                    {
+                        "name": "kmeans_clustering",
+                        "formula": "minimize Σ||x_i - μ_c||² for cluster c",
+                        "params": "n_clusters=min(3, chunks-1), random_state=42, n_init=10",
+                        "output": "cluster sizes, chunk assignments, centroid terms",
+                    },
+                    {
+                        "name": "isolation_forest",
+                        "formula": "random partition tree → anomalies = points with shortest average path length",
+                        "params": "contamination=0.15, random_state=42",
+                        "output": "anomalous chunk indices with previews",
+                    },
+                    {
+                        "name": "shannon_entropy",
+                        "formula": "H = -Σ(p_i × log2(p_i)) for character frequencies in first 8192 chars",
+                        "unit": "bits/char",
+                        "range": "0.0 - 8.0",
+                    },
+                    {
+                        "name": "zipf_slope",
+                        "formula": "linear regression on (log(rank), log(frequency)) → slope of Zipf's law fit",
+                        "interpretation": "slope ≈ -1.0 indicates natural language, steeper = more concentrated vocabulary",
+                    },
+                    {
+                        "name": "vocabulary_concentration",
+                        "formula": "max(word_freq) / sum(word_freq)  →  proportion of most frequent word",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "topic_coherence",
+                        "formula": "max(topic.strength for all topics)  →  how focused the document is on one topic",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "structural_balance",
+                        "formula": "1.0 - (max(cluster_sizes) - min(cluster_sizes)) / sum(cluster_sizes)  →  how evenly chunks distribute across clusters",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "anomaly_rate",
+                        "formula": "len(anomalies) / len(chunks)  →  proportion of anomalous chunks",
+                        "range": "0.0 - 1.0",
+                    },
+                    {
+                        "name": "semantic_complexity",
+                        "formula": "mean(explained_variance[:3])  →  average of top 3 LSA component variances",
+                        "range": "0.0 - 1.0",
+                    },
+                ],
+            },
+            "password_security": {
+                "endpoint": "/password/{file_id}",
+                "formulas": [
+                    {
+                        "name": "password_hashing",
+                        "algorithm": "PBKDF2-HMAC-SHA256",
+                        "params": "iterations=100000, salt=random 32 bytes, dklen=64",
+                        "formula": "dk = pbkdf2(password, salt, 100000, 64, hashlib.sha256)",
+                        "storage": "salt + dk stored as hex in access_control table",
+                    },
+                    {
+                        "name": "password_verification",
+                        "formula": "recompute PBKDF2(input_password, stored_salt) → compare with stored_dk using constant-time comparison",
+                    },
+                ],
+            },
+            "file_indexing": {
+                "endpoint": "/index",
+                "formulas": [
+                    {
+                        "name": "merkle_root",
+                        "formula": "SHA-256 of all chunk hashes combined → tree root hash = file_id",
+                        "description": "Each chunk is SHA-256 hashed, then hashes are combined into a Merkle tree, root = file identifier",
+                    },
+                    {
+                        "name": "semantic_chunking",
+                        "formula": "split on boundaries: blank lines, class/function definitions, markdown headers, paragraph breaks → chunks of 5-50 lines",
+                        "boundary_types": ["blank_line", "function_def", "class_def", "header", "paragraph", "code_block"],
+                    },
+                    {
+                        "name": "word_frequency",
+                        "formula": "tokenize(text) → lowercase → remove stopwords → count occurrences → store top 200 in word_freq table",
+                    },
+                    {
+                        "name": "symbol_extraction",
+                        "formula": "regex patterns for: def name, class name, function name, const name, interface name, struct name → store in symbols table with line numbers",
+                    },
+                ],
+            },
+        },
+        "scoring_summary": {
+            "collateral": "0-100, grade A-F, weighted by financial+accounting+legal+KPI+DNA+origin signals × 3",
+            "liquidity": "0-100, grade A-F, weighted by cash+time+marketability+revenue+assets+doc_type × 2",
+            "risk": "0-100, level high/medium/low, additive from 6 risk signal categories",
+            "production_readiness": "0-100, grade A-F, 12 weighted checks (tests, errors, logging, config, docs, types, security, complexity, deps, deploy, secrets)",
+            "depreciation": "0-100, additive from legacy patterns + maintenance signals",
+            "complexity": "0-30+, weighted formula from symbol density, chunks, vocab, entropy, line length",
+        },
+        "total_formulas": 47,
+        "total_endpoints_with_formulas": 7,
+    }
+
+# ─── Video Export: Render Dossier as Animated MP4/GIF ────────────────────
+
+def _jorki_render_video(resume, file_id, filename):
+    """Render file dossier as an animated video using matplotlib."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+    from matplotlib.patches import FancyBboxPatch
+    import numpy as np
+
+    # Colors — Jorki brand
+    BG = "#0a0a0a"
+    ORANGE = "#ff8c00"
+    WHITE = "#e0e0e0"
+    DIM = "#555555"
+    GREEN = "#00ff88"
+    RED = "#ff4444"
+    YELLOW = "#ffcc00"
+
+    val = resume.get("valuation_summary", {})
+    prof = resume.get("financial_profile", {})
+    risk = resume.get("risk_assessment", {})
+    ml = resume.get("ml_insights", {})
+    ident = resume.get("identity", {})
+    dna_info = resume.get("structural_dna", {})
+    kpi_sum = resume.get("kpi_summary", {})
+
+    # Build frames — each frame is a "scene"
+    scenes = []
+
+    # Scene 1: Title card
+    scenes.append({
+        "type": "title",
+        "title": filename or "unknown",
+        "subtitle": f"JORKI FILE DOSSIER",
+        "info": f"ID: {file_id}  ·  Species: {ident.get('species', '?')}  ·  {ident.get('lines', 0)} lines",
+    })
+
+    # Scene 2: Identity
+    scenes.append({
+        "type": "stats",
+        "title": "IDENTITY",
+        "stats": [
+            ("Species", ident.get("species", "unknown")),
+            ("Lines", str(ident.get("lines", 0))),
+            ("Words", str(ident.get("words", 0))),
+            ("Chunks", str(ident.get("chunks", 0))),
+            ("Symbols", str(ident.get("symbols", 0))),
+            ("Vocabulary", str(ident.get("vocabulary", 0))),
+            ("Purpose", ident.get("primary_purpose", "unknown")[:40]),
+        ],
+    })
+
+    # Scene 3: DNA
+    genes = dna_info.get("genes", {})
+    scenes.append({
+        "type": "dna",
+        "title": "STRUCTURAL DNA",
+        "complexity": dna_info.get("complexity_score", 0),
+        "interpretation": dna_info.get("interpretation", ""),
+        "species": dna_info.get("species", "?"),
+        "genes": genes,
+    })
+
+    # Scene 4: KPIs
+    scenes.append({
+        "type": "kpi",
+        "title": f"KPIs ({kpi_sum.get('total', 0)} total)",
+        "by_category": kpi_sum.get("by_category", {}),
+        "top_financial": resume.get("kpi_summary", {}).get("top_financial", []),
+        "top_technical": resume.get("kpi_summary", {}).get("top_technical", []),
+    })
+
+    # Scene 5: Financial Profile
+    scenes.append({
+        "type": "grades",
+        "title": "FINANCIAL PROFILE",
+        "grades": [
+            ("Collateral", prof.get("collateral_grade", "F"), prof.get("collateral_score", 0), 100),
+            ("Liquidity", prof.get("liquidity_grade", "F"), prof.get("liquidity_score", 0), 100),
+        ],
+        "extra": [
+            f"Time to liquidate: {prof.get('time_to_liquidate', 'illiquid')}",
+            f"Monetary refs: {prof.get('monetary_references', 0)}",
+            f"Standards: {', '.join(prof.get('standards', [])) or 'none'}",
+        ],
+    })
+
+    # Scene 6: Valuation
+    scenes.append({
+        "type": "valuation",
+        "title": "VALUATION",
+        "items": [
+            ("Build Cost", f"${val.get('build_cost_usd', 0):,}"),
+            ("Replacement", f"${val.get('replacement_cost_usd', 0):,}"),
+            ("Depreciated", f"${val.get('depreciated_value_usd', 0):,}"),
+            ("Insurance", f"${val.get('insurance_value_usd', 0):,}"),
+            ("Rebuild Time", f"{val.get('time_to_rebuild_days', 0)} days"),
+            ("Difficulty", val.get("difficulty", "?")),
+        ],
+        "pr_grade": val.get("production_readiness_grade", "F"),
+        "pr_score": val.get("production_readiness_score", 0),
+        "distance": val.get("distance_to_prod", "?"),
+    })
+
+    # Scene 7: Risk
+    scenes.append({
+        "type": "risk",
+        "title": "RISK ASSESSMENT",
+        "level": risk.get("level", "low"),
+        "score": risk.get("score", 0),
+        "signals": risk.get("signals", []),
+        "origin": risk.get("origin", "unknown"),
+    })
+
+    # Scene 8: ML Insights
+    if ml.get("available"):
+        scenes.append({
+            "type": "ml",
+            "title": "ML INSIGHTS",
+            "topics": ml.get("topics", []),
+            "tfidf": ml.get("tfidf_top", []),
+            "anomalies": ml.get("anomaly_count", 0),
+            "inferred": ml.get("inferred_kpis", [])[:6],
+        })
+
+    # Scene 9: Recommendations
+    scenes.append({
+        "type": "recommendations",
+        "title": "RECOMMENDATIONS",
+        "recs": resume.get("recommendations", [])[:8],
+    })
+
+    # Scene 10: Closing
+    scenes.append({
+        "type": "closing",
+        "title": filename or "unknown",
+        "subtitle": "JORKI DOSSIER COMPLETE",
+        "info": f"{len(resume.get('recommendations', []))} recommendations  ·  {kpi_sum.get('total', 0)} KPIs  ·  Complexity {dna_info.get('complexity_score', 0):.1f}",
+    })
+
+    # Render frames
+    fig, ax = plt.subplots(figsize=(12, 6.75), facecolor=BG)  # 16:9
+    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)
+
+    def draw_scene(frame_idx):
+        ax.clear()
+        ax.set_xlim(0, 12)
+        ax.set_ylim(0, 6.75)
+        ax.set_facecolor(BG)
+        ax.axis("off")
+
+        scene = scenes[frame_idx % len(scenes)]
+        stype = scene["type"]
+
+        # Fade in/out — compute alpha based on frame position within scene
+        frames_per_scene = 20
+        local_frame = frame_idx % frames_per_scene
+        if local_frame < 3:
+            alpha = local_frame / 3.0
+        elif local_frame > frames_per_scene - 3:
+            alpha = (frames_per_scene - local_frame) / 3.0
+        else:
+            alpha = 1.0
+
+        if stype == "title":
+            ax.text(6, 4.5, scene["title"], ha="center", va="center",
+                    fontsize=28, color=ORANGE, fontweight="bold", alpha=alpha,
+                    fontfamily="monospace")
+            ax.text(6, 3.5, scene["subtitle"], ha="center", va="center",
+                    fontsize=14, color=DIM, alpha=alpha, fontfamily="monospace")
+            ax.text(6, 2.5, scene["info"], ha="center", va="center",
+                    fontsize=10, color=WHITE, alpha=alpha * 0.7, fontfamily="monospace")
+            # Decorative line
+            ax.plot([2, 10], [3.0, 3.0], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+
+        elif stype == "stats":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            for i, (label, value) in enumerate(scene["stats"]):
+                y = 5.0 - i * 0.6
+                ax.text(1.5, y, label, fontsize=11, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(6, y, value, fontsize=11, color=WHITE, alpha=alpha, fontfamily="monospace")
+
+        elif stype == "dna":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            complexity = scene["complexity"]
+            ax.text(1.5, 5.0, "Complexity", fontsize=11, color=DIM, alpha=alpha, fontfamily="monospace")
+            ax.text(6, 5.0, f"{complexity:.1f}/100", fontsize=11, color=ORANGE if complexity > 20 else WHITE,
+                    alpha=alpha, fontfamily="monospace")
+            # Complexity bar
+            bar_w = complexity / 100 * 8
+            ax.add_patch(FancyBboxPatch((1.5, 4.5), max(bar_w, 0.1), 0.2,
+                                         boxstyle="round,pad=0.05", facecolor=ORANGE, alpha=alpha * 0.6))
+            ax.text(1.5, 4.0, scene["interpretation"], fontsize=10, color=WHITE, alpha=alpha * 0.8, fontfamily="monospace")
+            genes = scene.get("genes", {})
+            for i, (gname, gval) in enumerate(list(genes.items())[:8]):
+                y = 3.3 - i * 0.35
+                ax.text(1.5, y, gname, fontsize=9, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(6, y, str(gval), fontsize=9, color=WHITE, alpha=alpha, fontfamily="monospace")
+
+        elif stype == "kpi":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            by_cat = scene.get("by_category", {})
+            y = 5.0
+            for cat, count in list(by_cat.items())[:6]:
+                ax.text(1.5, y, cat, fontsize=11, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(5, y, str(count), fontsize=11, color=WHITE, alpha=alpha, fontfamily="monospace")
+                # Bar
+                ax.add_patch(FancyBboxPatch((6, y - 0.1), min(count * 0.3, 4), 0.2,
+                                             boxstyle="round,pad=0.02", facecolor=ORANGE, alpha=alpha * 0.4))
+                y -= 0.5
+            # Top financial KPIs
+            fin = scene.get("top_financial", [])
+            if fin:
+                ax.text(1.5, 1.5, "Top Financial:", fontsize=9, color=DIM, alpha=alpha, fontfamily="monospace")
+                for i, k in enumerate(fin[:3]):
+                    ax.text(4, 1.5 - i * 0.35, f"{k['name']}={k['value']}", fontsize=8, color=GREEN,
+                            alpha=alpha, fontfamily="monospace")
+
+        elif stype == "grades":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            grades = scene.get("grades", [])
+            for i, (label, grade, score, max_score) in enumerate(grades):
+                y = 4.5 - i * 1.5
+                ax.text(1.5, y, label, fontsize=14, color=DIM, alpha=alpha, fontfamily="monospace")
+                grade_color = GREEN if grade in ("A", "B") else YELLOW if grade in ("C") else RED
+                ax.text(4, y, grade, fontsize=28, color=grade_color, fontweight="bold",
+                        alpha=alpha, fontfamily="monospace")
+                ax.text(5.5, y, f"({score}/{max_score})", fontsize=11, color=WHITE,
+                        alpha=alpha, fontfamily="monospace")
+                # Score bar
+                bar_w = score / max_score * 5
+                bar_color = grade_color
+                ax.add_patch(FancyBboxPatch((1.5, y - 0.4), max(bar_w, 0.1), 0.15,
+                                             boxstyle="round,pad=0.03", facecolor=bar_color, alpha=alpha * 0.5))
+            for i, line in enumerate(scene.get("extra", [])):
+                ax.text(1.5, 1.0 - i * 0.35, line, fontsize=9, color=DIM, alpha=alpha, fontfamily="monospace")
+
+        elif stype == "valuation":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            items = scene.get("items", [])
+            for i, (label, value) in enumerate(items):
+                y = 5.0 - i * 0.5
+                ax.text(1.5, y, label, fontsize=11, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(7, y, value, fontsize=12, color=GREEN if "$" in value else WHITE,
+                        alpha=alpha, fontfamily="monospace")
+            # PR badge
+            pr_grade = scene.get("pr_grade", "F")
+            pr_score = scene.get("pr_score", 0)
+            pr_color = GREEN if pr_grade in ("A", "B") else YELLOW if pr_grade == "C" else RED
+            ax.text(9.5, 5.0, "PROD", fontsize=9, color=DIM, alpha=alpha, fontfamily="monospace")
+            ax.text(9.5, 4.3, pr_grade, fontsize=24, color=pr_color, fontweight="bold",
+                    alpha=alpha, fontfamily="monospace")
+            ax.text(9.5, 3.6, f"{pr_score}/100", fontsize=9, color=WHITE, alpha=alpha, fontfamily="monospace")
+            ax.text(9.5, 3.1, scene.get("distance", "?")[:20], fontsize=7, color=DIM,
+                    alpha=alpha, fontfamily="monospace")
+
+        elif stype == "risk":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            level = scene.get("level", "low")
+            score = scene.get("score", 0)
+            level_color = RED if level == "high" else YELLOW if level == "medium" else GREEN
+            ax.text(1.5, 4.5, "Level", fontsize=11, color=DIM, alpha=alpha, fontfamily="monospace")
+            ax.text(4, 4.5, level.upper(), fontsize=20, color=level_color, fontweight="bold",
+                    alpha=alpha, fontfamily="monospace")
+            ax.text(7, 4.5, f"({score}/100)", fontsize=11, color=WHITE, alpha=alpha, fontfamily="monospace")
+            ax.text(1.5, 3.5, f"Origin: {scene.get('origin', 'unknown')}", fontsize=10, color=WHITE,
+                    alpha=alpha, fontfamily="monospace")
+            signals = scene.get("signals", [])
+            ax.text(1.5, 3.0, "Signals:", fontsize=10, color=DIM, alpha=alpha, fontfamily="monospace")
+            for i, sig in enumerate(signals[:6]):
+                ax.text(2.5, 2.5 - i * 0.35, f"⟁ {sig}", fontsize=9, color=RED if level == "high" else YELLOW,
+                        alpha=alpha, fontfamily="monospace")
+
+        elif stype == "ml":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            topics = scene.get("topics", [])
+            for i, t in enumerate(topics[:3]):
+                y = 5.0 - i * 0.6
+                kws = ", ".join(t.get("keywords", [])[:5])
+                ax.text(1.5, y, f"Topic {t.get('id', 0)}", fontsize=10, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(4, y, kws[:50], fontsize=9, color=WHITE, alpha=alpha, fontfamily="monospace")
+            tfidf = scene.get("tfidf", [])
+            if tfidf:
+                ax.text(1.5, 2.5, "TF-IDF:", fontsize=9, color=DIM, alpha=alpha, fontfamily="monospace")
+                ax.text(3.5, 2.5, ", ".join(tfidf[:8]), fontsize=8, color=ORANGE, alpha=alpha, fontfamily="monospace")
+            inferred = scene.get("inferred", [])
+            for i, k in enumerate(inferred[:4]):
+                ax.text(1.5, 2.0 - i * 0.3, f"{k.get('name', '')}: {k.get('value', '')}", fontsize=8,
+                        color=GREEN, alpha=alpha, fontfamily="monospace")
+            if scene.get("anomalies", 0):
+                ax.text(1.5, 0.5, f"⟁ {scene['anomalies']} anomalies detected", fontsize=9, color=RED,
+                        alpha=alpha, fontfamily="monospace")
+
+        elif stype == "recommendations":
+            ax.text(1, 6.0, scene["title"], fontsize=16, color=ORANGE,
+                    fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.plot([1, 11], [5.7, 5.7], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+            recs = scene.get("recs", [])
+            priority_colors = {"critical": RED, "high": RED, "medium": YELLOW, "low": ORANGE, "info": DIM}
+            for i, rec in enumerate(recs):
+                y = 5.0 - i * 0.55
+                color = priority_colors.get(rec.get("priority", "info"), DIM)
+                ax.text(1.5, y, f"[{rec.get('priority', '?').upper()}]", fontsize=9, color=color,
+                        alpha=alpha, fontfamily="monospace")
+                ax.text(3.5, y, rec.get("action", ""), fontsize=10, color=WHITE,
+                        alpha=alpha, fontfamily="monospace")
+                ax.text(7.5, y, rec.get("reason", "")[:35], fontsize=8, color=DIM,
+                        alpha=alpha, fontfamily="monospace")
+
+        elif stype == "closing":
+            ax.text(6, 4.5, scene["title"], ha="center", va="center",
+                    fontsize=24, color=ORANGE, fontweight="bold", alpha=alpha, fontfamily="monospace")
+            ax.text(6, 3.5, scene["subtitle"], ha="center", va="center",
+                    fontsize=14, color=DIM, alpha=alpha, fontfamily="monospace")
+            ax.text(6, 2.5, scene["info"], ha="center", va="center",
+                    fontsize=10, color=WHITE, alpha=alpha * 0.7, fontfamily="monospace")
+            ax.plot([3, 9], [3.0, 3.0], color=ORANGE, linewidth=0.5, alpha=alpha * 0.3)
+
+        # Watermark
+        ax.text(11.5, 0.2, "◆ JORKI", fontsize=7, color=DIM, alpha=alpha * 0.3,
+                ha="right", fontfamily="monospace")
+
+    # Build animation
+    frames_per_scene = 20
+    total_frames = len(scenes) * frames_per_scene
+
+    anim = animation.FuncAnimation(
+        fig, draw_scene, frames=total_frames,
+        interval=200, blit=False, repeat=True
+    )
+
+    # Save — try MP4 first, fall back to GIF
+    video_dir = JORKI_DATA_DIR / "videos"
+    video_dir.mkdir(parents=True, exist_ok=True)
+
+    # Try MP4 with ffmpeg
+    mp4_path = video_dir / f"{file_id}.mp4"
+    gif_path = video_dir / f"{file_id}.gif"
+
+    video_format = "gif"
+    video_path = gif_path
+
+    try:
+        # Check if ffmpeg is available
+        import subprocess as _sp
+        _sp.run(["ffmpeg", "-version"], capture_output=True, check=True)
+        writer = animation.FFMpegWriter(fps=5, bitrate=1800)
+        anim.save(str(mp4_path), writer=writer, dpi=100)
+        video_format = "mp4"
+        video_path = mp4_path
+    except Exception:
+        # Fall back to GIF using Pillow
+        try:
+            writer = animation.PillowWriter(fps=5)
+            anim.save(str(gif_path), writer=writer, dpi=80)
+            video_format = "gif"
+            video_path = gif_path
+        except Exception as e:
+            plt.close(fig)
+            return {"error": f"Video generation failed: {str(e)}"}
+
+    plt.close(fig)
+
+    return {
+        "video_path": str(video_path),
+        "format": video_format,
+        "size_bytes": video_path.stat().st_size,
+        "scenes": len(scenes),
+        "frames": total_frames,
+        "duration_seconds": total_frames * 0.2,
+    }
+
+
+@app.get("/video/{file_id}")
+async def jorki_video(file_id: str):
+    """Generate and return a video dossier of the file."""
+    # First get the resume
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+
+    conn = sqlite3.connect(str(idx_path))
+    meta_rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    kpi_rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis").fetchall()
+    dna_rows = conn.execute("SELECT key, value FROM dna").fetchall()
+    word_rows = conn.execute("SELECT word, count FROM word_freq").fetchall()
+    chunk_rows = conn.execute("SELECT idx, line_start, line_end, boundary_type, preview, line_count FROM chunks").fetchall()
+    sym_rows = conn.execute("SELECT line, name, type FROM symbols").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "video")
+
+    meta = {r[0]: r[1] for r in meta_rows}
+    kpis = [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in kpi_rows]
+    dna = {r[0]: r[1] for r in dna_rows}
+    word_freq = {r[0]: int(r[1]) for r in word_rows}
+    chunks = [{"idx": r[0], "line_start": r[1], "line_end": r[2], "boundary_type": r[3], "preview": r[4], "line_count": r[5]} for r in chunk_rows]
+    symbols = [{"line": r[0], "name": r[1], "type": r[2]} for r in sym_rows]
+    text = "\n".join(c["preview"] for c in chunks)
+    lines = text.split("\n")
+
+    try:
+        dna_obj = json.loads(dna.get("genes", "{}")) if isinstance(dna.get("genes"), str) else {}
+        dna_dict = {"genes": dna_obj, "complexity_score": float(dna.get("complexity_score", 0)),
+                    "dna_sequence": dna.get("dna_sequence", ""), "species": dna.get("species", "")}
+    except:
+        dna_dict = {}
+
+    profile = _jorki_compute_profile(text, lines, word_freq, kpis, dna_dict)
+    valuation = _jorki_valuate(text, lines, chunks, symbols, word_freq, kpis, dna_dict, meta)
+    ml_result = _jorki_ml_extract(text, lines, chunks, word_freq, kpis, dna_dict)
+    resume = _jorki_generate_resume(file_id, meta, kpis, dna_dict, word_freq, chunks, symbols, profile, valuation, ml_result)
+
+    # Generate video
+    result = _jorki_render_video(resume, file_id, meta.get("filename", "unknown"))
+    if "error" in result:
+        return result
+
+    # Return the video file
+    return FileResponse(
+        result["video_path"],
+        media_type=f"video/{result['format']}" if result["format"] == "mp4" else "image/gif",
+        filename=f"{file_id}_dossier.{result['format']}"
+    )
+
+# ─── Pipeline API: Clipboard → Repo → Artifact → Deploy → App → DMG → AppStore ─
+
+# ─── Unsupervised ML Feature Extraction ─────────────────────────────────
+
+def _jorki_ml_extract_pure(text, lines, chunks, word_freq, kpis, dna):
+    """Pure-Python ML fallback when scikit-learn is not available.
+    Implements TF-IDF, topic modeling, clustering, and anomaly detection without numpy/sklearn."""
+    import math
+    from collections import Counter
+
+    STOPWORDS = set("a an the and or but in on at to for of is are was were be been being have has had do does did will would could should may might must can this that these those i you he she it we they them his her its their my your our what which who whom whose when where why how all any both each few more most other some such no nor not only own same so than too very s t can just don should now".split())
+
+    result = {"available": True, "topics": [], "clusters": {}, "anomalies": [],
+              "latent_features": {}, "inferred_kpis": [], "semantic_embedding": {},
+              "engine": "pure-python"}
+
+    chunk_texts = [c["preview"] for c in chunks] if chunks else [text[:500]]
+    if len(chunk_texts) > 200:
+        chunk_texts = chunk_texts[:200]
+    if len(chunk_texts) < 2:
+        chunk_texts = [text[i:i+500] for i in range(0, len(text), 500)][:20]
+    if len(chunk_texts) < 2:
+        return result
+
+    # ── TF-IDF (pure Python) ──
+    # Tokenize chunks
+    chunk_tokens = []
+    for ct in chunk_texts:
+        tokens = [w.lower() for w in re.findall(r'\b[a-zA-Z][a-zA-Z0-9]{2,}\b', ct) if w.lower() not in STOPWORDS]
+        chunk_tokens.append(tokens)
+
+    # Document frequency
+    N = len(chunk_texts)
+    df = Counter()
+    for tokens in chunk_tokens:
+        for t in set(tokens):
+            df[t] += 1
+
+    # TF-IDF per chunk
+    vocab = [t for t, c in df.most_common(100)]
+    tfidf_scores = {}
+    for t in vocab:
+        idf = math.log(N / max(df[t], 1)) + 1
+        total_tf = sum(tokens.count(t) for tokens in chunk_tokens)
+        tfidf_scores[t] = total_tf * idf
+
+    top_terms = sorted(tfidf_scores.items(), key=lambda x: -x[1])[:15]
+    result["tfidf_top_terms"] = [{"term": t, "score": round(s, 4)} for t, s in top_terms if s > 0]
+
+    # ── Topic modeling (word co-occurrence grouping) ──
+    n_topics = min(3, max(1, N - 1))
+    if vocab:
+        # Group terms by co-occurrence — top terms form topic seeds
+        topic_seeds = [t for t, _ in top_terms[:n_topics]]
+        for topic_idx, seed in enumerate(topic_seeds):
+            # Find terms that co-occur most with seed
+            cooccur = Counter()
+            seed_chunks = 0
+            for i, tokens in enumerate(chunk_tokens):
+                if seed in tokens:
+                    seed_chunks += 1
+                    for t in set(tokens):
+                        if t != seed:
+                            cooccur[t] += 1
+            topic_words = [seed] + [t for t, _ in cooccur.most_common(7)]
+            dominant = [i for i, tokens in enumerate(chunk_tokens) if seed in tokens]
+            strength = seed_chunks / max(N, 1)
+            result["topics"].append({
+                "topic_id": topic_idx,
+                "keywords": topic_words[:8],
+                "chunk_count": seed_chunks,
+                "chunks": dominant[:10],
+                "strength": round(strength, 3),
+            })
+
+    # ── Clustering (k-means-like by term overlap) ──
+    n_clusters = min(3, max(1, N - 1))
+    if vocab and len(chunk_tokens) >= 2:
+        # Assign chunks to nearest topic seed
+        cluster_assignments = {}
+        for c in range(n_clusters):
+            cluster_assignments[c] = []
+        for i, tokens in enumerate(chunk_tokens):
+            best_cluster = 0
+            best_score = -1
+            for c in range(n_clusters):
+                seed = topic_seeds[c] if c < len(topic_seeds) else vocab[c % len(vocab)]
+                score = tokens.count(seed)
+                if score > best_score:
+                    best_score = score
+                    best_cluster = c
+            cluster_assignments[best_cluster].append(i)
+        for c in range(n_clusters):
+            member_tokens = []
+            for i in cluster_assignments[c]:
+                member_tokens.extend(chunk_tokens[i])
+            centroid_terms = [t for t, _ in Counter(member_tokens).most_common(5)]
+            result["clusters"][f"cluster_{c}"] = {
+                "size": len(cluster_assignments[c]),
+                "chunks": cluster_assignments[c][:10],
+                "centroid_terms": centroid_terms,
+            }
+
+    # ── Anomaly detection (statistical outlier by chunk length + unique words) ──
+    chunk_sizes = [len(ct) for ct in chunk_texts]
+    chunk_uniq = [len(set(tokens)) for tokens in chunk_tokens]
+    if len(chunk_sizes) >= 4:
+        mean_size = sum(chunk_sizes) / len(chunk_sizes)
+        std_size = (sum((s - mean_size) ** 2 for s in chunk_sizes) / len(chunk_sizes)) ** 0.5
+        mean_uniq = sum(chunk_uniq) / len(chunk_uniq)
+        std_uniq = (sum((u - mean_uniq) ** 2 for u in chunk_uniq) / len(chunk_uniq)) ** 0.5
+        anomalies = []
+        for i in range(len(chunk_texts)):
+            z_size = abs(chunk_sizes[i] - mean_size) / max(std_size, 1)
+            z_uniq = abs(chunk_uniq[i] - mean_uniq) / max(std_uniq, 1)
+            if z_size > 2.0 or z_uniq > 2.0:
+                anomalies.append({
+                    "chunk_idx": i,
+                    "preview": chunk_texts[i][:100],
+                    "reason": f"statistical outlier (z_size={z_size:.1f}, z_uniq={z_uniq:.1f})",
+                })
+        result["anomalies"] = anomalies
+
+    # ── Inferred KPIs (same as sklearn version) ──
+    inferred = []
+    char_freq = Counter(text[:8192])
+    total_chars = sum(char_freq.values())
+    if total_chars > 0:
+        info_density = -sum((c/total_chars) * math.log2(c/total_chars) for c in char_freq.values() if c > 0)
+        inferred.append({"name": "information_density", "value": f"{info_density:.2f} bits/char", "method": "shannon_entropy", "confidence": 0.9})
+
+    if word_freq:
+        freqs = sorted(word_freq.values(), reverse=True)
+        if len(freqs) > 3:
+            log_freqs = [math.log(f) for f in freqs]
+            log_ranks = [math.log(r) for r in range(1, len(freqs) + 1)]
+            n = len(freqs)
+            denom = n * sum(r**2 for r in log_ranks) - sum(log_ranks)**2
+            slope = (n * sum(r * f for r, f in zip(log_ranks, log_freqs)) - sum(log_ranks) * sum(log_freqs)) / denom if denom != 0 else 0
+            inferred.append({"name": "zipf_slope", "value": f"{slope:.3f}", "method": "zipf_regression", "confidence": 0.7})
+            inferred.append({"name": "vocabulary_concentration", "value": f"{freqs[0] / sum(freqs):.3f}", "method": "dominant_word_ratio", "confidence": 0.8})
+
+    if result["topics"]:
+        max_ts = max(t["strength"] for t in result["topics"])
+        inferred.append({"name": "topic_coherence", "value": f"{max_ts:.3f}", "method": "word_cooccur", "confidence": 0.75})
+        inferred.append({"name": "topic_diversity", "value": str(len(result["topics"])), "method": "topic_count", "confidence": 0.6})
+
+    if result["clusters"]:
+        cs = [c["size"] for c in result["clusters"].values()]
+        if cs:
+            balance = 1.0 - (max(cs) - min(cs)) / max(sum(cs), 1)
+            inferred.append({"name": "structural_balance", "value": f"{balance:.3f}", "method": "cluster_balance", "confidence": 0.65})
+
+    if chunk_texts:
+        ar = len(result["anomalies"]) / len(chunk_texts)
+        inferred.append({"name": "anomaly_rate", "value": f"{ar:.3f}", "method": "z_score_outlier", "confidence": 0.7})
+        if ar > 0.3:
+            inferred.append({"name": "anomaly_flag", "value": "high_unusual_content", "method": "z_score", "confidence": 0.6})
+
+    fin_kpis = [k for k in kpis if k["category"] == "financial"]
+    if fin_kpis and len(fin_kpis) > 3:
+        inferred.append({"name": "financial_density", "value": f"{len(fin_kpis)} refs", "method": "kpi_cross_ref", "confidence": 0.8})
+    if len(kpis) > 20:
+        inferred.append({"name": "high_signal_density", "value": f"{len(kpis)} KPIs", "method": "kpi_count", "confidence": 0.7})
+
+    result["inferred_kpis"] = inferred
+
+    # LLM extrapolation
+    llm_extrapolation = _jorki_llm_extrapolate(text, kpis, dna, result)
+    if llm_extrapolation:
+        result["llm_extrapolation"] = llm_extrapolation
+
+    return result
+
+
+def _jorki_ml_extract(text, lines, chunks, word_freq, kpis, dna):
+    """Unsupervised ML: TF-IDF, NMF topics, clustering, anomaly detection, latent features."""
+    try:
+        import numpy as np
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.decomposition import NMF, TruncatedSVD
+        from sklearn.cluster import KMeans
+        from sklearn.ensemble import IsolationForest
+    except ImportError:
+        return _jorki_ml_extract_pure(text, lines, chunks, word_freq, kpis, dna)
+
+    result = {"available": True, "topics": [], "clusters": {}, "anomalies": [],
+              "latent_features": {}, "inferred_kpis": [], "semantic_embedding": {}}
+
+    # Prepare chunk texts
+    chunk_texts = [c["preview"] for c in chunks] if chunks else [text[:500]]
+    if len(chunk_texts) > 200:
+        chunk_texts = chunk_texts[:200]
+    if len(chunk_texts) < 2:
+        chunk_texts = [text[i:i+500] for i in range(0, len(text), 500)][:20]
+    if len(chunk_texts) < 2:
+        return result
+
+    # ── TF-IDF ──
+    try:
+        vectorizer = TfidfVectorizer(max_features=100, stop_words="english", ngram_range=(1, 2))
+        tfidf_matrix = vectorizer.fit_transform(chunk_texts)
+        feature_names = vectorizer.get_feature_names_out()
+
+        # Top distinctive terms
+        scores = tfidf_matrix.sum(axis=0).A1
+        top_indices = scores.argsort()[-15:][::-1]
+        top_terms = [{"term": feature_names[i], "score": round(float(scores[i]), 4)} for i in top_indices if scores[i] > 0]
+        result["tfidf_top_terms"] = top_terms
+    except:
+        top_terms = []
+        result["tfidf_top_terms"] = []
+
+    # ── NMF Topic Modeling ──
+    n_topics = min(3, len(chunk_texts) - 1)
+    if n_topics >= 1 and tfidf_matrix.shape[0] > 1:
+        try:
+            nmf = NMF(n_components=n_topics, random_state=42, max_iter=200)
+            W = nmf.fit_transform(tfidf_matrix)
+            H = nmf.components_
+            for topic_idx in range(n_topics):
+                top_words_idx = H[topic_idx].argsort()[-8:][::-1]
+                topic_words = [feature_names[i] for i in top_words_idx if H[topic_idx][i] > 0.01]
+                # Which chunks belong to this topic
+                dominant_chunks = [i for i in range(len(chunk_texts)) if W[i].argmax() == topic_idx]
+                result["topics"].append({
+                    "topic_id": topic_idx,
+                    "keywords": topic_words,
+                    "chunk_count": len(dominant_chunks),
+                    "chunks": dominant_chunks[:10],
+                    "strength": round(float(W[:, topic_idx].sum() / max(W.sum(), 1)), 3),
+                })
+        except:
+            pass
+
+    # ── LSA / SVD for latent semantic space ──
+    try:
+        n_components = min(5, tfidf_matrix.shape[1] - 1, tfidf_matrix.shape[0] - 1)
+        if n_components >= 1:
+            svd = TruncatedSVD(n_components=n_components, random_state=42)
+            svd_matrix = svd.fit_transform(tfidf_matrix)
+            explained = svd.explained_variance_ratio_
+            result["latent_features"]["lsa_components"] = n_components
+            result["latent_features"]["explained_variance"] = [round(float(e), 4) for e in explained]
+            result["latent_features"]["semantic_dimensions"] = [
+                {"dim": i, "top_terms": [feature_names[j] for j in svd.components_[i].argsort()[-5:][::-1]]}
+                for i in range(n_components)
+            ]
+            # File-level embedding = mean of chunk embeddings
+            file_embedding = svd_matrix.mean(axis=0)
+            result["semantic_embedding"]["dimensions"] = len(file_embedding)
+            result["semantic_embedding"]["vector"] = [round(float(v), 4) for v in file_embedding]
+    except:
+        pass
+
+    # ── KMeans clustering of chunks ──
+    try:
+        n_clusters = min(3, len(chunk_texts) - 1)
+        if n_clusters >= 1 and tfidf_matrix.shape[0] >= 2:
+            km = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+            labels = km.fit_predict(tfidf_matrix)
+            for c in range(n_clusters):
+                cluster_chunks = [i for i in range(len(labels)) if labels[i] == c]
+                # Find centroid terms
+                centroid = km.cluster_centers_[c]
+                top_terms_idx = centroid.argsort()[-5:][::-1]
+                cluster_terms = [feature_names[i] for i in top_terms_idx if centroid[i] > 0]
+                result["clusters"][f"cluster_{c}"] = {
+                    "size": len(cluster_chunks),
+                    "chunks": cluster_chunks[:10],
+                    "centroid_terms": cluster_terms,
+                }
+    except:
+        pass
+
+    # ── Isolation Forest anomaly detection ──
+    try:
+        if tfidf_matrix.shape[0] >= 4:
+            iso = IsolationForest(random_state=42, contamination=0.15)
+            anomaly_labels = iso.fit_predict(tfidf_matrix)
+            anomalies = [i for i in range(len(anomaly_labels)) if anomaly_labels[i] == -1]
+            result["anomalies"] = [{
+                "chunk_idx": a,
+                "preview": chunk_texts[a][:100] if a < len(chunk_texts) else "",
+                "reason": "unusual content pattern",
+            } for a in anomalies]
+    except:
+        pass
+
+    # ── Inferred / latent KPIs from ML ──
+    inferred = []
+
+    # Information density (bits per character)
+    import math
+    from collections import Counter
+    char_freq = Counter(text[:8192])
+    total_chars = sum(char_freq.values())
+    if total_chars > 0:
+        info_density = -sum((c/total_chars) * math.log2(c/total_chars) for c in char_freq.values() if c > 0)
+        inferred.append({"name": "information_density", "value": f"{info_density:.2f} bits/char", "method": "shannon_entropy", "confidence": 0.9})
+
+    # Zipf coefficient (how well word distribution follows Zipf's law)
+    if word_freq:
+        freqs = sorted(word_freq.values(), reverse=True)
+        ranks = list(range(1, len(freqs) + 1))
+        if len(freqs) > 3:
+            log_freqs = [math.log(f) for f in freqs]
+            log_ranks = [math.log(r) for r in ranks]
+            n = len(freqs)
+            _denom = n * sum(r**2 for r in log_ranks) - sum(log_ranks)**2
+            slope = (n * sum(r * f for r, f in zip(log_ranks, log_freqs)) - sum(log_ranks) * sum(log_freqs)) / _denom if _denom != 0 else 0
+            inferred.append({"name": "zipf_slope", "value": f"{slope:.3f}", "method": "zipf_regression", "confidence": 0.7})
+            inferred.append({"name": "vocabulary_concentration", "value": f"{freqs[0] / sum(freqs):.3f}", "method": "dominant_word_ratio", "confidence": 0.8})
+
+    # Topic coherence (how focused the document is)
+    if result["topics"]:
+        max_topic_strength = max(t["strength"] for t in result["topics"])
+        inferred.append({"name": "topic_coherence", "value": f"{max_topic_strength:.3f}", "method": "nmf_dominance", "confidence": 0.75})
+        inferred.append({"name": "topic_diversity", "value": str(len(result["topics"])), "method": "nmf_topic_count", "confidence": 0.6})
+
+    # Cluster separation (structural diversity)
+    if result["clusters"]:
+        cluster_sizes = [c["size"] for c in result["clusters"].values()]
+        if cluster_sizes:
+            balance = 1.0 - (max(cluster_sizes) - min(cluster_sizes)) / max(sum(cluster_sizes), 1)
+            inferred.append({"name": "structural_balance", "value": f"{balance:.3f}", "method": "kmeans_balance", "confidence": 0.65})
+
+    # Anomaly rate
+    if chunk_texts:
+        anomaly_rate = len(result["anomalies"]) / len(chunk_texts)
+        inferred.append({"name": "anomaly_rate", "value": f"{anomaly_rate:.3f}", "method": "isolation_forest", "confidence": 0.7})
+        if anomaly_rate > 0.3:
+            inferred.append({"name": "anomaly_flag", "value": "high_unusual_content", "method": "isolation_forest", "confidence": 0.6})
+
+    # Semantic complexity from LSA
+    if "explained_variance" in result.get("latent_features", {}):
+        ev = result["latent_features"]["explained_variance"]
+        if ev:
+            complexity = sum(ev[:3]) / len(ev[:3]) if len(ev) >= 3 else sum(ev) / max(len(ev), 1)
+            inferred.append({"name": "semantic_complexity", "value": f"{complexity:.3f}", "method": "lsa_variance", "confidence": 0.7})
+
+    # Cross-feature inference: financial + legal = contract value
+    fin_kpis = [k for k in kpis if k["category"] == "financial"]
+    legal_kpis = [k for k in kpis if k.get("category") == "technical" and "api" in k.get("name", "")]
+    if fin_kpis and len(fin_kpis) > 3:
+        inferred.append({"name": "financial_density", "value": f"{len(fin_kpis)} refs", "method": "kpi_cross_ref", "confidence": 0.8})
+    if len(kpis) > 20:
+        inferred.append({"name": "high_signal_density", "value": f"{len(kpis)} KPIs", "method": "kpi_count", "confidence": 0.7})
+
+    result["inferred_kpis"] = inferred
+
+    # ── LLM extrapolation (if OpenAI configured) ──
+    llm_extrapolation = _jorki_llm_extrapolate(text, kpis, dna, result)
+    if llm_extrapolation:
+        result["llm_extrapolation"] = llm_extrapolation
+
+    return result
+
+
+def _jorki_llm_30_facts(text, kpis, dna, ml_result, meta):
+    """Use Groq LLM to generate 30 facts about a file, served as KPIs."""
+    if not GROQ_API_KEY and not OPENAI_API_KEY:
+        return None
+
+    filename = meta.get("filename", "unknown")
+    species = dna.get("species", "?") if isinstance(dna, dict) else "?"
+    complexity = float(dna.get("complexity_score", 0)) if isinstance(dna, dict) else 0
+    total_lines = int(meta.get("total_lines", 0))
+    total_words = int(meta.get("total_words", 0))
+    total_chunks = int(meta.get("total_chunks", 0))
+
+    kpi_summary = "; ".join(f"{k['name']}={k['value']}" for k in kpis[:15])
+    topics = ", ".join(t["keywords"][:3] for t in ml_result.get("topics", [])[:3]) if ml_result.get("topics") else "none"
+    text_sample = text[:2000]
+
+    prompt = f"""You are a forensic file analyst. Generate exactly 30 distinct, factual KPI-style insights about this file.
+
+FILE: {filename}
+SPECIES: {species}
+LINES: {total_lines} | WORDS: {total_words} | CHUNKS: {total_chunks} | COMPLEXITY: {complexity:.1f}
+EXTRACTED KPIs: {kpi_summary}
+ML TOPICS: {topics}
+
+FILE SAMPLE (first 2000 chars):
+{text_sample}
+
+Return a JSON array of exactly 30 objects, each with:
+{{
+  "id": 1-30,
+  "label": "short KPI name (2-4 words)",
+  "value": "the fact value (string or number)",
+  "category": "one of: structural|financial|technical|operational|risk|legal|ml|value|quality|security",
+  "confidence": 0.0-1.0,
+  "source": "llm"
+}}
+
+Cover diverse categories: structure, complexity, vocabulary, patterns, risk, value, quality, security, legal, financial, ML insights, recommendations.
+Be specific and grounded in the actual file content. No generic statements."""
+
+    # ── Fallback chain: try every active provider until one works ──
+    import urllib.request as _urllib, time as _time
+    _chain_path = _Path(__file__).resolve().parent / "data" / "llm_fallback_chain.json"
+    _cat_path = _Path(__file__).resolve().parent / "data" / "api_catalog.json"
+    providers_to_try = []
+    # 1) Build from fallback chain (ranked)
+    if _chain_path.exists():
+        try:
+            for c in json.load(open(_chain_path)):
+                if c.get("score", 0) > 0: providers_to_try.append(c)
+        except: pass
+    # 2) Fallback to hardcoded Groq/OpenAI if chain empty
+    if not providers_to_try:
+        if GROQ_API_KEY: providers_to_try.append({"provider":"groq","env_var":"GROQ_API_KEY","model":"llama-3.3-70b-versatile"})
+        if OPENAI_API_KEY: providers_to_try.append({"provider":"openai","env_var":"OPENAI_API_KEY","model":"gpt-4o-mini"})
+    # 3) Load catalog for endpoints
+    _endpoints = {}
+    if _cat_path.exists():
+        try:
+            for s in json.load(open(_cat_path)).get("services", []): _endpoints[s["p"]] = s["e"]
+        except: pass
+    if "groq" not in _endpoints: _endpoints["groq"] = GROQ_URL
+    if "openai" not in _endpoints: _endpoints["openai"] = "https://api.openai.com/v1/chat/completions"
+    # 4) Try each provider
+    for entry in providers_to_try:
+        prov = entry.get("provider",""); env_var = entry.get("env_var",""); model = entry.get("model","")
+        key = os.environ.get(env_var, "")
+        if not key: continue
+        endpoint = _endpoints.get(prov, "")
+        if not endpoint: continue
+        try:
+            body = json.dumps({"model": model, "messages": [{"role": "user", "content": prompt}], "temperature": 0.3, "max_tokens": 2000}).encode()
+            req = _urllib.Request(endpoint, data=body, method="POST")
+            req.add_header("Content-Type", "application/json")
+            req.add_header("Authorization", f"Bearer {key}")
+            with _urllib.urlopen(req, timeout=30) as resp:
+                content = json.loads(resp.read())["choices"][0]["message"]["content"]
+            return _parse_facts(content)
+        except Exception: continue
+    return None
+
+
+def _parse_facts(content):
+    """Parse LLM response into 30 facts."""
+    try:
+        facts = json.loads(content)
+        if isinstance(facts, list):
+            return facts[:30]
+        if isinstance(facts, dict) and "facts" in facts:
+            return facts["facts"][:30]
+    except:
+        import re as _re
+        m = _re.search(r'\[.*\]', content, _re.DOTALL)
+        if m:
+            try:
+                return json.loads(m.group())[:30]
+            except:
+                pass
+    return [{"id": 1, "label": "llm_parse_error", "value": content[:200], "category": "technical", "confidence": 0.1, "source": "llm"}]
+
+
+def _jorki_llm_extrapolate(text, kpis, dna, ml_result):
+    """Use LLM to extrapolate hidden features, risks, and opportunities."""
+    if not OPENAI_API_KEY:
+        return None
+
+    # Build a compact prompt from extracted features
+    kpi_summary = "; ".join(f"{k['name']}={k['value']}" for k in kpis[:15])
+    dna_summary = f"species={dna.get('species','?')}, complexity={dna.get('complexity_score',0)}"
+    topics = ", ".join(t["keywords"][:3] for t in ml_result.get("topics", [])[:2])
+    text_sample = text[:1500]
+
+    prompt = f"""Analyze this file's extracted features and extrapolate hidden value, risks, and opportunities.
+
+FILE SAMPLE (first 1500 chars):
+{text_sample}
+
+EXTRACTED KPIs: {kpi_summary}
+DNA: {dna_summary}
+ML TOPICS: {topics}
+
+Return JSON with:
+{{
+  "inferred_purpose": "what this file is likely used for",
+  "hidden_value": "economic or strategic value not obvious from content",
+  "counterparty_risk": "any risk from sharing this with external parties",
+  "monetization_vector": "how this file's data could be monetized",
+  "compliance_flags": ["any regulatory concerns"],
+  "comparable_assets": "what kind of financial or intellectual asset this resembles",
+  "confidence": 0.0-1.0
+}}"""
+
+    try:
+        import requests as _req
+        resp = _req.post(
+            "https://api.openai.com/v1/chat/completions",
+            headers={"Authorization": f"Bearer {OPENAI_API_KEY}", "Content-Type": "application/json"},
+            json={
+                "model": "gpt-4o-mini",
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.3,
+                "max_tokens": 500,
+            },
+            timeout=15,
+        )
+        if resp.status_code == 200:
+            content = resp.json()["choices"][0]["message"]["content"]
+            try:
+                return json.loads(content)
+            except:
+                return {"raw_response": content}
+    except:
+        pass
+    return None
+
+
+@app.get("/ml/{file_id}")
+async def jorki_ml_profile(file_id: str):
+    """Unsupervised ML features: topics, clusters, anomalies, latent features, LLM extrapolation."""
+    idx_path = JORKI_INDEX_DIR / f"{file_id}.idx"
+    if not idx_path.exists():
+        return {"error": f"Index not found for {file_id}"}
+    conn = sqlite3.connect(str(idx_path))
+    meta_rows = conn.execute("SELECT key, value FROM file_meta").fetchall()
+    kpi_rows = conn.execute("SELECT id, name, value, line, category, confidence FROM kpis").fetchall()
+    dna_rows = conn.execute("SELECT key, value FROM dna").fetchall()
+    word_rows = conn.execute("SELECT word, count FROM word_freq").fetchall()
+    chunk_rows = conn.execute("SELECT idx, line_start, line_end, boundary_type, preview, line_count FROM chunks").fetchall()
+    conn.close()
+    _jorki_track_query(file_id, "ml")
+
+    meta = {r[0]: r[1] for r in meta_rows}
+    kpis = [{"id": r[0], "name": r[1], "value": r[2], "line": r[3], "category": r[4], "confidence": r[5]} for r in kpi_rows]
+    dna = {r[0]: r[1] for r in dna_rows}
+    word_freq = {r[0]: int(r[1]) for r in word_rows}
+    chunks = [{"idx": r[0], "line_start": r[1], "line_end": r[2], "boundary_type": r[3], "preview": r[4], "line_count": r[5]} for r in chunk_rows]
+
+    # Reconstruct text from chunks (limit to first 200 chunks for performance)
+    text = "\n".join(c["preview"] for c in chunks[:200])
+    lines = text.split("\n")
+
+    try:
+        dna_obj = json.loads(dna.get("genes", "{}")) if isinstance(dna.get("genes"), str) else {}
+        dna_dict = {"genes": dna_obj, "complexity_score": float(dna.get("complexity_score", 0)),
+                    "dna_sequence": dna.get("dna_sequence", ""), "species": dna.get("species", "")}
+    except:
+        dna_dict = {}
+
+    try:
+        ml_result = _jorki_ml_extract(text, lines, chunks, word_freq, kpis, dna_dict)
+    except Exception as e:
+        ml_result = {"available": False, "error": str(e), "engine": "error"}
+    return {"file_id": file_id, "filename": meta.get("filename", "unknown"), "ml": ml_result}
+
+# ─── Pipeline API: Clipboard → Repo → Artifact → Deploy → App → DMG → AppStore ─
+
+import subprocess as _subproc
+import re as _re
+import uuid as _uuid
+
+PIPELINE_DIR = _Path(os.environ.get("JORKI_PIPELINE_DIR", "/tmp/jorki_pipeline"))
+PIPELINE_RUNS = {}
+PIPELINE_LOGS = {}
+
+PIPELINE_STAGES = ["clipboard", "repo", "artifact", "deploy", "app", "dmg", "notarize", "appstore"]
+
+GLYPH_MAP = {"idle": "◌", "active": "◉", "complete": "✓", "error": "⟁", "skipped": "◍"}
+
+def _pipe_log(run_id: str, stage: str, msg: str, level: str = "info"):
+    if run_id not in PIPELINE_LOGS:
+        PIPELINE_LOGS[run_id] = []
+    glyph = GLYPH_MAP.get("active" if level == "info" else
+                           "complete" if level == "done" else
+                           "error" if level == "error" else "active", "◉")
+    PIPELINE_LOGS[run_id].append({
+        "ts": datetime.now().strftime("%H:%M:%S"),
+        "stage": stage, "msg": msg, "level": level, "glyph": glyph,
+    })
+
+def _pipe_receipt(chain: list, stage: str, artifacts: dict) -> dict:
+    prev = chain[-1]["hash"] if chain else "0" * 64
+    entry = json.dumps({"stage": stage, "artifacts": artifacts, "ts": time.time()}, sort_keys=True, default=str)
+    h = hashlib.sha256((prev + entry).encode()).hexdigest()
+    r = {"stage": stage, "artifacts": artifacts, "hash": h, "prev_hash": prev, "ts": time.time()}
+    chain.append(r)
+    return r
+
+def _detect_content_type(content: str) -> str:
+    s = content.strip()
+    if not s: return "empty"
+    if s.startswith("{") or s.startswith("["):
+        try: json.loads(s); return "json"
+        except: pass
+    if s.startswith("#!"): return "script"
+    if "import " in s and ("def " in s or "class " in s): return "python"
+    if "function " in s or "const " in s or "=>" in s: return "javascript"
+    if s.startswith("<"): return "markup"
+    if "# " in s[:10] or "## " in s[:20]: return "markdown"
+    if _re.match(r'^(FROM|RUN|COPY|CMD|WORKDIR)', s, _re.MULTILINE): return "dockerfile"
+    return "text"
+
+def _derive_name(content: str, ctype: str) -> str:
+    if ctype == "python":
+        for line in content.split("\n"):
+            if "class " in line and ":" in line:
+                n = line.split("class ")[1].split("(")[0].split(":")[0].strip()
+                if n and n[0].isupper(): return _re.sub(r'[^A-Za-z0-9]', '', n)
+    if ctype == "json":
+        try:
+            d = json.loads(content.strip())
+            if isinstance(d, dict):
+                for k in ("name", "title", "app"):
+                    if k in d and isinstance(d[k], str): return _re.sub(r'[^A-Za-z0-9]', '', d[k])
+        except: pass
+    words = _re.findall(r'\b[A-Za-z][a-z]+\b', content[:500])
+    if words: return _re.sub(r'[^A-Za-z0-9]', '', "".join(w.capitalize() for w in words[:3])) or "ClipboardApp"
+    return "ClipboardApp"
+
+def _run_pipeline(run_id: str, content: str):
+    state = PIPELINE_RUNS[run_id]
+    chain = state["receipt_chain"]
+    try:
+        # Stage 1: Clipboard
+        _pipe_log(run_id, "clipboard", f"Read {len(content)} chars")
+        ctype = _detect_content_type(content)
+        chash = hashlib.sha256(content.encode()).hexdigest()
+        pname = _derive_name(content, ctype)
+        state["content_type"] = ctype
+        state["content_hash"] = chash
+        state["project_name"] = pname
+        state["content_preview"] = content[:500]
+
+        # Index clipboard content via Jorki indexer for dossier/intel
+        try:
+            clip_path = JORKI_DATA_DIR / "pipeline_uploads" / f"{pname}.txt"
+            clip_path.parent.mkdir(parents=True, exist_ok=True)
+            clip_path.write_text(content)
+            idx_result = _jorki_index_file(str(clip_path))
+            state["file_id"] = idx_result.get("file_id", "")
+            reg = _jorki_load_registry()
+            reg[state["file_id"]] = {
+                "filename": idx_result.get("filename", pname),
+                "size_bytes": idx_result.get("size_bytes", 0),
+                "size_human": idx_result.get("size_human", ""),
+                "format": ctype, "status": "active", "indexed_at": time.time(),
+            }
+            _jorki_save_registry(reg)
+            _pipe_log(run_id, "clipboard", f"Indexed as file_id: {state['file_id']}", "ok")
+        except Exception as e:
+            _pipe_log(run_id, "clipboard", f"Index warning: {str(e)[:80]}", "info")
+
+        _pipe_receipt(chain, "clipboard", {"type": ctype, "hash": chash, "name": pname, "file_id": state.get("file_id", "")})
+        state["completed_stages"].append("clipboard")
+        _pipe_log(run_id, "clipboard", f"Type: {ctype} │ Name: {pname}", "ok")
+
+        # Stage 2: Repo
+        state["current_stage"] = "repo"
+        _pipe_log(run_id, "repo", f"Creating project: {pname}")
+        proj_dir = PIPELINE_DIR / "projects" / pname
+        proj_dir.mkdir(parents=True, exist_ok=True)
+        main_file = "main.py" if ctype in ("python", "script") else \
+                    "index.js" if ctype == "javascript" else \
+                    "index.html" if ctype == "markup" else \
+                    "content.md" if ctype == "markdown" else \
+                    "data.json" if ctype == "json" else "content.txt"
+        (proj_dir / main_file).write_text(content)
+        (proj_dir / "README.md").write_text(f"# {pname}\n\nAuto-generated from clipboard via Jorki pipeline.\n\n- Type: {ctype}\n- Hash: `{chash}`\n")
+        (proj_dir / ".gitignore").write_text(".venv/\n__pycache__/\nnode_modules/\ndist/\nbuild/\n.env\n*.dmg\n")
+
+        _subproc.run(["git", "init"], cwd=str(proj_dir), capture_output=True, check=False)
+        _subproc.run(["git", "add", "-A"], cwd=str(proj_dir), capture_output=True, check=False)
+        env = {**os.environ, "GIT_AUTHOR_NAME": "Jorki", "GIT_AUTHOR_EMAIL": "pipeline@jorki.local",
+               "GIT_COMMITTER_NAME": "Jorki", "GIT_COMMITTER_EMAIL": "pipeline@jorki.local"}
+        _subproc.run(["git", "commit", "-m", f"Initial commit from clipboard\n\nType: {ctype}\nHash: {chash}"],
+                     cwd=str(proj_dir), capture_output=True, check=False, env=env)
+
+        repo_name = pname.lower().replace("_", "-")
+        r = _subproc.run(["gh", "repo", "create", repo_name, "--public", "--source=.", "--push",
+                          "--description", f"Auto-generated from clipboard ({ctype})"],
+                         cwd=str(proj_dir), capture_output=True, text=True, check=False, env=env)
+        gh_url = ""
+        if r.returncode == 0:
+            for line in (r.stderr + r.stdout).split("\n"):
+                if "github.com" in line:
+                    gh_url = line.strip().split()[-1]; break
+            if not gh_url:
+                r2 = _subproc.run(["gh", "repo", "view", repo_name, "--json", "url"],
+                                  capture_output=True, text=True, check=False)
+                if r2.returncode == 0:
+                    try: gh_url = json.loads(r2.stdout).get("url", "")
+                    except: pass
+            state["github_repo"] = repo_name
+            state["github_url"] = gh_url
+            _pipe_log(run_id, "repo", f"GitHub: {gh_url}", "ok")
+        else:
+            _pipe_log(run_id, "repo", f"gh failed: {r.stderr.strip()[:100]}", "error")
+            state["error_stage"] = "repo"
+            state["status"] = "error"
+            return
+        _pipe_receipt(chain, "repo", {"repo": repo_name, "url": gh_url, "dir": str(proj_dir)})
+        state["completed_stages"].append("repo")
+
+        # Stage 3: Artifact (HuggingFace Space)
+        state["current_stage"] = "artifact"
+        hf_token = os.environ.get("HF_TOKEN", "")
+        if hf_token:
+            _pipe_log(run_id, "artifact", "Creating HuggingFace Space…")
+            try:
+                from huggingface_hub import HfApi, create_repo
+                space_id = f"{os.environ.get('HF_USERNAME', 'user')}/{repo_name}-space"
+                create_repo(repo_id=space_id, repo_type="space", space_sdk="static", exist_ok=True)
+                api = HfApi()
+                api.upload_folder(folder_path=str(proj_dir), repo_id=space_id, repo_type="space")
+                hf_url = f"https://huggingface.co/spaces/{space_id}"
+                state["hf_space_id"] = space_id
+                state["hf_space_url"] = hf_url
+                _pipe_log(run_id, "artifact", f"HF Space: {hf_url}", "ok")
+                _pipe_receipt(chain, "artifact", {"space_id": space_id, "url": hf_url})
+            except Exception as e:
+                _pipe_log(run_id, "artifact", f"HF failed: {str(e)[:100]}", "error")
+                state["error_stage"] = "artifact"
+                state["status"] = "error"
+                return
+        else:
+            _pipe_log(run_id, "artifact", "HF_TOKEN not set — skipping", "info")
+            _pipe_receipt(chain, "artifact", {"skipped": True, "reason": "no HF_TOKEN"})
+        state["completed_stages"].append("artifact")
+
+        # Stage 4: Deploy (Vercel)
+        state["current_stage"] = "deploy"
+        _pipe_log(run_id, "deploy", "Deploying to Vercel…")
+        try:
+            r = _subproc.run(["vercel", "--prod", "--yes"], cwd=str(proj_dir),
+                             capture_output=True, text=True, check=False, timeout=120)
+            if r.returncode == 0:
+                vercel_url = r.stdout.strip().split("\n")[-1].strip()
+                if not vercel_url.startswith("http"):
+                    for line in r.stdout.split("\n"):
+                        if "https://" in line:
+                            vercel_url = line.strip(); break
+                state["vercel_url"] = vercel_url
+                _pipe_log(run_id, "deploy", f"Vercel: {vercel_url}", "ok")
+                _pipe_receipt(chain, "deploy", {"url": vercel_url})
+            else:
+                _pipe_log(run_id, "deploy", f"Vercel failed: {r.stderr.strip()[:100]}", "error")
+                _pipe_receipt(chain, "deploy", {"failed": True, "error": r.stderr.strip()[:200]})
+        except Exception as e:
+            _pipe_log(run_id, "deploy", f"Vercel error: {str(e)[:100]}", "error")
+            _pipe_receipt(chain, "deploy", {"error": str(e)[:200]})
+        state["completed_stages"].append("deploy")
+
+        # Stage 5: macOS App (SwiftUI)
+        state["current_stage"] = "app"
+        _pipe_log(run_id, "app", "Building SwiftUI app…")
+        app_dir = PIPELINE_DIR / "apps" / pname
+        app_dir.mkdir(parents=True, exist_ok=True)
+        _escaped_content = content[:2000].replace('"', '&quot;')
+        sources_dir = app_dir / "Sources" / pname
+        sources_dir.mkdir(parents=True, exist_ok=True)
+
+        swift_code = f'''import SwiftUI
+
+@main
+struct {pname}App: App {{
+    var body: some Scene {{
+        WindowGroup {{
+            ContentView()
+        }}
+    }}
+}}
+
+struct ContentView: View {{
+    var body: some View {{
+        VStack(spacing: 20) {{
+            Image(systemName: "doc.on.clipboard.fill")
+                .font(.system(size: 48))
+                .foregroundStyle(.orange)
+            Text("{pname}")
+                .font(.title.bold())
+            Text("Generated from clipboard via Jorki")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            ScrollView {{
+                Text(#"""
+                {_escaped_content}
+                """#)
+                .font(.system(.caption, design: .monospaced))
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color(.textBackgroundColor).opacity(0.3))
+                .cornerRadius(8)
+            }}
+        }}
+        .padding()
+        .frame(width: 500, height: 400)
+    }}
+}}
+'''
+        swift_filename = f"{pname}App.swift"
+        (sources_dir / swift_filename).write_text(swift_code)
+
+        # Write Info.plist
+        plist = f'''<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key><string>{pname}</string>
+    <key>CFBundleIdentifier</key><string>com.jorki.{pname.lower()}</string>
+    <key>CFBundleVersion</key><string>1</string>
+    <key>CFBundleShortVersionString</key><string>1.0.0</string>
+    <key>CFBundlePackageType</key><string>APPL</string>
+    <key>LSMinimumSystemVersion</key><string>14.0</string>
+    <key>NSHighResolutionCapable</key><true/>
+</dict>
+</plist>
+'''
+        (app_dir / "Info.plist").write_text(plist)
+
+        build_dir = app_dir / "build"
+        build_dir.mkdir(exist_ok=True)
+        r = _subproc.run(
+            ["swiftc", "-framework", "SwiftUI", "-framework", "AppKit",
+             str(sources_dir / f"{pname}App.swift"),
+             "-o", str(build_dir / pname)],
+            capture_output=True, text=True, check=False, timeout=120,
+        )
+        if r.returncode == 0:
+            app_bundle = build_dir / f"{pname}.app"
+            (app_bundle / "Contents" / "MacOS").mkdir(parents=True, exist_ok=True)
+            (app_bundle / "Contents" / "Resources").mkdir(parents=True, exist_ok=True)
+            shutil.copy(str(build_dir / pname), str(app_bundle / "Contents" / "MacOS" / pname))
+            shutil.copy(str(app_dir / "Info.plist"), str(app_bundle / "Contents" / "Info.plist"))
+            state["app_bundle_path"] = str(app_bundle)
+            _pipe_log(run_id, "app", f"App bundle: {app_bundle}", "ok")
+            _pipe_receipt(chain, "app", {"bundle": str(app_bundle)})
+        else:
+            _pipe_log(run_id, "app", f"swiftc failed: {r.stderr.strip()[:100]}", "error")
+            state["error_stage"] = "app"
+            state["status"] = "error"
+            return
+        state["completed_stages"].append("app")
+
+        # Stage 6: DMG
+        state["current_stage"] = "dmg"
+        _pipe_log(run_id, "dmg", "Creating DMG…")
+        dmg_path = build_dir / f"{pname}.dmg"
+        r = _subproc.run(
+            ["hdiutil", "create", "-volname", pname, "-srcfolder",
+             str(app_bundle), "-ov", "-format", "UDZO", str(dmg_path)],
+            capture_output=True, text=True, check=False, timeout=120,
+        )
+        if r.returncode == 0:
+            state["dmg_path"] = str(dmg_path)
+            _pipe_log(run_id, "dmg", f"DMG: {dmg_path}", "ok")
+            _pipe_receipt(chain, "dmg", {"path": str(dmg_path), "size": dmg_path.stat().st_size})
+        else:
+            _pipe_log(run_id, "dmg", f"hdiutil failed: {r.stderr.strip()[:100]}", "error")
+            state["error_stage"] = "dmg"
+            state["status"] = "error"
+            return
+        state["completed_stages"].append("dmg")
+
+        # Stage 7: Notarize
+        state["current_stage"] = "notarize"
+        apple_id = os.environ.get("APPLE_ID", "")
+        dev_id = os.environ.get("DEVELOPER_ID_NAME", "")
+        if apple_id and dev_id:
+            _pipe_log(run_id, "notarize", "Signing DMG…")
+            r = _subproc.run(["codesign", "--force", "--sign", dev_id, str(dmg_path)],
+                             capture_output=True, text=True, check=False)
+            if r.returncode == 0:
+                _pipe_log(run_id, "notarize", "Submitting to Apple…")
+                app_pw = os.environ.get("APPLE_APP_PASSWORD", "")
+                team_id = os.environ.get("APPLE_TEAM_ID", "")
+                r = _subproc.run(
+                    ["xcrun", "notarytool", "submit", str(dmg_path),
+                     "--apple-id", apple_id, "--password", app_pw, "--team-id", team_id],
+                    capture_output=True, text=True, check=False, timeout=300,
+                )
+                if r.returncode == 0:
+                    notarize_id = ""
+                    for line in r.stdout.split("\n"):
+                        if "id:" in line.lower():
+                            notarize_id = line.split(":")[-1].strip(); break
+                    state["notarization_id"] = notarize_id
+                    _pipe_log(run_id, "notarize", f"Submitted: {notarize_id}", "ok")
+                    _pipe_receipt(chain, "notarize", {"submission_id": notarize_id})
+                else:
+                    _pipe_log(run_id, "notarize", f"Notarize failed: {r.stderr.strip()[:100]}", "error")
+            else:
+                _pipe_log(run_id, "notarize", f"Codesign failed: {r.stderr.strip()[:100]}", "error")
+        else:
+            _pipe_log(run_id, "notarize", "Apple credentials not set — skipping", "info")
+            _pipe_receipt(chain, "notarize", {"skipped": True, "reason": "no Apple credentials"})
+        state["completed_stages"].append("notarize")
+
+        # Stage 8: App Store
+        state["current_stage"] = "appstore"
+        _pipe_log(run_id, "appstore", "Preparing App Store metadata…")
+        appstore_meta = {
+            "app_name": pname,
+            "bundle_id": f"com.jorki.{pname.lower()}",
+            "version": "1.0.0",
+            "dmg_path": str(dmg_path),
+            "content_hash": chash,
+            "pipeline_run": run_id,
+        }
+        meta_path = build_dir / "appstore_metadata.json"
+        meta_path.write_text(json.dumps(appstore_meta, indent=2))
+        _pipe_receipt(chain, "appstore", {"metadata": str(meta_path)})
+        state["completed_stages"].append("appstore")
+        _pipe_log(run_id, "appstore", "App Store metadata ready", "ok")
+
+        state["status"] = "complete"
+        state["current_stage"] = ""
+        _pipe_log(run_id, "pipeline", "Pipeline complete", "done")
+
+    except Exception as e:
+        _pipe_log(run_id, state.get("current_stage", "pipeline"), f"Error: {str(e)[:200]}", "error")
+        state["status"] = "error"
+        state["error_stage"] = state.get("current_stage", "unknown")
+
+@app.post("/pipeline/trigger")
+async def pipeline_trigger(body: dict = Body(...)):
+    content = body.get("content", "")
+    if not content:
+        try:
+            r = _subproc.run(["pbpaste"], capture_output=True, text=True, check=False, timeout=5)
+            content = r.stdout
+        except Exception:
+            content = ""
+    if not content.strip():
+        return {"error": "Clipboard is empty and no content provided"}
+    run_id = str(_uuid.uuid4())[:12]
+    PIPELINE_RUNS[run_id] = {
+        "run_id": run_id, "status": "running", "current_stage": "clipboard",
+        "completed_stages": [], "error_stage": "",
+        "content_type": "", "content_hash": "", "project_name": "",
+        "content_preview": "", "github_repo": "", "github_url": "",
+        "hf_space_id": "", "hf_space_url": "", "vercel_url": "",
+        "app_bundle_path": "", "dmg_path": "", "notarization_id": "",
+        "file_id": "", "receipt_chain": [],
+    }
+    PIPELINE_LOGS[run_id] = []
+    thread = threading.Thread(target=lambda: _run_pipeline(run_id, content), daemon=True)
+    thread.start()
+    return {"run_id": run_id, "status": "started", "message": "Pipeline started. Poll GET /pipeline/status/{run_id}"}
+
+@app.get("/pipeline/status/{run_id}")
+async def pipeline_status(run_id: str):
+    state = PIPELINE_RUNS.get(run_id)
+    if not state:
+        return {"error": f"Run {run_id} not found"}
+    result = dict(state)
+    result["logs"] = PIPELINE_LOGS.get(run_id, [])
+    return result
+
+@app.get("/pipeline/latest")
+async def pipeline_latest():
+    if not PIPELINE_RUNS:
+        return {"run_id": None}
+    latest = max(PIPELINE_RUNS.values(), key=lambda s: s.get("started_at", 0) if "started_at" in s else 0)
+    return {"run_id": latest["run_id"], "status": latest["status"]}
+
+@app.get("/pipeline/receipts/{run_id}")
+async def pipeline_receipts(run_id: str):
+    state = PIPELINE_RUNS.get(run_id)
+    if not state:
+        return {"error": f"Run {run_id} not found"}
+    return {"run_id": run_id, "receipts": state.get("receipt_chain", []),
+            "chain_valid": all(
+                r["prev_hash"] == (state["receipt_chain"][i-1]["hash"] if i > 0 else "0"*64)
+                for i, r in enumerate(state.get("receipt_chain", []))
+            )}
+
 # Mount React UI static assets if dist exists
 _ui_dist = _Path("/app/jorki_ui_dist")
 if _ui_dist.exists():
@@ -1097,6 +4394,143 @@ if _ui_dist.exists():
     @app.get("/ui")
     async def jorki_ui():
         return FileResponse(str(_ui_dist / "index.html"))
+
+# ─── LLM API Key Agent Endpoints ────────────────────────────────────────
+_LLM_DATA_DIR = _Path(__file__).resolve().parent / "data"
+_LLM_CATALOG_PATH = _LLM_DATA_DIR / "api_catalog.json"
+_LLM_REGISTRY_PATH = _LLM_DATA_DIR / "api_key_registry.json"
+_LLM_CHAIN_PATH = _LLM_DATA_DIR / "llm_fallback_chain.json"
+_LLM_USAGE = {"total_requests": 0, "per_provider": {}, "fallbacks_triggered": 0}
+
+def _llm_load_json(path):
+    if path.exists():
+        with open(path) as f: return json.load(f)
+    return {}
+
+def _llm_save_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w") as f: json.dump(data, f, indent=2)
+
+@app.get("/llm/keys")
+async def llm_keys():
+    """Return all validated keys with status, provider, model, score."""
+    registry = _llm_load_json(_LLM_REGISTRY_PATH)
+    return {"keys": registry, "total": len(registry) if isinstance(registry, list) else 0,
+            "active": sum(1 for r in registry if r.get("status") == "active") if isinstance(registry, list) else 0}
+
+@app.get("/llm/catalog")
+async def llm_catalog():
+    """Return full 300+ service catalog."""
+    return _llm_load_json(_LLM_CATALOG_PATH)
+
+@app.get("/llm/models")
+async def llm_models():
+    """Return all available models across all providers."""
+    catalog = _llm_load_json(_LLM_CATALOG_PATH)
+    models = []
+    for svc in catalog.get("services", []):
+        for m in svc.get("m", []):
+            models.append({"model": m, "provider": svc["p"], "category": svc["c"], "endpoint": svc["e"]})
+    return {"models": models, "total": len(models)}
+
+@app.get("/llm/health")
+async def llm_health():
+    """Ping all providers, return live status board."""
+    import urllib.request, urllib.error, time as _time
+    registry = _llm_load_json(_LLM_REGISTRY_PATH)
+    if not isinstance(registry, list): registry = []
+    statuses = []
+    for r in registry:
+        p = r.get("provider", ""); st = r.get("status", "unknown")
+        glyph = {"active": "◉", "expired": "⟁", "rate_limited": "⧖", "invalid": "✕", "untested": "◌"}.get(st, "◌")
+        statuses.append({"provider": p, "status": st, "glyph": glyph, "latency_ms": r.get("latency_ms", 0), "score": r.get("score", 0)})
+    return {"providers": statuses, "timestamp": _time.time(),
+            "summary": {"active": sum(1 for s in statuses if s["status"] == "active"),
+                        "total": len(statuses)}}
+
+@app.get("/llm/chain")
+async def llm_chain():
+    """Return the ranked fallback chain."""
+    return {"chain": _llm_load_json(_LLM_CHAIN_PATH)}
+
+@app.post("/llm/chat")
+async def llm_chat(body: dict = Body(...)):
+    """Auto-route to best available provider, fall back on failure."""
+    import urllib.request, urllib.error, time as _time
+    chain = _llm_load_json(_LLM_CHAIN_PATH)
+    if not isinstance(chain, list): chain = []
+    active = [c for c in chain if c.get("score", 0) > 0]
+    if not active: active = chain
+    messages = body.get("messages", [{"role": "user", "content": "Hello"}])
+    model = body.get("model", "")
+    prompt = body.get("prompt", "")
+    if prompt and not messages: messages = [{"role": "user", "content": prompt}]
+    errors = []
+    for entry in active:
+        provider = entry.get("provider", ""); env_var = entry.get("env_var", "")
+        key = os.environ.get(env_var, ""); endpoint = ""
+        for svc in _llm_load_json(_LLM_CATALOG_PATH).get("services", []):
+            if svc["p"] == provider: endpoint = svc["e"]; break
+        if not key or not endpoint: continue
+        use_model = model or entry.get("model", "")
+        req_body = json.dumps({"model": use_model, "messages": messages, "max_tokens": body.get("max_tokens", 500), "temperature": body.get("temperature", 0.3)}).encode()
+        headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+        try:
+            req = urllib.request.Request(endpoint, data=req_body, headers=headers, method="POST")
+            resp = urllib.request.urlopen(req, timeout=15)
+            data = json.loads(resp.read())
+            _LLM_USAGE["total_requests"] += 1
+            _LLM_USAGE["per_provider"][provider] = _LLM_USAGE["per_provider"].get(provider, 0) + 1
+            return {"response": data.get("choices", [{}])[0].get("message", {}).get("content", ""),
+                    "provider": provider, "model": use_model, "usage": _LLM_USAGE}
+        except Exception as e:
+            errors.append({"provider": provider, "error": str(e)[:200]}); continue
+    _LLM_USAGE["fallbacks_triggered"] += 1
+    return {"error": "All providers failed", "errors": errors, "usage": _LLM_USAGE}
+
+@app.post("/llm/rotate")
+async def llm_rotate():
+    """Trigger re-discovery + re-validation + re-ranking via ETL script."""
+    import subprocess
+    etl_script = _Path(__file__).resolve().parent / "scripts" / "api_key_etl.py"
+    if not etl_script.exists():
+        return {"error": "ETL script not found", "path": str(etl_script)}
+    try:
+        result = subprocess.run([sys.executable, str(etl_script), "--phase", "all"], capture_output=True, text=True, timeout=60, cwd=str(_Path(__file__).resolve().parent))
+        return {"status": "completed", "stdout": result.stdout[-500:], "stderr": result.stderr[-500:] if result.stderr else ""}
+    except subprocess.TimeoutExpired:
+        return {"status": "timeout", "error": "ETL script timed out after 60s"}
+    except Exception as e:
+        return {"status": "error", "error": str(e)[:200]}
+
+@app.get("/llm/usage")
+async def llm_usage():
+    """Track tokens used per provider, requests served, fallbacks triggered."""
+    return _LLM_USAGE
+
+@app.post("/llm/keys/add")
+async def llm_keys_add(body: dict = Body(...)):
+    """Manually add a key, auto-validate, insert into registry."""
+    provider = body.get("provider", ""); key = body.get("key", ""); env_var = body.get("env_var", "")
+    if not provider or not key: return {"error": "provider and key required"}
+    catalog = _llm_load_json(_LLM_CATALOG_PATH)
+    svc = None
+    for s in catalog.get("services", []):
+        if s["p"] == provider: svc = s; break
+    if not svc: return {"error": f"Unknown provider: {provider}"}
+    env_var = env_var or svc.get("env", "")
+    # Update .env
+    env_path = _Path(__file__).resolve().parent / ".env"
+    existing = {}
+    if env_path.exists():
+        for line in open(env_path, errors="ignore"):
+            if "=" in line and not line.startswith("#"):
+                k, v = line.strip().split("=", 1); existing[k] = v.strip().strip("'\"")
+    existing[env_var] = key
+    with open(env_path, "w") as f:
+        for k, v in sorted(existing.items()): f.write(f"{k}={v}\n")
+    os.environ[env_var] = key
+    return {"status": "added", "provider": provider, "env_var": env_var, "message": "Key added to .env. Run /llm/rotate to validate."}
 
 if __name__ == "__main__":
     import uvicorn

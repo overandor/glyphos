@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
-import { motion } from 'framer-motion'
-import { FileText, Shield, Activity, Copy, Check, Search, ArrowRight } from 'lucide-react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FileText, Shield, Activity, Copy, Check, Search, ArrowRight, UploadCloud, Loader2, X, Dna, BookOpen } from 'lucide-react'
 
 const API_BASE = ''
 
@@ -10,6 +10,11 @@ export default function Dashboard({ setActivePanel, onSelectFile }) {
   const [states, setStates] = useState({})
   const [loading, setLoading] = useState(true)
   const [copied, setCopied] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadProgress, setUploadProgress] = useState(null)
+  const [uploadResult, setUploadResult] = useState(null)
+  const [dragOver, setDragOver] = useState(false)
+  const fileInputRef = useRef(null)
 
   const fetchAll = useCallback(async () => {
     try {
@@ -52,6 +57,40 @@ export default function Dashboard({ setActivePanel, onSelectFile }) {
     setCopied(fileId)
     setTimeout(() => setCopied(null), 2000)
   }
+
+  const handleUpload = useCallback(async (file) => {
+    setUploading(true)
+    setUploadProgress({ name: file.name, size: (file.size / 1024).toFixed(1) })
+    setUploadResult(null)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch(`${API_BASE}/index`, { method: 'POST', body: fd })
+      const data = await res.json()
+      if (data.error) {
+        setUploadResult({ error: data.error })
+      } else {
+        setUploadResult({ success: true, file_id: data.file_id, filename: data.filename, chunks: data.total_chunks, lines: data.total_lines })
+        fetchAll()
+      }
+    } catch (e) {
+      setUploadResult({ error: e.message })
+    } finally {
+      setUploading(false)
+    }
+  }, [fetchAll])
+
+  const handleDrop = useCallback((e) => {
+    e.preventDefault()
+    setDragOver(false)
+    const file = e.dataTransfer.files[0]
+    if (file) handleUpload(file)
+  }, [handleUpload])
+
+  const handleFileSelect = useCallback((e) => {
+    const file = e.target.files[0]
+    if (file) handleUpload(file)
+  }, [handleUpload])
 
   const isLive = health?.status === 'ok'
 
@@ -112,6 +151,67 @@ export default function Dashboard({ setActivePanel, onSelectFile }) {
         </div>
       </motion.div>
 
+      {/* Upload zone */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="glass rounded-2xl p-5"
+      >
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+          onClick={() => !uploading && fileInputRef.current?.click()}
+          className={`border-2 border-dashed rounded-xl p-6 text-center transition-all cursor-pointer ${dragOver ? 'border-primary bg-primary/5' : 'border-white/10 hover:border-white/20 hover:bg-white/3'
+            }`}
+        >
+          <input ref={fileInputRef} type="file" className="hidden" onChange={handleFileSelect} />
+          {uploading ? (
+            <div className="flex flex-col items-center gap-3">
+              <Loader2 className="w-6 h-6 text-primary animate-spin" />
+              <div className="text-sm text-secondary">
+                Indexing <span className="text-text font-mono">{uploadProgress?.name}</span> ({uploadProgress?.size} KB)
+              </div>
+              <div className="text-[10px] text-secondary/60 font-mono">Computing Merkle root · chunking · symbol extraction...</div>
+            </div>
+          ) : uploadResult ? (
+            <div className="flex flex-col items-center gap-2">
+              {uploadResult.error ? (
+                <>
+                  <X className="w-6 h-6 text-critical" />
+                  <div className="text-sm text-critical">{uploadResult.error}</div>
+                </>
+              ) : (
+                <>
+                  <Check className="w-6 h-6 text-success" />
+                  <div className="text-sm text-success">
+                    Indexed: <span className="font-mono">{uploadResult.filename}</span>
+                  </div>
+                  <div className="text-[10px] text-secondary font-mono">
+                    {uploadResult.file_id} · {uploadResult.chunks} chunks · {uploadResult.lines} lines
+                  </div>
+                </>
+              )}
+              <button
+                onClick={(e) => { e.stopPropagation(); setUploadResult(null) }}
+                className="text-[10px] text-secondary/60 hover:text-text mt-1"
+              >
+                Upload another
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <UploadCloud className={`w-6 h-6 ${dragOver ? 'text-primary' : 'text-secondary'}`} />
+              <div className="text-sm text-secondary">
+                Drop a file to index, or <span className="text-primary underline">browse</span>
+              </div>
+              <div className="text-[10px] text-secondary/50 font-mono">SHA-256 · Merkle root · Semantic chunks · Symbol table</div>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
       {/* Real file list */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -135,7 +235,7 @@ export default function Dashboard({ setActivePanel, onSelectFile }) {
 
         {files.length === 0 ? (
           <div className="text-center py-8 text-secondary text-sm">
-            No files indexed. Upload via the API.
+            No files indexed. Drop a file above to get started.
           </div>
         ) : (
           <div className="space-y-2">
@@ -172,6 +272,20 @@ export default function Dashboard({ setActivePanel, onSelectFile }) {
                     {copied === file.file_id ? <Check className="w-3 h-3 text-success" /> : <Copy className="w-3 h-3" />}
                     {copied === file.file_id ? 'Copied' : 'Copy URL'}
                   </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onSelectFile(file.file_id); setActivePanel('intel') }}
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] glass hover:glass-orange transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    <Dna className="w-3 h-3" />
+                    Intel
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onSelectFile(file.file_id); setActivePanel('dossier') }}
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] glass hover:glass-orange transition-all opacity-0 group-hover:opacity-100"
+                  >
+                    <FileText className="w-3 h-3" />
+                    Dossier
+                  </button>
                   <ArrowRight className="w-3 h-3 text-secondary/40 group-hover:text-primary transition-colors" />
                 </motion.div>
               )
@@ -197,12 +311,19 @@ export default function Dashboard({ setActivePanel, onSelectFile }) {
             ['GET', '/files'],
             ['GET', '/meta/{id}'],
             ['GET', '/summary/{id}'],
-            ['GET', '/search/{id}?q='],
-            ['GET', '/chunk/{id}/{idx}'],
-            ['GET', '/capabilities/{id}'],
-            ['GET', '/stats/{id}'],
-            ['GET', '/superpose/state/{id}'],
-            ['POST', '/query/sql/{id}'],
+            ['GET', '/dna/{id}'],
+            ['GET', '/kpi/{id}'],
+            ['GET', '/kpi/{id}/gif'],
+            ['GET', '/ml/{id}'],
+            ['GET', '/profile/{id}'],
+            ['GET', '/valuation/{id}'],
+            ['GET', '/resume/{id}'],
+            ['GET', '/video/{id}'],
+            ['GET', '/formulas'],
+            ['POST', '/reindex/{id}'],
+            ['POST', '/password/{id}'],
+            ['GET', '/password/{id}/status'],
+            ['POST', '/password/{id}/verify'],
           ].map(([method, path]) => (
             <div key={path} className="flex items-center gap-2 py-1.5 px-2 rounded-lg bg-white/3">
               <span className={method === 'GET' ? 'text-success' : 'text-primary'}>{method}</span>
