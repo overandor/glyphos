@@ -1,0 +1,66 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "DimLight-arm64-apple-macosx-release.exe": ["<DimLight-arm64-apple-macosx-release.exe>"]
+  "DimLight-arm64-apple-macosx-release.module": ["<DimLight-arm64-apple-macosx-release.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<DimLight-arm64-apple-macosx-release.exe>","<DimLight-arm64-apple-macosx-release.module>"]
+  "test": ["<DimLight-arm64-apple-macosx-release.exe>","<DimLight-arm64-apple-macosx-release.module>"]
+default: "main"
+nodes:
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Sources/DimLight/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Sources/DimLight/DimLightApp.swift"]
+    outputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/sources"]
+    description: "Write auxiliary file /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/sources"
+
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.swift.o"]
+    outputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.product/Objects.LinkFileList"
+
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"]
+    outputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt"
+
+  "<DimLight-arm64-apple-macosx-release.exe>":
+    tool: phony
+    inputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight"]
+    outputs: ["<DimLight-arm64-apple-macosx-release.exe>"]
+
+  "<DimLight-arm64-apple-macosx-release.module>":
+    tool: phony
+    inputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.swift.o","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/Modules/DimLight.swiftmodule"]
+    outputs: ["<DimLight-arm64-apple-macosx-release.module>"]
+
+  "C.DimLight-arm64-apple-macosx-release.exe":
+    tool: shell
+    inputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.swift.o","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.product/Objects.LinkFileList"]
+    outputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight"]
+    description: "Linking ./.build/arm64-apple-macosx/release/DimLight"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-L","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release","-o","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight","-module-name","DimLight","-Xlinker","-no_warn_duplicate_libraries","-emit-executable","-Xlinker","-dead_strip","-Xlinker","-alias","-Xlinker","_DimLight_main","-Xlinker","_main","-Xlinker","-rpath","-Xlinker","@loader_path","@/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.product/Objects.LinkFileList","-Xlinker","-rpath","-Xlinker","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-6.2/macosx","-target","arm64-apple-macosx14.0","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g"]
+
+  "C.DimLight-arm64-apple-macosx-release.module":
+    tool: shell
+    inputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Sources/DimLight/DimLightApp.swift","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/swift-version--58304C5D6DBC2206.txt","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/sources"]
+    outputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.swift.o","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/Modules/DimLight.swiftmodule"]
+    description: "Compiling Swift Module 'DimLight' (1 sources)"
+    args: ["/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc","-module-name","DimLight","-emit-dependencies","-emit-module","-emit-module-path","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/Modules/DimLight.swiftmodule","-output-file-map","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/output-file-map.json","-whole-module-optimization","-num-threads","18","-c","@/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/sources","-I","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/Modules","-target","arm64-apple-macosx14.0","-whole-module-optimization","-num-threads","18","-serialize-diagnostics","-O","-j18","-DSWIFT_PACKAGE","-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE","-module-cache-path","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/ModuleCache","-parseable-output","-Xfrontend","-entry-point-function-name","-Xfrontend","DimLight_main","-parse-as-library","-swift-version","5","-plugin-path","/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing","-sdk","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-F","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-I","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-L","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib","-g","-Xcc","-isysroot","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk","-Xcc","-F","-Xcc","/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks","-Xcc","-fPIC","-Xcc","-g","-package-name","dimlight"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Sources/DimLight/","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Package.swift","/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

@@ -1,0 +1,79 @@
+{
+  "" : {
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConcierge-primary.dia",
+    "emit-module-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConcierge-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConcierge-primary-emit-module.dia",
+    "pch" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConcierge-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConcierge-primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/APIClient.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/APIClient~partial.swiftmodule"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/ConciergeStore.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ConciergeStore~partial.swiftmodule"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/CoreMLClassifier.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/CoreMLClassifier~partial.swiftmodule"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/MLXEngine.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/MLXEngine~partial.swiftmodule"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/ProofModels.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofModels~partial.swiftmodule"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/ProofWalletConciergeApp.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/ProofWalletConciergeApp~partial.swiftmodule"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/Views.swift" : {
+    "const-values" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.swiftconstvalues",
+    "dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.d",
+    "diagnostics" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.dia",
+    "index-unit-output-path" : "/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.o",
+    "llvm-bc" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.bc",
+    "object" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.o",
+    "swift-dependencies" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views.swiftdeps",
+    "swiftmodule" : "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/build/Build/Intermediates.noindex/ProofWalletConcierge.build/Debug-iphonesimulator/ProofWalletConcierge.build/Objects-normal/arm64/Views~partial.swiftmodule"
+  }
+}

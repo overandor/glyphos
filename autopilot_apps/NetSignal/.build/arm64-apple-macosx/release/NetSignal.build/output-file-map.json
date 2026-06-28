@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/NetSignal.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/NetSignal.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/Sources/NetSignal/NetSignalApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/NetSignalApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/NetSignalApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/NetSignalApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/arm64-apple-macosx/release/NetSignal.build/NetSignalApp.dia"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXLinalg.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/checkouts/mlx-swift/Source/MLXLinalg/Linalg.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXLinalg.build/Linalg.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXLinalg.build/Linalg.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXLinalg.build/Linalg~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXLinalg.build/Linalg.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXLinalg.build/Linalg.dia"
+  }
+}

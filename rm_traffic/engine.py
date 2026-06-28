@@ -42,7 +42,7 @@ from selenium.common.exceptions import (
 # ---------------------------------------------------------------------------
 
 USERNAME = "karpathianwolf"
-PASSWORD = "Lola369!"
+PASSWORD = os.environ.get("RM_PASSWORD", "")
 BASE_URL = "https://rentmasseur.com"
 DB_PATH = Path(__file__).parent / "traffic.db"
 LOG_PATH = Path(__file__).parent / "traffic.log"

@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/Numerics.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/checkouts/swift-numerics/Sources/Numerics/Numerics.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/Numerics.build/Numerics.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/Numerics.build/Numerics.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/Numerics.build/Numerics~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/Numerics.build/Numerics.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/Numerics.build/Numerics.dia"
+  }
+}

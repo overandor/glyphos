@@ -1,0 +1,873 @@
+{
+  "type": "glyph_compiled",
+  "source_file": "supervisor_layer.glyph",
+  "compiled_at": 1782507400.166683,
+  "glyph_count": 140,
+  "operator_count": 78,
+  "noun_count": 62,
+  "operator_ratio": 0.5571,
+  "node_count": 78,
+  "nodes": [
+    {
+      "op": "DERIVE",
+      "operands": [
+        "L",
+        "Σ"
+      ],
+      "line": 2
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 2
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 3
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 3
+    },
+    {
+      "op": "MUL",
+      "operands": [],
+      "line": 3
+    },
+    {
+      "op": "MUL",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 5
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 5
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "H"
+      ],
+      "line": 6
+    },
+    {
+      "op": "DOT",
+      "operands": [],
+      "line": 6
+    },
+    {
+      "op": "DOT",
+      "operands": [],
+      "line": 7
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 7
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [],
+      "line": 7
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [],
+      "line": 8
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 8
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "◈",
+        "◎",
+        "$"
+      ],
+      "line": 10
+    },
+    {
+      "op": "BIND",
+      "operands": [],
+      "line": 10
+    },
+    {
+      "op": "BIND",
+      "operands": [],
+      "line": 11
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 11
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 11
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 12
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 12
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "¤",
+        "◎",
+        "ZK"
+      ],
+      "line": 14
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◇",
+        "◇"
+      ],
+      "line": 15
+    },
+    {
+      "op": "DOT",
+      "operands": [],
+      "line": 15
+    },
+    {
+      "op": "DOT",
+      "operands": [],
+      "line": 16
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 16
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [],
+      "line": 16
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [],
+      "line": 17
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 17
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◈",
+        "◈"
+      ],
+      "line": 18
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "□"
+      ],
+      "line": 19
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "H",
+        "H"
+      ],
+      "line": 20
+    },
+    {
+      "op": "DOT",
+      "operands": [],
+      "line": 20
+    },
+    {
+      "op": "DOT",
+      "operands": [],
+      "line": 21
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 21
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "L",
+        "L"
+      ],
+      "line": 22
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "R",
+        "R"
+      ],
+      "line": 23
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "⊙̂",
+        "◎",
+        "λ"
+      ],
+      "line": 25
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "∇",
+        "∇"
+      ],
+      "line": 26
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "∂",
+        "∂"
+      ],
+      "line": 27
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "∫",
+        "∫"
+      ],
+      "line": 28
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "η",
+        "η"
+      ],
+      "line": 29
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "ψ"
+      ],
+      "line": 30
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "χ",
+        "χ"
+      ],
+      "line": 31
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 31
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 32
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 32
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "σ"
+      ],
+      "line": 33
+    },
+    {
+      "op": "SPIN_UP",
+      "operands": [],
+      "line": 33
+    },
+    {
+      "op": "SPIN_UP",
+      "operands": [],
+      "line": 34
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 34
+    },
+    {
+      "op": "SPIN_DOWN",
+      "operands": [],
+      "line": 34
+    },
+    {
+      "op": "SPIN_DOWN",
+      "operands": [],
+      "line": 35
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 35
+    },
+    {
+      "op": "SPIN_MUL",
+      "operands": [],
+      "line": 35
+    },
+    {
+      "op": "SPIN_MUL",
+      "operands": [],
+      "line": 36
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 36
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "θ"
+      ],
+      "line": 37
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "φ",
+        "φ"
+      ],
+      "line": 38
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "ρ",
+        "ρ"
+      ],
+      "line": 39
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "μ",
+        "μ"
+      ],
+      "line": 40
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "ω"
+      ],
+      "line": 41
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "τ",
+        "τ"
+      ],
+      "line": 42
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "κ",
+        "κ"
+      ],
+      "line": 43
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "◈",
+        "κ",
+        "ξ"
+      ],
+      "line": 45
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 45
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 46
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 46
+    },
+    {
+      "op": "DIVERGE",
+      "operands": [],
+      "line": 46
+    },
+    {
+      "op": "DIVERGE",
+      "operands": [],
+      "line": 47
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 47
+    },
+    {
+      "op": "THEREFORE",
+      "operands": [],
+      "line": 47
+    },
+    {
+      "op": "THEREFORE",
+      "operands": [],
+      "line": 48
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 48
+    },
+    {
+      "op": "THEREFORE",
+      "operands": [
+        "◎",
+        "⊙̂"
+      ],
+      "line": 49
+    }
+  ],
+  "embeddings": {
+    "▷": {
+      "spinor": [
+        -1.0,
+        -4.651838719590128e-26
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_START",
+      "is_operator": true
+    },
+    "L": {
+      "spinor": [
+        -0.9999999999999805,
+        1.9777965275452742e-07
+      ],
+      "bloch_theta": 3.9537248496477665e-07,
+      "name": "LOCATION",
+      "is_operator": false
+    },
+    "Σ": {
+      "spinor": [
+        1.0,
+        -5.780272432389221e-42
+      ],
+      "bloch_theta": 0.0,
+      "name": "SHARD",
+      "is_operator": false
+    },
+    "→": {
+      "spinor": [
+        8.851785898045702e-59,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DERIVE",
+      "is_operator": true
+    },
+    "⊕": {
+      "spinor": [
+        1.0,
+        4.032662374509044e-40
+      ],
+      "bloch_theta": 0.0,
+      "name": "ADD",
+      "is_operator": true
+    },
+    "⊗": {
+      "spinor": [
+        1.0,
+        6.380481369403163e-13
+      ],
+      "bloch_theta": 0.0,
+      "name": "MUL",
+      "is_operator": true
+    },
+    "⊠": {
+      "spinor": [
+        -1.5819177040950907e-08,
+        -0.9999999999999999
+      ],
+      "bloch_theta": 3.141592621951439,
+      "name": "TENSOR_BOX",
+      "is_operator": true
+    },
+    "◎": {
+      "spinor": [
+        -1.0,
+        -1.3661105214792438e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFIED",
+      "is_operator": false
+    },
+    "H": {
+      "spinor": [
+        -1.0,
+        -2.2010314836854655e-34
+      ],
+      "bloch_theta": 0.0,
+      "name": "HASH",
+      "is_operator": false
+    },
+    "⊙": {
+      "spinor": [
+        -3.837843061135739e-53,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DOT",
+      "is_operator": true
+    },
+    "≡": {
+      "spinor": [
+        1.5868278538160468e-48,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "IDENTICAL",
+      "is_operator": true
+    },
+    "◈": {
+      "spinor": [
+        1.0,
+        -6.74250707572453e-23
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROVE",
+      "is_operator": false
+    },
+    "$": {
+      "spinor": [
+        3.2467990144639917e-53,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "VALUE",
+      "is_operator": false
+    },
+    "Æ": {
+      "spinor": [
+        1.0,
+        -2.3391445994626524e-39
+      ],
+      "bloch_theta": 0.0,
+      "name": "BIND",
+      "is_operator": true
+    },
+    "¤": {
+      "spinor": [
+        2.5260668213449805e-19,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "PAY",
+      "is_operator": false
+    },
+    "ZK": {
+      "spinor": [
+        -3.763582939877383e-21,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "ZK_PROOF",
+      "is_operator": false
+    },
+    "◇": {
+      "spinor": [
+        2.6998718390413642e-05,
+        -0.9999999996355345
+      ],
+      "bloch_theta": 3.141538656153006,
+      "name": "DIAMOND_OPEN",
+      "is_operator": false
+    },
+    "□": {
+      "spinor": [
+        2.962010454420608e-10,
+        1.0
+      ],
+      "bloch_theta": 3.141592652997391,
+      "name": "SQUARE_OPEN",
+      "is_operator": false
+    },
+    "R": {
+      "spinor": [
+        -2.9176066329748107e-08,
+        -0.9999999999999996
+      ],
+      "bloch_theta": 3.1415925952376607,
+      "name": "RECEIPT",
+      "is_operator": false
+    },
+    "⊙̂": {
+      "spinor": [
+        1.2246062966347575e-07,
+        -0.9999999999999925
+      ],
+      "bloch_theta": 3.141592408668534,
+      "name": "EMIT",
+      "is_operator": false
+    },
+    "λ": {
+      "spinor": [
+        1.0,
+        5.836410401095705e-25
+      ],
+      "bloch_theta": 0.0,
+      "name": "FRICTION",
+      "is_operator": false
+    },
+    "∇": {
+      "spinor": [
+        9.85422322575087e-08,
+        0.9999999999999951
+      ],
+      "bloch_theta": 3.141592456505329,
+      "name": "GRADIENT",
+      "is_operator": false
+    },
+    "∂": {
+      "spinor": [
+        -6.358649671602754e-44,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "PARTIAL",
+      "is_operator": false
+    },
+    "∫": {
+      "spinor": [
+        2.5899609789233057e-12,
+        -1.0
+      ],
+      "bloch_theta": 3.1415926535846133,
+      "name": "INTEGRAL",
+      "is_operator": false
+    },
+    "η": {
+      "spinor": [
+        2.0526434659191446e-70,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "EFFICIENCY",
+      "is_operator": false
+    },
+    "ψ": {
+      "spinor": [
+        -1.0,
+        -1.6085223224972146e-64
+      ],
+      "bloch_theta": 0.0,
+      "name": "WAVEFUNCTION",
+      "is_operator": false
+    },
+    "χ": {
+      "spinor": [
+        1.0787618383397742e-08,
+        -0.9999999999999999
+      ],
+      "bloch_theta": 3.1415926320145564,
+      "name": "EIGENVECTOR",
+      "is_operator": false
+    },
+    "σ": {
+      "spinor": [
+        6.2439392204797204e-46,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "PAULI",
+      "is_operator": false
+    },
+    "↑": {
+      "spinor": [
+        -1.0,
+        2.0163481859354249e-19
+      ],
+      "bloch_theta": 0.0,
+      "name": "SPIN_UP",
+      "is_operator": true
+    },
+    "↓": {
+      "spinor": [
+        -7.704228686473088e-20,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "SPIN_DOWN",
+      "is_operator": true
+    },
+    "⨂": {
+      "spinor": [
+        1.0,
+        -1.1306418583968056e-32
+      ],
+      "bloch_theta": 0.0,
+      "name": "SPIN_MUL",
+      "is_operator": true
+    },
+    "θ": {
+      "spinor": [
+        2.0253478221288253e-36,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "ANGLE",
+      "is_operator": false
+    },
+    "φ": {
+      "spinor": [
+        1.0,
+        5.403165104787726e-28
+      ],
+      "bloch_theta": 0.0,
+      "name": "PHASE",
+      "is_operator": false
+    },
+    "ρ": {
+      "spinor": [
+        1.0,
+        2.461722693860644e-44
+      ],
+      "bloch_theta": 0.0,
+      "name": "DENSITY",
+      "is_operator": false
+    },
+    "μ": {
+      "spinor": [
+        4.813226026550605e-46,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "MEAN",
+      "is_operator": false
+    },
+    "ω": {
+      "spinor": [
+        -1.4615294965011576e-41,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "FREQUENCY",
+      "is_operator": false
+    },
+    "τ": {
+      "spinor": [
+        -1.9986000585769362e-44,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "TENSOR",
+      "is_operator": false
+    },
+    "κ": {
+      "spinor": [
+        1.0,
+        3.8264929443573103e-11
+      ],
+      "bloch_theta": 0.0,
+      "name": "CURVATURE",
+      "is_operator": false
+    },
+    "ξ": {
+      "spinor": [
+        -3.3856732225071636e-13,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589116,
+      "name": "RANDOM",
+      "is_operator": false
+    },
+    "∞": {
+      "spinor": [
+        -4.522049094190469e-09,
+        -1.0
+      ],
+      "bloch_theta": 3.1415926445456948,
+      "name": "DIVERGE",
+      "is_operator": true
+    },
+    "∴": {
+      "spinor": [
+        0.002332154445738995,
+        -0.9999972805241228
+      ],
+      "bloch_theta": 3.1369283404701522,
+      "name": "THEREFORE",
+      "is_operator": true
+    },
+    "◀": {
+      "spinor": [
+        -1.0,
+        -1.6799965129496125e-50
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_END",
+      "is_operator": true
+    }
+  },
+  "compile_time_ms": 1.76,
+  "sha256": "71c0677809568d6d48e423b0c1ae2559b47db3c305bbceae031a939a8614d5af"
+}

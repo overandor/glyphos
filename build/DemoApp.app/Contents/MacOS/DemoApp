@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "◉ DemoApp live"
+echo "◇ Resources indexed"
+echo "◆ Verified bundle"
+open -a Finder "$(dirname "$0")/../Resources/"

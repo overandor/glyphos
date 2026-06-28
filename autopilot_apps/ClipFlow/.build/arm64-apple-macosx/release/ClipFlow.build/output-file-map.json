@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/ClipFlow.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/ClipFlow.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/Sources/ClipFlow/ClipFlowApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/ClipFlowApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/ClipFlowApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/ClipFlowApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/arm64-apple-macosx/release/ClipFlow.build/ClipFlowApp.dia"
+  }
+}

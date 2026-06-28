@@ -1,0 +1,20 @@
+{
+  "schema": "reality_compiler.valuation_packet.v1",
+  "artifact": {
+    "path": "build/AIApp.app",
+    "hash": "981d799866db2363159d29ec3290043120d402e54f07a8aa85b73409da9e99a0",
+    "size": 5741,
+    "file_count": 11,
+    "type": "directory"
+  },
+  "substrate_cost_usd": 0.0,
+  "lambda_score": 0.7875,
+  "transferability": 1.0,
+  "buyer_readiness": 0.35,
+  "estimated_value_usd": 178.75,
+  "value_basis": "substrate_cost × transferability_multiplier + base_verified_value",
+  "verdict": "TRANSFERABLE: ready for zero-copy transfer",
+  "receipt_count": 2,
+  "proof_count": 2,
+  "exported_at": "2026-06-27T09:06:55.697136"
+}

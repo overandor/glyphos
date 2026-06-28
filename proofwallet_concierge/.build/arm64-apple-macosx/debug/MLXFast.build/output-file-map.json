@@ -1,0 +1,19 @@
+{
+  "": {
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/checkouts/mlx-swift/Source/MLXFast/MLXFast.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFast.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFast.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFast~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFast.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFast.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/checkouts/mlx-swift/Source/MLXFast/MLXFastKernel.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFastKernel.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFastKernel.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFastKernel~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFastKernel.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXFast.build/MLXFastKernel.dia"
+  }
+}

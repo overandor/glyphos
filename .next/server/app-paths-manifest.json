@@ -1,0 +1,4 @@
+{
+  "/api/kpis/route": "app/api/kpis/route.js",
+  "/api/schedule/route": "app/api/schedule/route.js"
+}

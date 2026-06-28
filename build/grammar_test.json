@@ -1,0 +1,1553 @@
+{
+  "type": "glyph_compiled",
+  "source_file": "grammar_test.glyph",
+  "compiled_at": 1782510220.897247,
+  "glyph_count": 183,
+  "operator_count": 120,
+  "noun_count": 63,
+  "operator_ratio": 0.6557,
+  "node_count": 2,
+  "max_depth": 29,
+  "branch_count": 8,
+  "loop_count": 2,
+  "fn_count": 2,
+  "match_count": 5,
+  "state_count": 6,
+  "try_count": 3,
+  "token_count": 430,
+  "nodes": [
+    {
+      "op": "IMPORT_OP",
+      "operands": [
+        "T"
+      ],
+      "line": 2,
+      "children": []
+    },
+    {
+      "op": "NAMESPACE",
+      "operands": [],
+      "line": 2,
+      "children": [
+        {
+          "op": "NAMESPACE",
+          "operands": [],
+          "line": 3,
+          "children": [
+            {
+              "op": "MODULE_DEF",
+              "operands": [],
+              "line": 3,
+              "children": [
+                {
+                  "op": "FN_DEF",
+                  "operands": [],
+                  "line": 4,
+                  "children": [
+                    {
+                      "op": "FN_PARAM",
+                      "operands": [],
+                      "line": 5,
+                      "children": []
+                    },
+                    {
+                      "op": "FN_PARAM",
+                      "operands": [
+                        "□"
+                      ],
+                      "line": 5,
+                      "children": []
+                    },
+                    {
+                      "op": "CHAIN",
+                      "operands": [
+                        "Ⲷ"
+                      ],
+                      "line": 5,
+                      "children": []
+                    },
+                    {
+                      "op": "FN_BODY",
+                      "operands": [],
+                      "line": 6,
+                      "children": [
+                        {
+                          "op": "HASH_SHA256",
+                          "operands": [
+                            "□"
+                          ],
+                          "line": 7,
+                          "children": []
+                        },
+                        {
+                          "op": "DERIVE",
+                          "operands": [],
+                          "line": 7,
+                          "children": []
+                        },
+                        {
+                          "op": "HMAC_OP",
+                          "operands": [
+                            "H",
+                            "H"
+                          ],
+                          "line": 8,
+                          "children": []
+                        },
+                        {
+                          "op": "DERIVE",
+                          "operands": [],
+                          "line": 8,
+                          "children": []
+                        },
+                        {
+                          "op": "AEAD_OP",
+                          "operands": [
+                            "M",
+                            "M"
+                          ],
+                          "line": 9,
+                          "children": []
+                        },
+                        {
+                          "op": "DERIVE",
+                          "operands": [],
+                          "line": 9,
+                          "children": []
+                        },
+                        {
+                          "op": "RETURN",
+                          "operands": [
+                            "T",
+                            "T"
+                          ],
+                          "line": 10,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "op": "FN_DEF",
+                      "operands": [],
+                      "line": 12,
+                      "children": [
+                        {
+                          "op": "FN_PARAM",
+                          "operands": [],
+                          "line": 13,
+                          "children": []
+                        },
+                        {
+                          "op": "FN_PARAM",
+                          "operands": [
+                            "T"
+                          ],
+                          "line": 13,
+                          "children": []
+                        },
+                        {
+                          "op": "FN_PARAM",
+                          "operands": [
+                            "M"
+                          ],
+                          "line": 13,
+                          "children": []
+                        },
+                        {
+                          "op": "CHAIN",
+                          "operands": [
+                            "Ⲷ"
+                          ],
+                          "line": 13,
+                          "children": []
+                        },
+                        {
+                          "op": "FN_BODY",
+                          "operands": [],
+                          "line": 14,
+                          "children": [
+                            {
+                              "op": "DECRYPT",
+                              "operands": [
+                                "T"
+                              ],
+                              "line": 15,
+                              "children": []
+                            },
+                            {
+                              "op": "DERIVE",
+                              "operands": [],
+                              "line": 15,
+                              "children": []
+                            },
+                            {
+                              "op": "HASH_SHA256",
+                              "operands": [
+                                "T",
+                                "T"
+                              ],
+                              "line": 16,
+                              "children": []
+                            },
+                            {
+                              "op": "DERIVE",
+                              "operands": [],
+                              "line": 16,
+                              "children": []
+                            },
+                            {
+                              "op": "IDENTICAL",
+                              "operands": [
+                                "H",
+                                "H"
+                              ],
+                              "line": 17,
+                              "children": []
+                            },
+                            {
+                              "op": "IDENTICAL",
+                              "operands": [
+                                "M",
+                                "H"
+                              ],
+                              "line": 18,
+                              "children": []
+                            },
+                            {
+                              "op": "RETURN",
+                              "operands": [
+                                "◎",
+                                "T"
+                              ],
+                              "line": 19,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "NAMESPACE",
+                      "operands": [],
+                      "line": 21,
+                      "children": [
+                        {
+                          "op": "STATE_DEF",
+                          "operands": [],
+                          "line": 23,
+                          "children": [
+                            {
+                              "op": "STATE_ENTRY",
+                              "operands": [],
+                              "line": 24,
+                              "children": [
+                                {
+                                  "op": "HASH_SHA256",
+                                  "operands": [],
+                                  "line": 24,
+                                  "children": []
+                                },
+                                {
+                                  "op": "DERIVE",
+                                  "operands": [],
+                                  "line": 24,
+                                  "children": []
+                                },
+                                {
+                                  "op": "STATE_TRANS",
+                                  "operands": [
+                                    "H"
+                                  ],
+                                  "line": 25,
+                                  "children": []
+                                },
+                                {
+                                  "op": "DERIVE",
+                                  "operands": [],
+                                  "line": 25,
+                                  "children": []
+                                },
+                                {
+                                  "op": "STATE_GUARD",
+                                  "operands": [],
+                                  "line": 26,
+                                  "children": []
+                                },
+                                {
+                                  "op": "IDENTICAL",
+                                  "operands": [
+                                    "H"
+                                  ],
+                                  "line": 26,
+                                  "children": []
+                                },
+                                {
+                                  "op": "CHAIN",
+                                  "operands": [
+                                    "◎"
+                                  ],
+                                  "line": 26,
+                                  "children": []
+                                },
+                                {
+                                  "op": "STATE_DEF",
+                                  "operands": [],
+                                  "line": 27,
+                                  "children": [
+                                    {
+                                      "op": "STATE_ENTRY",
+                                      "operands": [],
+                                      "line": 28,
+                                      "children": [
+                                        {
+                                          "op": "AEAD_OP",
+                                          "operands": [
+                                            "H"
+                                          ],
+                                          "line": 28,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "DERIVE",
+                                          "operands": [],
+                                          "line": 28,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "STATE_TRANS",
+                                          "operands": [
+                                            "T"
+                                          ],
+                                          "line": 29,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "DERIVE",
+                                          "operands": [],
+                                          "line": 29,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "STATE_GUARD",
+                                          "operands": [],
+                                          "line": 30,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "EQ",
+                                          "operands": [
+                                            "T"
+                                          ],
+                                          "line": 30,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "CHAIN",
+                                          "operands": [
+                                            "Ⲷ"
+                                          ],
+                                          "line": 30,
+                                          "children": []
+                                        },
+                                        {
+                                          "op": "STATE_DEF",
+                                          "operands": [],
+                                          "line": 31,
+                                          "children": [
+                                            {
+                                              "op": "STATE_ENTRY",
+                                              "operands": [],
+                                              "line": 32,
+                                              "children": [
+                                                {
+                                                  "op": "VERIFY_SIG",
+                                                  "operands": [
+                                                    "T"
+                                                  ],
+                                                  "line": 32,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "op": "DERIVE",
+                                                  "operands": [],
+                                                  "line": 32,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "op": "STATE_TRANS",
+                                                  "operands": [
+                                                    "◎"
+                                                  ],
+                                                  "line": 33,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "op": "DERIVE",
+                                                  "operands": [],
+                                                  "line": 33,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "op": "STATE_FINAL",
+                                                  "operands": [],
+                                                  "line": 34,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "op": "CHAIN",
+                                                  "operands": [
+                                                    "⊙̂",
+                                                    "◎"
+                                                  ],
+                                                  "line": 35,
+                                                  "children": []
+                                                },
+                                                {
+                                                  "op": "BRANCH",
+                                                  "operands": [],
+                                                  "line": 37,
+                                                  "children": [
+                                                    {
+                                                      "op": "EQ",
+                                                      "operands": [
+                                                        "□"
+                                                      ],
+                                                      "line": 37,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "op": "CHAIN",
+                                                      "operands": [
+                                                        "ⲻ"
+                                                      ],
+                                                      "line": 37,
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "op": "BRANCH_ELSE",
+                                                      "operands": [],
+                                                      "line": 38,
+                                                      "children": [
+                                                        {
+                                                          "op": "EQ",
+                                                          "operands": [
+                                                            "□"
+                                                          ],
+                                                          "line": 38,
+                                                          "children": []
+                                                        },
+                                                        {
+                                                          "op": "CHAIN",
+                                                          "operands": [
+                                                            "Ⲹ"
+                                                          ],
+                                                          "line": 38,
+                                                          "children": []
+                                                        },
+                                                        {
+                                                          "op": "LOOP",
+                                                          "operands": [],
+                                                          "line": 39,
+                                                          "children": [
+                                                            {
+                                                              "op": "CHAIN",
+                                                              "operands": [
+                                                                "□"
+                                                              ],
+                                                              "line": 39,
+                                                              "children": []
+                                                            },
+                                                            {
+                                                              "op": "FOR_EACH",
+                                                              "operands": [],
+                                                              "line": 40,
+                                                              "children": [
+                                                                {
+                                                                  "op": "DERIVE",
+                                                                  "operands": [
+                                                                    "□"
+                                                                  ],
+                                                                  "line": 40,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "HASH_SHA256",
+                                                                  "operands": [],
+                                                                  "line": 41,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "DERIVE",
+                                                                  "operands": [],
+                                                                  "line": 41,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "ADD",
+                                                                  "operands": [
+                                                                    "H",
+                                                                    "H"
+                                                                  ],
+                                                                  "line": 42,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "DERIVE",
+                                                                  "operands": [
+                                                                    "Σ"
+                                                                  ],
+                                                                  "line": 42,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "ITER_NEXT",
+                                                                  "operands": [
+                                                                    "Σ"
+                                                                  ],
+                                                                  "line": 43,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "ITER_DONE",
+                                                                  "operands": [],
+                                                                  "line": 44,
+                                                                  "children": []
+                                                                },
+                                                                {
+                                                                  "op": "BRANCH",
+                                                                  "operands": [],
+                                                                  "line": 45,
+                                                                  "children": [
+                                                                    {
+                                                                      "op": "EQ",
+                                                                      "operands": [
+                                                                        "□"
+                                                                      ],
+                                                                      "line": 45,
+                                                                      "children": []
+                                                                    },
+                                                                    {
+                                                                      "op": "CHAIN",
+                                                                      "operands": [
+                                                                        "ⲹ"
+                                                                      ],
+                                                                      "line": 45,
+                                                                      "children": []
+                                                                    },
+                                                                    {
+                                                                      "op": "BRANCH_ELSE",
+                                                                      "operands": [],
+                                                                      "line": 46,
+                                                                      "children": [
+                                                                        {
+                                                                          "op": "RAISE",
+                                                                          "operands": [],
+                                                                          "line": 46,
+                                                                          "children": []
+                                                                        },
+                                                                        {
+                                                                          "op": "TRY_OP",
+                                                                          "operands": [],
+                                                                          "line": 48,
+                                                                          "children": [
+                                                                            {
+                                                                              "op": "ENCRYPT",
+                                                                              "operands": [
+                                                                                "□"
+                                                                              ],
+                                                                              "line": 49,
+                                                                              "children": []
+                                                                            },
+                                                                            {
+                                                                              "op": "DERIVE",
+                                                                              "operands": [],
+                                                                              "line": 49,
+                                                                              "children": []
+                                                                            },
+                                                                            {
+                                                                              "op": "CHAIN",
+                                                                              "operands": [
+                                                                                "T"
+                                                                              ],
+                                                                              "line": 49,
+                                                                              "children": []
+                                                                            },
+                                                                            {
+                                                                              "op": "BRANCH",
+                                                                              "operands": [],
+                                                                              "line": 50,
+                                                                              "children": [
+                                                                                {
+                                                                                  "op": "IDENTICAL",
+                                                                                  "operands": [
+                                                                                    "T"
+                                                                                  ],
+                                                                                  "line": 50,
+                                                                                  "children": []
+                                                                                },
+                                                                                {
+                                                                                  "op": "CHAIN",
+                                                                                  "operands": [
+                                                                                    "✕"
+                                                                                  ],
+                                                                                  "line": 50,
+                                                                                  "children": []
+                                                                                },
+                                                                                {
+                                                                                  "op": "BRANCH_ELSE",
+                                                                                  "operands": [],
+                                                                                  "line": 51,
+                                                                                  "children": [
+                                                                                    {
+                                                                                      "op": "RECOVER",
+                                                                                      "operands": [],
+                                                                                      "line": 51,
+                                                                                      "children": []
+                                                                                    },
+                                                                                    {
+                                                                                      "op": "CHAIN",
+                                                                                      "operands": [
+                                                                                        "T"
+                                                                                      ],
+                                                                                      "line": 51,
+                                                                                      "children": []
+                                                                                    },
+                                                                                    {
+                                                                                      "op": "FINALLY",
+                                                                                      "operands": [],
+                                                                                      "line": 52,
+                                                                                      "children": [
+                                                                                        {
+                                                                                          "op": "CHAIN",
+                                                                                          "operands": [
+                                                                                            "⊙̂",
+                                                                                            "◎"
+                                                                                          ],
+                                                                                          "line": 53,
+                                                                                          "children": []
+                                                                                        },
+                                                                                        {
+                                                                                          "op": "CATCH",
+                                                                                          "operands": [],
+                                                                                          "line": 54,
+                                                                                          "children": [
+                                                                                            {
+                                                                                              "op": "ERROR_KIND",
+                                                                                              "operands": [],
+                                                                                              "line": 54,
+                                                                                              "children": []
+                                                                                            },
+                                                                                            {
+                                                                                              "op": "MATCH",
+                                                                                              "operands": [],
+                                                                                              "line": 56,
+                                                                                              "children": [
+                                                                                                {
+                                                                                                  "op": "CHAIN",
+                                                                                                  "operands": [
+                                                                                                    "□"
+                                                                                                  ],
+                                                                                                  "line": 56,
+                                                                                                  "children": []
+                                                                                                },
+                                                                                                {
+                                                                                                  "op": "CASE",
+                                                                                                  "operands": [],
+                                                                                                  "line": 57,
+                                                                                                  "children": [
+                                                                                                    {
+                                                                                                      "op": "SOME_PATTERN",
+                                                                                                      "operands": [],
+                                                                                                      "line": 57,
+                                                                                                      "children": []
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "op": "DERIVE",
+                                                                                                      "operands": [
+                                                                                                        "□"
+                                                                                                      ],
+                                                                                                      "line": 58,
+                                                                                                      "children": []
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "op": "RETURN",
+                                                                                                      "operands": [],
+                                                                                                      "line": 59,
+                                                                                                      "children": []
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "op": "CASE",
+                                                                                                      "operands": [],
+                                                                                                      "line": 60,
+                                                                                                      "children": [
+                                                                                                        {
+                                                                                                          "op": "NONE_PATTERN",
+                                                                                                          "operands": [],
+                                                                                                          "line": 60,
+                                                                                                          "children": []
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "op": "TRACE",
+                                                                                                          "operands": [],
+                                                                                                          "line": 61,
+                                                                                                          "children": []
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "op": "CASE",
+                                                                                                          "operands": [],
+                                                                                                          "line": 62,
+                                                                                                          "children": [
+                                                                                                            {
+                                                                                                              "op": "OK_PATTERN",
+                                                                                                              "operands": [],
+                                                                                                              "line": 62,
+                                                                                                              "children": []
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "op": "DERIVE",
+                                                                                                              "operands": [],
+                                                                                                              "line": 63,
+                                                                                                              "children": []
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "op": "RETURN",
+                                                                                                              "operands": [],
+                                                                                                              "line": 64,
+                                                                                                              "children": []
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "op": "CASE",
+                                                                                                              "operands": [],
+                                                                                                              "line": 65,
+                                                                                                              "children": [
+                                                                                                                {
+                                                                                                                  "op": "ERR_PATTERN",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 65,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "RAISE",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 66,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "FORK",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 68,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "SPAWN",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 69,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "HASH_SHA256",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 69,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "DERIVE",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 69,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "SPAWN",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 70,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "HASH_SHA256",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 70,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "DERIVE",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 70,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "JOIN",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 71,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "ADD",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 72,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "DERIVE",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 72,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "IDENTICAL",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 73,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "NOW",
+                                                                                                                  "operands": [
+                                                                                                                    "◎"
+                                                                                                                  ],
+                                                                                                                  "line": 75,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "DERIVE",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 75,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "DELAY",
+                                                                                                                  "operands": [
+                                                                                                                    "T"
+                                                                                                                  ],
+                                                                                                                  "line": 76,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "INTERVAL",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 76,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "DERIVE",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 76,
+                                                                                                                  "children": []
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "op": "BRANCH",
+                                                                                                                  "operands": [],
+                                                                                                                  "line": 77,
+                                                                                                                  "children": [
+                                                                                                                    {
+                                                                                                                      "op": "LE",
+                                                                                                                      "operands": [],
+                                                                                                                      "line": 77,
+                                                                                                                      "children": []
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "op": "TIMEOUT",
+                                                                                                                      "operands": [],
+                                                                                                                      "line": 77,
+                                                                                                                      "children": []
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "op": "BRANCH_ELSE",
+                                                                                                                      "operands": [],
+                                                                                                                      "line": 78,
+                                                                                                                      "children": [
+                                                                                                                        {
+                                                                                                                          "op": "RAISE",
+                                                                                                                          "operands": [],
+                                                                                                                          "line": 78,
+                                                                                                                          "children": []
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "op": "HASH_SHA256",
+                                                                                                                          "operands": [],
+                                                                                                                          "line": 80,
+                                                                                                                          "children": []
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "op": "DERIVE",
+                                                                                                                          "operands": [],
+                                                                                                                          "line": 80,
+                                                                                                                          "children": []
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "op": "IDENTICAL",
+                                                                                                                          "operands": [
+                                                                                                                            "H",
+                                                                                                                            "H"
+                                                                                                                          ],
+                                                                                                                          "line": 81,
+                                                                                                                          "children": []
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "op": "CHAIN",
+                                                                                                                          "operands": [
+                                                                                                                            "◎",
+                                                                                                                            "◈",
+                                                                                                                            "H",
+                                                                                                                            "⊙̂",
+                                                                                                                            "◎"
+                                                                                                                          ],
+                                                                                                                          "line": 81,
+                                                                                                                          "children": []
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "embeddings": {
+    "▷": {
+      "spinor": [
+        -1.0,
+        -4.651838719590128e-26
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_START",
+      "is_operator": true
+    },
+    "T": {
+      "spinor": [
+        6.384655042987028e-22,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "TIME",
+      "is_operator": false
+    },
+    "⧀": {
+      "spinor": [
+        0.8789283289220815,
+        0.47695386843827725
+      ],
+      "bloch_theta": 0.994371413129288,
+      "name": "IMPORT_OP",
+      "is_operator": true
+    },
+    "⧂": {
+      "spinor": [
+        -1.7160151352262129e-15,
+        -1.0
+      ],
+      "bloch_theta": 3.1415926535897896,
+      "name": "NAMESPACE",
+      "is_operator": true
+    },
+    "⧃": {
+      "spinor": [
+        2.4097544457423775e-17,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "MODULE_DEF",
+      "is_operator": true
+    },
+    "⏦": {
+      "spinor": [
+        1.0,
+        -7.940600395981939e-13
+      ],
+      "bloch_theta": 0.0,
+      "name": "FN_DEF",
+      "is_operator": true
+    },
+    "⏨": {
+      "spinor": [
+        -1.0,
+        1.7207267190625078e-24
+      ],
+      "bloch_theta": 0.0,
+      "name": "FN_PARAM",
+      "is_operator": true
+    },
+    "□": {
+      "spinor": [
+        2.962010454420608e-10,
+        1.0
+      ],
+      "bloch_theta": 3.141592652997391,
+      "name": "SQUARE_OPEN",
+      "is_operator": false
+    },
+    "Ⲷ": {
+      "spinor": [
+        1.0,
+        -2.6961424570427886e-71
+      ],
+      "bloch_theta": 0.0,
+      "name": "TYPE_INT",
+      "is_operator": false
+    },
+    "⏩": {
+      "spinor": [
+        1.0,
+        4.3643892862874136e-18
+      ],
+      "bloch_theta": 0.0,
+      "name": "FN_BODY",
+      "is_operator": true
+    },
+    "⬠": {
+      "spinor": [
+        -1.0,
+        -6.768316330011685e-29
+      ],
+      "bloch_theta": 0.0,
+      "name": "HASH_SHA256",
+      "is_operator": true
+    },
+    "→": {
+      "spinor": [
+        8.851785898045702e-59,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DERIVE",
+      "is_operator": true
+    },
+    "H": {
+      "spinor": [
+        -1.0,
+        -2.2010314836854655e-34
+      ],
+      "bloch_theta": 0.0,
+      "name": "HASH",
+      "is_operator": false
+    },
+    "⬤": {
+      "spinor": [
+        -1.0,
+        1.57683332120653e-35
+      ],
+      "bloch_theta": 0.0,
+      "name": "HMAC_OP",
+      "is_operator": true
+    },
+    "M": {
+      "spinor": [
+        -0.9793243472724854,
+        0.2022963737671057
+      ],
+      "bloch_theta": 0.4074044210019714,
+      "name": "MERKLE",
+      "is_operator": false
+    },
+    "⬥": {
+      "spinor": [
+        -1.0,
+        6.031882121826471e-44
+      ],
+      "bloch_theta": 0.0,
+      "name": "AEAD_OP",
+      "is_operator": true
+    },
+    "⇝": {
+      "spinor": [
+        -2.4692477353251674e-05,
+        -0.9999999996951408
+      ],
+      "bloch_theta": 3.1415432686350817,
+      "name": "RETURN",
+      "is_operator": true
+    },
+    "⏧": {
+      "spinor": [
+        -0.0004888895746467318,
+        -0.9999998804934848
+      ],
+      "bloch_theta": 3.140614874401549,
+      "name": "FN_END",
+      "is_operator": true
+    },
+    "⬩": {
+      "spinor": [
+        2.1216689191886383e-09,
+        1.0
+      ],
+      "bloch_theta": 3.1415926493464554,
+      "name": "DECRYPT",
+      "is_operator": true
+    },
+    "≡": {
+      "spinor": [
+        1.5868278538160468e-48,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "IDENTICAL",
+      "is_operator": true
+    },
+    "◎": {
+      "spinor": [
+        -1.0,
+        -1.3661105214792438e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFIED",
+      "is_operator": false
+    },
+    "⧄": {
+      "spinor": [
+        -1.0,
+        3.8875328174500813e-48
+      ],
+      "bloch_theta": 0.0,
+      "name": "MODULE_END",
+      "is_operator": true
+    },
+    "⦜": {
+      "spinor": [
+        -1.0,
+        -1.918227246392284e-27
+      ],
+      "bloch_theta": 0.0,
+      "name": "STATE_DEF",
+      "is_operator": true
+    },
+    "⦠": {
+      "spinor": [
+        1.0,
+        -4.6252625536988695e-68
+      ],
+      "bloch_theta": 0.0,
+      "name": "STATE_ENTRY",
+      "is_operator": true
+    },
+    "⦝": {
+      "spinor": [
+        -1.0,
+        -7.102871177751478e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "STATE_TRANS",
+      "is_operator": true
+    },
+    "⦞": {
+      "spinor": [
+        -1.0,
+        -2.6760185436045748e-15
+      ],
+      "bloch_theta": 0.0,
+      "name": "STATE_GUARD",
+      "is_operator": true
+    },
+    "⪳": {
+      "spinor": [
+        -1.0,
+        2.7509555607040308e-17
+      ],
+      "bloch_theta": 0.0,
+      "name": "EQ",
+      "is_operator": true
+    },
+    "⬧": {
+      "spinor": [
+        NaN,
+        NaN
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFY_SIG",
+      "is_operator": true
+    },
+    "⦣": {
+      "spinor": [
+        1.0,
+        -3.026618470571504e-61
+      ],
+      "bloch_theta": 0.0,
+      "name": "STATE_FINAL",
+      "is_operator": true
+    },
+    "⊙̂": {
+      "spinor": [
+        1.2246062966347575e-07,
+        -0.9999999999999925
+      ],
+      "bloch_theta": 3.141592408668534,
+      "name": "EMIT",
+      "is_operator": false
+    },
+    "⦂": {
+      "spinor": [
+        0.001889057101218878,
+        0.9999982157300423
+      ],
+      "bloch_theta": 3.137814537140295,
+      "name": "BRANCH",
+      "is_operator": true
+    },
+    "ⲻ": {
+      "spinor": [
+        -1.0,
+        -8.581430133165433e-67
+      ],
+      "bloch_theta": 0.0,
+      "name": "TYPE_LIST",
+      "is_operator": false
+    },
+    "⦙": {
+      "spinor": [
+        -1.0,
+        3.50645392548642e-41
+      ],
+      "bloch_theta": 0.0,
+      "name": "BRANCH_ELSE",
+      "is_operator": true
+    },
+    "Ⲹ": {
+      "spinor": [
+        1.0,
+        -4.776566888286757e-10
+      ],
+      "bloch_theta": 0.0,
+      "name": "TYPE_STR",
+      "is_operator": false
+    },
+    "⥂": {
+      "spinor": [
+        -1.0,
+        9.886789452115536e-25
+      ],
+      "bloch_theta": 0.0,
+      "name": "LOOP",
+      "is_operator": true
+    },
+    "⥅": {
+      "spinor": [
+        -2.83339376164107e-25,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "FOR_EACH",
+      "is_operator": true
+    },
+    "⊕": {
+      "spinor": [
+        1.0,
+        4.032662374509044e-40
+      ],
+      "bloch_theta": 0.0,
+      "name": "ADD",
+      "is_operator": true
+    },
+    "Σ": {
+      "spinor": [
+        1.0,
+        -5.780272432389221e-42
+      ],
+      "bloch_theta": 0.0,
+      "name": "SHARD",
+      "is_operator": false
+    },
+    "⥆": {
+      "spinor": [
+        1.4349854103296176e-06,
+        0.9999999999989705
+      ],
+      "bloch_theta": 3.1415897836189726,
+      "name": "ITER_NEXT",
+      "is_operator": true
+    },
+    "⥇": {
+      "spinor": [
+        0.5543821333311372,
+        0.8322622484789378
+      ],
+      "bloch_theta": 1.9663518771698762,
+      "name": "ITER_DONE",
+      "is_operator": true
+    },
+    "ⲹ": {
+      "spinor": [
+        -1.0,
+        -1.366444919263835e-35
+      ],
+      "bloch_theta": 0.0,
+      "name": "TYPE_BOOL",
+      "is_operator": false
+    },
+    "⦩": {
+      "spinor": [
+        1.0459761791257225e-23,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "RAISE",
+      "is_operator": true
+    },
+    "⦦": {
+      "spinor": [
+        -6.937993908650188e-36,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "TRY_OP",
+      "is_operator": true
+    },
+    "⬨": {
+      "spinor": [
+        1.0454723881239841e-19,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "ENCRYPT",
+      "is_operator": true
+    },
+    "✕": {
+      "spinor": [
+        -9.391696407566794e-47,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "INVALID",
+      "is_operator": false
+    },
+    "⦪": {
+      "spinor": [
+        1.7777435560392828e-06,
+        -0.9999999999984199
+      ],
+      "bloch_theta": 3.141589098102681,
+      "name": "RECOVER",
+      "is_operator": true
+    },
+    "⦨": {
+      "spinor": [
+        0.8996657086329807,
+        -0.43657944604609683
+      ],
+      "bloch_theta": 0.9035862452454857,
+      "name": "FINALLY",
+      "is_operator": true
+    },
+    "⦧": {
+      "spinor": [
+        1.0,
+        -1.2168759357808662e-28
+      ],
+      "bloch_theta": 0.0,
+      "name": "CATCH",
+      "is_operator": true
+    },
+    "⦯": {
+      "spinor": [
+        -0.9999999999999994,
+        3.013531935397371e-08
+      ],
+      "bloch_theta": 6.664001874625056e-08,
+      "name": "ERROR_KIND",
+      "is_operator": true
+    },
+    "⦰": {
+      "spinor": [
+        -3.822827023562328e-29,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "MATCH",
+      "is_operator": true
+    },
+    "⦱": {
+      "spinor": [
+        -1.0,
+        -1.3707181564921621e-08
+      ],
+      "bloch_theta": 0.0,
+      "name": "CASE",
+      "is_operator": true
+    },
+    "⦸": {
+      "spinor": [
+        1.0,
+        -5.13712860690598e-16
+      ],
+      "bloch_theta": 0.0,
+      "name": "SOME_PATTERN",
+      "is_operator": true
+    },
+    "⦹": {
+      "spinor": [
+        -1.5787378840809794e-10,
+        1.0
+      ],
+      "bloch_theta": 3.1415926532740457,
+      "name": "NONE_PATTERN",
+      "is_operator": true
+    },
+    "⭚": {
+      "spinor": [
+        3.1484416750955003e-10,
+        -1.0
+      ],
+      "bloch_theta": 3.141592652960105,
+      "name": "TRACE",
+      "is_operator": true
+    },
+    "⦺": {
+      "spinor": [
+        -1.0,
+        1.1181315106713323e-29
+      ],
+      "bloch_theta": 0.0,
+      "name": "OK_PATTERN",
+      "is_operator": true
+    },
+    "⦻": {
+      "spinor": [
+        -4.108931239186744e-51,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "ERR_PATTERN",
+      "is_operator": true
+    },
+    "⣢": {
+      "spinor": [
+        -1.0,
+        -2.954186616223069e-39
+      ],
+      "bloch_theta": 0.0,
+      "name": "FORK",
+      "is_operator": true
+    },
+    "⣚": {
+      "spinor": [
+        3.847927635459535e-26,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "SPAWN",
+      "is_operator": true
+    },
+    "⣡": {
+      "spinor": [
+        -6.72450407895908e-22,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "JOIN",
+      "is_operator": true
+    },
+    "⭐": {
+      "spinor": [
+        -1.2557810259838342e-71,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "NOW",
+      "is_operator": true
+    },
+    "⭒": {
+      "spinor": [
+        -1.0,
+        -7.167112484165018e-34
+      ],
+      "bloch_theta": 0.0,
+      "name": "DELAY",
+      "is_operator": true
+    },
+    "⭗": {
+      "spinor": [
+        -5.727370880382883e-13,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653588648,
+      "name": "INTERVAL",
+      "is_operator": true
+    },
+    "⪱": {
+      "spinor": [
+        -4.531015755856867e-09,
+        1.0
+      ],
+      "bloch_theta": 3.1415926445277615,
+      "name": "LE",
+      "is_operator": true
+    },
+    "⭔": {
+      "spinor": [
+        8.602040128031194e-12,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653572589,
+      "name": "TIMEOUT",
+      "is_operator": true
+    },
+    "◈": {
+      "spinor": [
+        1.0,
+        -6.74250707572453e-23
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROVE",
+      "is_operator": false
+    },
+    "◀": {
+      "spinor": [
+        -1.0,
+        -1.6799965129496125e-50
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_END",
+      "is_operator": true
+    }
+  },
+  "compile_time_ms": 12.76,
+  "sha256": "64d4f7c41699d73f68f3d49c5c6334f9af19003aaacda9b6417add29b1003497"
+}

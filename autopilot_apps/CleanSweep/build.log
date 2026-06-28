@@ -1,0 +1,10 @@
+Building for production...
+[0/4] Write sources
+[1/4] Write swift-version--58304C5D6DBC2206.txt
+[3/5] Compiling CleanSweep CleanSweepApp.swift
+[3/5] Write Objects.LinkFileList
+[4/5] Linking CleanSweep
+Build complete! (3.83s)
+
+warning: 'cleansweep': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/Sources/CleanSweep/Info.plist

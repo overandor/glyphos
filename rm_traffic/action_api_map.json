@@ -56,9 +56,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -230,9 +230,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -429,9 +429,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -652,9 +652,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -973,9 +973,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -1317,9 +1317,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -1684,9 +1684,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -2051,9 +2051,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -2418,9 +2418,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -2785,9 +2785,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -3174,9 +3174,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {
@@ -3587,9 +3587,9 @@
         "path": "/api/v1/login",
         "full_url": "https://rentmasseur.com/api/v1/login",
         "request_body": {
-          "email": "karpathianwolf",
-          "password": "Lola369!",
-          "csrf": "SjJHUzh6T1JKbkkwdVpjOEo5aEdaQT09",
+          "email": "REMOVED - use env var RM_USERNAME",
+          "password": "REMOVED - use env var RM_PASSWORD",
+          "csrf": "REMOVED",
           "remember": 0
         },
         "request_headers": {

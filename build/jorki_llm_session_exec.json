@@ -1,0 +1,402 @@
+{
+  "type": "over_executed",
+  "workflow": "JorkiLLMSession",
+  "intent": "simulate an LLM querying a JORKI-indexed file — read meta, read summary, search, retrieve only needed chunk, verify merkle root",
+  "executed_at": 1782508653.255465,
+  "step_results": [
+    {
+      "step": 1,
+      "action": "read meta",
+      "outputs": [
+        "meta"
+      ],
+      "result": {
+        "file_id": "9df7315ee91f",
+        "meta": {
+          "filename": "jorki_1gb_test.bin",
+          "size_bytes": "1073741824",
+          "total_lines": "4196894",
+          "total_words": "211926145",
+          "merkle_root": "9df7315ee91fca4cd7a206a91c8c352bedb77144b254ef822bcb3d6abba4f40c",
+          "total_chunks": "16786",
+          "total_symbols": "0"
+        }
+      },
+      "receipt": "a305955ff653cb8f"
+    },
+    {
+      "step": 2,
+      "action": "read summary",
+      "outputs": [
+        "summary"
+      ],
+      "result": {
+        "file_id": "9df7315ee91f",
+        "total_chunks": 20,
+        "chunks": [
+          {
+            "idx": 0,
+            "type": "paragraph",
+            "lines": "0-441"
+          },
+          {
+            "idx": 1,
+            "type": "paragraph",
+            "lines": "442-984"
+          },
+          {
+            "idx": 2,
+            "type": "paragraph",
+            "lines": "985-1354"
+          },
+          {
+            "idx": 3,
+            "type": "paragraph",
+            "lines": "1355-1444"
+          },
+          {
+            "idx": 4,
+            "type": "paragraph",
+            "lines": "1445-2002"
+          },
+          {
+            "idx": 5,
+            "type": "paragraph",
+            "lines": "2003-2926"
+          },
+          {
+            "idx": 6,
+            "type": "paragraph",
+            "lines": "2927-3324"
+          },
+          {
+            "idx": 7,
+            "type": "paragraph",
+            "lines": "3325-3842"
+          },
+          {
+            "idx": 8,
+            "type": "paragraph",
+            "lines": "3843-4092"
+          },
+          {
+            "idx": 9,
+            "type": "paragraph",
+            "lines": "4093-4638"
+          },
+          {
+            "idx": 10,
+            "type": "paragraph",
+            "lines": "4639-4794"
+          },
+          {
+            "idx": 11,
+            "type": "paragraph",
+            "lines": "4795-5408"
+          },
+          {
+            "idx": 12,
+            "type": "paragraph",
+            "lines": "5409-5575"
+          },
+          {
+            "idx": 13,
+            "type": "paragraph",
+            "lines": "5576-5960"
+          },
+          {
+            "idx": 14,
+            "type": "paragraph",
+            "lines": "5961-6253"
+          },
+          {
+            "idx": 15,
+            "type": "paragraph",
+            "lines": "6254-6338"
+          },
+          {
+            "idx": 16,
+            "type": "paragraph",
+            "lines": "6339-6769"
+          },
+          {
+            "idx": 17,
+            "type": "paragraph",
+            "lines": "6770-6919"
+          },
+          {
+            "idx": 18,
+            "type": "paragraph",
+            "lines": "6920-6953"
+          },
+          {
+            "idx": 19,
+            "type": "paragraph",
+            "lines": "6954-7036"
+          }
+        ],
+        "total_symbols": 0,
+        "symbols": []
+      },
+      "receipt": "e5593c1c0d34de93"
+    },
+    {
+      "step": 3,
+      "action": "search index",
+      "outputs": [
+        "search_hits"
+      ],
+      "result": {
+        "file_id": "9df7315ee91f",
+        "query": "test",
+        "total_matches": 0,
+        "chunks": [],
+        "symbols": [],
+        "words": []
+      },
+      "receipt": "30bdf1b49318f085"
+    },
+    {
+      "step": 4,
+      "action": "retrieve chunk 0",
+      "outputs": [
+        "chunk_bytes"
+      ],
+      "result": {
+        "idx": 0,
+        "line_start": 0,
+        "line_end": 441,
+        "boundary_type": "paragraph",
+        "preview": "9���cr�4\u001f�Y7׸�%���6+�y7\u0005�\u0016��؇\u000b>\u0019�f����~lW&4\n\r\u0015W�X�\"��\u0001��挬��nS�A��˕\u000e[0u\u0002\u001b���M�\u001c~�N@>�-�P�\u0001\u000b\u001e�nn\u0019B=v�P�!��+�@�#/�mc���K\u0014���\\\u000f*jQ\u000b��]@��\u00012�#\u000b�#3\t�\u0003z8�˖4�Ȫ�*C���!M1��4�B���xG&Wʐ�\n��<� 5�Br��ǵ�\u001cꀠ���X�$\u0012�m",
+        "line_count": 442
+      },
+      "receipt": "72639b4cbaff4bbc"
+    },
+    {
+      "step": 5,
+      "action": "verify hash integrity",
+      "outputs": [
+        "integrity"
+      ],
+      "result": {
+        "file_id": "9df7315ee91f",
+        "verified": true,
+        "merkle_root": "9df7315ee91fca4cd7a206a91c8c352bedb77144b254ef822bcb3d6abba4f40c",
+        "status": "active"
+      },
+      "receipt": "d25d28d015a4d1fd"
+    },
+    {
+      "step": 6,
+      "action": "issue receipt",
+      "outputs": [
+        "session_receipt"
+      ],
+      "result": {
+        "receipt": "d25d28d015a4d1fd",
+        "chain_length": 5
+      },
+      "receipt": "31d7197c7de13d4b"
+    }
+  ],
+  "state": {
+    "workflow": "JorkiLLMSession",
+    "intent": "simulate an LLM querying a JORKI-indexed file — read meta, read summary, search, retrieve only needed chunk, verify merkle root",
+    "meta": {
+      "file_id": "9df7315ee91f",
+      "meta": {
+        "filename": "jorki_1gb_test.bin",
+        "size_bytes": "1073741824",
+        "total_lines": "4196894",
+        "total_words": "211926145",
+        "merkle_root": "9df7315ee91fca4cd7a206a91c8c352bedb77144b254ef822bcb3d6abba4f40c",
+        "total_chunks": "16786",
+        "total_symbols": "0"
+      }
+    },
+    "summary": {
+      "file_id": "9df7315ee91f",
+      "total_chunks": 20,
+      "chunks": [
+        {
+          "idx": 0,
+          "type": "paragraph",
+          "lines": "0-441"
+        },
+        {
+          "idx": 1,
+          "type": "paragraph",
+          "lines": "442-984"
+        },
+        {
+          "idx": 2,
+          "type": "paragraph",
+          "lines": "985-1354"
+        },
+        {
+          "idx": 3,
+          "type": "paragraph",
+          "lines": "1355-1444"
+        },
+        {
+          "idx": 4,
+          "type": "paragraph",
+          "lines": "1445-2002"
+        },
+        {
+          "idx": 5,
+          "type": "paragraph",
+          "lines": "2003-2926"
+        },
+        {
+          "idx": 6,
+          "type": "paragraph",
+          "lines": "2927-3324"
+        },
+        {
+          "idx": 7,
+          "type": "paragraph",
+          "lines": "3325-3842"
+        },
+        {
+          "idx": 8,
+          "type": "paragraph",
+          "lines": "3843-4092"
+        },
+        {
+          "idx": 9,
+          "type": "paragraph",
+          "lines": "4093-4638"
+        },
+        {
+          "idx": 10,
+          "type": "paragraph",
+          "lines": "4639-4794"
+        },
+        {
+          "idx": 11,
+          "type": "paragraph",
+          "lines": "4795-5408"
+        },
+        {
+          "idx": 12,
+          "type": "paragraph",
+          "lines": "5409-5575"
+        },
+        {
+          "idx": 13,
+          "type": "paragraph",
+          "lines": "5576-5960"
+        },
+        {
+          "idx": 14,
+          "type": "paragraph",
+          "lines": "5961-6253"
+        },
+        {
+          "idx": 15,
+          "type": "paragraph",
+          "lines": "6254-6338"
+        },
+        {
+          "idx": 16,
+          "type": "paragraph",
+          "lines": "6339-6769"
+        },
+        {
+          "idx": 17,
+          "type": "paragraph",
+          "lines": "6770-6919"
+        },
+        {
+          "idx": 18,
+          "type": "paragraph",
+          "lines": "6920-6953"
+        },
+        {
+          "idx": 19,
+          "type": "paragraph",
+          "lines": "6954-7036"
+        }
+      ],
+      "total_symbols": 0,
+      "symbols": []
+    },
+    "search_hits": {
+      "file_id": "9df7315ee91f",
+      "query": "test",
+      "total_matches": 0,
+      "chunks": [],
+      "symbols": [],
+      "words": []
+    },
+    "chunk_bytes": {
+      "idx": 0,
+      "line_start": 0,
+      "line_end": 441,
+      "boundary_type": "paragraph",
+      "preview": "9���cr�4\u001f�Y7׸�%���6+�y7\u0005�\u0016��؇\u000b>\u0019�f����~lW&4\n\r\u0015W�X�\"��\u0001��挬��nS�A��˕\u000e[0u\u0002\u001b���M�\u001c~�N@>�-�P�\u0001\u000b\u001e�nn\u0019B=v�P�!��+�@�#/�mc���K\u0014���\\\u000f*jQ\u000b��]@��\u00012�#\u000b�#3\t�\u0003z8�˖4�Ȫ�*C���!M1��4�B���xG&Wʐ�\n��<� 5�Br��ǵ�\u001cꀠ���X�$\u0012�m",
+      "line_count": 442
+    },
+    "integrity": {
+      "file_id": "9df7315ee91f",
+      "verified": true,
+      "merkle_root": "9df7315ee91fca4cd7a206a91c8c352bedb77144b254ef822bcb3d6abba4f40c",
+      "status": "active"
+    },
+    "session_receipt": {
+      "receipt": "d25d28d015a4d1fd",
+      "chain_length": 5
+    }
+  },
+  "artifacts": [
+    "session_receipt"
+  ],
+  "value_claim": "LLM queried file through compact index without downloading full file",
+  "receipt_chain": [
+    {
+      "step": 1,
+      "action": "read meta",
+      "hash": "a305955ff653cb8f59c79f12d334297c584fbbb969055f42eec7d53a2294bfca",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "ts": 1782508653.248079
+    },
+    {
+      "step": 2,
+      "action": "read summary",
+      "hash": "e5593c1c0d34de9369c09a72c22580a694be152f05002bf540154e00e99242a4",
+      "prev_hash": "a305955ff653cb8f59c79f12d334297c584fbbb969055f42eec7d53a2294bfca",
+      "ts": 1782508653.248229
+    },
+    {
+      "step": 3,
+      "action": "search index",
+      "hash": "30bdf1b49318f0852c6292cb42074f59c3e8cae97be9d32dc2b7e87e9e5b135d",
+      "prev_hash": "e5593c1c0d34de9369c09a72c22580a694be152f05002bf540154e00e99242a4",
+      "ts": 1782508653.2528691
+    },
+    {
+      "step": 4,
+      "action": "retrieve chunk 0",
+      "hash": "72639b4cbaff4bbc959e60d6e8e3b2d94515fa19014a8dcec102d175ed522be7",
+      "prev_hash": "30bdf1b49318f0852c6292cb42074f59c3e8cae97be9d32dc2b7e87e9e5b135d",
+      "ts": 1782508653.255411
+    },
+    {
+      "step": 5,
+      "action": "verify hash integrity",
+      "hash": "d25d28d015a4d1fd4a462ef7c701aa57ac1d0603b9667668784b5cb8421be986",
+      "prev_hash": "72639b4cbaff4bbc959e60d6e8e3b2d94515fa19014a8dcec102d175ed522be7",
+      "ts": 1782508653.255451
+    },
+    {
+      "step": 6,
+      "action": "issue receipt",
+      "hash": "31d7197c7de13d4bcd9da20fbf8268d2cf28e6fffbeea29caa1a873eaef28ce6",
+      "prev_hash": "d25d28d015a4d1fd4a462ef7c701aa57ac1d0603b9667668784b5cb8421be986",
+      "ts": 1782508653.255462
+    }
+  ],
+  "merkle_root": "31d7197c7de13d4bcd9da20fbf8268d2cf28e6fffbeea29caa1a873eaef28ce6",
+  "sha256": "3a8fd16ab4bade70582e6313d941c6d5f12ad4b6af0e4cb3ba4431026970274d"
+}

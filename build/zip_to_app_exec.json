@@ -1,0 +1,850 @@
+{
+  "type": "over_executed",
+  "workflow": "ZipToApp",
+  "intent": "take a .zip archive and render it into a valid, optimized, AI-readable macOS .app bundle — detecting binary type by magic bytes, classifying resources by content, inferring entitlements from capability hints, building a dependency graph, emitting an AI manifest, self-healing structural issues, and optimizing bundle layout",
+  "executed_at": 1782563313.0924559,
+  "step_results": [
+    {
+      "step": 1,
+      "action": "read zip archive",
+      "outputs": [
+        "zip_contents"
+      ],
+      "result": {
+        "zip_path": "/tmp/AIApp.zip",
+        "entry_count": 5,
+        "entries": [
+          "AIApp",
+          "processor.py",
+          "config.json",
+          "README.md",
+          "icon.png"
+        ]
+      },
+      "receipt": "1ec07fedc97e4676"
+    },
+    {
+      "step": 2,
+      "action": "validate zip structure",
+      "outputs": [
+        "zip_validated"
+      ],
+      "result": {
+        "valid": true,
+        "entry_count": 5,
+        "has_executable_candidate": true
+      },
+      "receipt": "a9c9d9ffa8362835"
+    },
+    {
+      "step": 3,
+      "action": "extract zip to staging",
+      "outputs": [
+        "staging_dir"
+      ],
+      "result": {
+        "staging_dir": "/var/folders/hr/hr6mb_r96k5d4qrls1shsm4w0000gn/T/ziptoapp_ol7vri3x",
+        "file_count": 5,
+        "files": [
+          "AIApp",
+          "icon.png",
+          "config.json",
+          "processor.py",
+          "README.md"
+        ]
+      },
+      "receipt": "08551acc3d2544c8"
+    },
+    {
+      "step": 4,
+      "action": "analyze binary content",
+      "outputs": [
+        "binary_analysis"
+      ],
+      "result": {
+        "analyses": [
+          {
+            "file": "AIApp",
+            "size": 148,
+            "type": "script",
+            "shebang": "/bin/bash",
+            "executable": true,
+            "script_type": "shell"
+          },
+          {
+            "file": "README.md",
+            "size": 88,
+            "type": "text",
+            "executable": false
+          },
+          {
+            "file": "config.json",
+            "size": 61,
+            "type": "json",
+            "executable": false
+          },
+          {
+            "file": "icon.png",
+            "size": 69,
+            "type": "image",
+            "subtype": "png",
+            "executable": false
+          },
+          {
+            "file": "processor.py",
+            "size": 360,
+            "type": "script",
+            "shebang": "/usr/bin/env python3",
+            "executable": true,
+            "script_type": "python"
+          }
+        ],
+        "file_count": 5,
+        "executable_count": 2,
+        "type_counts": {
+          "script": 2,
+          "text": 1,
+          "json": 1,
+          "image": 1
+        },
+        "has_mach_o": false,
+        "has_script": true,
+        "has_native": false
+      },
+      "receipt": "1f8aff9173b87858"
+    },
+    {
+      "step": 5,
+      "action": "detect executable entry",
+      "outputs": [
+        "exec_entry"
+      ],
+      "result": {
+        "exec_entry": "AIApp",
+        "exec_type": "script",
+        "exec_arch": "shell",
+        "app_name": "AIApp.app",
+        "candidates": [
+          "AIApp",
+          "processor.py"
+        ],
+        "selection_reason": "script"
+      },
+      "receipt": "6e69dd53f5b2153f"
+    },
+    {
+      "step": 6,
+      "action": "classify resources",
+      "outputs": [
+        "resource_map"
+      ],
+      "result": {
+        "categories": {
+          "Assets": [
+            "icon.png"
+          ],
+          "Helpers": [
+            "processor.py"
+          ],
+          "Data": [],
+          "Frameworks": [],
+          "Localization": [],
+          "Documentation": [
+            "README.md"
+          ],
+          "Configuration": [
+            "config.json"
+          ],
+          "Scripts": []
+        },
+        "total_resources": 4,
+        "category_counts": {
+          "Assets": 1,
+          "Helpers": 1,
+          "Documentation": 1,
+          "Configuration": 1
+        }
+      },
+      "receipt": "6e803cf75f704b5e"
+    },
+    {
+      "step": 7,
+      "action": "infer entitlements",
+      "outputs": [
+        "entitlements"
+      ],
+      "result": {
+        "entitlements": {
+          "com.apple.security.app-sandbox": false,
+          "com.apple.security.network.client": true,
+          "com.apple.security.network.server": true,
+          "com.apple.security.files.user-selected.read-write": false,
+          "com.apple.security.files.downloads.read-write": false,
+          "com.apple.security.device.camera": false,
+          "com.apple.security.device.microphone": false,
+          "com.apple.security.automation.apple-events": false
+        },
+        "active_count": 2,
+        "active": [
+          "com.apple.security.network.client",
+          "com.apple.security.network.server"
+        ],
+        "sandbox": true
+      },
+      "receipt": "4ec84b1764a7ab3e"
+    },
+    {
+      "step": 8,
+      "action": "build dependency graph",
+      "outputs": [
+        "dependency_graph"
+      ],
+      "result": {
+        "nodes": [
+          {
+            "id": "AIApp",
+            "type": "script",
+            "size": 148,
+            "is_entry": true
+          },
+          {
+            "id": "README.md",
+            "type": "text",
+            "size": 88,
+            "is_entry": false
+          },
+          {
+            "id": "config.json",
+            "type": "json",
+            "size": 61,
+            "is_entry": false
+          },
+          {
+            "id": "icon.png",
+            "type": "image",
+            "size": 69,
+            "is_entry": false
+          },
+          {
+            "id": "processor.py",
+            "type": "script",
+            "size": 360,
+            "is_entry": false
+          }
+        ],
+        "edges": [
+          {
+            "from": "processor.py",
+            "to": "json",
+            "type": "python_import"
+          },
+          {
+            "from": "processor.py",
+            "to": "sys",
+            "type": "python_import"
+          },
+          {
+            "from": "processor.py",
+            "to": "socket",
+            "type": "python_import"
+          }
+        ],
+        "node_count": 5,
+        "edge_count": 3,
+        "entry_point": "AIApp",
+        "has_dependencies": true
+      },
+      "receipt": "9e94f7782188dbba"
+    },
+    {
+      "step": 9,
+      "action": "generate Info.plist",
+      "outputs": [
+        "info_plist"
+      ],
+      "result": {
+        "plist": {
+          "CFBundleName": "AIApp",
+          "CFBundleDisplayName": "AIApp",
+          "CFBundleIdentifier": "com.glyphforge.aiapp",
+          "CFBundleVersion": "2.0.0",
+          "CFBundleShortVersionString": "2.0.0",
+          "CFBundlePackageType": "APPL",
+          "CFBundleExecutable": "AIApp",
+          "CFBundleInfoDictionaryVersion": "6.0",
+          "LSMinimumSystemVersion": "10.13",
+          "NSHighResolutionCapable": true
+        },
+        "bundle_id": "com.glyphforge.aiapp",
+        "app_name": "AIApp.app"
+      },
+      "receipt": "330518554dc09f24"
+    },
+    {
+      "step": 10,
+      "action": "assemble .app bundle",
+      "outputs": [
+        "app_bundle"
+      ],
+      "result": {
+        "app_bundle": "build/AIApp.app",
+        "exec_path": "build/AIApp.app/Contents/MacOS/AIApp",
+        "plist_path": "build/AIApp.app/Contents/Info.plist",
+        "contents_root": "build/AIApp.app/Contents",
+        "placed": {
+          "Resources": 3,
+          "Helpers": 1,
+          "Frameworks": 0,
+          "Scripts": 0
+        }
+      },
+      "receipt": "a46b231d190077e5"
+    },
+    {
+      "step": 11,
+      "action": "set executable permissions",
+      "outputs": [
+        "exec_perms"
+      ],
+      "result": {
+        "exec_path": "build/AIApp.app/Contents/MacOS/AIApp",
+        "permissions": "755",
+        "set": true
+      },
+      "receipt": "c184eb62de9ffc0a"
+    },
+    {
+      "step": 12,
+      "action": "ad-hoc code sign",
+      "outputs": [
+        "code_signature"
+      ],
+      "result": {
+        "signed": true,
+        "bundle": "build/AIApp.app",
+        "signature": "ad-hoc",
+        "stdout": ""
+      },
+      "receipt": "04680c2456f3cbfb"
+    },
+    {
+      "step": 13,
+      "action": "emit AI manifest",
+      "outputs": [
+        "ai_manifest"
+      ],
+      "result": {
+        "manifest": {
+          "schema": "ai.app.manifest.v1",
+          "glyph": "⟡◆⌁",
+          "app_name": "AIApp",
+          "bundle_id": "com.glyphforge.aiapp",
+          "version": "2.0.0",
+          "executable": {
+            "name": "AIApp",
+            "type": "script",
+            "arch": "shell",
+            "native": false
+          },
+          "capabilities": {
+            "network": true,
+            "camera": false,
+            "microphone": false,
+            "file_access": false,
+            "automation": false,
+            "sandbox": true
+          },
+          "entitlements": [
+            "com.apple.security.network.client",
+            "com.apple.security.network.server"
+          ],
+          "resources": {
+            "Assets": 1,
+            "Helpers": 1,
+            "Documentation": 1,
+            "Configuration": 1
+          },
+          "content_types": {
+            "script": 2,
+            "text": 1,
+            "json": 1,
+            "image": 1
+          },
+          "dependency_graph": {
+            "nodes": 5,
+            "edges": 3,
+            "has_dependencies": true
+          },
+          "bundle_path": "build/AIApp.app",
+          "launchable": true,
+          "signed": true
+        },
+        "manifest_path": "build/AIApp.app/Contents/AIManifest.json"
+      },
+      "receipt": "5b6583427fe9d971"
+    },
+    {
+      "step": 14,
+      "action": "self-heal bundle validation",
+      "outputs": [
+        "heal_report"
+      ],
+      "result": {
+        "healthy": true,
+        "issue_count": 0,
+        "fix_count": 0,
+        "issues": [],
+        "fixes": [],
+        "critical_count": 0,
+        "high_count": 0,
+        "low_count": 0
+      },
+      "receipt": "011df806efdcf552"
+    },
+    {
+      "step": 15,
+      "action": "compute SHA256 of bundle",
+      "outputs": [
+        "bundle_hash"
+      ],
+      "result": {
+        "bundle_hash": "981d799866db2363159d29ec3290043120d402e54f07a8aa85b73409da9e99a0",
+        "file_count": 11,
+        "bundle": "build/AIApp.app"
+      },
+      "receipt": "473c0ba09de3068f"
+    },
+    {
+      "step": 16,
+      "action": "write chained receipt",
+      "outputs": [
+        "signed_receipt"
+      ],
+      "result": {
+        "receipt": "473c0ba09de3068f",
+        "chain_length": 15
+      },
+      "receipt": "62e46d40e50b351f"
+    }
+  ],
+  "state": {
+    "workflow": "ZipToApp",
+    "intent": "take a .zip archive and render it into a valid, optimized, AI-readable macOS .app bundle — detecting binary type by magic bytes, classifying resources by content, inferring entitlements from capability hints, building a dependency graph, emitting an AI manifest, self-healing structural issues, and optimizing bundle layout",
+    "zip_contents": {
+      "zip_path": "/tmp/AIApp.zip",
+      "entry_count": 5,
+      "entries": [
+        "AIApp",
+        "processor.py",
+        "config.json",
+        "README.md",
+        "icon.png"
+      ]
+    },
+    "zip_validated": {
+      "valid": true,
+      "entry_count": 5,
+      "has_executable_candidate": true
+    },
+    "staging_dir": {
+      "staging_dir": "/var/folders/hr/hr6mb_r96k5d4qrls1shsm4w0000gn/T/ziptoapp_ol7vri3x",
+      "file_count": 5,
+      "files": [
+        "AIApp",
+        "icon.png",
+        "config.json",
+        "processor.py",
+        "README.md"
+      ]
+    },
+    "binary_analysis": {
+      "analyses": [
+        {
+          "file": "AIApp",
+          "size": 148,
+          "type": "script",
+          "shebang": "/bin/bash",
+          "executable": true,
+          "script_type": "shell"
+        },
+        {
+          "file": "README.md",
+          "size": 88,
+          "type": "text",
+          "executable": false
+        },
+        {
+          "file": "config.json",
+          "size": 61,
+          "type": "json",
+          "executable": false
+        },
+        {
+          "file": "icon.png",
+          "size": 69,
+          "type": "image",
+          "subtype": "png",
+          "executable": false
+        },
+        {
+          "file": "processor.py",
+          "size": 360,
+          "type": "script",
+          "shebang": "/usr/bin/env python3",
+          "executable": true,
+          "script_type": "python"
+        }
+      ],
+      "file_count": 5,
+      "executable_count": 2,
+      "type_counts": {
+        "script": 2,
+        "text": 1,
+        "json": 1,
+        "image": 1
+      },
+      "has_mach_o": false,
+      "has_script": true,
+      "has_native": false
+    },
+    "exec_entry": {
+      "exec_entry": "AIApp",
+      "exec_type": "script",
+      "exec_arch": "shell",
+      "app_name": "AIApp.app",
+      "candidates": [
+        "AIApp",
+        "processor.py"
+      ],
+      "selection_reason": "script"
+    },
+    "resource_map": {
+      "categories": {
+        "Assets": [
+          "icon.png"
+        ],
+        "Helpers": [
+          "processor.py"
+        ],
+        "Data": [],
+        "Frameworks": [],
+        "Localization": [],
+        "Documentation": [
+          "README.md"
+        ],
+        "Configuration": [
+          "config.json"
+        ],
+        "Scripts": []
+      },
+      "total_resources": 4,
+      "category_counts": {
+        "Assets": 1,
+        "Helpers": 1,
+        "Documentation": 1,
+        "Configuration": 1
+      }
+    },
+    "entitlements": {
+      "entitlements": {
+        "com.apple.security.app-sandbox": false,
+        "com.apple.security.network.client": true,
+        "com.apple.security.network.server": true,
+        "com.apple.security.files.user-selected.read-write": false,
+        "com.apple.security.files.downloads.read-write": false,
+        "com.apple.security.device.camera": false,
+        "com.apple.security.device.microphone": false,
+        "com.apple.security.automation.apple-events": false
+      },
+      "active_count": 2,
+      "active": [
+        "com.apple.security.network.client",
+        "com.apple.security.network.server"
+      ],
+      "sandbox": true
+    },
+    "dependency_graph": {
+      "nodes": [
+        {
+          "id": "AIApp",
+          "type": "script",
+          "size": 148,
+          "is_entry": true
+        },
+        {
+          "id": "README.md",
+          "type": "text",
+          "size": 88,
+          "is_entry": false
+        },
+        {
+          "id": "config.json",
+          "type": "json",
+          "size": 61,
+          "is_entry": false
+        },
+        {
+          "id": "icon.png",
+          "type": "image",
+          "size": 69,
+          "is_entry": false
+        },
+        {
+          "id": "processor.py",
+          "type": "script",
+          "size": 360,
+          "is_entry": false
+        }
+      ],
+      "edges": [
+        {
+          "from": "processor.py",
+          "to": "json",
+          "type": "python_import"
+        },
+        {
+          "from": "processor.py",
+          "to": "sys",
+          "type": "python_import"
+        },
+        {
+          "from": "processor.py",
+          "to": "socket",
+          "type": "python_import"
+        }
+      ],
+      "node_count": 5,
+      "edge_count": 3,
+      "entry_point": "AIApp",
+      "has_dependencies": true
+    },
+    "info_plist": {
+      "plist": {
+        "CFBundleName": "AIApp",
+        "CFBundleDisplayName": "AIApp",
+        "CFBundleIdentifier": "com.glyphforge.aiapp",
+        "CFBundleVersion": "2.0.0",
+        "CFBundleShortVersionString": "2.0.0",
+        "CFBundlePackageType": "APPL",
+        "CFBundleExecutable": "AIApp",
+        "CFBundleInfoDictionaryVersion": "6.0",
+        "LSMinimumSystemVersion": "10.13",
+        "NSHighResolutionCapable": true
+      },
+      "bundle_id": "com.glyphforge.aiapp",
+      "app_name": "AIApp.app"
+    },
+    "app_bundle": {
+      "app_bundle": "build/AIApp.app",
+      "exec_path": "build/AIApp.app/Contents/MacOS/AIApp",
+      "plist_path": "build/AIApp.app/Contents/Info.plist",
+      "contents_root": "build/AIApp.app/Contents",
+      "placed": {
+        "Resources": 3,
+        "Helpers": 1,
+        "Frameworks": 0,
+        "Scripts": 0
+      }
+    },
+    "exec_perms": {
+      "exec_path": "build/AIApp.app/Contents/MacOS/AIApp",
+      "permissions": "755",
+      "set": true
+    },
+    "code_signature": {
+      "signed": true,
+      "bundle": "build/AIApp.app",
+      "signature": "ad-hoc",
+      "stdout": ""
+    },
+    "ai_manifest": {
+      "manifest": {
+        "schema": "ai.app.manifest.v1",
+        "glyph": "⟡◆⌁",
+        "app_name": "AIApp",
+        "bundle_id": "com.glyphforge.aiapp",
+        "version": "2.0.0",
+        "executable": {
+          "name": "AIApp",
+          "type": "script",
+          "arch": "shell",
+          "native": false
+        },
+        "capabilities": {
+          "network": true,
+          "camera": false,
+          "microphone": false,
+          "file_access": false,
+          "automation": false,
+          "sandbox": true
+        },
+        "entitlements": [
+          "com.apple.security.network.client",
+          "com.apple.security.network.server"
+        ],
+        "resources": {
+          "Assets": 1,
+          "Helpers": 1,
+          "Documentation": 1,
+          "Configuration": 1
+        },
+        "content_types": {
+          "script": 2,
+          "text": 1,
+          "json": 1,
+          "image": 1
+        },
+        "dependency_graph": {
+          "nodes": 5,
+          "edges": 3,
+          "has_dependencies": true
+        },
+        "bundle_path": "build/AIApp.app",
+        "launchable": true,
+        "signed": true
+      },
+      "manifest_path": "build/AIApp.app/Contents/AIManifest.json"
+    },
+    "heal_report": {
+      "healthy": true,
+      "issue_count": 0,
+      "fix_count": 0,
+      "issues": [],
+      "fixes": [],
+      "critical_count": 0,
+      "high_count": 0,
+      "low_count": 0
+    },
+    "bundle_hash": {
+      "bundle_hash": "981d799866db2363159d29ec3290043120d402e54f07a8aa85b73409da9e99a0",
+      "file_count": 11,
+      "bundle": "build/AIApp.app"
+    },
+    "signed_receipt": {
+      "receipt": "473c0ba09de3068f",
+      "chain_length": 15
+    }
+  },
+  "artifacts": [
+    "app_bundle",
+    "ai_manifest",
+    "signed_receipt"
+  ],
+  "value_claim": "any zip archive rendered into a launchable, AI-readable, self-healing macOS .app bundle — no Xcode required, no human intervention needed",
+  "receipt_chain": [
+    {
+      "step": 1,
+      "action": "read zip archive",
+      "hash": "1ec07fedc97e46763767292f8d16cf2bf74122f750d6acee206b79ff26844e5e",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "ts": 1782563313.074498
+    },
+    {
+      "step": 2,
+      "action": "validate zip structure",
+      "hash": "a9c9d9ffa8362835dc4062b5a8555c3eca5754c5e7bb5bffd54ed655196686dd",
+      "prev_hash": "1ec07fedc97e46763767292f8d16cf2bf74122f750d6acee206b79ff26844e5e",
+      "ts": 1782563313.07465
+    },
+    {
+      "step": 3,
+      "action": "extract zip to staging",
+      "hash": "08551acc3d2544c878536ace1083ccb39ae16ffa6ba346cb0984121cf7f3d7ba",
+      "prev_hash": "a9c9d9ffa8362835dc4062b5a8555c3eca5754c5e7bb5bffd54ed655196686dd",
+      "ts": 1782563313.0756779
+    },
+    {
+      "step": 4,
+      "action": "analyze binary content",
+      "hash": "1f8aff9173b87858ad69aeb2e73ded32923fb8fa828b53258854da85f4d49e9c",
+      "prev_hash": "08551acc3d2544c878536ace1083ccb39ae16ffa6ba346cb0984121cf7f3d7ba",
+      "ts": 1782563313.075924
+    },
+    {
+      "step": 5,
+      "action": "detect executable entry",
+      "hash": "6e69dd53f5b2153fb04b5c81d8c3760503ca4168cb122347b39485b6737221bb",
+      "prev_hash": "1f8aff9173b87858ad69aeb2e73ded32923fb8fa828b53258854da85f4d49e9c",
+      "ts": 1782563313.075943
+    },
+    {
+      "step": 6,
+      "action": "classify resources",
+      "hash": "6e803cf75f704b5eebf28ca69d2194b5a8e23a03299f56f8593518264324bea9",
+      "prev_hash": "6e69dd53f5b2153fb04b5c81d8c3760503ca4168cb122347b39485b6737221bb",
+      "ts": 1782563313.0759711
+    },
+    {
+      "step": 7,
+      "action": "infer entitlements",
+      "hash": "4ec84b1764a7ab3e7dcb1371116735d81a29c9d67ec2e2b166bff9aeb2716e66",
+      "prev_hash": "6e803cf75f704b5eebf28ca69d2194b5a8e23a03299f56f8593518264324bea9",
+      "ts": 1782563313.076128
+    },
+    {
+      "step": 8,
+      "action": "build dependency graph",
+      "hash": "9e94f7782188dbba83fa93fa4815e4a8bca67703d8955f866a44f2905378d02f",
+      "prev_hash": "4ec84b1764a7ab3e7dcb1371116735d81a29c9d67ec2e2b166bff9aeb2716e66",
+      "ts": 1782563313.076483
+    },
+    {
+      "step": 9,
+      "action": "generate Info.plist",
+      "hash": "330518554dc09f24e0118428e82c26138571cdf0fce2a99834e34f6b6abf73d2",
+      "prev_hash": "9e94f7782188dbba83fa93fa4815e4a8bca67703d8955f866a44f2905378d02f",
+      "ts": 1782563313.076504
+    },
+    {
+      "step": 10,
+      "action": "assemble .app bundle",
+      "hash": "a46b231d190077e57277312cb80f9303ab34cae9ad9b70c3a05a9945b58dc5e8",
+      "prev_hash": "330518554dc09f24e0118428e82c26138571cdf0fce2a99834e34f6b6abf73d2",
+      "ts": 1782563313.077743
+    },
+    {
+      "step": 11,
+      "action": "set executable permissions",
+      "hash": "c184eb62de9ffc0a6e7d664f693bed359c5968d30cdaf2f08ebd1af751b1a025",
+      "prev_hash": "a46b231d190077e57277312cb80f9303ab34cae9ad9b70c3a05a9945b58dc5e8",
+      "ts": 1782563313.077774
+    },
+    {
+      "step": 12,
+      "action": "ad-hoc code sign",
+      "hash": "04680c2456f3cbfb6558074e46145e335381f84b63ff971f235533b00d56de7a",
+      "prev_hash": "c184eb62de9ffc0a6e7d664f693bed359c5968d30cdaf2f08ebd1af751b1a025",
+      "ts": 1782563313.091319
+    },
+    {
+      "step": 13,
+      "action": "emit AI manifest",
+      "hash": "5b6583427fe9d971510ed7b485bb0d460d8ef12b540dea04bbd52aea2d96c827",
+      "prev_hash": "04680c2456f3cbfb6558074e46145e335381f84b63ff971f235533b00d56de7a",
+      "ts": 1782563313.0916638
+    },
+    {
+      "step": 14,
+      "action": "self-heal bundle validation",
+      "hash": "011df806efdcf55297bb84ba0bc18a89816f47cc1c91903975bdef4e47e0b51b",
+      "prev_hash": "5b6583427fe9d971510ed7b485bb0d460d8ef12b540dea04bbd52aea2d96c827",
+      "ts": 1782563313.092144
+    },
+    {
+      "step": 15,
+      "action": "compute SHA256 of bundle",
+      "hash": "473c0ba09de3068f0ab2b27592c4374566eadcf8c4c79a73e82c5552c8250865",
+      "prev_hash": "011df806efdcf55297bb84ba0bc18a89816f47cc1c91903975bdef4e47e0b51b",
+      "ts": 1782563313.092438
+    },
+    {
+      "step": 16,
+      "action": "write chained receipt",
+      "hash": "62e46d40e50b351f0b990c89f5d3c051a8802668a20a59379cc3bd07f38e54c3",
+      "prev_hash": "473c0ba09de3068f0ab2b27592c4374566eadcf8c4c79a73e82c5552c8250865",
+      "ts": 1782563313.092451
+    }
+  ],
+  "merkle_root": "62e46d40e50b351f0b990c89f5d3c051a8802668a20a59379cc3bd07f38e54c3",
+  "sha256": "440007806316712a4ff56679d7dca63a5719f923e3bdfe0b5b03db10ed079aae"
+}

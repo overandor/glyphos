@@ -1,0 +1,280 @@
+{
+  "source": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/Views.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Search items…",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 32
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "⟡",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "MLX Reasoning",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "→ %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Receipt Chain",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 255
+        }
+      },
+      {
+        "comment": "",
+        "key": "Verify",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chain intact",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 270
+        }
+      },
+      {
+        "comment": "",
+        "key": "Chain broken",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 270
+        }
+      },
+      {
+        "comment": "",
+        "key": "◆",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 313
+        }
+      },
+      {
+        "comment": "",
+        "key": "Proof Packets",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 331
+        }
+      },
+      {
+        "comment": "",
+        "key": "⤓",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 355
+        }
+      },
+      {
+        "comment": "",
+        "key": "Packet %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 361
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 364
+        }
+      },
+      {
+        "comment": "",
+        "key": "Capture Evidence",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 404
+        }
+      },
+      {
+        "comment": "",
+        "key": "TYPE",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 416
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 421
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto-detect",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 422
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 424
+        }
+      },
+      {
+        "comment": "",
+        "key": "⟡ Core ML detected:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 434
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 437
+        }
+      },
+      {
+        "comment": "",
+        "key": "TEXT / EMAIL CONTENT",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 446
+        }
+      },
+      {
+        "comment": "",
+        "key": "⟡ EXTRACTED",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 465
+        }
+      },
+      {
+        "comment": "",
+        "key": "Merchant: %@",
+        "location": {
+          "startingColumn": 61,
+          "startingLine": 470
+        }
+      },
+      {
+        "comment": "",
+        "key": "Amount: $%@",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 471
+        }
+      },
+      {
+        "comment": "",
+        "key": "Date: %@",
+        "location": {
+          "startingColumn": 57,
+          "startingLine": 472
+        }
+      },
+      {
+        "comment": "",
+        "key": "Deadlines:",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 474
+        }
+      },
+      {
+        "comment": "",
+        "key": "⧖ %@",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 478
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 32,
+          "startingLine": 505
+        }
+      },
+      {
+        "comment": "",
+        "key": "Capture",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 514
+        }
+      },
+      {
+        "comment": "",
+        "key": "⟡ Concierge",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 619
+        }
+      },
+      {
+        "comment": "",
+        "key": "Core ML + MLX on-device",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 622
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ask the concierge…",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 661
+        }
+      },
+      {
+        "comment": "",
+        "key": "⟡ thinking%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 736
+        }
+      }
+    ]
+  },
+  "version": 1
+}

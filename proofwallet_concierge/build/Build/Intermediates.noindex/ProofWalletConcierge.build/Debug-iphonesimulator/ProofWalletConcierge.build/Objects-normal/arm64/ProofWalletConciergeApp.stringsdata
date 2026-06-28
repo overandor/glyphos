@@ -1,0 +1,96 @@
+{
+  "source": "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/Sources/ProofWalletConcierge/ProofWalletConciergeApp.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "ProofWallet",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 284
+        }
+      },
+      {
+        "comment": "",
+        "key": "Never lose the proof",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 287
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 302
+        }
+      },
+      {
+        "comment": "",
+        "key": "◆",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 314
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 377
+        }
+      },
+      {
+        "comment": "",
+        "key": "⟡",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 423
+        }
+      },
+      {
+        "comment": "",
+        "key": "MLX Summary",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 426
+        }
+      },
+      {
+        "comment": "",
+        "key": "Recent",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 444
+        }
+      },
+      {
+        "comment": "",
+        "key": "Deadlines",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 463
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ · %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 547
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@: %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 620
+        }
+      }
+    ]
+  },
+  "version": 1
+}

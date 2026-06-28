@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLight.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLight.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/Sources/DimLight/DimLightApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/arm64-apple-macosx/release/DimLight.build/DimLightApp.dia"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/GlyphBoard.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/GlyphBoard.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/Sources/GlyphBoard/GlyphBoardApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/GlyphBoardApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/GlyphBoardApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/GlyphBoardApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/arm64-apple-macosx/release/GlyphBoard.build/GlyphBoardApp.dia"
+  }
+}

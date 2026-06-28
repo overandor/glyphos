@@ -10,7 +10,7 @@ RANKED = Path("rm_traffic/data/real_bios_ranked.txt")
 RAW = Path("rm_traffic/data/real_bios_raw_deep.jsonl")
 
 api = RentMasseurAPI()
-api.login("karpathianwolf", "Lola369!")
+api.login("karpathianwolf", "os.environ.get("RM_PASSWORD", "")")
 
 seen = set()
 bios = []

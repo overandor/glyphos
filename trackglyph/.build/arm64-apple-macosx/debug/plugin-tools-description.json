@@ -1,0 +1,517 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.TrackGlyph-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/sources",
+      "importPath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureDatabase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureFrame.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureSequenceParser.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDefinitions.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDictionary.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/MultiDeviceManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/QuadPartition.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/RemoteTrackpadBridge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphEncoder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphExporter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphHUD.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphLabApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphReceipt.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackpadOverlayDisplay.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "TrackGlyph",
+      "moduleOutputPath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/Modules/TrackGlyph.swiftmodule",
+      "objects" : [
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureDatabase.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureFrame.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureSequenceParser.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GlyphDefinitions.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GlyphDictionary.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/MultiDeviceManager.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/QuadPartition.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/RemoteTrackpadBridge.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphEncoder.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphExporter.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphHUD.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphLabApp.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphReceipt.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphView.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackpadOverlayDisplay.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j18",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "TrackGlyph_main",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "trackglyph"
+      ],
+      "outputFileMapPath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureDatabase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureFrame.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureSequenceParser.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GlyphDefinitions.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GlyphDictionary.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/MultiDeviceManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/QuadPartition.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/RemoteTrackpadBridge.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphEncoder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphExporter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphHUD.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphLabApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphReceipt.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackpadOverlayDisplay.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/Modules/TrackGlyph.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureDatabase.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureFrame.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureSequenceParser.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDefinitions.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDictionary.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/MultiDeviceManager.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/QuadPartition.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/RemoteTrackpadBridge.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphEncoder.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphExporter.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphHUD.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphLabApp.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphReceipt.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphView.swift",
+        "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackpadOverlayDisplay.swift"
+      ],
+      "tempsPath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "TrackGlyph" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "TrackGlyph",
+      "-package-name",
+      "trackglyph",
+      "-c",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureDatabase.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureFrame.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureSequenceParser.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDefinitions.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDictionary.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/MultiDeviceManager.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/QuadPartition.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/RemoteTrackpadBridge.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphEncoder.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphExporter.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphHUD.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphLabApp.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphReceipt.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphView.swift",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackpadOverlayDisplay.swift",
+      "-I",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j18",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "TrackGlyph_main",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "trackglyph",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "TrackGlyph" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph-entitlement.plist" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<entitlement-plist>"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<com.apple.security.get-task-allow>"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph-entitlement.plist"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureDatabase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureFrame.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GestureSequenceParser.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDefinitions.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/GlyphDictionary.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/MultiDeviceManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/QuadPartition.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/RemoteTrackpadBridge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphEncoder.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphExporter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphHUD.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphLabApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphReceipt.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackGlyphView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/Sources/TrackGlyph/TrackpadOverlayDisplay.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/sources"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureDatabase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureFrame.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GestureSequenceParser.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GlyphDefinitions.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/GlyphDictionary.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/MultiDeviceManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/QuadPartition.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/RemoteTrackpadBridge.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphEncoder.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphExporter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphHUD.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphLabApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphReceipt.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackGlyphView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.build/TrackpadOverlayDisplay.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/TrackGlyph.product/Objects.LinkFileList"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/trackglyph/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

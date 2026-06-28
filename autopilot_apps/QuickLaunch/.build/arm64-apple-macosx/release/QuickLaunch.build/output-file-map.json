@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/QuickLaunch.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/QuickLaunch.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/Sources/QuickLaunch/QuickLaunchApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/QuickLaunchApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/QuickLaunchApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/QuickLaunchApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/arm64-apple-macosx/release/QuickLaunch.build/QuickLaunchApp.dia"
+  }
+}

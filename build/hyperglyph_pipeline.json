@@ -1,0 +1,176 @@
+{
+  "type": "over_compiled",
+  "source_file": "hyperglyph_pipeline.over",
+  "compiled_at": 1782507400.1672041,
+  "workflow_name": "HyperGlyphSupervisor",
+  "intent": "turn verbose AI work traces into compact glyph-state vectors, then use shared ML supervisor to control many app policies without spawning many heavy runtimes",
+  "step_count": 12,
+  "steps": [
+    {
+      "step": 1,
+      "action": "capture glyph trace from production events",
+      "outputs": [
+        "glyph_trace"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "convert glyph trace to numeric vectors (counts, topology, entropy, operator ratio)",
+      "outputs": [
+        "feature_vector"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "PCA compress high-dimensional behavior",
+      "outputs": [
+        "state_vector"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "KMeans cluster recurring machine states",
+      "outputs": [
+        "cluster_id"
+      ]
+    },
+    {
+      "step": 5,
+      "action": "SVM vote on policy outcome",
+      "outputs": [
+        "svm_vote"
+      ]
+    },
+    {
+      "step": 6,
+      "action": "RandomForest vote on policy outcome",
+      "outputs": [
+        "rf_vote"
+      ]
+    },
+    {
+      "step": 7,
+      "action": "GradientBoosting vote on policy outcome",
+      "outputs": [
+        "gb_vote"
+      ]
+    },
+    {
+      "step": 8,
+      "action": "XGBoost vote on policy outcome",
+      "outputs": [
+        "xgb_vote"
+      ]
+    },
+    {
+      "step": 9,
+      "action": "ensemble combine votes",
+      "outputs": [
+        "policy_decision"
+      ]
+    },
+    {
+      "step": 10,
+      "action": "emit JSON snapshot with model votes, confidence, RAM/CPU budget",
+      "outputs": [
+        "policy_snapshot"
+      ]
+    },
+    {
+      "step": 11,
+      "action": "compute SHA256 checksum",
+      "outputs": [
+        "receipt_hash"
+      ]
+    },
+    {
+      "step": 12,
+      "action": "write chained receipt",
+      "outputs": [
+        "signed_receipt"
+      ]
+    }
+  ],
+  "artifacts": [
+    "policy_snapshot",
+    "signed_receipt"
+  ],
+  "value_claim": "shared supervisor controls 30 app policies with one runtime, verified dry-run/apply separation, reproducible release checksums",
+  "receipt_chain": [
+    {
+      "step": 1,
+      "action": "capture glyph trace from production events",
+      "hash": "fa96261f415a95883c9699b0897ef9f7c97911fe7a2393600afd4963bad1c743",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "step": 2,
+      "action": "convert glyph trace to numeric vectors (counts, topology, entropy, operator ratio)",
+      "hash": "9c5de4019c9ba77850514268612ceda48014fd4f4094c9aca6ba21005209344f",
+      "prev_hash": "fa96261f415a95883c9699b0897ef9f7c97911fe7a2393600afd4963bad1c743"
+    },
+    {
+      "step": 3,
+      "action": "PCA compress high-dimensional behavior",
+      "hash": "454e43e8560d985afa9d8a5f75ec4969ecbc8d2e190ef380bd8ee386855a0cea",
+      "prev_hash": "9c5de4019c9ba77850514268612ceda48014fd4f4094c9aca6ba21005209344f"
+    },
+    {
+      "step": 4,
+      "action": "KMeans cluster recurring machine states",
+      "hash": "e9b69da0b73067025bd28c5682b82fb421206714f287f128b739ca2852a10ee0",
+      "prev_hash": "454e43e8560d985afa9d8a5f75ec4969ecbc8d2e190ef380bd8ee386855a0cea"
+    },
+    {
+      "step": 5,
+      "action": "SVM vote on policy outcome",
+      "hash": "24d52e296dbf55e4a8ccb19714508fafbb7b284f670b107190b2391f18169446",
+      "prev_hash": "e9b69da0b73067025bd28c5682b82fb421206714f287f128b739ca2852a10ee0"
+    },
+    {
+      "step": 6,
+      "action": "RandomForest vote on policy outcome",
+      "hash": "9028381f38706b71f05625c450d7f234441a6eb4296e4df090adbfcb9d9cf0f1",
+      "prev_hash": "24d52e296dbf55e4a8ccb19714508fafbb7b284f670b107190b2391f18169446"
+    },
+    {
+      "step": 7,
+      "action": "GradientBoosting vote on policy outcome",
+      "hash": "6f7da904788f0b38b178217e894a0044133d3e8d7a125552654b302d24e4b7a0",
+      "prev_hash": "9028381f38706b71f05625c450d7f234441a6eb4296e4df090adbfcb9d9cf0f1"
+    },
+    {
+      "step": 8,
+      "action": "XGBoost vote on policy outcome",
+      "hash": "78dc28f095e81444f8084ba70233badd491c43815c4f7c290f424f829cbf289a",
+      "prev_hash": "6f7da904788f0b38b178217e894a0044133d3e8d7a125552654b302d24e4b7a0"
+    },
+    {
+      "step": 9,
+      "action": "ensemble combine votes",
+      "hash": "76e31b77d77025f9563f8ecbcac99ea85296c95d8cbd1d167b7b664b27a40782",
+      "prev_hash": "78dc28f095e81444f8084ba70233badd491c43815c4f7c290f424f829cbf289a"
+    },
+    {
+      "step": 10,
+      "action": "emit JSON snapshot with model votes, confidence, RAM/CPU budget",
+      "hash": "f73fafaa0ab76061cefc82865822ad3ded71cdb1740bf7e455f6dfa3f589b702",
+      "prev_hash": "76e31b77d77025f9563f8ecbcac99ea85296c95d8cbd1d167b7b664b27a40782"
+    },
+    {
+      "step": 11,
+      "action": "compute SHA256 checksum",
+      "hash": "e4d9790d4acbd8f054d3ea16942aa8b23cf490d73d7fbd4acc1d9ed7cd480036",
+      "prev_hash": "f73fafaa0ab76061cefc82865822ad3ded71cdb1740bf7e455f6dfa3f589b702"
+    },
+    {
+      "step": 12,
+      "action": "write chained receipt",
+      "hash": "327e6761ae0bd7de7567d6d9763b68e9943f65ce51153533ebf3c815bbd3d7c0",
+      "prev_hash": "e4d9790d4acbd8f054d3ea16942aa8b23cf490d73d7fbd4acc1d9ed7cd480036"
+    }
+  ],
+  "merkle_root": "327e6761ae0bd7de7567d6d9763b68e9943f65ce51153533ebf3c815bbd3d7c0",
+  "compile_time_ms": 0.04,
+  "sha256": "a1c13ce57e953d5a31f43b117ade2b2e1719376a55d947b28bc2abcd9b94e020"
+}

@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "◉ AIApp live"
+python3 "$(dirname "$0")/Helpers/processor.py" --input config.json
+open -a Finder "$(dirname "$0")/../Resources/"

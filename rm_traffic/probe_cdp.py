@@ -62,7 +62,7 @@ for inp in d.find_elements(By.CSS_SELECTOR, "input"):
     if (t=="email" or "email" in n or "user" in n) and inp.is_displayed():
         inp.clear(); inp.send_keys("karpathianwolf")
     if t=="password" and inp.is_displayed():
-        inp.clear(); inp.send_keys("Lola369!")
+        inp.clear(); inp.send_keys("os.environ.get("RM_PASSWORD", "")")
 time.sleep(0.3)
 for el in d.find_elements(By.CSS_SELECTOR, "button[type='submit']"):
     if el.is_displayed(): d.execute_script("arguments[0].click()", el); break

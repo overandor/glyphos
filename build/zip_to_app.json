@@ -1,0 +1,150 @@
+{
+  "type": "over_compiled",
+  "source_file": "zip_to_app.over",
+  "compiled_at": 1782562937.740534,
+  "workflow_name": "ZipToApp",
+  "intent": "take a .zip archive containing executable + resources and render it into a valid macOS .app bundle with Info.plist, correct directory layout, executable bit, and ad-hoc code signature",
+  "step_count": 10,
+  "steps": [
+    {
+      "step": 1,
+      "action": "read zip archive",
+      "outputs": [
+        "zip_contents"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "validate zip structure",
+      "outputs": [
+        "zip_validated"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "extract zip to staging",
+      "outputs": [
+        "staging_dir"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "detect executable entry",
+      "outputs": [
+        "exec_entry"
+      ]
+    },
+    {
+      "step": 5,
+      "action": "generate Info.plist",
+      "outputs": [
+        "info_plist"
+      ]
+    },
+    {
+      "step": 6,
+      "action": "assemble .app bundle",
+      "outputs": [
+        "app_bundle"
+      ]
+    },
+    {
+      "step": 7,
+      "action": "set executable permissions",
+      "outputs": [
+        "exec_perms"
+      ]
+    },
+    {
+      "step": 8,
+      "action": "ad-hoc code sign",
+      "outputs": [
+        "code_signature"
+      ]
+    },
+    {
+      "step": 9,
+      "action": "compute SHA256 of bundle",
+      "outputs": [
+        "bundle_hash"
+      ]
+    },
+    {
+      "step": 10,
+      "action": "write chained receipt",
+      "outputs": [
+        "signed_receipt"
+      ]
+    }
+  ],
+  "artifacts": [
+    "app_bundle",
+    "signed_receipt"
+  ],
+  "value_claim": "any zip archive with an executable can be rendered into a launchable macOS .app bundle — no Xcode required",
+  "receipt_chain": [
+    {
+      "step": 1,
+      "action": "read zip archive",
+      "hash": "a21a819721f415ff19dcdbb3d79f641416c45943d03c4816c1ddd5d9f210603b",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "step": 2,
+      "action": "validate zip structure",
+      "hash": "bf1e335ade49bda42389aa42f3aca4ccf2fa9ee95e24057431ac84b765c8e97e",
+      "prev_hash": "a21a819721f415ff19dcdbb3d79f641416c45943d03c4816c1ddd5d9f210603b"
+    },
+    {
+      "step": 3,
+      "action": "extract zip to staging",
+      "hash": "c2947243270a1f3e6622bcbce1ec58176441be03503b91b6e5ea0dacd1f40a72",
+      "prev_hash": "bf1e335ade49bda42389aa42f3aca4ccf2fa9ee95e24057431ac84b765c8e97e"
+    },
+    {
+      "step": 4,
+      "action": "detect executable entry",
+      "hash": "d79e2670a87e3c48a15ec6fd43ec8fec6f0e48d1cafe369e9c2a0ae61f87dfd1",
+      "prev_hash": "c2947243270a1f3e6622bcbce1ec58176441be03503b91b6e5ea0dacd1f40a72"
+    },
+    {
+      "step": 5,
+      "action": "generate Info.plist",
+      "hash": "47d12652beceb27d5aa0d3a8d1fa2771214637623f0d92b242cf6fbbdf0285cc",
+      "prev_hash": "d79e2670a87e3c48a15ec6fd43ec8fec6f0e48d1cafe369e9c2a0ae61f87dfd1"
+    },
+    {
+      "step": 6,
+      "action": "assemble .app bundle",
+      "hash": "682c64592917f98bfb0753e4f70184b2fce68e84252247376abb28969ff44fe8",
+      "prev_hash": "47d12652beceb27d5aa0d3a8d1fa2771214637623f0d92b242cf6fbbdf0285cc"
+    },
+    {
+      "step": 7,
+      "action": "set executable permissions",
+      "hash": "1dd74da967156e020829bf0dffaeb647ba2f512bd4480562bcb894854161f1c6",
+      "prev_hash": "682c64592917f98bfb0753e4f70184b2fce68e84252247376abb28969ff44fe8"
+    },
+    {
+      "step": 8,
+      "action": "ad-hoc code sign",
+      "hash": "e7e8db2e324347a76526abb2b8c2316868c10673029a97ad6c1121458eb151fe",
+      "prev_hash": "1dd74da967156e020829bf0dffaeb647ba2f512bd4480562bcb894854161f1c6"
+    },
+    {
+      "step": 9,
+      "action": "compute SHA256 of bundle",
+      "hash": "2f93a18cb3763408f912b8b2b216e164eb5c2356aa744e6bf4e35955cd3a5c5f",
+      "prev_hash": "e7e8db2e324347a76526abb2b8c2316868c10673029a97ad6c1121458eb151fe"
+    },
+    {
+      "step": 10,
+      "action": "write chained receipt",
+      "hash": "268edd057feb8b5c821af5b8bc019683c5e19f70c74e0f568f6a732d1a93b5be",
+      "prev_hash": "2f93a18cb3763408f912b8b2b216e164eb5c2356aa744e6bf4e35955cd3a5c5f"
+    }
+  ],
+  "merkle_root": "268edd057feb8b5c821af5b8bc019683c5e19f70c74e0f568f6a732d1a93b5be",
+  "compile_time_ms": 0.07,
+  "sha256": "315071ef1a554ab9f2d9ee6011066aa35b1fe77f1ce6ea9695c9a1d8696823a9"
+}

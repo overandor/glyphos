@@ -24,7 +24,7 @@ What it does NOT do:
 - Mutate everything every minute
 
 Usage:
-    RM_USER=karpathianwolf RM_PASS=Lola369! python3 -m rm_traffic.profileops --daemon
+    RM_USER=karpathianwolf RM_PASS=os.environ.get("RM_PASSWORD", "") python3 -m rm_traffic.profileops --daemon
     RM_USER=... RM_PASS=... python3 -m rm_traffic.profileops --status
     RM_USER=... RM_PASS=... python3 -m rm_traffic.profileops --once
     RM_USER=... RM_PASS=... python3 -m rm_traffic.profileops --suggest-bio

@@ -1,0 +1,356 @@
+{
+  "type": "glyph_compiled",
+  "source_file": "glyph_layer.glyph",
+  "compiled_at": 1782507400.16127,
+  "glyph_count": 64,
+  "operator_count": 18,
+  "noun_count": 46,
+  "operator_ratio": 0.2812,
+  "node_count": 19,
+  "nodes": [
+    {
+      "op": "DERIVE",
+      "operands": [
+        "L",
+        "◇"
+      ],
+      "line": 2
+    },
+    {
+      "op": "DOT",
+      "operands": [
+        "H",
+        "H"
+      ],
+      "line": 3
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [
+        "R",
+        "R"
+      ],
+      "line": 4
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "⊙̂",
+        "H",
+        "◇"
+      ],
+      "line": 6
+    },
+    {
+      "op": "BIND",
+      "operands": [
+        "$",
+        "$"
+      ],
+      "line": 7
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "R",
+        "R"
+      ],
+      "line": 8
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "¤",
+        "$",
+        "◇"
+      ],
+      "line": 10
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "ZK",
+        "ZK"
+      ],
+      "line": 11
+    },
+    {
+      "op": "DOT",
+      "operands": [
+        "◇",
+        "◇"
+      ],
+      "line": 12
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [
+        "R",
+        "R"
+      ],
+      "line": 13
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "◈",
+        "ZK",
+        "◇"
+      ],
+      "line": 15
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "□",
+        "□"
+      ],
+      "line": 16
+    },
+    {
+      "op": "DOT",
+      "operands": [
+        "H",
+        "H"
+      ],
+      "line": 17
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "L",
+        "L"
+      ],
+      "line": 18
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "R",
+        "⊙̂",
+        "R",
+        "◇"
+      ],
+      "line": 20
+    },
+    {
+      "op": "ADD",
+      "operands": [
+        "Σ",
+        "Σ"
+      ],
+      "line": 21
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "Σ"
+      ],
+      "line": 21
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [
+        "M",
+        "M"
+      ],
+      "line": 22
+    },
+    {
+      "op": "CHAIN",
+      "operands": [
+        "◎",
+        "◈",
+        "M"
+      ],
+      "line": 22
+    }
+  ],
+  "embeddings": {
+    "▷": {
+      "spinor": [
+        -1.0,
+        -4.651838719590128e-26
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_START",
+      "is_operator": true
+    },
+    "L": {
+      "spinor": [
+        -0.9999999999999805,
+        1.9777965275452742e-07
+      ],
+      "bloch_theta": 3.9537248496477665e-07,
+      "name": "LOCATION",
+      "is_operator": false
+    },
+    "◇": {
+      "spinor": [
+        2.6998718390413642e-05,
+        -0.9999999996355345
+      ],
+      "bloch_theta": 3.141538656153006,
+      "name": "DIAMOND_OPEN",
+      "is_operator": false
+    },
+    "→": {
+      "spinor": [
+        8.851785898045702e-59,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DERIVE",
+      "is_operator": true
+    },
+    "H": {
+      "spinor": [
+        -1.0,
+        -2.2010314836854655e-34
+      ],
+      "bloch_theta": 0.0,
+      "name": "HASH",
+      "is_operator": false
+    },
+    "⊙": {
+      "spinor": [
+        -3.837843061135739e-53,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DOT",
+      "is_operator": true
+    },
+    "R": {
+      "spinor": [
+        -2.9176066329748107e-08,
+        -0.9999999999999996
+      ],
+      "bloch_theta": 3.1415925952376607,
+      "name": "RECEIPT",
+      "is_operator": false
+    },
+    "≡": {
+      "spinor": [
+        1.5868278538160468e-48,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "IDENTICAL",
+      "is_operator": true
+    },
+    "◎": {
+      "spinor": [
+        -1.0,
+        -1.3661105214792438e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFIED",
+      "is_operator": false
+    },
+    "⊙̂": {
+      "spinor": [
+        1.2246062966347575e-07,
+        -0.9999999999999925
+      ],
+      "bloch_theta": 3.141592408668534,
+      "name": "EMIT",
+      "is_operator": false
+    },
+    "$": {
+      "spinor": [
+        3.2467990144639917e-53,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "VALUE",
+      "is_operator": false
+    },
+    "Æ": {
+      "spinor": [
+        1.0,
+        -2.3391445994626524e-39
+      ],
+      "bloch_theta": 0.0,
+      "name": "BIND",
+      "is_operator": true
+    },
+    "¤": {
+      "spinor": [
+        2.5260668213449805e-19,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "PAY",
+      "is_operator": false
+    },
+    "ZK": {
+      "spinor": [
+        -3.763582939877383e-21,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "ZK_PROOF",
+      "is_operator": false
+    },
+    "◈": {
+      "spinor": [
+        1.0,
+        -6.74250707572453e-23
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROVE",
+      "is_operator": false
+    },
+    "□": {
+      "spinor": [
+        2.962010454420608e-10,
+        1.0
+      ],
+      "bloch_theta": 3.141592652997391,
+      "name": "SQUARE_OPEN",
+      "is_operator": false
+    },
+    "Σ": {
+      "spinor": [
+        1.0,
+        -5.780272432389221e-42
+      ],
+      "bloch_theta": 0.0,
+      "name": "SHARD",
+      "is_operator": false
+    },
+    "⊕": {
+      "spinor": [
+        1.0,
+        4.032662374509044e-40
+      ],
+      "bloch_theta": 0.0,
+      "name": "ADD",
+      "is_operator": true
+    },
+    "M": {
+      "spinor": [
+        -0.9793243472724854,
+        0.2022963737671057
+      ],
+      "bloch_theta": 0.4074044210019714,
+      "name": "MERKLE",
+      "is_operator": false
+    },
+    "◀": {
+      "spinor": [
+        -1.0,
+        -1.6799965129496125e-50
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_END",
+      "is_operator": true
+    }
+  },
+  "compile_time_ms": 0.76,
+  "sha256": "31d192786b263937041f4fb99ac37eacd5f5ca201d9d7bee50da6d70b6e60931"
+}

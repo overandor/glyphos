@@ -1,0 +1,2381 @@
+[2026-06-27T18:31:26.262524Z] [INFO] ======================================================================
+[2026-06-27T18:31:26.262868Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:31:26.262913Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:31:26.262943Z] [INFO] ======================================================================
+[2026-06-27T18:31:26.263001Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:31:26.263027Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:31:26.263050Z] [INFO] 
+======================================================================
+[2026-06-27T18:31:26.263081Z] [INFO] CYCLE 0 — 2026-06-27T18:31:26.263080Z
+[2026-06-27T18:31:26.263102Z] [INFO] ======================================================================
+[2026-06-27T18:31:26.263131Z] [INFO] [SCOUT] Selected: ScreenPulse — Real-time screen activity monitor
+[2026-06-27T18:31:26.263153Z] [INFO]   Category: Utility | Price: $3.99 | Min OS: 14.0
+[2026-06-27T18:31:26.263774Z] [INFO] [ARCHITECT] Generated 4 files for ScreenPulse
+[2026-06-27T18:31:26.263802Z] [INFO]   Icon: sun.min
+[2026-06-27T18:31:26.263826Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse
+[2026-06-27T18:31:26.263955Z] [INFO] [BUILD] DRY RUN — skipping build for ScreenPulse
+[2026-06-27T18:31:26.263983Z] [INFO] [VERIFY] DRY RUN — skipping verification
+[2026-06-27T18:31:26.264008Z] [INFO] [NOTARY] DRY RUN — skipping notarization
+[2026-06-27T18:31:26.264029Z] [INFO] [SUBMIT] DRY RUN — would submit ScreenPulse to App Store Connect
+[2026-06-27T18:31:26.264137Z] [INFO] [GOVERN] Running decision gate for ScreenPulse...
+[2026-06-27T18:31:26.264163Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:31:26.264185Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:31:26.272930Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:31:26.273140Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:31:26.273169Z] [INFO] CYCLE 0 COMPLETE
+[2026-06-27T18:31:26.273193Z] [INFO]   App: ScreenPulse
+[2026-06-27T18:31:26.273230Z] [INFO]   Build: ✓
+[2026-06-27T18:31:26.273254Z] [INFO]   Verify: 1/1
+[2026-06-27T18:31:26.273288Z] [INFO]   Notarized: ✓
+[2026-06-27T18:31:26.273310Z] [INFO]   Submitted: ✓
+[2026-06-27T18:31:26.273333Z] [INFO]   Decision: SHIP
+[2026-06-27T18:31:26.273356Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:31:26.273459Z] [INFO] 
+Next cycle in 60s...
+[2026-06-27T18:32:26.278829Z] [INFO] 
+======================================================================
+[2026-06-27T18:32:26.279405Z] [INFO] CYCLE 1 — 2026-06-27T18:32:26.279399Z
+[2026-06-27T18:32:26.279521Z] [INFO] ======================================================================
+[2026-06-27T18:32:26.279621Z] [INFO] [SCOUT] Selected: ClipFlow — Clipboard history manager with search and pin
+[2026-06-27T18:32:26.279676Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T18:32:26.280756Z] [INFO] [ARCHITECT] Generated 4 files for ClipFlow
+[2026-06-27T18:32:26.280803Z] [INFO]   Icon: rectangle.split.2x1
+[2026-06-27T18:32:26.280839Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow
+[2026-06-27T18:32:26.281022Z] [INFO] [BUILD] DRY RUN — skipping build for ClipFlow
+[2026-06-27T18:32:26.281060Z] [INFO] [VERIFY] DRY RUN — skipping verification
+[2026-06-27T18:32:26.281095Z] [INFO] [NOTARY] DRY RUN — skipping notarization
+[2026-06-27T18:32:26.281129Z] [INFO] [SUBMIT] DRY RUN — would submit ClipFlow to App Store Connect
+[2026-06-27T18:32:26.281288Z] [INFO] [GOVERN] Running decision gate for ClipFlow...
+[2026-06-27T18:32:26.281330Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:32:26.281386Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:32:26.282649Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:32:26.282829Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:32:26.282867Z] [INFO] CYCLE 1 COMPLETE
+[2026-06-27T18:32:26.282902Z] [INFO]   App: ClipFlow
+[2026-06-27T18:32:26.282930Z] [INFO]   Build: ✓
+[2026-06-27T18:32:26.282959Z] [INFO]   Verify: 1/1
+[2026-06-27T18:32:26.282988Z] [INFO]   Notarized: ✓
+[2026-06-27T18:32:26.283021Z] [INFO]   Submitted: ✓
+[2026-06-27T18:32:26.283051Z] [INFO]   Decision: SHIP
+[2026-06-27T18:32:26.283080Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:32:26.283191Z] [INFO] 
+Reached max cycles (2). Stopping.
+[2026-06-27T18:32:28.882603Z] [INFO] ======================================================================
+[2026-06-27T18:32:28.882813Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:32:28.882852Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:32:28.882883Z] [INFO] ======================================================================
+[2026-06-27T18:32:28.882960Z] [INFO] Resuming from cycle 2
+[2026-06-27T18:32:28.882990Z] [INFO] Previous: 0 built, 0 verified, 8 receipts
+[2026-06-27T18:32:28.883017Z] [INFO] 
+Reached max cycles (1). Stopping.
+[2026-06-27T18:32:33.672657Z] [INFO] ======================================================================
+[2026-06-27T18:32:33.672920Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:32:33.672966Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:32:33.673001Z] [INFO] ======================================================================
+[2026-06-27T18:32:33.673061Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:32:33.673099Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:32:33.673132Z] [INFO] 
+======================================================================
+[2026-06-27T18:32:33.673169Z] [INFO] CYCLE 0 — 2026-06-27T18:32:33.673167Z
+[2026-06-27T18:32:33.673193Z] [INFO] ======================================================================
+[2026-06-27T18:32:33.673224Z] [INFO] [SCOUT] Selected: GlyphBoard — Unicode glyph picker with custom collections
+[2026-06-27T18:32:33.673247Z] [INFO]   Category: Utility | Price: $0.99 | Min OS: 14.0
+[2026-06-27T18:32:33.673849Z] [INFO] [ARCHITECT] Generated 4 files for GlyphBoard
+[2026-06-27T18:32:33.673878Z] [INFO]   Icon: speedometer
+[2026-06-27T18:32:33.673902Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard
+[2026-06-27T18:32:33.674025Z] [INFO] [BUILD] Building GlyphBoard...
+[2026-06-27T18:32:38.183995Z] [INFO] [BUILD] ✓ PASS — GlyphBoard compiled successfully
+[2026-06-27T18:32:38.184113Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/release/GlyphBoard (91,624 bytes)
+[2026-06-27T18:32:38.184361Z] [INFO] [VERIFY] Verifying GlyphBoard...
+[2026-06-27T18:32:38.184401Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:32:38.184446Z] [INFO]   Executable: ✓
+[2026-06-27T18:32:38.184515Z] [INFO]   Package valid: ✓
+[2026-06-27T18:32:38.184551Z] [INFO]   Source exists: ✓
+[2026-06-27T18:32:40.190901Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:32:40.194743Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:32:40.195274Z] [INFO] [NOTARY] Notarizing GlyphBoard...
+[2026-06-27T18:32:40.348216Z] [INFO] [NOTARY] Would codesign + notarize with Developer ID
+[2026-06-27T18:32:40.348609Z] [INFO] [SUBMIT] Submitting GlyphBoard to App Store Connect...
+[2026-06-27T18:32:40.348917Z] [INFO] [SUBMIT] Would upload to App Store Connect
+[2026-06-27T18:32:40.349167Z] [INFO] [GOVERN] Running decision gate for GlyphBoard...
+[2026-06-27T18:32:40.349232Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:32:40.349265Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:32:40.367550Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:32:40.367757Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:32:40.367794Z] [INFO] CYCLE 0 COMPLETE
+[2026-06-27T18:32:40.367828Z] [INFO]   App: GlyphBoard
+[2026-06-27T18:32:40.367855Z] [INFO]   Build: ✓
+[2026-06-27T18:32:40.367883Z] [INFO]   Verify: 5/5
+[2026-06-27T18:32:40.367909Z] [INFO]   Notarized: ✓
+[2026-06-27T18:32:40.367936Z] [INFO]   Submitted: ✓
+[2026-06-27T18:32:40.367963Z] [INFO]   Decision: SHIP
+[2026-06-27T18:32:40.367988Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:32:40.368152Z] [INFO] 
+Reached max cycles (1). Stopping.
+[2026-06-27T18:32:43.322300Z] [INFO] ======================================================================
+[2026-06-27T18:32:43.322543Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:32:43.322588Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:32:43.322622Z] [INFO] ======================================================================
+[2026-06-27T18:32:43.322684Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:32:43.322719Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:32:43.322753Z] [INFO] 
+======================================================================
+[2026-06-27T18:32:43.322792Z] [INFO] CYCLE 0 — 2026-06-27T18:32:43.322791Z
+[2026-06-27T18:32:43.322821Z] [INFO] ======================================================================
+[2026-06-27T18:32:43.322855Z] [INFO] [SCOUT] Selected: ScreenPulse — Real-time screen activity monitor
+[2026-06-27T18:32:43.322881Z] [INFO]   Category: Utility | Price: $3.99 | Min OS: 14.0
+[2026-06-27T18:32:43.323817Z] [INFO] [ARCHITECT] Generated 4 files for ScreenPulse
+[2026-06-27T18:32:43.323852Z] [INFO]   Icon: textformat
+[2026-06-27T18:32:43.323879Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse
+[2026-06-27T18:32:43.324013Z] [INFO] [BUILD] Building ScreenPulse...
+[2026-06-27T18:32:46.885480Z] [INFO] [BUILD] ✓ PASS — ScreenPulse compiled successfully
+[2026-06-27T18:32:46.885622Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/.build/release/ScreenPulse (91,720 bytes)
+[2026-06-27T18:32:46.885880Z] [INFO] [VERIFY] Verifying ScreenPulse...
+[2026-06-27T18:32:46.885946Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:32:46.886040Z] [INFO]   Executable: ✓
+[2026-06-27T18:32:46.886155Z] [INFO]   Package valid: ✓
+[2026-06-27T18:32:46.886205Z] [INFO]   Source exists: ✓
+[2026-06-27T18:32:48.887857Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:32:48.892000Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:32:48.892627Z] [INFO] [NOTARY] Notarizing ScreenPulse...
+[2026-06-27T18:32:48.914235Z] [INFO] [NOTARY] Would codesign + notarize with Developer ID
+[2026-06-27T18:32:48.914653Z] [INFO] [SUBMIT] Submitting ScreenPulse to App Store Connect...
+[2026-06-27T18:32:48.914776Z] [INFO] [SUBMIT] Would upload to App Store Connect
+[2026-06-27T18:32:48.914942Z] [INFO] [GOVERN] Running decision gate for ScreenPulse...
+[2026-06-27T18:32:48.914982Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:32:48.915009Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:32:48.926531Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:32:48.926759Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:32:48.926805Z] [INFO] CYCLE 0 COMPLETE
+[2026-06-27T18:32:48.926840Z] [INFO]   App: ScreenPulse
+[2026-06-27T18:32:48.926870Z] [INFO]   Build: ✓
+[2026-06-27T18:32:48.926900Z] [INFO]   Verify: 5/5
+[2026-06-27T18:32:48.926930Z] [INFO]   Notarized: ✓
+[2026-06-27T18:32:48.926966Z] [INFO]   Submitted: ✓
+[2026-06-27T18:32:48.926994Z] [INFO]   Decision: SHIP
+[2026-06-27T18:32:48.927021Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:32:48.927143Z] [INFO] 
+Next cycle in 120s...
+[2026-06-27T18:33:53.836734Z] [INFO] ======================================================================
+[2026-06-27T18:33:53.837159Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:33:53.837214Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:33:53.837252Z] [INFO] ======================================================================
+[2026-06-27T18:33:53.837313Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:33:53.837345Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:33:53.837375Z] [INFO] 
+======================================================================
+[2026-06-27T18:33:53.837413Z] [INFO] CYCLE 0 — 2026-06-27T18:33:53.837412Z
+[2026-06-27T18:33:53.837440Z] [INFO] ======================================================================
+[2026-06-27T18:33:53.837474Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T18:33:53.837500Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T18:33:53.838097Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T18:33:53.838127Z] [INFO]   Icon: sun.min
+[2026-06-27T18:33:53.838157Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T18:33:53.838287Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T18:33:57.686732Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T18:33:57.686900Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T18:33:57.687176Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T18:33:57.687221Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:33:57.687263Z] [INFO]   Executable: ✓
+[2026-06-27T18:33:57.687352Z] [INFO]   Package valid: ✓
+[2026-06-27T18:33:57.687395Z] [INFO]   Source exists: ✓
+[2026-06-27T18:33:59.693820Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:33:59.697946Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:33:59.698578Z] [INFO] [NOTARY] Notarizing SnapBarrier...
+[2026-06-27T18:33:59.723608Z] [INFO] [NOTARY] Would codesign + notarize with Developer ID
+[2026-06-27T18:33:59.724052Z] [INFO] [SUBMIT] Submitting SnapBarrier to App Store Connect...
+[2026-06-27T18:33:59.724191Z] [INFO] [SUBMIT] Would upload to App Store Connect
+[2026-06-27T18:33:59.724365Z] [INFO] [GOVERN] Running decision gate for SnapBarrier...
+[2026-06-27T18:33:59.724414Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:33:59.724451Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:33:59.734428Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:33:59.734879Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:33:59.734960Z] [INFO] CYCLE 0 COMPLETE
+[2026-06-27T18:33:59.735033Z] [INFO]   App: SnapBarrier
+[2026-06-27T18:33:59.735101Z] [INFO]   Build: ✓
+[2026-06-27T18:33:59.735174Z] [INFO]   Verify: 5/5
+[2026-06-27T18:33:59.735237Z] [INFO]   Notarized: ✓
+[2026-06-27T18:33:59.735272Z] [INFO]   Submitted: ✓
+[2026-06-27T18:33:59.735305Z] [INFO]   Decision: SHIP
+[2026-06-27T18:33:59.735337Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:33:59.735526Z] [INFO] 
+Next cycle in 60s...
+[2026-06-27T18:34:59.740762Z] [INFO] 
+======================================================================
+[2026-06-27T18:34:59.741259Z] [INFO] CYCLE 1 — 2026-06-27T18:34:59.741254Z
+[2026-06-27T18:34:59.741343Z] [INFO] ======================================================================
+[2026-06-27T18:34:59.741412Z] [INFO] [SCOUT] Selected: GlyphBoard — Unicode glyph picker with custom collections
+[2026-06-27T18:34:59.741447Z] [INFO]   Category: Utility | Price: $0.99 | Min OS: 14.0
+[2026-06-27T18:34:59.748775Z] [INFO] [ARCHITECT] Generated 4 files for GlyphBoard
+[2026-06-27T18:34:59.748824Z] [INFO]   Icon: rocket
+[2026-06-27T18:34:59.748856Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard
+[2026-06-27T18:34:59.749050Z] [INFO] [BUILD] Building GlyphBoard...
+[2026-06-27T18:35:03.173878Z] [INFO] [BUILD] ✓ PASS — GlyphBoard compiled successfully
+[2026-06-27T18:35:03.174000Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/release/GlyphBoard (91,624 bytes)
+[2026-06-27T18:35:03.174255Z] [INFO] [VERIFY] Verifying GlyphBoard...
+[2026-06-27T18:35:03.174308Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:35:03.174349Z] [INFO]   Executable: ✓
+[2026-06-27T18:35:03.174418Z] [INFO]   Package valid: ✓
+[2026-06-27T18:35:03.174457Z] [INFO]   Source exists: ✓
+[2026-06-27T18:35:05.178208Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:35:05.182370Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:35:05.182910Z] [INFO] [NOTARY] Notarizing GlyphBoard...
+[2026-06-27T18:35:05.206040Z] [INFO] [NOTARY] Would codesign + notarize with Developer ID
+[2026-06-27T18:35:05.206540Z] [INFO] [SUBMIT] Submitting GlyphBoard to App Store Connect...
+[2026-06-27T18:35:05.206663Z] [INFO] [SUBMIT] Would upload to App Store Connect
+[2026-06-27T18:35:05.206831Z] [INFO] [GOVERN] Running decision gate for GlyphBoard...
+[2026-06-27T18:35:05.206871Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:35:05.206901Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:35:05.208770Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:35:05.208964Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:35:05.208995Z] [INFO] CYCLE 1 COMPLETE
+[2026-06-27T18:35:05.209030Z] [INFO]   App: GlyphBoard
+[2026-06-27T18:35:05.209060Z] [INFO]   Build: ✓
+[2026-06-27T18:35:05.209087Z] [INFO]   Verify: 5/5
+[2026-06-27T18:35:05.209115Z] [INFO]   Notarized: ✓
+[2026-06-27T18:35:05.209143Z] [INFO]   Submitted: ✓
+[2026-06-27T18:35:05.209169Z] [INFO]   Decision: SHIP
+[2026-06-27T18:35:05.209195Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:35:05.209304Z] [INFO] 
+Next cycle in 60s...
+[2026-06-27T18:36:05.209452Z] [INFO] 
+======================================================================
+[2026-06-27T18:36:05.211918Z] [INFO] CYCLE 2 — 2026-06-27T18:36:05.211906Z
+[2026-06-27T18:36:05.212040Z] [INFO] ======================================================================
+[2026-06-27T18:36:05.212138Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T18:36:05.212187Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T18:36:05.213148Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T18:36:05.213193Z] [INFO]   Icon: sun.min
+[2026-06-27T18:36:05.213230Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T18:36:05.213416Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T18:36:09.269362Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T18:36:09.269495Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T18:36:09.269858Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T18:36:09.269946Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:36:09.270029Z] [INFO]   Executable: ✓
+[2026-06-27T18:36:09.270127Z] [INFO]   Package valid: ✓
+[2026-06-27T18:36:09.270187Z] [INFO]   Source exists: ✓
+[2026-06-27T18:36:11.275751Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:36:11.283374Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:36:11.284182Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T18:36:11.311720Z] [INFO] [NOTARY] Would codesign + notarize with Developer ID
+[2026-06-27T18:36:11.312338Z] [INFO] [SUBMIT] Submitting FocusBeam to App Store Connect...
+[2026-06-27T18:36:11.312484Z] [INFO] [SUBMIT] Would upload to App Store Connect
+[2026-06-27T18:36:11.312702Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T18:36:11.312747Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:36:11.312785Z] [INFO]   Decision: SHIP — All stages passed — ship it
+[2026-06-27T18:36:11.314234Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:36:11.314458Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:36:11.314492Z] [INFO] CYCLE 2 COMPLETE
+[2026-06-27T18:36:11.314526Z] [INFO]   App: FocusBeam
+[2026-06-27T18:36:11.314559Z] [INFO]   Build: ✓
+[2026-06-27T18:36:11.314592Z] [INFO]   Verify: 5/5
+[2026-06-27T18:36:11.314625Z] [INFO]   Notarized: ✓
+[2026-06-27T18:36:11.314660Z] [INFO]   Submitted: ✓
+[2026-06-27T18:36:11.314694Z] [INFO]   Decision: SHIP
+[2026-06-27T18:36:11.314724Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:36:11.314850Z] [INFO] 
+Reached max cycles (3). Stopping.
+[2026-06-27T18:36:38.200740Z] [INFO] ======================================================================
+[2026-06-27T18:36:38.201198Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:36:38.201330Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:36:38.201397Z] [INFO] ======================================================================
+[2026-06-27T18:36:38.201710Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:36:38.201797Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:36:38.201846Z] [INFO] 
+======================================================================
+[2026-06-27T18:36:38.201946Z] [INFO] CYCLE 0 — 2026-06-27T18:36:38.201941Z
+[2026-06-27T18:36:38.202192Z] [INFO] ======================================================================
+[2026-06-27T18:36:38.202280Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T18:36:38.202411Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T18:36:38.209691Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T18:36:38.209760Z] [INFO]   Icon: sun.min
+[2026-06-27T18:36:38.209802Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T18:36:38.210008Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T18:36:41.641723Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T18:36:41.641855Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T18:36:41.642098Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T18:36:41.642140Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:36:41.642183Z] [INFO]   Executable: ✓
+[2026-06-27T18:36:41.642257Z] [INFO]   Package valid: ✓
+[2026-06-27T18:36:41.642310Z] [INFO]   Source exists: ✓
+[2026-06-27T18:37:35.462727Z] [INFO] ======================================================================
+[2026-06-27T18:37:35.463095Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:37:35.463149Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:37:35.463187Z] [INFO] ======================================================================
+[2026-06-27T18:37:35.463246Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:37:35.463278Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:37:35.463307Z] [INFO] 
+======================================================================
+[2026-06-27T18:37:35.463343Z] [INFO] CYCLE 0 — 2026-06-27T18:37:35.463342Z
+[2026-06-27T18:37:35.463369Z] [INFO] ======================================================================
+[2026-06-27T18:37:35.463401Z] [INFO] [SCOUT] Selected: NetSignal — Network speed monitor in menu bar
+[2026-06-27T18:37:35.463427Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T18:37:35.464132Z] [INFO] [ARCHITECT] Generated 4 files for NetSignal
+[2026-06-27T18:37:35.464161Z] [INFO]   Icon: internaldrive
+[2026-06-27T18:37:35.464188Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal
+[2026-06-27T18:37:35.464320Z] [INFO] [BUILD] Building NetSignal...
+[2026-06-27T18:37:39.314089Z] [INFO] [BUILD] ✓ PASS — NetSignal compiled successfully
+[2026-06-27T18:37:39.314198Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/release/NetSignal (91,480 bytes)
+[2026-06-27T18:37:39.314411Z] [INFO] [VERIFY] Verifying NetSignal...
+[2026-06-27T18:37:39.314460Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:37:39.314512Z] [INFO]   Executable: ✓
+[2026-06-27T18:37:39.314585Z] [INFO]   Package valid: ✓
+[2026-06-27T18:37:39.314623Z] [INFO]   Source exists: ✓
+[2026-06-27T18:37:41.320770Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:37:41.324762Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:37:41.326167Z] [INFO] [NOTARY] Notarizing NetSignal...
+[2026-06-27T18:37:41.355984Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app
+[2026-06-27T18:37:41.356048Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T18:37:45.792460Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T18:37:45.792691Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T18:48:42.139521Z] [INFO] ======================================================================
+[2026-06-27T18:48:42.139979Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:48:42.140038Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:48:42.140075Z] [INFO] ======================================================================
+[2026-06-27T18:48:42.140140Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:48:42.140306Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:48:42.140378Z] [INFO] 
+======================================================================
+[2026-06-27T18:48:42.140503Z] [INFO] CYCLE 0 — 2026-06-27T18:48:42.140501Z
+[2026-06-27T18:48:42.140540Z] [INFO] ======================================================================
+[2026-06-27T18:48:42.140578Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T18:48:42.140608Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T18:48:42.152982Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T18:48:42.153047Z] [INFO]   Icon: wifi
+[2026-06-27T18:48:42.153091Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T18:48:42.153269Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T18:48:47.127571Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T18:48:47.127714Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T18:48:47.127981Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T18:48:47.128049Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:48:47.128096Z] [INFO]   Executable: ✓
+[2026-06-27T18:48:47.128188Z] [INFO]   Package valid: ✓
+[2026-06-27T18:48:47.128229Z] [INFO]   Source exists: ✓
+[2026-06-27T18:48:49.134680Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:48:49.138799Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:48:49.139408Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T18:48:49.166815Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app
+[2026-06-27T18:48:49.166887Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T18:48:53.270060Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T18:48:53.270264Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T18:48:54.084521Z] [INFO] [NOTARY] Submitted — ID: ee9e6a38-2c03-498d-8f7c-8ce7daac55e1
+[2026-06-27T18:48:54.084741Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T18:49:24.412806Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T18:48:53.610Z
+  id: ee9e6a38-2c03-498d-8f7c-8ce7daac55e1
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T18:49:54.702815Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T18:48:53.610Z
+  id: ee9e6a38-2c03-498d-8f7c-8ce7daac55e1
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T18:50:25.030246Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T18:48:53.610Z
+  id: ee9e6a38-2c03-498d-8f7c-8ce7daac55e1
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T18:50:25.030582Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T18:50:25.031139Z] [INFO] [SUBMIT] SKIP — notarization not complete for FocusBeam
+[2026-06-27T18:50:25.031213Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T18:50:25.031270Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:50:25.031312Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T18:50:25.047680Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:50:25.047922Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:50:25.047956Z] [INFO] CYCLE 0 COMPLETE
+[2026-06-27T18:50:25.047991Z] [INFO]   App: FocusBeam
+[2026-06-27T18:50:25.048021Z] [INFO]   Build: ✓
+[2026-06-27T18:50:25.048050Z] [INFO]   Verify: 5/5
+[2026-06-27T18:50:25.048079Z] [INFO]   Notarized: ✗
+[2026-06-27T18:50:25.048109Z] [INFO]   Submitted: ✗
+[2026-06-27T18:50:25.048148Z] [INFO]   Decision: HOLD
+[2026-06-27T18:50:25.048187Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:50:25.048454Z] [INFO] 
+Reached max cycles (1). Stopping.
+[2026-06-27T18:50:28.432779Z] [INFO] ======================================================================
+[2026-06-27T18:50:28.433033Z] [INFO] AUTOPILOT — 24/7 Autonomous Mac App Factory
+[2026-06-27T18:50:28.433096Z] [INFO] THE PIPE SHALL NOT STOP
+[2026-06-27T18:50:28.433140Z] [INFO] ======================================================================
+[2026-06-27T18:50:28.433217Z] [INFO] Resuming from cycle 0
+[2026-06-27T18:50:28.433292Z] [INFO] Previous: 0 built, 0 verified, 0 receipts
+[2026-06-27T18:50:28.433332Z] [INFO] 
+======================================================================
+[2026-06-27T18:50:28.433379Z] [INFO] CYCLE 0 — 2026-06-27T18:50:28.433378Z
+[2026-06-27T18:50:28.433414Z] [INFO] ======================================================================
+[2026-06-27T18:50:28.433461Z] [INFO] [SCOUT] Selected: ClipFlow — Clipboard history manager with search and pin
+[2026-06-27T18:50:28.433536Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T18:50:28.434886Z] [INFO] [ARCHITECT] Generated 4 files for ClipFlow
+[2026-06-27T18:50:28.434949Z] [INFO]   Icon: rocket
+[2026-06-27T18:50:28.434987Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow
+[2026-06-27T18:50:28.435210Z] [INFO] [BUILD] Building ClipFlow...
+[2026-06-27T18:50:32.436534Z] [INFO] [BUILD] ✓ PASS — ClipFlow compiled successfully
+[2026-06-27T18:50:32.436899Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/release/ClipFlow (91,400 bytes)
+[2026-06-27T18:50:32.437328Z] [INFO] [VERIFY] Verifying ClipFlow...
+[2026-06-27T18:50:32.437381Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:50:32.437424Z] [INFO]   Executable: ✓
+[2026-06-27T18:50:32.437545Z] [INFO]   Package valid: ✓
+[2026-06-27T18:50:32.437600Z] [INFO]   Source exists: ✓
+[2026-06-27T18:50:34.444051Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:50:34.452525Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:50:34.453540Z] [INFO] [NOTARY] Notarizing ClipFlow...
+[2026-06-27T18:50:34.481416Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app
+[2026-06-27T18:50:34.481469Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T18:50:41.116073Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T18:50:41.116330Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T18:50:41.912578Z] [INFO] [NOTARY] Submitted — ID: 69f167e7-05bb-4fe8-9347-0079a8a92095
+[2026-06-27T18:50:41.912764Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T18:51:12.256727Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T18:50:41.461Z
+  id: 69f167e7-05bb-4fe8-9347-0079a8a92095
+  name: ClipFlow.zip
+  status: In Progress
+[2026-06-27T18:51:42.549537Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T18:50:41.461Z
+  id: 69f167e7-05bb-4fe8-9347-0079a8a92095
+  name: ClipFlow.zip
+  status: In Progress
+[2026-06-27T18:52:12.948322Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T18:50:41.461Z
+  id: 69f167e7-05bb-4fe8-9347-0079a8a92095
+  name: ClipFlow.zip
+  status: In Progress
+[2026-06-27T18:52:12.948482Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T18:52:12.948907Z] [INFO] [SUBMIT] SKIP — notarization not complete for ClipFlow
+[2026-06-27T18:52:12.948942Z] [INFO] [GOVERN] Running decision gate for ClipFlow...
+[2026-06-27T18:52:12.948984Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:52:12.949010Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T18:52:12.962267Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:52:12.962437Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:52:12.962466Z] [INFO] CYCLE 0 COMPLETE
+[2026-06-27T18:52:12.962496Z] [INFO]   App: ClipFlow
+[2026-06-27T18:52:12.962521Z] [INFO]   Build: ✓
+[2026-06-27T18:52:12.962544Z] [INFO]   Verify: 5/5
+[2026-06-27T18:52:12.962566Z] [INFO]   Notarized: ✗
+[2026-06-27T18:52:12.962588Z] [INFO]   Submitted: ✗
+[2026-06-27T18:52:12.962609Z] [INFO]   Decision: HOLD
+[2026-06-27T18:52:12.962630Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:52:12.962744Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T18:57:12.967933Z] [INFO] 
+======================================================================
+[2026-06-27T18:57:12.968559Z] [INFO] CYCLE 1 — 2026-06-27T18:57:12.968550Z
+[2026-06-27T18:57:12.968659Z] [INFO] ======================================================================
+[2026-06-27T18:57:12.968715Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T18:57:12.968748Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T18:57:12.981571Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T18:57:12.981644Z] [INFO]   Icon: timer
+[2026-06-27T18:57:12.981689Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T18:57:12.981928Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T18:57:16.773603Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T18:57:16.773720Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T18:57:16.774000Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T18:57:16.774050Z] [INFO]   Binary exists: ✓
+[2026-06-27T18:57:16.774095Z] [INFO]   Executable: ✓
+[2026-06-27T18:57:16.774177Z] [INFO]   Package valid: ✓
+[2026-06-27T18:57:16.774215Z] [INFO]   Source exists: ✓
+[2026-06-27T18:57:18.776782Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T18:57:18.780940Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T18:57:18.782132Z] [INFO] [NOTARY] Notarizing SnapBarrier...
+[2026-06-27T18:57:18.809110Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app
+[2026-06-27T18:57:18.809169Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T18:57:28.866674Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T18:57:28.866863Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T18:57:29.749220Z] [INFO] [NOTARY] Submitted — ID: 8d276b0b-8854-4815-a2cd-3a4fcc9b88d9
+[2026-06-27T18:57:29.749465Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T18:58:00.135372Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T18:57:29.198Z
+  id: 8d276b0b-8854-4815-a2cd-3a4fcc9b88d9
+  name: SnapBarrier.zip
+  status: In Progress
+[2026-06-27T18:58:30.395754Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T18:57:29.198Z
+  id: 8d276b0b-8854-4815-a2cd-3a4fcc9b88d9
+  name: SnapBarrier.zip
+  status: In Progress
+[2026-06-27T18:59:00.718144Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T18:57:29.198Z
+  id: 8d276b0b-8854-4815-a2cd-3a4fcc9b88d9
+  name: SnapBarrier.zip
+  status: In Progress
+[2026-06-27T18:59:00.718508Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T18:59:00.719132Z] [INFO] [SUBMIT] SKIP — notarization not complete for SnapBarrier
+[2026-06-27T18:59:00.719179Z] [INFO] [GOVERN] Running decision gate for SnapBarrier...
+[2026-06-27T18:59:00.719228Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T18:59:00.719255Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T18:59:00.720553Z] [INFO]   DecisionGate receipt written
+[2026-06-27T18:59:00.720724Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:59:00.720761Z] [INFO] CYCLE 1 COMPLETE
+[2026-06-27T18:59:00.720793Z] [INFO]   App: SnapBarrier
+[2026-06-27T18:59:00.720816Z] [INFO]   Build: ✓
+[2026-06-27T18:59:00.720841Z] [INFO]   Verify: 5/5
+[2026-06-27T18:59:00.720867Z] [INFO]   Notarized: ✗
+[2026-06-27T18:59:00.720896Z] [INFO]   Submitted: ✗
+[2026-06-27T18:59:00.720922Z] [INFO]   Decision: HOLD
+[2026-06-27T18:59:00.720953Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T18:59:00.721069Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:04:00.722346Z] [INFO] 
+======================================================================
+[2026-06-27T19:04:00.726810Z] [INFO] CYCLE 2 — 2026-06-27T19:04:00.726791Z
+[2026-06-27T19:04:00.726977Z] [INFO] ======================================================================
+[2026-06-27T19:04:00.727088Z] [INFO] [SCOUT] Selected: DimLight — Screen dimmer below minimum brightness
+[2026-06-27T19:04:00.727155Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T19:04:00.729384Z] [INFO] [ARCHITECT] Generated 4 files for DimLight
+[2026-06-27T19:04:00.729513Z] [INFO]   Icon: clipboard
+[2026-06-27T19:04:00.729597Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight
+[2026-06-27T19:04:00.730027Z] [INFO] [BUILD] Building DimLight...
+[2026-06-27T19:04:04.790300Z] [INFO] [BUILD] ✓ PASS — DimLight compiled successfully
+[2026-06-27T19:04:04.790421Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/release/DimLight (91,400 bytes)
+[2026-06-27T19:04:04.790662Z] [INFO] [VERIFY] Verifying DimLight...
+[2026-06-27T19:04:04.790701Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:04:04.790742Z] [INFO]   Executable: ✓
+[2026-06-27T19:04:04.790818Z] [INFO]   Package valid: ✓
+[2026-06-27T19:04:04.790854Z] [INFO]   Source exists: ✓
+[2026-06-27T19:04:06.797372Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:04:06.807259Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:04:06.809050Z] [INFO] [NOTARY] Notarizing DimLight...
+[2026-06-27T19:04:06.852786Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app
+[2026-06-27T19:04:06.852856Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:05:06.859024Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app']' timed out after 60 seconds
+[2026-06-27T19:05:06.860667Z] [INFO] [SUBMIT] SKIP — notarization not complete for DimLight
+[2026-06-27T19:05:06.860777Z] [INFO] [GOVERN] Running decision gate for DimLight...
+[2026-06-27T19:05:06.860861Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:05:06.860929Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:05:06.863541Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:05:06.863911Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:05:06.863978Z] [INFO] CYCLE 2 COMPLETE
+[2026-06-27T19:05:06.864042Z] [INFO]   App: DimLight
+[2026-06-27T19:05:06.864099Z] [INFO]   Build: ✓
+[2026-06-27T19:05:06.864163Z] [INFO]   Verify: 5/5
+[2026-06-27T19:05:06.864228Z] [INFO]   Notarized: ✗
+[2026-06-27T19:05:06.864295Z] [INFO]   Submitted: ✗
+[2026-06-27T19:05:06.864355Z] [INFO]   Decision: HOLD
+[2026-06-27T19:05:06.864408Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:05:06.864658Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:10:06.868563Z] [INFO] 
+======================================================================
+[2026-06-27T19:10:06.871986Z] [INFO] CYCLE 3 — 2026-06-27T19:10:06.871972Z
+[2026-06-27T19:10:06.872161Z] [INFO] ======================================================================
+[2026-06-27T19:10:06.872348Z] [INFO] [SCOUT] Selected: CleanSweep — Disk space analyzer and cleaner
+[2026-06-27T19:10:06.872544Z] [INFO]   Category: Utility | Price: $4.99 | Min OS: 14.0
+[2026-06-27T19:10:06.874683Z] [INFO] [ARCHITECT] Generated 4 files for CleanSweep
+[2026-06-27T19:10:06.874838Z] [INFO]   Icon: speedometer
+[2026-06-27T19:10:06.874917Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep
+[2026-06-27T19:10:06.875308Z] [INFO] [BUILD] Building CleanSweep...
+[2026-06-27T19:10:11.221373Z] [INFO] [BUILD] ✓ PASS — CleanSweep compiled successfully
+[2026-06-27T19:10:11.221501Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/.build/release/CleanSweep (91,624 bytes)
+[2026-06-27T19:10:11.221751Z] [INFO] [VERIFY] Verifying CleanSweep...
+[2026-06-27T19:10:11.221794Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:10:11.221836Z] [INFO]   Executable: ✓
+[2026-06-27T19:10:11.221906Z] [INFO]   Package valid: ✓
+[2026-06-27T19:10:11.221944Z] [INFO]   Source exists: ✓
+[2026-06-27T19:10:13.226541Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:10:13.236170Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:10:13.237331Z] [INFO] [NOTARY] Notarizing CleanSweep...
+[2026-06-27T19:10:13.273257Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app
+[2026-06-27T19:10:13.273316Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:11:13.279410Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app']' timed out after 60 seconds
+[2026-06-27T19:11:13.280700Z] [INFO] [SUBMIT] SKIP — notarization not complete for CleanSweep
+[2026-06-27T19:11:13.280806Z] [INFO] [GOVERN] Running decision gate for CleanSweep...
+[2026-06-27T19:11:13.280903Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:11:13.280979Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:11:13.283098Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:11:13.283580Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:11:13.283662Z] [INFO] CYCLE 3 COMPLETE
+[2026-06-27T19:11:13.283741Z] [INFO]   App: CleanSweep
+[2026-06-27T19:11:13.283816Z] [INFO]   Build: ✓
+[2026-06-27T19:11:13.283902Z] [INFO]   Verify: 5/5
+[2026-06-27T19:11:13.283977Z] [INFO]   Notarized: ✗
+[2026-06-27T19:11:13.284056Z] [INFO]   Submitted: ✗
+[2026-06-27T19:11:13.284133Z] [INFO]   Decision: HOLD
+[2026-06-27T19:11:13.284362Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:11:13.284954Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:16:13.288258Z] [INFO] 
+======================================================================
+[2026-06-27T19:16:13.290997Z] [INFO] CYCLE 4 — 2026-06-27T19:16:13.290953Z
+[2026-06-27T19:16:13.291264Z] [INFO] ======================================================================
+[2026-06-27T19:16:13.291609Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T19:16:13.291731Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T19:16:13.320819Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T19:16:13.320902Z] [INFO]   Icon: wifi
+[2026-06-27T19:16:13.320948Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T19:16:13.321206Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T19:16:17.509131Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T19:16:17.509306Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T19:16:17.509578Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T19:16:17.509649Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:16:17.509689Z] [INFO]   Executable: ✓
+[2026-06-27T19:16:17.509766Z] [INFO]   Package valid: ✓
+[2026-06-27T19:16:17.509800Z] [INFO]   Source exists: ✓
+[2026-06-27T19:16:19.516302Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:16:19.526021Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:16:19.527516Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T19:16:19.574273Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app
+[2026-06-27T19:16:19.574335Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:17:19.582209Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app']' timed out after 60 seconds
+[2026-06-27T19:17:19.585114Z] [INFO] [SUBMIT] SKIP — notarization not complete for FocusBeam
+[2026-06-27T19:17:19.585219Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T19:17:19.585295Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:17:19.585354Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:17:19.587563Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:17:19.588052Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:17:19.588114Z] [INFO] CYCLE 4 COMPLETE
+[2026-06-27T19:17:19.588173Z] [INFO]   App: FocusBeam
+[2026-06-27T19:17:19.588224Z] [INFO]   Build: ✓
+[2026-06-27T19:17:19.588271Z] [INFO]   Verify: 5/5
+[2026-06-27T19:17:19.588317Z] [INFO]   Notarized: ✗
+[2026-06-27T19:17:19.588363Z] [INFO]   Submitted: ✗
+[2026-06-27T19:17:19.588408Z] [INFO]   Decision: HOLD
+[2026-06-27T19:17:19.588463Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:17:19.588926Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:22:19.592496Z] [INFO] 
+======================================================================
+[2026-06-27T19:22:19.597007Z] [INFO] CYCLE 5 — 2026-06-27T19:22:19.596990Z
+[2026-06-27T19:22:19.597184Z] [INFO] ======================================================================
+[2026-06-27T19:22:19.597377Z] [INFO] [SCOUT] Selected: GlyphBoard — Unicode glyph picker with custom collections
+[2026-06-27T19:22:19.597459Z] [INFO]   Category: Utility | Price: $0.99 | Min OS: 14.0
+[2026-06-27T19:22:19.620790Z] [INFO] [ARCHITECT] Generated 4 files for GlyphBoard
+[2026-06-27T19:22:19.620865Z] [INFO]   Icon: speedometer
+[2026-06-27T19:22:19.620899Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard
+[2026-06-27T19:22:19.621087Z] [INFO] [BUILD] Building GlyphBoard...
+[2026-06-27T19:22:23.764034Z] [INFO] [BUILD] ✓ PASS — GlyphBoard compiled successfully
+[2026-06-27T19:22:23.764167Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/release/GlyphBoard (91,624 bytes)
+[2026-06-27T19:22:23.764401Z] [INFO] [VERIFY] Verifying GlyphBoard...
+[2026-06-27T19:22:23.764440Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:22:23.764481Z] [INFO]   Executable: ✓
+[2026-06-27T19:22:23.764561Z] [INFO]   Package valid: ✓
+[2026-06-27T19:22:23.764600Z] [INFO]   Source exists: ✓
+[2026-06-27T19:22:25.770924Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:22:25.782572Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:22:25.783767Z] [INFO] [NOTARY] Notarizing GlyphBoard...
+[2026-06-27T19:22:25.819537Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app
+[2026-06-27T19:22:25.819619Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:22:32.051512Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T19:22:32.052195Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T19:22:32.896860Z] [INFO] [NOTARY] Submitted — ID: 72f61e1d-0059-477a-aeb3-06afd284b3c0
+[2026-06-27T19:22:32.897193Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T19:23:03.559863Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T19:22:32.479Z
+  id: 72f61e1d-0059-477a-aeb3-06afd284b3c0
+  name: GlyphBoard.zip
+  status: In Progress
+[2026-06-27T19:23:34.216236Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T19:22:32.479Z
+  id: 72f61e1d-0059-477a-aeb3-06afd284b3c0
+  name: GlyphBoard.zip
+  status: In Progress
+[2026-06-27T19:24:04.533946Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T19:22:32.479Z
+  id: 72f61e1d-0059-477a-aeb3-06afd284b3c0
+  name: GlyphBoard.zip
+  status: In Progress
+[2026-06-27T19:24:04.534144Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T19:24:04.534751Z] [INFO] [SUBMIT] SKIP — notarization not complete for GlyphBoard
+[2026-06-27T19:24:04.534783Z] [INFO] [GOVERN] Running decision gate for GlyphBoard...
+[2026-06-27T19:24:04.534830Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:24:04.534861Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:24:04.536807Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:24:04.537224Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:24:04.537261Z] [INFO] CYCLE 5 COMPLETE
+[2026-06-27T19:24:04.537300Z] [INFO]   App: GlyphBoard
+[2026-06-27T19:24:04.537326Z] [INFO]   Build: ✓
+[2026-06-27T19:24:04.537352Z] [INFO]   Verify: 5/5
+[2026-06-27T19:24:04.537376Z] [INFO]   Notarized: ✗
+[2026-06-27T19:24:04.537404Z] [INFO]   Submitted: ✗
+[2026-06-27T19:24:04.537429Z] [INFO]   Decision: HOLD
+[2026-06-27T19:24:04.537452Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:24:04.537691Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:29:04.539783Z] [INFO] 
+======================================================================
+[2026-06-27T19:29:04.541125Z] [INFO] CYCLE 6 — 2026-06-27T19:29:04.541103Z
+[2026-06-27T19:29:04.541404Z] [INFO] ======================================================================
+[2026-06-27T19:29:04.541693Z] [INFO] [SCOUT] Selected: QuickLaunch — Keyboard-driven app launcher with fuzzy search
+[2026-06-27T19:29:04.541838Z] [INFO]   Category: Productivity | Price: $3.99 | Min OS: 14.0
+[2026-06-27T19:29:04.544724Z] [INFO] [ARCHITECT] Generated 4 files for QuickLaunch
+[2026-06-27T19:29:04.544863Z] [INFO]   Icon: internaldrive
+[2026-06-27T19:29:04.544941Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch
+[2026-06-27T19:29:04.545435Z] [INFO] [BUILD] Building QuickLaunch...
+[2026-06-27T19:29:09.161474Z] [INFO] [BUILD] ✓ PASS — QuickLaunch compiled successfully
+[2026-06-27T19:29:09.161613Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/release/QuickLaunch (91,720 bytes)
+[2026-06-27T19:29:09.161868Z] [INFO] [VERIFY] Verifying QuickLaunch...
+[2026-06-27T19:29:09.161908Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:29:09.161946Z] [INFO]   Executable: ✓
+[2026-06-27T19:29:09.162021Z] [INFO]   Package valid: ✓
+[2026-06-27T19:29:09.162057Z] [INFO]   Source exists: ✓
+[2026-06-27T19:29:11.173380Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:29:11.185194Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:29:11.187077Z] [INFO] [NOTARY] Notarizing QuickLaunch...
+[2026-06-27T19:29:11.246409Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app
+[2026-06-27T19:29:11.246492Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:30:11.255025Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app']' timed out after 60 seconds
+[2026-06-27T19:30:11.257216Z] [INFO] [SUBMIT] SKIP — notarization not complete for QuickLaunch
+[2026-06-27T19:30:11.257407Z] [INFO] [GOVERN] Running decision gate for QuickLaunch...
+[2026-06-27T19:30:11.257570Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:30:11.257688Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:30:11.261325Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:30:11.262036Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:30:11.262139Z] [INFO] CYCLE 6 COMPLETE
+[2026-06-27T19:30:11.262232Z] [INFO]   App: QuickLaunch
+[2026-06-27T19:30:11.262310Z] [INFO]   Build: ✓
+[2026-06-27T19:30:11.262395Z] [INFO]   Verify: 5/5
+[2026-06-27T19:30:11.262534Z] [INFO]   Notarized: ✗
+[2026-06-27T19:30:11.262657Z] [INFO]   Submitted: ✗
+[2026-06-27T19:30:11.262747Z] [INFO]   Decision: HOLD
+[2026-06-27T19:30:11.262842Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:30:11.263482Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:35:11.271863Z] [INFO] 
+======================================================================
+[2026-06-27T19:35:11.276418Z] [INFO] CYCLE 7 — 2026-06-27T19:35:11.276405Z
+[2026-06-27T19:35:11.276668Z] [INFO] ======================================================================
+[2026-06-27T19:35:11.276840Z] [INFO] [SCOUT] Selected: ReceiptVault — Tamper-evident receipt ledger for personal transactions
+[2026-06-27T19:35:11.276923Z] [INFO]   Category: Finance | Price: $4.99 | Min OS: 14.0
+[2026-06-27T19:35:11.278902Z] [INFO] [ARCHITECT] Generated 4 files for ReceiptVault
+[2026-06-27T19:35:11.279029Z] [INFO]   Icon: timer
+[2026-06-27T19:35:11.279111Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault
+[2026-06-27T19:35:11.279508Z] [INFO] [BUILD] Building ReceiptVault...
+[2026-06-27T19:35:14.798841Z] [INFO] [BUILD] ✓ PASS — ReceiptVault compiled successfully
+[2026-06-27T19:35:14.798978Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/release/ReceiptVault (91,808 bytes)
+[2026-06-27T19:35:14.799269Z] [INFO] [VERIFY] Verifying ReceiptVault...
+[2026-06-27T19:35:14.799377Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:35:14.799434Z] [INFO]   Executable: ✓
+[2026-06-27T19:35:14.799530Z] [INFO]   Package valid: ✓
+[2026-06-27T19:35:14.799575Z] [INFO]   Source exists: ✓
+[2026-06-27T19:35:16.811117Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:35:16.822069Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:35:16.823928Z] [INFO] [NOTARY] Notarizing ReceiptVault...
+[2026-06-27T19:35:16.875093Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app
+[2026-06-27T19:35:16.875218Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:36:16.885900Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app']' timed out after 60 seconds
+[2026-06-27T19:36:16.888061Z] [INFO] [SUBMIT] SKIP — notarization not complete for ReceiptVault
+[2026-06-27T19:36:16.888187Z] [INFO] [GOVERN] Running decision gate for ReceiptVault...
+[2026-06-27T19:36:16.888293Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:36:16.888374Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:36:16.892093Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:36:16.893759Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:36:16.893935Z] [INFO] CYCLE 7 COMPLETE
+[2026-06-27T19:36:16.894024Z] [INFO]   App: ReceiptVault
+[2026-06-27T19:36:16.894201Z] [INFO]   Build: ✓
+[2026-06-27T19:36:16.894526Z] [INFO]   Verify: 5/5
+[2026-06-27T19:36:16.894768Z] [INFO]   Notarized: ✗
+[2026-06-27T19:36:16.894882Z] [INFO]   Submitted: ✗
+[2026-06-27T19:36:16.895028Z] [INFO]   Decision: HOLD
+[2026-06-27T19:36:16.895153Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:36:16.895765Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:41:16.905587Z] [INFO] 
+======================================================================
+[2026-06-27T19:41:16.911136Z] [INFO] CYCLE 8 — 2026-06-27T19:41:16.911114Z
+[2026-06-27T19:41:16.911278Z] [INFO] ======================================================================
+[2026-06-27T19:41:16.911402Z] [INFO] [SCOUT] Selected: ScreenPulse — Real-time screen activity monitor
+[2026-06-27T19:41:16.911482Z] [INFO]   Category: Utility | Price: $3.99 | Min OS: 14.0
+[2026-06-27T19:41:16.939077Z] [INFO] [ARCHITECT] Generated 4 files for ScreenPulse
+[2026-06-27T19:41:16.939216Z] [INFO]   Icon: speedometer
+[2026-06-27T19:41:16.939293Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse
+[2026-06-27T19:41:16.939678Z] [INFO] [BUILD] Building ScreenPulse...
+[2026-06-27T19:41:20.534273Z] [INFO] [BUILD] ✓ PASS — ScreenPulse compiled successfully
+[2026-06-27T19:41:20.534389Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/.build/release/ScreenPulse (91,720 bytes)
+[2026-06-27T19:41:20.534622Z] [INFO] [VERIFY] Verifying ScreenPulse...
+[2026-06-27T19:41:20.534669Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:41:20.534714Z] [INFO]   Executable: ✓
+[2026-06-27T19:41:20.534799Z] [INFO]   Package valid: ✓
+[2026-06-27T19:41:20.534838Z] [INFO]   Source exists: ✓
+[2026-06-27T19:41:22.540960Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:41:22.552080Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:41:22.553388Z] [INFO] [NOTARY] Notarizing ScreenPulse...
+[2026-06-27T19:41:22.613351Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app
+[2026-06-27T19:41:22.613469Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:42:22.620374Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app']' timed out after 60 seconds
+[2026-06-27T19:42:22.621433Z] [INFO] [SUBMIT] SKIP — notarization not complete for ScreenPulse
+[2026-06-27T19:42:22.621539Z] [INFO] [GOVERN] Running decision gate for ScreenPulse...
+[2026-06-27T19:42:22.621631Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:42:22.621761Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:42:22.624344Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:42:22.624825Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:42:22.624938Z] [INFO] CYCLE 8 COMPLETE
+[2026-06-27T19:42:22.625016Z] [INFO]   App: ScreenPulse
+[2026-06-27T19:42:22.625082Z] [INFO]   Build: ✓
+[2026-06-27T19:42:22.625149Z] [INFO]   Verify: 5/5
+[2026-06-27T19:42:22.625208Z] [INFO]   Notarized: ✗
+[2026-06-27T19:42:22.625268Z] [INFO]   Submitted: ✗
+[2026-06-27T19:42:22.625327Z] [INFO]   Decision: HOLD
+[2026-06-27T19:42:22.625394Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:42:22.625901Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:47:22.627181Z] [INFO] 
+======================================================================
+[2026-06-27T19:47:22.630201Z] [INFO] CYCLE 9 — 2026-06-27T19:47:22.630188Z
+[2026-06-27T19:47:22.630314Z] [INFO] ======================================================================
+[2026-06-27T19:47:22.630434Z] [INFO] [SCOUT] Selected: NetSignal — Network speed monitor in menu bar
+[2026-06-27T19:47:22.630501Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T19:47:22.664821Z] [INFO] [ARCHITECT] Generated 4 files for NetSignal
+[2026-06-27T19:47:22.664920Z] [INFO]   Icon: clipboard
+[2026-06-27T19:47:22.664971Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal
+[2026-06-27T19:47:22.665270Z] [INFO] [BUILD] Building NetSignal...
+[2026-06-27T19:47:26.294272Z] [INFO] [BUILD] ✓ PASS — NetSignal compiled successfully
+[2026-06-27T19:47:26.294375Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/release/NetSignal (91,480 bytes)
+[2026-06-27T19:47:26.294607Z] [INFO] [VERIFY] Verifying NetSignal...
+[2026-06-27T19:47:26.294643Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:47:26.294678Z] [INFO]   Executable: ✓
+[2026-06-27T19:47:26.294743Z] [INFO]   Package valid: ✓
+[2026-06-27T19:47:26.294773Z] [INFO]   Source exists: ✓
+[2026-06-27T19:47:28.299247Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:47:28.310810Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:47:28.312082Z] [INFO] [NOTARY] Notarizing NetSignal...
+[2026-06-27T19:47:28.362838Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app
+[2026-06-27T19:47:28.362932Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:48:28.371771Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app']' timed out after 60 seconds
+[2026-06-27T19:48:28.374591Z] [INFO] [SUBMIT] SKIP — notarization not complete for NetSignal
+[2026-06-27T19:48:28.374765Z] [INFO] [GOVERN] Running decision gate for NetSignal...
+[2026-06-27T19:48:28.374940Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:48:28.375045Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:48:28.378014Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:48:28.378523Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:48:28.378597Z] [INFO] CYCLE 9 COMPLETE
+[2026-06-27T19:48:28.378658Z] [INFO]   App: NetSignal
+[2026-06-27T19:48:28.378808Z] [INFO]   Build: ✓
+[2026-06-27T19:48:28.378871Z] [INFO]   Verify: 5/5
+[2026-06-27T19:48:28.378927Z] [INFO]   Notarized: ✗
+[2026-06-27T19:48:28.378979Z] [INFO]   Submitted: ✗
+[2026-06-27T19:48:28.379028Z] [INFO]   Decision: HOLD
+[2026-06-27T19:48:28.379080Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:48:28.379430Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:53:28.382308Z] [INFO] 
+======================================================================
+[2026-06-27T19:53:28.383063Z] [INFO] CYCLE 10 — 2026-06-27T19:53:28.383054Z
+[2026-06-27T19:53:28.383165Z] [INFO] ======================================================================
+[2026-06-27T19:53:28.383267Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T19:53:28.383352Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T19:53:28.412504Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T19:53:28.412635Z] [INFO]   Icon: rectangle.split.2x1
+[2026-06-27T19:53:28.412691Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T19:53:28.413047Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T19:53:31.463190Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T19:53:31.463325Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T19:53:31.463561Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T19:53:31.463605Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:53:31.463641Z] [INFO]   Executable: ✓
+[2026-06-27T19:53:31.463710Z] [INFO]   Package valid: ✓
+[2026-06-27T19:53:31.463750Z] [INFO]   Source exists: ✓
+[2026-06-27T19:53:33.475201Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:53:33.484444Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:53:33.486105Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T19:53:33.534120Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app
+[2026-06-27T19:53:33.534218Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T19:54:33.543843Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app']' timed out after 60 seconds
+[2026-06-27T19:54:33.545025Z] [INFO] [SUBMIT] SKIP — notarization not complete for FocusBeam
+[2026-06-27T19:54:33.545144Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T19:54:33.545259Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T19:54:33.545355Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T19:54:33.547975Z] [INFO]   DecisionGate receipt written
+[2026-06-27T19:54:33.549129Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:54:33.549461Z] [INFO] CYCLE 10 COMPLETE
+[2026-06-27T19:54:33.549602Z] [INFO]   App: FocusBeam
+[2026-06-27T19:54:33.549692Z] [INFO]   Build: ✓
+[2026-06-27T19:54:33.549778Z] [INFO]   Verify: 5/5
+[2026-06-27T19:54:33.549883Z] [INFO]   Notarized: ✗
+[2026-06-27T19:54:33.550012Z] [INFO]   Submitted: ✗
+[2026-06-27T19:54:33.550124Z] [INFO]   Decision: HOLD
+[2026-06-27T19:54:33.550234Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T19:54:33.550984Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T19:59:33.556983Z] [INFO] 
+======================================================================
+[2026-06-27T19:59:33.557792Z] [INFO] CYCLE 11 — 2026-06-27T19:59:33.557783Z
+[2026-06-27T19:59:33.557923Z] [INFO] ======================================================================
+[2026-06-27T19:59:33.558060Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T19:59:33.558155Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T19:59:33.594382Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T19:59:33.594534Z] [INFO]   Icon: wifi
+[2026-06-27T19:59:33.594628Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T19:59:33.595181Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T19:59:36.718225Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T19:59:36.718345Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T19:59:36.718562Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T19:59:36.718602Z] [INFO]   Binary exists: ✓
+[2026-06-27T19:59:36.718640Z] [INFO]   Executable: ✓
+[2026-06-27T19:59:36.718704Z] [INFO]   Package valid: ✓
+[2026-06-27T19:59:36.718740Z] [INFO]   Source exists: ✓
+[2026-06-27T19:59:38.720188Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T19:59:38.730763Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T19:59:38.733849Z] [INFO] [NOTARY] Notarizing SnapBarrier...
+[2026-06-27T19:59:38.787910Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app
+[2026-06-27T19:59:38.787993Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:00:38.795755Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app']' timed out after 60 seconds
+[2026-06-27T20:00:38.797405Z] [INFO] [SUBMIT] SKIP — notarization not complete for SnapBarrier
+[2026-06-27T20:00:38.797580Z] [INFO] [GOVERN] Running decision gate for SnapBarrier...
+[2026-06-27T20:00:38.797741Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:00:38.797861Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:00:38.802353Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:00:38.802838Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:00:38.802935Z] [INFO] CYCLE 11 COMPLETE
+[2026-06-27T20:00:38.803021Z] [INFO]   App: SnapBarrier
+[2026-06-27T20:00:38.803080Z] [INFO]   Build: ✓
+[2026-06-27T20:00:38.803147Z] [INFO]   Verify: 5/5
+[2026-06-27T20:00:38.803225Z] [INFO]   Notarized: ✗
+[2026-06-27T20:00:38.803311Z] [INFO]   Submitted: ✗
+[2026-06-27T20:00:38.803385Z] [INFO]   Decision: HOLD
+[2026-06-27T20:00:38.803467Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:00:38.804168Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:05:38.813575Z] [INFO] 
+======================================================================
+[2026-06-27T20:05:38.814041Z] [INFO] CYCLE 12 — 2026-06-27T20:05:38.814035Z
+[2026-06-27T20:05:38.814298Z] [INFO] ======================================================================
+[2026-06-27T20:05:38.814445Z] [INFO] [SCOUT] Selected: NetSignal — Network speed monitor in menu bar
+[2026-06-27T20:05:38.814548Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T20:05:38.835948Z] [INFO] [ARCHITECT] Generated 4 files for NetSignal
+[2026-06-27T20:05:38.836151Z] [INFO]   Icon: wifi
+[2026-06-27T20:05:38.836240Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal
+[2026-06-27T20:05:38.838779Z] [INFO] [BUILD] Building NetSignal...
+[2026-06-27T20:05:42.033990Z] [INFO] [BUILD] ✓ PASS — NetSignal compiled successfully
+[2026-06-27T20:05:42.034109Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/release/NetSignal (91,480 bytes)
+[2026-06-27T20:05:42.034471Z] [INFO] [VERIFY] Verifying NetSignal...
+[2026-06-27T20:05:42.034512Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:05:42.034551Z] [INFO]   Executable: ✓
+[2026-06-27T20:05:42.034617Z] [INFO]   Package valid: ✓
+[2026-06-27T20:05:42.034654Z] [INFO]   Source exists: ✓
+[2026-06-27T20:05:44.037418Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:05:44.048342Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:05:44.050628Z] [INFO] [NOTARY] Notarizing NetSignal...
+[2026-06-27T20:05:44.100108Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app
+[2026-06-27T20:05:44.100258Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:06:44.108375Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app']' timed out after 60 seconds
+[2026-06-27T20:06:44.110060Z] [INFO] [SUBMIT] SKIP — notarization not complete for NetSignal
+[2026-06-27T20:06:44.110173Z] [INFO] [GOVERN] Running decision gate for NetSignal...
+[2026-06-27T20:06:44.110266Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:06:44.110350Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:06:44.113937Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:06:44.114452Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:06:44.114577Z] [INFO] CYCLE 12 COMPLETE
+[2026-06-27T20:06:44.114745Z] [INFO]   App: NetSignal
+[2026-06-27T20:06:44.114844Z] [INFO]   Build: ✓
+[2026-06-27T20:06:44.114964Z] [INFO]   Verify: 5/5
+[2026-06-27T20:06:44.115037Z] [INFO]   Notarized: ✗
+[2026-06-27T20:06:44.115112Z] [INFO]   Submitted: ✗
+[2026-06-27T20:06:44.115243Z] [INFO]   Decision: HOLD
+[2026-06-27T20:06:44.115385Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:06:44.116046Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:11:44.118565Z] [INFO] 
+======================================================================
+[2026-06-27T20:11:44.121723Z] [INFO] CYCLE 13 — 2026-06-27T20:11:44.121711Z
+[2026-06-27T20:11:44.121834Z] [INFO] ======================================================================
+[2026-06-27T20:11:44.121962Z] [INFO] [SCOUT] Selected: CleanSweep — Disk space analyzer and cleaner
+[2026-06-27T20:11:44.122043Z] [INFO]   Category: Utility | Price: $4.99 | Min OS: 14.0
+[2026-06-27T20:11:44.148972Z] [INFO] [ARCHITECT] Generated 4 files for CleanSweep
+[2026-06-27T20:11:44.149290Z] [INFO]   Icon: doc.text
+[2026-06-27T20:11:44.149372Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep
+[2026-06-27T20:11:44.149845Z] [INFO] [BUILD] Building CleanSweep...
+[2026-06-27T20:11:47.221391Z] [INFO] [BUILD] ✓ PASS — CleanSweep compiled successfully
+[2026-06-27T20:11:47.221501Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/.build/release/CleanSweep (91,624 bytes)
+[2026-06-27T20:11:47.221722Z] [INFO] [VERIFY] Verifying CleanSweep...
+[2026-06-27T20:11:47.221765Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:11:47.221802Z] [INFO]   Executable: ✓
+[2026-06-27T20:11:47.221884Z] [INFO]   Package valid: ✓
+[2026-06-27T20:11:47.221922Z] [INFO]   Source exists: ✓
+[2026-06-27T20:11:49.233401Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:11:49.244467Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:11:49.246546Z] [INFO] [NOTARY] Notarizing CleanSweep...
+[2026-06-27T20:11:49.298733Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app
+[2026-06-27T20:11:49.298869Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:12:49.309190Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app']' timed out after 60 seconds
+[2026-06-27T20:12:49.310891Z] [INFO] [SUBMIT] SKIP — notarization not complete for CleanSweep
+[2026-06-27T20:12:49.311086Z] [INFO] [GOVERN] Running decision gate for CleanSweep...
+[2026-06-27T20:12:49.311203Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:12:49.311289Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:12:49.314503Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:12:49.315114Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:12:49.315200Z] [INFO] CYCLE 13 COMPLETE
+[2026-06-27T20:12:49.315276Z] [INFO]   App: CleanSweep
+[2026-06-27T20:12:49.315336Z] [INFO]   Build: ✓
+[2026-06-27T20:12:49.315408Z] [INFO]   Verify: 5/5
+[2026-06-27T20:12:49.315463Z] [INFO]   Notarized: ✗
+[2026-06-27T20:12:49.315521Z] [INFO]   Submitted: ✗
+[2026-06-27T20:12:49.315574Z] [INFO]   Decision: HOLD
+[2026-06-27T20:12:49.315636Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:12:49.316038Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:17:49.318506Z] [INFO] 
+======================================================================
+[2026-06-27T20:17:49.321789Z] [INFO] CYCLE 14 — 2026-06-27T20:17:49.321777Z
+[2026-06-27T20:17:49.321882Z] [INFO] ======================================================================
+[2026-06-27T20:17:49.321966Z] [INFO] [SCOUT] Selected: GlyphBoard — Unicode glyph picker with custom collections
+[2026-06-27T20:17:49.322027Z] [INFO]   Category: Utility | Price: $0.99 | Min OS: 14.0
+[2026-06-27T20:17:49.348096Z] [INFO] [ARCHITECT] Generated 4 files for GlyphBoard
+[2026-06-27T20:17:49.348207Z] [INFO]   Icon: rectangle.split.2x1
+[2026-06-27T20:17:49.348271Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard
+[2026-06-27T20:17:49.348696Z] [INFO] [BUILD] Building GlyphBoard...
+[2026-06-27T20:17:52.565935Z] [INFO] [BUILD] ✓ PASS — GlyphBoard compiled successfully
+[2026-06-27T20:17:52.566057Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/release/GlyphBoard (91,624 bytes)
+[2026-06-27T20:17:52.566308Z] [INFO] [VERIFY] Verifying GlyphBoard...
+[2026-06-27T20:17:52.566351Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:17:52.566393Z] [INFO]   Executable: ✓
+[2026-06-27T20:17:52.566461Z] [INFO]   Package valid: ✓
+[2026-06-27T20:17:52.566495Z] [INFO]   Source exists: ✓
+[2026-06-27T20:17:54.578215Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:17:54.590670Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:17:54.593636Z] [INFO] [NOTARY] Notarizing GlyphBoard...
+[2026-06-27T20:17:54.640632Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app
+[2026-06-27T20:17:54.640798Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:18:54.650764Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app']' timed out after 60 seconds
+[2026-06-27T20:18:54.654219Z] [INFO] [SUBMIT] SKIP — notarization not complete for GlyphBoard
+[2026-06-27T20:18:54.654383Z] [INFO] [GOVERN] Running decision gate for GlyphBoard...
+[2026-06-27T20:18:54.654482Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:18:54.654554Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:18:54.657864Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:18:54.658291Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:18:54.658357Z] [INFO] CYCLE 14 COMPLETE
+[2026-06-27T20:18:54.658428Z] [INFO]   App: GlyphBoard
+[2026-06-27T20:18:54.658480Z] [INFO]   Build: ✓
+[2026-06-27T20:18:54.658534Z] [INFO]   Verify: 5/5
+[2026-06-27T20:18:54.658584Z] [INFO]   Notarized: ✗
+[2026-06-27T20:18:54.658638Z] [INFO]   Submitted: ✗
+[2026-06-27T20:18:54.658693Z] [INFO]   Decision: HOLD
+[2026-06-27T20:18:54.658747Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:18:54.659053Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:23:54.664437Z] [INFO] 
+======================================================================
+[2026-06-27T20:23:54.667435Z] [INFO] CYCLE 15 — 2026-06-27T20:23:54.667420Z
+[2026-06-27T20:23:54.667591Z] [INFO] ======================================================================
+[2026-06-27T20:23:54.667722Z] [INFO] [SCOUT] Selected: ScreenPulse — Real-time screen activity monitor
+[2026-06-27T20:23:54.667826Z] [INFO]   Category: Utility | Price: $3.99 | Min OS: 14.0
+[2026-06-27T20:23:54.690366Z] [INFO] [ARCHITECT] Generated 4 files for ScreenPulse
+[2026-06-27T20:23:54.690493Z] [INFO]   Icon: textformat
+[2026-06-27T20:23:54.690647Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse
+[2026-06-27T20:23:54.691202Z] [INFO] [BUILD] Building ScreenPulse...
+[2026-06-27T20:23:57.817225Z] [INFO] [BUILD] ✓ PASS — ScreenPulse compiled successfully
+[2026-06-27T20:23:57.817332Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/.build/release/ScreenPulse (91,720 bytes)
+[2026-06-27T20:23:57.817545Z] [INFO] [VERIFY] Verifying ScreenPulse...
+[2026-06-27T20:23:57.817583Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:23:57.817620Z] [INFO]   Executable: ✓
+[2026-06-27T20:23:57.817684Z] [INFO]   Package valid: ✓
+[2026-06-27T20:23:57.817721Z] [INFO]   Source exists: ✓
+[2026-06-27T20:23:59.829118Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:23:59.840616Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:23:59.842299Z] [INFO] [NOTARY] Notarizing ScreenPulse...
+[2026-06-27T20:23:59.896561Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app
+[2026-06-27T20:23:59.896634Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:24:59.905546Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app']' timed out after 60 seconds
+[2026-06-27T20:24:59.907158Z] [INFO] [SUBMIT] SKIP — notarization not complete for ScreenPulse
+[2026-06-27T20:24:59.907236Z] [INFO] [GOVERN] Running decision gate for ScreenPulse...
+[2026-06-27T20:24:59.907312Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:24:59.907368Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:24:59.909930Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:24:59.910482Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:24:59.910566Z] [INFO] CYCLE 15 COMPLETE
+[2026-06-27T20:24:59.910644Z] [INFO]   App: ScreenPulse
+[2026-06-27T20:24:59.910709Z] [INFO]   Build: ✓
+[2026-06-27T20:24:59.910772Z] [INFO]   Verify: 5/5
+[2026-06-27T20:24:59.910834Z] [INFO]   Notarized: ✗
+[2026-06-27T20:24:59.910894Z] [INFO]   Submitted: ✗
+[2026-06-27T20:24:59.910958Z] [INFO]   Decision: HOLD
+[2026-06-27T20:24:59.911015Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:24:59.911425Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:29:59.915151Z] [INFO] 
+======================================================================
+[2026-06-27T20:29:59.915810Z] [INFO] CYCLE 16 — 2026-06-27T20:29:59.915803Z
+[2026-06-27T20:29:59.916170Z] [INFO] ======================================================================
+[2026-06-27T20:29:59.916285Z] [INFO] [SCOUT] Selected: ClipFlow — Clipboard history manager with search and pin
+[2026-06-27T20:29:59.916359Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T20:29:59.948273Z] [INFO] [ARCHITECT] Generated 4 files for ClipFlow
+[2026-06-27T20:29:59.948368Z] [INFO]   Icon: timer
+[2026-06-27T20:29:59.948423Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow
+[2026-06-27T20:29:59.948771Z] [INFO] [BUILD] Building ClipFlow...
+[2026-06-27T20:30:02.907345Z] [INFO] [BUILD] ✓ PASS — ClipFlow compiled successfully
+[2026-06-27T20:30:02.907459Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/release/ClipFlow (91,400 bytes)
+[2026-06-27T20:30:02.907699Z] [INFO] [VERIFY] Verifying ClipFlow...
+[2026-06-27T20:30:02.907737Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:30:02.907779Z] [INFO]   Executable: ✓
+[2026-06-27T20:30:02.907847Z] [INFO]   Package valid: ✓
+[2026-06-27T20:30:02.907878Z] [INFO]   Source exists: ✓
+[2026-06-27T20:30:04.914444Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:30:04.925256Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:30:04.926917Z] [INFO] [NOTARY] Notarizing ClipFlow...
+[2026-06-27T20:30:04.975141Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app
+[2026-06-27T20:30:04.975231Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:31:04.985539Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app']' timed out after 60 seconds
+[2026-06-27T20:31:04.989021Z] [INFO] [SUBMIT] SKIP — notarization not complete for ClipFlow
+[2026-06-27T20:31:04.989185Z] [INFO] [GOVERN] Running decision gate for ClipFlow...
+[2026-06-27T20:31:04.989282Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:31:04.989349Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:31:04.992740Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:31:04.993307Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:31:04.993385Z] [INFO] CYCLE 16 COMPLETE
+[2026-06-27T20:31:04.993454Z] [INFO]   App: ClipFlow
+[2026-06-27T20:31:04.993512Z] [INFO]   Build: ✓
+[2026-06-27T20:31:04.993567Z] [INFO]   Verify: 5/5
+[2026-06-27T20:31:04.993623Z] [INFO]   Notarized: ✗
+[2026-06-27T20:31:04.993682Z] [INFO]   Submitted: ✗
+[2026-06-27T20:31:04.993734Z] [INFO]   Decision: HOLD
+[2026-06-27T20:31:04.993785Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:31:04.994166Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:36:04.996749Z] [INFO] 
+======================================================================
+[2026-06-27T20:36:04.999810Z] [INFO] CYCLE 17 — 2026-06-27T20:36:04.999795Z
+[2026-06-27T20:36:04.999923Z] [INFO] ======================================================================
+[2026-06-27T20:36:05.000033Z] [INFO] [SCOUT] Selected: ReceiptVault — Tamper-evident receipt ledger for personal transactions
+[2026-06-27T20:36:05.000107Z] [INFO]   Category: Finance | Price: $4.99 | Min OS: 14.0
+[2026-06-27T20:36:05.027535Z] [INFO] [ARCHITECT] Generated 4 files for ReceiptVault
+[2026-06-27T20:36:05.027653Z] [INFO]   Icon: textformat
+[2026-06-27T20:36:05.027720Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault
+[2026-06-27T20:36:05.028072Z] [INFO] [BUILD] Building ReceiptVault...
+[2026-06-27T20:36:08.114557Z] [INFO] [BUILD] ✓ PASS — ReceiptVault compiled successfully
+[2026-06-27T20:36:08.114680Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/release/ReceiptVault (91,808 bytes)
+[2026-06-27T20:36:08.114918Z] [INFO] [VERIFY] Verifying ReceiptVault...
+[2026-06-27T20:36:08.114974Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:36:08.115053Z] [INFO]   Executable: ✓
+[2026-06-27T20:36:08.115146Z] [INFO]   Package valid: ✓
+[2026-06-27T20:36:08.115191Z] [INFO]   Source exists: ✓
+[2026-06-27T20:36:10.126582Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:36:10.137864Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:36:10.139502Z] [INFO] [NOTARY] Notarizing ReceiptVault...
+[2026-06-27T20:36:10.190695Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app
+[2026-06-27T20:36:10.190776Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:37:10.200623Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app']' timed out after 60 seconds
+[2026-06-27T20:37:10.202530Z] [INFO] [SUBMIT] SKIP — notarization not complete for ReceiptVault
+[2026-06-27T20:37:10.202651Z] [INFO] [GOVERN] Running decision gate for ReceiptVault...
+[2026-06-27T20:37:10.202751Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:37:10.202822Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:37:10.205772Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:37:10.206667Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:37:10.206767Z] [INFO] CYCLE 17 COMPLETE
+[2026-06-27T20:37:10.206851Z] [INFO]   App: ReceiptVault
+[2026-06-27T20:37:10.206912Z] [INFO]   Build: ✓
+[2026-06-27T20:37:10.206967Z] [INFO]   Verify: 5/5
+[2026-06-27T20:37:10.207284Z] [INFO]   Notarized: ✗
+[2026-06-27T20:37:10.207461Z] [INFO]   Submitted: ✗
+[2026-06-27T20:37:10.207581Z] [INFO]   Decision: HOLD
+[2026-06-27T20:37:10.207654Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:37:10.208087Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:42:10.215343Z] [INFO] 
+======================================================================
+[2026-06-27T20:42:10.216092Z] [INFO] CYCLE 18 — 2026-06-27T20:42:10.216080Z
+[2026-06-27T20:42:10.216199Z] [INFO] ======================================================================
+[2026-06-27T20:42:10.216302Z] [INFO] [SCOUT] Selected: QuickLaunch — Keyboard-driven app launcher with fuzzy search
+[2026-06-27T20:42:10.216362Z] [INFO]   Category: Productivity | Price: $3.99 | Min OS: 14.0
+[2026-06-27T20:42:10.244867Z] [INFO] [ARCHITECT] Generated 4 files for QuickLaunch
+[2026-06-27T20:42:10.244984Z] [INFO]   Icon: rocket
+[2026-06-27T20:42:10.245039Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch
+[2026-06-27T20:42:10.245375Z] [INFO] [BUILD] Building QuickLaunch...
+[2026-06-27T20:42:13.323743Z] [INFO] [BUILD] ✓ PASS — QuickLaunch compiled successfully
+[2026-06-27T20:42:13.323934Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/release/QuickLaunch (91,720 bytes)
+[2026-06-27T20:42:13.324339Z] [INFO] [VERIFY] Verifying QuickLaunch...
+[2026-06-27T20:42:13.324380Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:42:13.324420Z] [INFO]   Executable: ✓
+[2026-06-27T20:42:13.324487Z] [INFO]   Package valid: ✓
+[2026-06-27T20:42:13.324521Z] [INFO]   Source exists: ✓
+[2026-06-27T20:42:15.330540Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:42:15.341180Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:42:15.342984Z] [INFO] [NOTARY] Notarizing QuickLaunch...
+[2026-06-27T20:42:15.391492Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app
+[2026-06-27T20:42:15.391567Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:43:15.398355Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app']' timed out after 60 seconds
+[2026-06-27T20:43:15.400802Z] [INFO] [SUBMIT] SKIP — notarization not complete for QuickLaunch
+[2026-06-27T20:43:15.401011Z] [INFO] [GOVERN] Running decision gate for QuickLaunch...
+[2026-06-27T20:43:15.401165Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:43:15.401236Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:43:15.404216Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:43:15.404788Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:43:15.404863Z] [INFO] CYCLE 18 COMPLETE
+[2026-06-27T20:43:15.404934Z] [INFO]   App: QuickLaunch
+[2026-06-27T20:43:15.404999Z] [INFO]   Build: ✓
+[2026-06-27T20:43:15.405060Z] [INFO]   Verify: 5/5
+[2026-06-27T20:43:15.405122Z] [INFO]   Notarized: ✗
+[2026-06-27T20:43:15.405181Z] [INFO]   Submitted: ✗
+[2026-06-27T20:43:15.405238Z] [INFO]   Decision: HOLD
+[2026-06-27T20:43:15.405291Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:43:15.405690Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:48:15.411226Z] [INFO] 
+======================================================================
+[2026-06-27T20:48:15.412309Z] [INFO] CYCLE 19 — 2026-06-27T20:48:15.412295Z
+[2026-06-27T20:48:15.412513Z] [INFO] ======================================================================
+[2026-06-27T20:48:15.412694Z] [INFO] [SCOUT] Selected: DimLight — Screen dimmer below minimum brightness
+[2026-06-27T20:48:15.412816Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T20:48:15.442071Z] [INFO] [ARCHITECT] Generated 4 files for DimLight
+[2026-06-27T20:48:15.442161Z] [INFO]   Icon: textformat
+[2026-06-27T20:48:15.442209Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight
+[2026-06-27T20:48:15.442474Z] [INFO] [BUILD] Building DimLight...
+[2026-06-27T20:48:18.509974Z] [INFO] [BUILD] ✓ PASS — DimLight compiled successfully
+[2026-06-27T20:48:18.510089Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/release/DimLight (91,400 bytes)
+[2026-06-27T20:48:18.510396Z] [INFO] [VERIFY] Verifying DimLight...
+[2026-06-27T20:48:18.510440Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:48:18.510477Z] [INFO]   Executable: ✓
+[2026-06-27T20:48:18.510542Z] [INFO]   Package valid: ✓
+[2026-06-27T20:48:18.510573Z] [INFO]   Source exists: ✓
+[2026-06-27T20:48:20.521904Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:48:20.531146Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:48:20.533047Z] [INFO] [NOTARY] Notarizing DimLight...
+[2026-06-27T20:48:20.584276Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app
+[2026-06-27T20:48:20.584360Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:49:20.590710Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app']' timed out after 60 seconds
+[2026-06-27T20:49:20.592011Z] [INFO] [SUBMIT] SKIP — notarization not complete for DimLight
+[2026-06-27T20:49:20.592256Z] [INFO] [GOVERN] Running decision gate for DimLight...
+[2026-06-27T20:49:20.592399Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:49:20.592492Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:49:20.597692Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:49:20.598783Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:49:20.598889Z] [INFO] CYCLE 19 COMPLETE
+[2026-06-27T20:49:20.598975Z] [INFO]   App: DimLight
+[2026-06-27T20:49:20.599041Z] [INFO]   Build: ✓
+[2026-06-27T20:49:20.599106Z] [INFO]   Verify: 5/5
+[2026-06-27T20:49:20.599176Z] [INFO]   Notarized: ✗
+[2026-06-27T20:49:20.599242Z] [INFO]   Submitted: ✗
+[2026-06-27T20:49:20.599305Z] [INFO]   Decision: HOLD
+[2026-06-27T20:49:20.599366Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:49:20.599976Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T20:54:20.606688Z] [INFO] 
+======================================================================
+[2026-06-27T20:54:20.609562Z] [INFO] CYCLE 20 — 2026-06-27T20:54:20.609546Z
+[2026-06-27T20:54:20.609662Z] [INFO] ======================================================================
+[2026-06-27T20:54:20.609777Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T20:54:20.609848Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T20:54:20.644649Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T20:54:20.644784Z] [INFO]   Icon: wifi
+[2026-06-27T20:54:20.644845Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T20:54:20.645215Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T20:54:23.989879Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T20:54:23.990037Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T20:54:23.990309Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T20:54:23.990353Z] [INFO]   Binary exists: ✓
+[2026-06-27T20:54:23.990395Z] [INFO]   Executable: ✓
+[2026-06-27T20:54:23.990486Z] [INFO]   Package valid: ✓
+[2026-06-27T20:54:23.990538Z] [INFO]   Source exists: ✓
+[2026-06-27T20:54:25.992912Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T20:54:26.004064Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T20:54:26.008452Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T20:54:26.055945Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app
+[2026-06-27T20:54:26.056034Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T20:55:26.067739Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app']' timed out after 60 seconds
+[2026-06-27T20:55:26.070990Z] [INFO] [SUBMIT] SKIP — notarization not complete for FocusBeam
+[2026-06-27T20:55:26.071202Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T20:55:26.071330Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T20:55:26.071429Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T20:55:26.073618Z] [INFO]   DecisionGate receipt written
+[2026-06-27T20:55:26.074743Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:55:26.074854Z] [INFO] CYCLE 20 COMPLETE
+[2026-06-27T20:55:26.074930Z] [INFO]   App: FocusBeam
+[2026-06-27T20:55:26.074992Z] [INFO]   Build: ✓
+[2026-06-27T20:55:26.075064Z] [INFO]   Verify: 5/5
+[2026-06-27T20:55:26.075245Z] [INFO]   Notarized: ✗
+[2026-06-27T20:55:26.075335Z] [INFO]   Submitted: ✗
+[2026-06-27T20:55:26.075405Z] [INFO]   Decision: HOLD
+[2026-06-27T20:55:26.075472Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T20:55:26.076501Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:00:26.079552Z] [INFO] 
+======================================================================
+[2026-06-27T21:00:26.083162Z] [INFO] CYCLE 21 — 2026-06-27T21:00:26.083144Z
+[2026-06-27T21:00:26.083415Z] [INFO] ======================================================================
+[2026-06-27T21:00:26.083531Z] [INFO] [SCOUT] Selected: QuickLaunch — Keyboard-driven app launcher with fuzzy search
+[2026-06-27T21:00:26.083606Z] [INFO]   Category: Productivity | Price: $3.99 | Min OS: 14.0
+[2026-06-27T21:00:26.111998Z] [INFO] [ARCHITECT] Generated 4 files for QuickLaunch
+[2026-06-27T21:00:26.112145Z] [INFO]   Icon: internaldrive
+[2026-06-27T21:00:26.112230Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch
+[2026-06-27T21:00:26.112609Z] [INFO] [BUILD] Building QuickLaunch...
+[2026-06-27T21:00:29.203304Z] [INFO] [BUILD] ✓ PASS — QuickLaunch compiled successfully
+[2026-06-27T21:00:29.203416Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/release/QuickLaunch (91,720 bytes)
+[2026-06-27T21:00:29.203648Z] [INFO] [VERIFY] Verifying QuickLaunch...
+[2026-06-27T21:00:29.203685Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:00:29.203720Z] [INFO]   Executable: ✓
+[2026-06-27T21:00:29.203785Z] [INFO]   Package valid: ✓
+[2026-06-27T21:00:29.203816Z] [INFO]   Source exists: ✓
+[2026-06-27T21:00:31.213794Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:00:31.224398Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:00:31.226729Z] [INFO] [NOTARY] Notarizing QuickLaunch...
+[2026-06-27T21:00:31.276980Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app
+[2026-06-27T21:00:31.277068Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:01:31.285835Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app']' timed out after 60 seconds
+[2026-06-27T21:01:31.289659Z] [INFO] [SUBMIT] SKIP — notarization not complete for QuickLaunch
+[2026-06-27T21:01:31.289853Z] [INFO] [GOVERN] Running decision gate for QuickLaunch...
+[2026-06-27T21:01:31.289984Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:01:31.290104Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:01:31.295603Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:01:31.296995Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:01:31.297216Z] [INFO] CYCLE 21 COMPLETE
+[2026-06-27T21:01:31.297317Z] [INFO]   App: QuickLaunch
+[2026-06-27T21:01:31.297395Z] [INFO]   Build: ✓
+[2026-06-27T21:01:31.297487Z] [INFO]   Verify: 5/5
+[2026-06-27T21:01:31.297641Z] [INFO]   Notarized: ✗
+[2026-06-27T21:01:31.297737Z] [INFO]   Submitted: ✗
+[2026-06-27T21:01:31.297816Z] [INFO]   Decision: HOLD
+[2026-06-27T21:01:31.297892Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:01:31.299356Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:06:31.305636Z] [INFO] 
+======================================================================
+[2026-06-27T21:06:31.309233Z] [INFO] CYCLE 22 — 2026-06-27T21:06:31.309220Z
+[2026-06-27T21:06:31.309370Z] [INFO] ======================================================================
+[2026-06-27T21:06:31.309471Z] [INFO] [SCOUT] Selected: ClipFlow — Clipboard history manager with search and pin
+[2026-06-27T21:06:31.309544Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T21:06:31.345081Z] [INFO] [ARCHITECT] Generated 4 files for ClipFlow
+[2026-06-27T21:06:31.345207Z] [INFO]   Icon: wifi
+[2026-06-27T21:06:31.345261Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow
+[2026-06-27T21:06:31.345607Z] [INFO] [BUILD] Building ClipFlow...
+[2026-06-27T21:06:34.562041Z] [INFO] [BUILD] ✓ PASS — ClipFlow compiled successfully
+[2026-06-27T21:06:34.562150Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/release/ClipFlow (91,400 bytes)
+[2026-06-27T21:06:34.562545Z] [INFO] [VERIFY] Verifying ClipFlow...
+[2026-06-27T21:06:34.562583Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:06:34.562620Z] [INFO]   Executable: ✓
+[2026-06-27T21:06:34.562684Z] [INFO]   Package valid: ✓
+[2026-06-27T21:06:34.562716Z] [INFO]   Source exists: ✓
+[2026-06-27T21:06:36.574303Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:06:36.585674Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:06:36.587708Z] [INFO] [NOTARY] Notarizing ClipFlow...
+[2026-06-27T21:06:36.636731Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app
+[2026-06-27T21:06:36.636828Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:07:36.647382Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app']' timed out after 60 seconds
+[2026-06-27T21:07:36.649304Z] [INFO] [SUBMIT] SKIP — notarization not complete for ClipFlow
+[2026-06-27T21:07:36.649467Z] [INFO] [GOVERN] Running decision gate for ClipFlow...
+[2026-06-27T21:07:36.649609Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:07:36.649731Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:07:36.652903Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:07:36.653700Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:07:36.653829Z] [INFO] CYCLE 22 COMPLETE
+[2026-06-27T21:07:36.653942Z] [INFO]   App: ClipFlow
+[2026-06-27T21:07:36.654031Z] [INFO]   Build: ✓
+[2026-06-27T21:07:36.654118Z] [INFO]   Verify: 5/5
+[2026-06-27T21:07:36.654196Z] [INFO]   Notarized: ✗
+[2026-06-27T21:07:36.654275Z] [INFO]   Submitted: ✗
+[2026-06-27T21:07:36.654343Z] [INFO]   Decision: HOLD
+[2026-06-27T21:07:36.654412Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:07:36.655268Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:12:36.660175Z] [INFO] 
+======================================================================
+[2026-06-27T21:12:36.664742Z] [INFO] CYCLE 23 — 2026-06-27T21:12:36.664722Z
+[2026-06-27T21:12:36.665012Z] [INFO] ======================================================================
+[2026-06-27T21:12:36.665256Z] [INFO] [SCOUT] Selected: ScreenPulse — Real-time screen activity monitor
+[2026-06-27T21:12:36.665389Z] [INFO]   Category: Utility | Price: $3.99 | Min OS: 14.0
+[2026-06-27T21:12:36.690403Z] [INFO] [ARCHITECT] Generated 4 files for ScreenPulse
+[2026-06-27T21:12:36.690493Z] [INFO]   Icon: speedometer
+[2026-06-27T21:12:36.690545Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse
+[2026-06-27T21:12:36.690854Z] [INFO] [BUILD] Building ScreenPulse...
+[2026-06-27T21:12:40.318870Z] [INFO] [BUILD] ✓ PASS — ScreenPulse compiled successfully
+[2026-06-27T21:12:40.318990Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/.build/release/ScreenPulse (91,720 bytes)
+[2026-06-27T21:12:40.319252Z] [INFO] [VERIFY] Verifying ScreenPulse...
+[2026-06-27T21:12:40.319299Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:12:40.319347Z] [INFO]   Executable: ✓
+[2026-06-27T21:12:40.319430Z] [INFO]   Package valid: ✓
+[2026-06-27T21:12:40.319473Z] [INFO]   Source exists: ✓
+[2026-06-27T21:12:42.321335Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:12:42.330499Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:12:42.331742Z] [INFO] [NOTARY] Notarizing ScreenPulse...
+[2026-06-27T21:12:42.374550Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app
+[2026-06-27T21:12:42.374614Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:13:42.382841Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app']' timed out after 60 seconds
+[2026-06-27T21:13:42.386010Z] [INFO] [SUBMIT] SKIP — notarization not complete for ScreenPulse
+[2026-06-27T21:13:42.386238Z] [INFO] [GOVERN] Running decision gate for ScreenPulse...
+[2026-06-27T21:13:42.386365Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:13:42.386456Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:13:42.389337Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:13:42.390004Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:13:42.390271Z] [INFO] CYCLE 23 COMPLETE
+[2026-06-27T21:13:42.390435Z] [INFO]   App: ScreenPulse
+[2026-06-27T21:13:42.390523Z] [INFO]   Build: ✓
+[2026-06-27T21:13:42.390601Z] [INFO]   Verify: 5/5
+[2026-06-27T21:13:42.390669Z] [INFO]   Notarized: ✗
+[2026-06-27T21:13:42.390742Z] [INFO]   Submitted: ✗
+[2026-06-27T21:13:42.390800Z] [INFO]   Decision: HOLD
+[2026-06-27T21:13:42.390857Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:13:42.391690Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:18:42.397440Z] [INFO] 
+======================================================================
+[2026-06-27T21:18:42.401731Z] [INFO] CYCLE 24 — 2026-06-27T21:18:42.401712Z
+[2026-06-27T21:18:42.401895Z] [INFO] ======================================================================
+[2026-06-27T21:18:42.402031Z] [INFO] [SCOUT] Selected: CleanSweep — Disk space analyzer and cleaner
+[2026-06-27T21:18:42.402106Z] [INFO]   Category: Utility | Price: $4.99 | Min OS: 14.0
+[2026-06-27T21:18:42.432227Z] [INFO] [ARCHITECT] Generated 4 files for CleanSweep
+[2026-06-27T21:18:42.432319Z] [INFO]   Icon: timer
+[2026-06-27T21:18:42.432379Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep
+[2026-06-27T21:18:42.432668Z] [INFO] [BUILD] Building CleanSweep...
+[2026-06-27T21:18:46.436051Z] [INFO] [BUILD] ✓ PASS — CleanSweep compiled successfully
+[2026-06-27T21:18:46.436157Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/.build/release/CleanSweep (91,624 bytes)
+[2026-06-27T21:18:46.436371Z] [INFO] [VERIFY] Verifying CleanSweep...
+[2026-06-27T21:18:46.436407Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:18:46.436446Z] [INFO]   Executable: ✓
+[2026-06-27T21:18:46.436542Z] [INFO]   Package valid: ✓
+[2026-06-27T21:18:46.436580Z] [INFO]   Source exists: ✓
+[2026-06-27T21:18:48.443152Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:18:48.451738Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:18:48.453651Z] [INFO] [NOTARY] Notarizing CleanSweep...
+[2026-06-27T21:18:48.506129Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app
+[2026-06-27T21:18:48.506223Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:19:48.513548Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app']' timed out after 60 seconds
+[2026-06-27T21:19:48.515044Z] [INFO] [SUBMIT] SKIP — notarization not complete for CleanSweep
+[2026-06-27T21:19:48.515161Z] [INFO] [GOVERN] Running decision gate for CleanSweep...
+[2026-06-27T21:19:48.515375Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:19:48.515540Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:19:48.518302Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:19:48.518830Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:19:48.518907Z] [INFO] CYCLE 24 COMPLETE
+[2026-06-27T21:19:48.518976Z] [INFO]   App: CleanSweep
+[2026-06-27T21:19:48.519057Z] [INFO]   Build: ✓
+[2026-06-27T21:19:48.519142Z] [INFO]   Verify: 5/5
+[2026-06-27T21:19:48.519223Z] [INFO]   Notarized: ✗
+[2026-06-27T21:19:48.519302Z] [INFO]   Submitted: ✗
+[2026-06-27T21:19:48.519380Z] [INFO]   Decision: HOLD
+[2026-06-27T21:19:48.519457Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:19:48.520614Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:24:48.522909Z] [INFO] 
+======================================================================
+[2026-06-27T21:24:48.526369Z] [INFO] CYCLE 25 — 2026-06-27T21:24:48.526357Z
+[2026-06-27T21:24:48.526520Z] [INFO] ======================================================================
+[2026-06-27T21:24:48.526743Z] [INFO] [SCOUT] Selected: GlyphBoard — Unicode glyph picker with custom collections
+[2026-06-27T21:24:48.526823Z] [INFO]   Category: Utility | Price: $0.99 | Min OS: 14.0
+[2026-06-27T21:24:48.554286Z] [INFO] [ARCHITECT] Generated 4 files for GlyphBoard
+[2026-06-27T21:24:48.554392Z] [INFO]   Icon: doc.text
+[2026-06-27T21:24:48.554440Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard
+[2026-06-27T21:24:48.554787Z] [INFO] [BUILD] Building GlyphBoard...
+[2026-06-27T21:24:52.388359Z] [INFO] [BUILD] ✓ PASS — GlyphBoard compiled successfully
+[2026-06-27T21:24:52.388539Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/release/GlyphBoard (91,624 bytes)
+[2026-06-27T21:24:52.388815Z] [INFO] [VERIFY] Verifying GlyphBoard...
+[2026-06-27T21:24:52.388864Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:24:52.388907Z] [INFO]   Executable: ✓
+[2026-06-27T21:24:52.388991Z] [INFO]   Package valid: ✓
+[2026-06-27T21:24:52.389039Z] [INFO]   Source exists: ✓
+[2026-06-27T21:24:54.393249Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:24:54.403150Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:24:54.404883Z] [INFO] [NOTARY] Notarizing GlyphBoard...
+[2026-06-27T21:24:54.448118Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app
+[2026-06-27T21:24:54.448193Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:25:54.455674Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app']' timed out after 60 seconds
+[2026-06-27T21:25:54.459798Z] [INFO] [SUBMIT] SKIP — notarization not complete for GlyphBoard
+[2026-06-27T21:25:54.460005Z] [INFO] [GOVERN] Running decision gate for GlyphBoard...
+[2026-06-27T21:25:54.460151Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:25:54.460245Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:25:54.468375Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:25:54.468919Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:25:54.469000Z] [INFO] CYCLE 25 COMPLETE
+[2026-06-27T21:25:54.469076Z] [INFO]   App: GlyphBoard
+[2026-06-27T21:25:54.469143Z] [INFO]   Build: ✓
+[2026-06-27T21:25:54.469210Z] [INFO]   Verify: 5/5
+[2026-06-27T21:25:54.469277Z] [INFO]   Notarized: ✗
+[2026-06-27T21:25:54.469348Z] [INFO]   Submitted: ✗
+[2026-06-27T21:25:54.469414Z] [INFO]   Decision: HOLD
+[2026-06-27T21:25:54.469487Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:25:54.471028Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:30:54.473826Z] [INFO] 
+======================================================================
+[2026-06-27T21:30:54.476216Z] [INFO] CYCLE 26 — 2026-06-27T21:30:54.476199Z
+[2026-06-27T21:30:54.476371Z] [INFO] ======================================================================
+[2026-06-27T21:30:54.476743Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T21:30:54.476821Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T21:30:54.505882Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T21:30:54.505948Z] [INFO]   Icon: internaldrive
+[2026-06-27T21:30:54.505992Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T21:30:54.506554Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T21:30:58.837462Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T21:30:58.837595Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T21:30:58.837827Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T21:30:58.837865Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:30:58.837901Z] [INFO]   Executable: ✓
+[2026-06-27T21:30:58.837976Z] [INFO]   Package valid: ✓
+[2026-06-27T21:30:58.838010Z] [INFO]   Source exists: ✓
+[2026-06-27T21:31:00.844466Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:31:00.864603Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:31:00.866074Z] [INFO] [NOTARY] Notarizing SnapBarrier...
+[2026-06-27T21:31:00.928651Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app
+[2026-06-27T21:31:00.928757Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:32:00.939608Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app']' timed out after 60 seconds
+[2026-06-27T21:32:00.943218Z] [INFO] [SUBMIT] SKIP — notarization not complete for SnapBarrier
+[2026-06-27T21:32:00.943472Z] [INFO] [GOVERN] Running decision gate for SnapBarrier...
+[2026-06-27T21:32:00.943621Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:32:00.943723Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:32:00.952132Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:32:00.952802Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:32:00.952896Z] [INFO] CYCLE 26 COMPLETE
+[2026-06-27T21:32:00.952996Z] [INFO]   App: SnapBarrier
+[2026-06-27T21:32:00.953067Z] [INFO]   Build: ✓
+[2026-06-27T21:32:00.953146Z] [INFO]   Verify: 5/5
+[2026-06-27T21:32:00.953216Z] [INFO]   Notarized: ✗
+[2026-06-27T21:32:00.953294Z] [INFO]   Submitted: ✗
+[2026-06-27T21:32:00.953363Z] [INFO]   Decision: HOLD
+[2026-06-27T21:32:00.953433Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:32:00.954469Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:37:00.957647Z] [INFO] 
+======================================================================
+[2026-06-27T21:37:00.962390Z] [INFO] CYCLE 27 — 2026-06-27T21:37:00.962376Z
+[2026-06-27T21:37:00.962640Z] [INFO] ======================================================================
+[2026-06-27T21:37:00.962874Z] [INFO] [SCOUT] Selected: DimLight — Screen dimmer below minimum brightness
+[2026-06-27T21:37:00.963007Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T21:37:00.994638Z] [INFO] [ARCHITECT] Generated 4 files for DimLight
+[2026-06-27T21:37:00.994756Z] [INFO]   Icon: textformat
+[2026-06-27T21:37:00.994818Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight
+[2026-06-27T21:37:00.995475Z] [INFO] [BUILD] Building DimLight...
+[2026-06-27T21:37:04.917698Z] [INFO] [BUILD] ✓ PASS — DimLight compiled successfully
+[2026-06-27T21:37:04.917813Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/release/DimLight (91,400 bytes)
+[2026-06-27T21:37:04.918058Z] [INFO] [VERIFY] Verifying DimLight...
+[2026-06-27T21:37:04.918099Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:37:04.918136Z] [INFO]   Executable: ✓
+[2026-06-27T21:37:04.918202Z] [INFO]   Package valid: ✓
+[2026-06-27T21:37:04.918234Z] [INFO]   Source exists: ✓
+[2026-06-27T21:37:06.924524Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:37:06.933662Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:37:06.934689Z] [INFO] [NOTARY] Notarizing DimLight...
+[2026-06-27T21:37:06.970391Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app
+[2026-06-27T21:37:06.970443Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:38:06.978654Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app']' timed out after 60 seconds
+[2026-06-27T21:38:06.980759Z] [INFO] [SUBMIT] SKIP — notarization not complete for DimLight
+[2026-06-27T21:38:06.981018Z] [INFO] [GOVERN] Running decision gate for DimLight...
+[2026-06-27T21:38:06.981194Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:38:06.981322Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:38:06.984980Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:38:06.985764Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:38:06.985874Z] [INFO] CYCLE 27 COMPLETE
+[2026-06-27T21:38:06.985972Z] [INFO]   App: DimLight
+[2026-06-27T21:38:06.986072Z] [INFO]   Build: ✓
+[2026-06-27T21:38:06.986158Z] [INFO]   Verify: 5/5
+[2026-06-27T21:38:06.986240Z] [INFO]   Notarized: ✗
+[2026-06-27T21:38:06.986323Z] [INFO]   Submitted: ✗
+[2026-06-27T21:38:06.986410Z] [INFO]   Decision: HOLD
+[2026-06-27T21:38:06.986496Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:38:06.987219Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:43:06.992011Z] [INFO] 
+======================================================================
+[2026-06-27T21:43:06.996688Z] [INFO] CYCLE 28 — 2026-06-27T21:43:06.996673Z
+[2026-06-27T21:43:06.996853Z] [INFO] ======================================================================
+[2026-06-27T21:43:06.997034Z] [INFO] [SCOUT] Selected: ReceiptVault — Tamper-evident receipt ledger for personal transactions
+[2026-06-27T21:43:06.997147Z] [INFO]   Category: Finance | Price: $4.99 | Min OS: 14.0
+[2026-06-27T21:43:07.030448Z] [INFO] [ARCHITECT] Generated 4 files for ReceiptVault
+[2026-06-27T21:43:07.030558Z] [INFO]   Icon: sun.min
+[2026-06-27T21:43:07.030633Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault
+[2026-06-27T21:43:07.031025Z] [INFO] [BUILD] Building ReceiptVault...
+[2026-06-27T21:43:10.266030Z] [INFO] [BUILD] ✓ PASS — ReceiptVault compiled successfully
+[2026-06-27T21:43:10.266131Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/release/ReceiptVault (91,808 bytes)
+[2026-06-27T21:43:10.266418Z] [INFO] [VERIFY] Verifying ReceiptVault...
+[2026-06-27T21:43:10.266467Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:43:10.266517Z] [INFO]   Executable: ✓
+[2026-06-27T21:43:10.266585Z] [INFO]   Package valid: ✓
+[2026-06-27T21:43:10.266626Z] [INFO]   Source exists: ✓
+[2026-06-27T21:43:12.277982Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:43:12.288784Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:43:12.290349Z] [INFO] [NOTARY] Notarizing ReceiptVault...
+[2026-06-27T21:43:12.334640Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app
+[2026-06-27T21:43:12.334748Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:44:12.343099Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app']' timed out after 60 seconds
+[2026-06-27T21:44:12.345495Z] [INFO] [SUBMIT] SKIP — notarization not complete for ReceiptVault
+[2026-06-27T21:44:12.345653Z] [INFO] [GOVERN] Running decision gate for ReceiptVault...
+[2026-06-27T21:44:12.345752Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:44:12.345838Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:44:12.350370Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:44:12.351211Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:44:12.351341Z] [INFO] CYCLE 28 COMPLETE
+[2026-06-27T21:44:12.351442Z] [INFO]   App: ReceiptVault
+[2026-06-27T21:44:12.351508Z] [INFO]   Build: ✓
+[2026-06-27T21:44:12.351586Z] [INFO]   Verify: 5/5
+[2026-06-27T21:44:12.351650Z] [INFO]   Notarized: ✗
+[2026-06-27T21:44:12.351714Z] [INFO]   Submitted: ✗
+[2026-06-27T21:44:12.351772Z] [INFO]   Decision: HOLD
+[2026-06-27T21:44:12.351835Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:44:12.352985Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:49:12.358455Z] [INFO] 
+======================================================================
+[2026-06-27T21:49:12.363061Z] [INFO] CYCLE 29 — 2026-06-27T21:49:12.363043Z
+[2026-06-27T21:49:12.363162Z] [INFO] ======================================================================
+[2026-06-27T21:49:12.363270Z] [INFO] [SCOUT] Selected: NetSignal — Network speed monitor in menu bar
+[2026-06-27T21:49:12.363339Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T21:49:12.404240Z] [INFO] [ARCHITECT] Generated 4 files for NetSignal
+[2026-06-27T21:49:12.404362Z] [INFO]   Icon: rocket
+[2026-06-27T21:49:12.404429Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal
+[2026-06-27T21:49:12.404848Z] [INFO] [BUILD] Building NetSignal...
+[2026-06-27T21:49:16.304583Z] [INFO] [BUILD] ✓ PASS — NetSignal compiled successfully
+[2026-06-27T21:49:16.304709Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/release/NetSignal (91,480 bytes)
+[2026-06-27T21:49:16.304951Z] [INFO] [VERIFY] Verifying NetSignal...
+[2026-06-27T21:49:16.304994Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:49:16.305038Z] [INFO]   Executable: ✓
+[2026-06-27T21:49:16.305111Z] [INFO]   Package valid: ✓
+[2026-06-27T21:49:16.305154Z] [INFO]   Source exists: ✓
+[2026-06-27T21:49:18.316345Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:49:18.326054Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:49:18.326918Z] [INFO] [NOTARY] Notarizing NetSignal...
+[2026-06-27T21:49:18.368489Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app
+[2026-06-27T21:49:18.368540Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:50:18.375001Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app']' timed out after 60 seconds
+[2026-06-27T21:50:18.376898Z] [INFO] [SUBMIT] SKIP — notarization not complete for NetSignal
+[2026-06-27T21:50:18.377020Z] [INFO] [GOVERN] Running decision gate for NetSignal...
+[2026-06-27T21:50:18.377135Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:50:18.377219Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:50:18.380537Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:50:18.381295Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:50:18.381415Z] [INFO] CYCLE 29 COMPLETE
+[2026-06-27T21:50:18.381544Z] [INFO]   App: NetSignal
+[2026-06-27T21:50:18.381647Z] [INFO]   Build: ✓
+[2026-06-27T21:50:18.381761Z] [INFO]   Verify: 5/5
+[2026-06-27T21:50:18.381876Z] [INFO]   Notarized: ✗
+[2026-06-27T21:50:18.382009Z] [INFO]   Submitted: ✗
+[2026-06-27T21:50:18.382115Z] [INFO]   Decision: HOLD
+[2026-06-27T21:50:18.382208Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:50:18.383350Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T21:55:18.393008Z] [INFO] 
+======================================================================
+[2026-06-27T21:55:18.395511Z] [INFO] CYCLE 30 — 2026-06-27T21:55:18.395493Z
+[2026-06-27T21:55:18.395761Z] [INFO] ======================================================================
+[2026-06-27T21:55:18.396007Z] [INFO] [SCOUT] Selected: ReceiptVault — Tamper-evident receipt ledger for personal transactions
+[2026-06-27T21:55:18.396146Z] [INFO]   Category: Finance | Price: $4.99 | Min OS: 14.0
+[2026-06-27T21:55:18.432945Z] [INFO] [ARCHITECT] Generated 4 files for ReceiptVault
+[2026-06-27T21:55:18.433084Z] [INFO]   Icon: timer
+[2026-06-27T21:55:18.433165Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault
+[2026-06-27T21:55:18.433572Z] [INFO] [BUILD] Building ReceiptVault...
+[2026-06-27T21:55:21.756488Z] [INFO] [BUILD] ✓ PASS — ReceiptVault compiled successfully
+[2026-06-27T21:55:21.756603Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/release/ReceiptVault (91,808 bytes)
+[2026-06-27T21:55:21.756855Z] [INFO] [VERIFY] Verifying ReceiptVault...
+[2026-06-27T21:55:21.756898Z] [INFO]   Binary exists: ✓
+[2026-06-27T21:55:21.756945Z] [INFO]   Executable: ✓
+[2026-06-27T21:55:21.757022Z] [INFO]   Package valid: ✓
+[2026-06-27T21:55:21.757069Z] [INFO]   Source exists: ✓
+[2026-06-27T21:55:23.768566Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T21:55:23.779695Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T21:55:23.781323Z] [INFO] [NOTARY] Notarizing ReceiptVault...
+[2026-06-27T21:55:23.837964Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app
+[2026-06-27T21:55:23.838067Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T21:56:23.846081Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/ReceiptVault.app']' timed out after 60 seconds
+[2026-06-27T21:56:23.848564Z] [INFO] [SUBMIT] SKIP — notarization not complete for ReceiptVault
+[2026-06-27T21:56:23.848750Z] [INFO] [GOVERN] Running decision gate for ReceiptVault...
+[2026-06-27T21:56:23.848946Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T21:56:23.849208Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T21:56:23.853502Z] [INFO]   DecisionGate receipt written
+[2026-06-27T21:56:23.854844Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:56:23.855052Z] [INFO] CYCLE 30 COMPLETE
+[2026-06-27T21:56:23.855188Z] [INFO]   App: ReceiptVault
+[2026-06-27T21:56:23.855285Z] [INFO]   Build: ✓
+[2026-06-27T21:56:23.855384Z] [INFO]   Verify: 5/5
+[2026-06-27T21:56:23.855480Z] [INFO]   Notarized: ✗
+[2026-06-27T21:56:23.855573Z] [INFO]   Submitted: ✗
+[2026-06-27T21:56:23.855656Z] [INFO]   Decision: HOLD
+[2026-06-27T21:56:23.855747Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T21:56:23.857212Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:01:23.861864Z] [INFO] 
+======================================================================
+[2026-06-27T22:01:23.868799Z] [INFO] CYCLE 31 — 2026-06-27T22:01:23.868774Z
+[2026-06-27T22:01:23.869105Z] [INFO] ======================================================================
+[2026-06-27T22:01:23.869327Z] [INFO] [SCOUT] Selected: GlyphBoard — Unicode glyph picker with custom collections
+[2026-06-27T22:01:23.869610Z] [INFO]   Category: Utility | Price: $0.99 | Min OS: 14.0
+[2026-06-27T22:01:23.899772Z] [INFO] [ARCHITECT] Generated 4 files for GlyphBoard
+[2026-06-27T22:01:23.899892Z] [INFO]   Icon: wifi
+[2026-06-27T22:01:23.899969Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard
+[2026-06-27T22:01:23.900558Z] [INFO] [BUILD] Building GlyphBoard...
+[2026-06-27T22:01:27.729626Z] [INFO] [BUILD] ✓ PASS — GlyphBoard compiled successfully
+[2026-06-27T22:01:27.729777Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/.build/release/GlyphBoard (91,624 bytes)
+[2026-06-27T22:01:27.730019Z] [INFO] [VERIFY] Verifying GlyphBoard...
+[2026-06-27T22:01:27.730062Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:01:27.730100Z] [INFO]   Executable: ✓
+[2026-06-27T22:01:27.730178Z] [INFO]   Package valid: ✓
+[2026-06-27T22:01:27.730215Z] [INFO]   Source exists: ✓
+[2026-06-27T22:01:29.741657Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:01:29.759688Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:01:29.761119Z] [INFO] [NOTARY] Notarizing GlyphBoard...
+[2026-06-27T22:01:29.816738Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app
+[2026-06-27T22:01:29.816844Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:02:29.828166Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/GlyphBoard.app']' timed out after 60 seconds
+[2026-06-27T22:02:29.830851Z] [INFO] [SUBMIT] SKIP — notarization not complete for GlyphBoard
+[2026-06-27T22:02:29.831104Z] [INFO] [GOVERN] Running decision gate for GlyphBoard...
+[2026-06-27T22:02:29.831286Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:02:29.831424Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:02:29.835272Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:02:29.837188Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:02:29.837360Z] [INFO] CYCLE 31 COMPLETE
+[2026-06-27T22:02:29.837485Z] [INFO]   App: GlyphBoard
+[2026-06-27T22:02:29.837577Z] [INFO]   Build: ✓
+[2026-06-27T22:02:29.837673Z] [INFO]   Verify: 5/5
+[2026-06-27T22:02:29.837773Z] [INFO]   Notarized: ✗
+[2026-06-27T22:02:29.837869Z] [INFO]   Submitted: ✗
+[2026-06-27T22:02:29.837954Z] [INFO]   Decision: HOLD
+[2026-06-27T22:02:29.838042Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:02:29.839176Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:07:29.847790Z] [INFO] 
+======================================================================
+[2026-06-27T22:07:29.853157Z] [INFO] CYCLE 32 — 2026-06-27T22:07:29.853137Z
+[2026-06-27T22:07:29.853348Z] [INFO] ======================================================================
+[2026-06-27T22:07:29.853517Z] [INFO] [SCOUT] Selected: CleanSweep — Disk space analyzer and cleaner
+[2026-06-27T22:07:29.853613Z] [INFO]   Category: Utility | Price: $4.99 | Min OS: 14.0
+[2026-06-27T22:07:29.885637Z] [INFO] [ARCHITECT] Generated 4 files for CleanSweep
+[2026-06-27T22:07:29.885805Z] [INFO]   Icon: rocket
+[2026-06-27T22:07:29.885889Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep
+[2026-06-27T22:07:29.886523Z] [INFO] [BUILD] Building CleanSweep...
+[2026-06-27T22:07:33.290613Z] [INFO] [BUILD] ✓ PASS — CleanSweep compiled successfully
+[2026-06-27T22:07:33.290719Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/.build/release/CleanSweep (91,624 bytes)
+[2026-06-27T22:07:33.291343Z] [INFO] [VERIFY] Verifying CleanSweep...
+[2026-06-27T22:07:33.291400Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:07:33.291444Z] [INFO]   Executable: ✓
+[2026-06-27T22:07:33.291529Z] [INFO]   Package valid: ✓
+[2026-06-27T22:07:33.291571Z] [INFO]   Source exists: ✓
+[2026-06-27T22:07:35.302892Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:07:35.312441Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:07:35.313339Z] [INFO] [NOTARY] Notarizing CleanSweep...
+[2026-06-27T22:07:35.350779Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app
+[2026-06-27T22:07:35.350830Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:08:35.357091Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app']' timed out after 60 seconds
+[2026-06-27T22:08:35.359715Z] [INFO] [SUBMIT] SKIP — notarization not complete for CleanSweep
+[2026-06-27T22:08:35.359910Z] [INFO] [GOVERN] Running decision gate for CleanSweep...
+[2026-06-27T22:08:35.360023Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:08:35.360104Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:08:35.362693Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:08:35.363792Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:08:35.363881Z] [INFO] CYCLE 32 COMPLETE
+[2026-06-27T22:08:35.363965Z] [INFO]   App: CleanSweep
+[2026-06-27T22:08:35.364030Z] [INFO]   Build: ✓
+[2026-06-27T22:08:35.364091Z] [INFO]   Verify: 5/5
+[2026-06-27T22:08:35.364149Z] [INFO]   Notarized: ✗
+[2026-06-27T22:08:35.364207Z] [INFO]   Submitted: ✗
+[2026-06-27T22:08:35.364262Z] [INFO]   Decision: HOLD
+[2026-06-27T22:08:35.364314Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:08:35.365021Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:13:35.371512Z] [INFO] 
+======================================================================
+[2026-06-27T22:13:35.374443Z] [INFO] CYCLE 33 — 2026-06-27T22:13:35.374416Z
+[2026-06-27T22:13:35.374759Z] [INFO] ======================================================================
+[2026-06-27T22:13:35.375127Z] [INFO] [SCOUT] Selected: ScreenPulse — Real-time screen activity monitor
+[2026-06-27T22:13:35.375288Z] [INFO]   Category: Utility | Price: $3.99 | Min OS: 14.0
+[2026-06-27T22:13:35.403533Z] [INFO] [ARCHITECT] Generated 4 files for ScreenPulse
+[2026-06-27T22:13:35.403605Z] [INFO]   Icon: textformat
+[2026-06-27T22:13:35.403646Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse
+[2026-06-27T22:13:35.404003Z] [INFO] [BUILD] Building ScreenPulse...
+[2026-06-27T22:13:39.910468Z] [INFO] [BUILD] ✓ PASS — ScreenPulse compiled successfully
+[2026-06-27T22:13:39.910578Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/.build/release/ScreenPulse (91,720 bytes)
+[2026-06-27T22:13:39.910842Z] [INFO] [VERIFY] Verifying ScreenPulse...
+[2026-06-27T22:13:39.910891Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:13:39.910930Z] [INFO]   Executable: ✓
+[2026-06-27T22:13:39.910994Z] [INFO]   Package valid: ✓
+[2026-06-27T22:13:39.911028Z] [INFO]   Source exists: ✓
+[2026-06-27T22:13:41.917459Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:13:41.937529Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:13:41.939204Z] [INFO] [NOTARY] Notarizing ScreenPulse...
+[2026-06-27T22:13:41.991976Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app
+[2026-06-27T22:13:41.992066Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:14:42.000677Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ScreenPulse/ScreenPulse.app']' timed out after 60 seconds
+[2026-06-27T22:14:42.004525Z] [INFO] [SUBMIT] SKIP — notarization not complete for ScreenPulse
+[2026-06-27T22:14:42.004749Z] [INFO] [GOVERN] Running decision gate for ScreenPulse...
+[2026-06-27T22:14:42.004862Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:14:42.004922Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:14:42.009194Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:14:42.009895Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:14:42.009992Z] [INFO] CYCLE 33 COMPLETE
+[2026-06-27T22:14:42.010084Z] [INFO]   App: ScreenPulse
+[2026-06-27T22:14:42.010157Z] [INFO]   Build: ✓
+[2026-06-27T22:14:42.010231Z] [INFO]   Verify: 5/5
+[2026-06-27T22:14:42.010306Z] [INFO]   Notarized: ✗
+[2026-06-27T22:14:42.010397Z] [INFO]   Submitted: ✗
+[2026-06-27T22:14:42.010467Z] [INFO]   Decision: HOLD
+[2026-06-27T22:14:42.010542Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:14:42.011493Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:19:42.016119Z] [INFO] 
+======================================================================
+[2026-06-27T22:19:42.022999Z] [INFO] CYCLE 34 — 2026-06-27T22:19:42.022974Z
+[2026-06-27T22:19:42.023215Z] [INFO] ======================================================================
+[2026-06-27T22:19:42.023595Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T22:19:42.023732Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T22:19:42.053624Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T22:19:42.053716Z] [INFO]   Icon: rocket
+[2026-06-27T22:19:42.053758Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T22:19:42.054138Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T22:19:45.926864Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T22:19:45.926977Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T22:19:45.927191Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T22:19:45.927229Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:19:45.927267Z] [INFO]   Executable: ✓
+[2026-06-27T22:19:45.927332Z] [INFO]   Package valid: ✓
+[2026-06-27T22:19:45.927365Z] [INFO]   Source exists: ✓
+[2026-06-27T22:19:47.933656Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:19:47.943260Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:19:47.945257Z] [INFO] [NOTARY] Notarizing SnapBarrier...
+[2026-06-27T22:19:47.984019Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app
+[2026-06-27T22:19:47.984079Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:20:47.989203Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app']' timed out after 60 seconds
+[2026-06-27T22:20:47.990831Z] [INFO] [SUBMIT] SKIP — notarization not complete for SnapBarrier
+[2026-06-27T22:20:47.990912Z] [INFO] [GOVERN] Running decision gate for SnapBarrier...
+[2026-06-27T22:20:47.990973Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:20:47.991015Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:20:47.992707Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:20:47.993027Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:20:47.993080Z] [INFO] CYCLE 34 COMPLETE
+[2026-06-27T22:20:47.993127Z] [INFO]   App: SnapBarrier
+[2026-06-27T22:20:47.993165Z] [INFO]   Build: ✓
+[2026-06-27T22:20:47.993199Z] [INFO]   Verify: 5/5
+[2026-06-27T22:20:47.993237Z] [INFO]   Notarized: ✗
+[2026-06-27T22:20:47.993280Z] [INFO]   Submitted: ✗
+[2026-06-27T22:20:47.993312Z] [INFO]   Decision: HOLD
+[2026-06-27T22:20:47.993350Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:20:47.993605Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:25:47.999707Z] [INFO] 
+======================================================================
+[2026-06-27T22:25:48.001354Z] [INFO] CYCLE 35 — 2026-06-27T22:25:48.001343Z
+[2026-06-27T22:25:48.001469Z] [INFO] ======================================================================
+[2026-06-27T22:25:48.001648Z] [INFO] [SCOUT] Selected: ClipFlow — Clipboard history manager with search and pin
+[2026-06-27T22:25:48.001712Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T22:25:48.030356Z] [INFO] [ARCHITECT] Generated 4 files for ClipFlow
+[2026-06-27T22:25:48.030521Z] [INFO]   Icon: rocket
+[2026-06-27T22:25:48.030665Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow
+[2026-06-27T22:25:48.031155Z] [INFO] [BUILD] Building ClipFlow...
+[2026-06-27T22:25:52.503615Z] [INFO] [BUILD] ✓ PASS — ClipFlow compiled successfully
+[2026-06-27T22:25:52.503745Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/.build/release/ClipFlow (91,400 bytes)
+[2026-06-27T22:25:52.504189Z] [INFO] [VERIFY] Verifying ClipFlow...
+[2026-06-27T22:25:52.504253Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:25:52.504301Z] [INFO]   Executable: ✓
+[2026-06-27T22:25:52.504383Z] [INFO]   Package valid: ✓
+[2026-06-27T22:25:52.504418Z] [INFO]   Source exists: ✓
+[2026-06-27T22:25:54.509637Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:25:54.519231Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:25:54.521932Z] [INFO] [NOTARY] Notarizing ClipFlow...
+[2026-06-27T22:25:54.559305Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app
+[2026-06-27T22:25:54.559368Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:26:54.566771Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ClipFlow/ClipFlow.app']' timed out after 60 seconds
+[2026-06-27T22:26:54.569347Z] [INFO] [SUBMIT] SKIP — notarization not complete for ClipFlow
+[2026-06-27T22:26:54.569663Z] [INFO] [GOVERN] Running decision gate for ClipFlow...
+[2026-06-27T22:26:54.569838Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:26:54.569958Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:26:54.575048Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:26:54.575681Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:26:54.575768Z] [INFO] CYCLE 35 COMPLETE
+[2026-06-27T22:26:54.575851Z] [INFO]   App: ClipFlow
+[2026-06-27T22:26:54.575921Z] [INFO]   Build: ✓
+[2026-06-27T22:26:54.575987Z] [INFO]   Verify: 5/5
+[2026-06-27T22:26:54.576055Z] [INFO]   Notarized: ✗
+[2026-06-27T22:26:54.576127Z] [INFO]   Submitted: ✗
+[2026-06-27T22:26:54.576201Z] [INFO]   Decision: HOLD
+[2026-06-27T22:26:54.576266Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:26:54.577150Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:31:54.581727Z] [INFO] 
+======================================================================
+[2026-06-27T22:31:54.586705Z] [INFO] CYCLE 36 — 2026-06-27T22:31:54.586682Z
+[2026-06-27T22:31:54.586997Z] [INFO] ======================================================================
+[2026-06-27T22:31:54.587203Z] [INFO] [SCOUT] Selected: DimLight — Screen dimmer below minimum brightness
+[2026-06-27T22:31:54.587276Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T22:31:54.615621Z] [INFO] [ARCHITECT] Generated 4 files for DimLight
+[2026-06-27T22:31:54.615713Z] [INFO]   Icon: doc.text
+[2026-06-27T22:31:54.615771Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight
+[2026-06-27T22:31:54.616071Z] [INFO] [BUILD] Building DimLight...
+[2026-06-27T22:31:58.798246Z] [INFO] [BUILD] ✓ PASS — DimLight compiled successfully
+[2026-06-27T22:31:58.798381Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/release/DimLight (91,400 bytes)
+[2026-06-27T22:31:58.798785Z] [INFO] [VERIFY] Verifying DimLight...
+[2026-06-27T22:31:58.798835Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:31:58.798882Z] [INFO]   Executable: ✓
+[2026-06-27T22:31:58.798960Z] [INFO]   Package valid: ✓
+[2026-06-27T22:31:58.798999Z] [INFO]   Source exists: ✓
+[2026-06-27T22:32:00.802862Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:32:00.813980Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:32:00.815491Z] [INFO] [NOTARY] Notarizing DimLight...
+[2026-06-27T22:32:00.858291Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app
+[2026-06-27T22:32:00.858351Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:33:00.863156Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app']' timed out after 60 seconds
+[2026-06-27T22:33:00.865057Z] [INFO] [SUBMIT] SKIP — notarization not complete for DimLight
+[2026-06-27T22:33:00.865186Z] [INFO] [GOVERN] Running decision gate for DimLight...
+[2026-06-27T22:33:00.865297Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:33:00.865383Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:33:00.868284Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:33:00.868844Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:33:00.868937Z] [INFO] CYCLE 36 COMPLETE
+[2026-06-27T22:33:00.869024Z] [INFO]   App: DimLight
+[2026-06-27T22:33:00.869104Z] [INFO]   Build: ✓
+[2026-06-27T22:33:00.869202Z] [INFO]   Verify: 5/5
+[2026-06-27T22:33:00.869300Z] [INFO]   Notarized: ✗
+[2026-06-27T22:33:00.869399Z] [INFO]   Submitted: ✗
+[2026-06-27T22:33:00.869511Z] [INFO]   Decision: HOLD
+[2026-06-27T22:33:00.869605Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:33:00.870220Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:38:00.878488Z] [INFO] 
+======================================================================
+[2026-06-27T22:38:00.879757Z] [INFO] CYCLE 37 — 2026-06-27T22:38:00.879741Z
+[2026-06-27T22:38:00.879984Z] [INFO] ======================================================================
+[2026-06-27T22:38:00.880153Z] [INFO] [SCOUT] Selected: NetSignal — Network speed monitor in menu bar
+[2026-06-27T22:38:00.880266Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T22:38:00.908671Z] [INFO] [ARCHITECT] Generated 4 files for NetSignal
+[2026-06-27T22:38:00.908746Z] [INFO]   Icon: clipboard
+[2026-06-27T22:38:00.908785Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal
+[2026-06-27T22:38:00.909002Z] [INFO] [BUILD] Building NetSignal...
+[2026-06-27T22:38:04.350320Z] [INFO] [BUILD] ✓ PASS — NetSignal compiled successfully
+[2026-06-27T22:38:04.350423Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/.build/release/NetSignal (91,480 bytes)
+[2026-06-27T22:38:04.350642Z] [INFO] [VERIFY] Verifying NetSignal...
+[2026-06-27T22:38:04.350682Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:38:04.350719Z] [INFO]   Executable: ✓
+[2026-06-27T22:38:04.350785Z] [INFO]   Package valid: ✓
+[2026-06-27T22:38:04.350818Z] [INFO]   Source exists: ✓
+[2026-06-27T22:38:06.353532Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:38:06.362990Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:38:06.364293Z] [INFO] [NOTARY] Notarizing NetSignal...
+[2026-06-27T22:38:06.405285Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app
+[2026-06-27T22:38:06.405363Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:39:06.414003Z] [INFO] [NOTARY] ✗ Codesign error: Command '['codesign', '--deep', '--force', '--verify', '--verbose', '--sign', 'Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)', '--options', 'runtime', '/Users/alep/Downloads/windsurf-smoke/autopilot_apps/NetSignal/NetSignal.app']' timed out after 60 seconds
+[2026-06-27T22:39:06.415735Z] [INFO] [SUBMIT] SKIP — notarization not complete for NetSignal
+[2026-06-27T22:39:06.415889Z] [INFO] [GOVERN] Running decision gate for NetSignal...
+[2026-06-27T22:39:06.416021Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:39:06.416130Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:39:06.419654Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:39:06.420458Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:39:06.420589Z] [INFO] CYCLE 37 COMPLETE
+[2026-06-27T22:39:06.420705Z] [INFO]   App: NetSignal
+[2026-06-27T22:39:06.420806Z] [INFO]   Build: ✓
+[2026-06-27T22:39:06.420919Z] [INFO]   Verify: 5/5
+[2026-06-27T22:39:06.421042Z] [INFO]   Notarized: ✗
+[2026-06-27T22:39:06.421143Z] [INFO]   Submitted: ✗
+[2026-06-27T22:39:06.421229Z] [INFO]   Decision: HOLD
+[2026-06-27T22:39:06.421326Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:39:06.421874Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:44:06.434197Z] [INFO] 
+======================================================================
+[2026-06-27T22:44:06.437111Z] [INFO] CYCLE 38 — 2026-06-27T22:44:06.437080Z
+[2026-06-27T22:44:06.437301Z] [INFO] ======================================================================
+[2026-06-27T22:44:06.437802Z] [INFO] [SCOUT] Selected: QuickLaunch — Keyboard-driven app launcher with fuzzy search
+[2026-06-27T22:44:06.437894Z] [INFO]   Category: Productivity | Price: $3.99 | Min OS: 14.0
+[2026-06-27T22:44:06.482199Z] [INFO] [ARCHITECT] Generated 4 files for QuickLaunch
+[2026-06-27T22:44:06.482294Z] [INFO]   Icon: wifi
+[2026-06-27T22:44:06.482363Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch
+[2026-06-27T22:44:06.483380Z] [INFO] [BUILD] Building QuickLaunch...
+[2026-06-27T22:44:15.295168Z] [INFO] [BUILD] ✓ PASS — QuickLaunch compiled successfully
+[2026-06-27T22:44:15.295688Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/release/QuickLaunch (91,720 bytes)
+[2026-06-27T22:44:15.296954Z] [INFO] [VERIFY] Verifying QuickLaunch...
+[2026-06-27T22:44:15.297061Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:44:15.297198Z] [INFO]   Executable: ✓
+[2026-06-27T22:44:15.297457Z] [INFO]   Package valid: ✓
+[2026-06-27T22:44:15.297630Z] [INFO]   Source exists: ✓
+[2026-06-27T22:44:17.426729Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:44:17.436020Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:44:17.437161Z] [INFO] [NOTARY] Notarizing QuickLaunch...
+[2026-06-27T22:44:17.487974Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app
+[2026-06-27T22:44:17.488194Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:44:20.377276Z] [INFO] [NOTARY] ✗ Codesign failed: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app: replacing existing signature
+
+[2026-06-27T22:44:20.378715Z] [INFO] [SUBMIT] SKIP — notarization not complete for QuickLaunch
+[2026-06-27T22:44:20.378816Z] [INFO] [GOVERN] Running decision gate for QuickLaunch...
+[2026-06-27T22:44:20.378913Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:44:20.378954Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:44:20.397426Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:44:20.398057Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:44:20.398351Z] [INFO] CYCLE 38 COMPLETE
+[2026-06-27T22:44:20.398472Z] [INFO]   App: QuickLaunch
+[2026-06-27T22:44:20.398544Z] [INFO]   Build: ✓
+[2026-06-27T22:44:20.398667Z] [INFO]   Verify: 5/5
+[2026-06-27T22:44:20.398758Z] [INFO]   Notarized: ✗
+[2026-06-27T22:44:20.398857Z] [INFO]   Submitted: ✗
+[2026-06-27T22:44:20.398941Z] [INFO]   Decision: HOLD
+[2026-06-27T22:44:20.398983Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:44:20.411835Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:49:20.426485Z] [INFO] 
+======================================================================
+[2026-06-27T22:49:20.453403Z] [INFO] CYCLE 39 — 2026-06-27T22:49:20.453004Z
+[2026-06-27T22:49:20.453961Z] [INFO] ======================================================================
+[2026-06-27T22:49:20.456452Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T22:49:20.458267Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T22:49:20.651189Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T22:49:20.651428Z] [INFO]   Icon: rocket
+[2026-06-27T22:49:20.651572Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T22:49:20.652881Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T22:49:39.081990Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T22:49:39.084626Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T22:49:39.089953Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T22:49:39.090470Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:49:39.090792Z] [INFO]   Executable: ✓
+[2026-06-27T22:49:39.091582Z] [INFO]   Package valid: ✓
+[2026-06-27T22:49:39.091923Z] [INFO]   Source exists: ✓
+[2026-06-27T22:49:41.103328Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:49:41.113873Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:49:41.119182Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T22:49:41.903092Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app
+[2026-06-27T22:49:41.903350Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:49:50.713940Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T22:49:50.714962Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T22:49:52.142181Z] [INFO] [NOTARY] Submitted — ID: ab379d0f-4060-4ad9-9f8e-792ab63426c9
+[2026-06-27T22:49:52.147473Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T22:50:22.759355Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T22:49:51.454Z
+  id: ab379d0f-4060-4ad9-9f8e-792ab63426c9
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T22:50:53.215710Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T22:49:51.454Z
+  id: ab379d0f-4060-4ad9-9f8e-792ab63426c9
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T22:51:23.754938Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T22:49:51.454Z
+  id: ab379d0f-4060-4ad9-9f8e-792ab63426c9
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T22:51:23.756050Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T22:51:23.762614Z] [INFO] [SUBMIT] SKIP — notarization not complete for FocusBeam
+[2026-06-27T22:51:23.762791Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T22:51:23.763096Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:51:23.763332Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:51:23.783386Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:51:23.784155Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:51:23.784241Z] [INFO] CYCLE 39 COMPLETE
+[2026-06-27T22:51:23.784310Z] [INFO]   App: FocusBeam
+[2026-06-27T22:51:23.784367Z] [INFO]   Build: ✓
+[2026-06-27T22:51:23.784424Z] [INFO]   Verify: 5/5
+[2026-06-27T22:51:23.784483Z] [INFO]   Notarized: ✗
+[2026-06-27T22:51:23.784537Z] [INFO]   Submitted: ✗
+[2026-06-27T22:51:23.784582Z] [INFO]   Decision: HOLD
+[2026-06-27T22:51:23.784625Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:51:23.788043Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T22:56:23.790920Z] [INFO] 
+======================================================================
+[2026-06-27T22:56:23.792946Z] [INFO] CYCLE 40 — 2026-06-27T22:56:23.792924Z
+[2026-06-27T22:56:23.793089Z] [INFO] ======================================================================
+[2026-06-27T22:56:23.793708Z] [INFO] [SCOUT] Selected: CleanSweep — Disk space analyzer and cleaner
+[2026-06-27T22:56:23.793808Z] [INFO]   Category: Utility | Price: $4.99 | Min OS: 14.0
+[2026-06-27T22:56:23.828183Z] [INFO] [ARCHITECT] Generated 4 files for CleanSweep
+[2026-06-27T22:56:23.828249Z] [INFO]   Icon: timer
+[2026-06-27T22:56:23.828299Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep
+[2026-06-27T22:56:23.828610Z] [INFO] [BUILD] Building CleanSweep...
+[2026-06-27T22:56:30.915360Z] [INFO] [BUILD] ✓ PASS — CleanSweep compiled successfully
+[2026-06-27T22:56:30.915752Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/.build/release/CleanSweep (91,624 bytes)
+[2026-06-27T22:56:30.916577Z] [INFO] [VERIFY] Verifying CleanSweep...
+[2026-06-27T22:56:30.916619Z] [INFO]   Binary exists: ✓
+[2026-06-27T22:56:30.916657Z] [INFO]   Executable: ✓
+[2026-06-27T22:56:30.916727Z] [INFO]   Package valid: ✓
+[2026-06-27T22:56:30.916765Z] [INFO]   Source exists: ✓
+[2026-06-27T22:56:32.917923Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T22:56:32.927640Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T22:56:32.954869Z] [INFO] [NOTARY] Notarizing CleanSweep...
+[2026-06-27T22:56:33.025120Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/CleanSweep/CleanSweep.app
+[2026-06-27T22:56:33.025322Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T22:56:33.236524Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T22:56:33.236810Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T22:56:34.080961Z] [INFO] [NOTARY] Submitted — ID: 3f592c93-7b63-4d62-b588-c71d6d914292
+[2026-06-27T22:56:34.081390Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T22:57:04.497700Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T22:56:33.578Z
+  id: 3f592c93-7b63-4d62-b588-c71d6d914292
+  name: CleanSweep.zip
+  status: In Progress
+[2026-06-27T22:57:34.797537Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T22:56:33.578Z
+  id: 3f592c93-7b63-4d62-b588-c71d6d914292
+  name: CleanSweep.zip
+  status: In Progress
+[2026-06-27T22:58:05.192377Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T22:56:33.578Z
+  id: 3f592c93-7b63-4d62-b588-c71d6d914292
+  name: CleanSweep.zip
+  status: In Progress
+[2026-06-27T22:58:05.193571Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T22:58:05.195463Z] [INFO] [SUBMIT] SKIP — notarization not complete for CleanSweep
+[2026-06-27T22:58:05.195617Z] [INFO] [GOVERN] Running decision gate for CleanSweep...
+[2026-06-27T22:58:05.195805Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T22:58:05.196081Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T22:58:05.204732Z] [INFO]   DecisionGate receipt written
+[2026-06-27T22:58:05.205186Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:58:05.205248Z] [INFO] CYCLE 40 COMPLETE
+[2026-06-27T22:58:05.205332Z] [INFO]   App: CleanSweep
+[2026-06-27T22:58:05.205394Z] [INFO]   Build: ✓
+[2026-06-27T22:58:05.205440Z] [INFO]   Verify: 5/5
+[2026-06-27T22:58:05.205476Z] [INFO]   Notarized: ✗
+[2026-06-27T22:58:05.205537Z] [INFO]   Submitted: ✗
+[2026-06-27T22:58:05.205584Z] [INFO]   Decision: HOLD
+[2026-06-27T22:58:05.205620Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T22:58:05.206943Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T23:03:05.214453Z] [INFO] 
+======================================================================
+[2026-06-27T23:03:05.219461Z] [INFO] CYCLE 41 — 2026-06-27T23:03:05.218588Z
+[2026-06-27T23:03:05.220216Z] [INFO] ======================================================================
+[2026-06-27T23:03:05.221657Z] [INFO] [SCOUT] Selected: QuickLaunch — Keyboard-driven app launcher with fuzzy search
+[2026-06-27T23:03:05.221868Z] [INFO]   Category: Productivity | Price: $3.99 | Min OS: 14.0
+[2026-06-27T23:03:05.265267Z] [INFO] [ARCHITECT] Generated 4 files for QuickLaunch
+[2026-06-27T23:03:05.265356Z] [INFO]   Icon: rectangle.split.2x1
+[2026-06-27T23:03:05.265416Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch
+[2026-06-27T23:03:05.266559Z] [INFO] [BUILD] Building QuickLaunch...
+[2026-06-27T23:03:14.399384Z] [INFO] [BUILD] ✓ PASS — QuickLaunch compiled successfully
+[2026-06-27T23:03:14.400335Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/.build/release/QuickLaunch (91,720 bytes)
+[2026-06-27T23:03:14.401478Z] [INFO] [VERIFY] Verifying QuickLaunch...
+[2026-06-27T23:03:14.401556Z] [INFO]   Binary exists: ✓
+[2026-06-27T23:03:14.401623Z] [INFO]   Executable: ✓
+[2026-06-27T23:03:14.401749Z] [INFO]   Package valid: ✓
+[2026-06-27T23:03:14.401830Z] [INFO]   Source exists: ✓
+[2026-06-27T23:03:16.409533Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T23:03:16.418789Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T23:03:16.419947Z] [INFO] [NOTARY] Notarizing QuickLaunch...
+[2026-06-27T23:03:16.466481Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/QuickLaunch/QuickLaunch.app
+[2026-06-27T23:03:16.466584Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T23:03:16.819710Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T23:03:16.820070Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T23:03:17.855964Z] [INFO] [NOTARY] Submitted — ID: 65cc36e9-6ade-46ad-ac05-e53e29ba98ce
+[2026-06-27T23:03:17.856218Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T23:03:48.241793Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T23:03:17.318Z
+  id: 65cc36e9-6ade-46ad-ac05-e53e29ba98ce
+  name: QuickLaunch.zip
+  status: In Progress
+[2026-06-27T23:04:18.546401Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T23:03:17.318Z
+  id: 65cc36e9-6ade-46ad-ac05-e53e29ba98ce
+  name: QuickLaunch.zip
+  status: In Progress
+[2026-06-27T23:04:48.885079Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T23:03:17.318Z
+  id: 65cc36e9-6ade-46ad-ac05-e53e29ba98ce
+  name: QuickLaunch.zip
+  status: In Progress
+[2026-06-27T23:04:48.885738Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T23:04:48.887634Z] [INFO] [SUBMIT] SKIP — notarization not complete for QuickLaunch
+[2026-06-27T23:04:48.887747Z] [INFO] [GOVERN] Running decision gate for QuickLaunch...
+[2026-06-27T23:04:48.887825Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T23:04:48.887867Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T23:04:48.899333Z] [INFO]   DecisionGate receipt written
+[2026-06-27T23:04:48.899906Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:04:48.899964Z] [INFO] CYCLE 41 COMPLETE
+[2026-06-27T23:04:48.900017Z] [INFO]   App: QuickLaunch
+[2026-06-27T23:04:48.900055Z] [INFO]   Build: ✓
+[2026-06-27T23:04:48.900090Z] [INFO]   Verify: 5/5
+[2026-06-27T23:04:48.900126Z] [INFO]   Notarized: ✗
+[2026-06-27T23:04:48.900166Z] [INFO]   Submitted: ✗
+[2026-06-27T23:04:48.900195Z] [INFO]   Decision: HOLD
+[2026-06-27T23:04:48.900222Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:04:48.902281Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T23:09:48.907051Z] [INFO] 
+======================================================================
+[2026-06-27T23:09:48.910043Z] [INFO] CYCLE 42 — 2026-06-27T23:09:48.910019Z
+[2026-06-27T23:09:48.910268Z] [INFO] ======================================================================
+[2026-06-27T23:09:48.910567Z] [INFO] [SCOUT] Selected: SnapBarrier — Window snap manager with center barrier
+[2026-06-27T23:09:48.910730Z] [INFO]   Category: Utility | Price: $2.99 | Min OS: 14.0
+[2026-06-27T23:09:48.965232Z] [INFO] [ARCHITECT] Generated 4 files for SnapBarrier
+[2026-06-27T23:09:48.965374Z] [INFO]   Icon: wifi
+[2026-06-27T23:09:48.965457Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier
+[2026-06-27T23:09:48.966022Z] [INFO] [BUILD] Building SnapBarrier...
+[2026-06-27T23:09:54.609659Z] [INFO] [BUILD] ✓ PASS — SnapBarrier compiled successfully
+[2026-06-27T23:09:54.609958Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/release/SnapBarrier (91,720 bytes)
+[2026-06-27T23:09:54.610355Z] [INFO] [VERIFY] Verifying SnapBarrier...
+[2026-06-27T23:09:54.610473Z] [INFO]   Binary exists: ✓
+[2026-06-27T23:09:54.610551Z] [INFO]   Executable: ✓
+[2026-06-27T23:09:54.610689Z] [INFO]   Package valid: ✓
+[2026-06-27T23:09:54.610756Z] [INFO]   Source exists: ✓
+[2026-06-27T23:09:56.622793Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T23:09:56.626969Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T23:09:56.628079Z] [INFO] [NOTARY] Notarizing SnapBarrier...
+[2026-06-27T23:09:56.780722Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/SnapBarrier.app
+[2026-06-27T23:09:56.780870Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T23:09:57.090385Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T23:09:57.090598Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T23:09:58.116111Z] [INFO] [NOTARY] Submitted — ID: 79eb3f28-17cd-4245-93e9-18b62d2d8759
+[2026-06-27T23:09:58.116330Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T23:10:28.471482Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T23:09:57.496Z
+  id: 79eb3f28-17cd-4245-93e9-18b62d2d8759
+  name: SnapBarrier.zip
+  status: In Progress
+[2026-06-27T23:10:58.766506Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T23:09:57.496Z
+  id: 79eb3f28-17cd-4245-93e9-18b62d2d8759
+  name: SnapBarrier.zip
+  status: In Progress
+[2026-06-27T23:11:29.128588Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T23:09:57.496Z
+  id: 79eb3f28-17cd-4245-93e9-18b62d2d8759
+  name: SnapBarrier.zip
+  status: In Progress
+[2026-06-27T23:11:29.128840Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T23:11:29.129940Z] [INFO] [SUBMIT] SKIP — notarization not complete for SnapBarrier
+[2026-06-27T23:11:29.130039Z] [INFO] [GOVERN] Running decision gate for SnapBarrier...
+[2026-06-27T23:11:29.130110Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T23:11:29.130149Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T23:11:29.132052Z] [INFO]   DecisionGate receipt written
+[2026-06-27T23:11:29.132916Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:11:29.132968Z] [INFO] CYCLE 42 COMPLETE
+[2026-06-27T23:11:29.133013Z] [INFO]   App: SnapBarrier
+[2026-06-27T23:11:29.133046Z] [INFO]   Build: ✓
+[2026-06-27T23:11:29.133078Z] [INFO]   Verify: 5/5
+[2026-06-27T23:11:29.133111Z] [INFO]   Notarized: ✗
+[2026-06-27T23:11:29.133144Z] [INFO]   Submitted: ✗
+[2026-06-27T23:11:29.133173Z] [INFO]   Decision: HOLD
+[2026-06-27T23:11:29.133201Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:11:29.133892Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T23:16:29.136025Z] [INFO] 
+======================================================================
+[2026-06-27T23:16:29.137932Z] [INFO] CYCLE 43 — 2026-06-27T23:16:29.137913Z
+[2026-06-27T23:16:29.138185Z] [INFO] ======================================================================
+[2026-06-27T23:16:29.138503Z] [INFO] [SCOUT] Selected: FocusBeam — Focus timer with ambient sound and visual feedback
+[2026-06-27T23:16:29.138643Z] [INFO]   Category: Productivity | Price: $1.99 | Min OS: 14.0
+[2026-06-27T23:16:29.179171Z] [INFO] [ARCHITECT] Generated 4 files for FocusBeam
+[2026-06-27T23:16:29.179271Z] [INFO]   Icon: clipboard
+[2026-06-27T23:16:29.179326Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam
+[2026-06-27T23:16:29.179674Z] [INFO] [BUILD] Building FocusBeam...
+[2026-06-27T23:16:34.734523Z] [INFO] [BUILD] ✓ PASS — FocusBeam compiled successfully
+[2026-06-27T23:16:34.734917Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/release/FocusBeam (91,480 bytes)
+[2026-06-27T23:16:34.735343Z] [INFO] [VERIFY] Verifying FocusBeam...
+[2026-06-27T23:16:34.735395Z] [INFO]   Binary exists: ✓
+[2026-06-27T23:16:34.735440Z] [INFO]   Executable: ✓
+[2026-06-27T23:16:34.735532Z] [INFO]   Package valid: ✓
+[2026-06-27T23:16:34.735574Z] [INFO]   Source exists: ✓
+[2026-06-27T23:16:36.747162Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T23:16:36.757430Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T23:16:36.759100Z] [INFO] [NOTARY] Notarizing FocusBeam...
+[2026-06-27T23:16:36.806341Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/FocusBeam.app
+[2026-06-27T23:16:36.806411Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T23:16:36.938058Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T23:16:36.938286Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T23:16:37.871599Z] [INFO] [NOTARY] Submitted — ID: 82fdcd9c-b427-4f56-a2e1-baa9cb81dbd6
+[2026-06-27T23:16:37.871888Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T23:17:08.204044Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T23:16:37.375Z
+  id: 82fdcd9c-b427-4f56-a2e1-baa9cb81dbd6
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T23:17:38.536090Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T23:16:37.375Z
+  id: 82fdcd9c-b427-4f56-a2e1-baa9cb81dbd6
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T23:18:08.926103Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T23:16:37.375Z
+  id: 82fdcd9c-b427-4f56-a2e1-baa9cb81dbd6
+  name: FocusBeam.zip
+  status: In Progress
+[2026-06-27T23:18:08.926330Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T23:18:08.928303Z] [INFO] [SUBMIT] SKIP — notarization not complete for FocusBeam
+[2026-06-27T23:18:08.928370Z] [INFO] [GOVERN] Running decision gate for FocusBeam...
+[2026-06-27T23:18:08.928419Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T23:18:08.928457Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T23:18:08.930597Z] [INFO]   DecisionGate receipt written
+[2026-06-27T23:18:08.931258Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:18:08.931310Z] [INFO] CYCLE 43 COMPLETE
+[2026-06-27T23:18:08.931356Z] [INFO]   App: FocusBeam
+[2026-06-27T23:18:08.931391Z] [INFO]   Build: ✓
+[2026-06-27T23:18:08.931426Z] [INFO]   Verify: 5/5
+[2026-06-27T23:18:08.931459Z] [INFO]   Notarized: ✗
+[2026-06-27T23:18:08.931491Z] [INFO]   Submitted: ✗
+[2026-06-27T23:18:08.931521Z] [INFO]   Decision: HOLD
+[2026-06-27T23:18:08.931692Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:18:08.932100Z] [INFO] 
+Next cycle in 300s...
+[2026-06-27T23:23:08.940570Z] [INFO] 
+======================================================================
+[2026-06-27T23:23:08.942208Z] [INFO] CYCLE 44 — 2026-06-27T23:23:08.942182Z
+[2026-06-27T23:23:08.942411Z] [INFO] ======================================================================
+[2026-06-27T23:23:08.943130Z] [INFO] [SCOUT] Selected: DimLight — Screen dimmer below minimum brightness
+[2026-06-27T23:23:08.943375Z] [INFO]   Category: Utility | Price: $1.99 | Min OS: 14.0
+[2026-06-27T23:23:08.974428Z] [INFO] [ARCHITECT] Generated 4 files for DimLight
+[2026-06-27T23:23:08.974521Z] [INFO]   Icon: speedometer
+[2026-06-27T23:23:08.974578Z] [INFO]   Package: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight
+[2026-06-27T23:23:08.975296Z] [INFO] [BUILD] Building DimLight...
+[2026-06-27T23:23:17.910998Z] [INFO] [BUILD] ✓ PASS — DimLight compiled successfully
+[2026-06-27T23:23:17.911302Z] [INFO]   Binary: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/.build/release/DimLight (91,400 bytes)
+[2026-06-27T23:23:17.911861Z] [INFO] [VERIFY] Verifying DimLight...
+[2026-06-27T23:23:17.911997Z] [INFO]   Binary exists: ✓
+[2026-06-27T23:23:17.912152Z] [INFO]   Executable: ✓
+[2026-06-27T23:23:17.912412Z] [INFO]   Package valid: ✓
+[2026-06-27T23:23:17.912561Z] [INFO]   Source exists: ✓
+[2026-06-27T23:23:19.916570Z] [INFO]   Launch (2s alive): ✓
+[2026-06-27T23:23:19.927738Z] [INFO] [VERIFY] 5/5 checks passed
+[2026-06-27T23:23:19.929953Z] [INFO] [NOTARY] Notarizing DimLight...
+[2026-06-27T23:23:20.090354Z] [INFO] [NOTARY] Created .app bundle: /Users/alep/Downloads/windsurf-smoke/autopilot_apps/DimLight/DimLight.app
+[2026-06-27T23:23:20.090528Z] [INFO] [NOTARY] Code-signing with Developer ID Application: Joseph SKrobynets (ZKKA58M5W9)...
+[2026-06-27T23:23:20.491244Z] [INFO] [NOTARY] ✓ Codesigned
+[2026-06-27T23:23:20.491531Z] [INFO] [NOTARY] Submitting to Apple Notary Service...
+[2026-06-27T23:23:21.515930Z] [INFO] [NOTARY] Submitted — ID: 13fc1bfb-0326-4893-9f00-4593f02992f2
+[2026-06-27T23:23:21.516333Z] [INFO] [NOTARY] Polling for status (up to 3 attempts, 30s apart)...
+[2026-06-27T23:23:51.909191Z] [INFO] [NOTARY] Poll 1: Successfully received submission info
+  createdDate: 2026-06-27T23:23:20.970Z
+  id: 13fc1bfb-0326-4893-9f00-4593f02992f2
+  name: DimLight.zip
+  status: In Progress
+[2026-06-27T23:24:22.266964Z] [INFO] [NOTARY] Poll 2: Successfully received submission info
+  createdDate: 2026-06-27T23:23:20.970Z
+  id: 13fc1bfb-0326-4893-9f00-4593f02992f2
+  name: DimLight.zip
+  status: In Progress
+[2026-06-27T23:24:52.591289Z] [INFO] [NOTARY] Poll 3: Successfully received submission info
+  createdDate: 2026-06-27T23:23:20.970Z
+  id: 13fc1bfb-0326-4893-9f00-4593f02992f2
+  name: DimLight.zip
+  status: In Progress
+[2026-06-27T23:24:52.591767Z] [INFO] [NOTARY] ⏳ Still in progress — saved submission ID, moving on
+[2026-06-27T23:24:52.592802Z] [INFO] [SUBMIT] SKIP — notarization not complete for DimLight
+[2026-06-27T23:24:52.592880Z] [INFO] [GOVERN] Running decision gate for DimLight...
+[2026-06-27T23:24:52.592938Z] [INFO]   Immortality: 1.00 | Virality: 0.50 | Conversion: 0.30 | Trust: 1.00
+[2026-06-27T23:24:52.592984Z] [INFO]   Decision: HOLD — Verified but not notarized — waiting on certificate
+[2026-06-27T23:24:52.595365Z] [INFO]   DecisionGate receipt written
+[2026-06-27T23:24:52.596041Z] [INFO] 
+──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:24:52.596091Z] [INFO] CYCLE 44 COMPLETE
+[2026-06-27T23:24:52.596141Z] [INFO]   App: DimLight
+[2026-06-27T23:24:52.596181Z] [INFO]   Build: ✓
+[2026-06-27T23:24:52.596220Z] [INFO]   Verify: 5/5
+[2026-06-27T23:24:52.596258Z] [INFO]   Notarized: ✗
+[2026-06-27T23:24:52.596301Z] [INFO]   Submitted: ✗
+[2026-06-27T23:24:52.596339Z] [INFO]   Decision: HOLD
+[2026-06-27T23:24:52.596378Z] [INFO] ──────────────────────────────────────────────────────────────────────
+[2026-06-27T23:24:52.596737Z] [INFO] 
+Next cycle in 300s...

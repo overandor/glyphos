@@ -1,0 +1,45 @@
+{
+  "schema": "ai.app.manifest.v1",
+  "glyph": "⟡◆⌁",
+  "app_name": "AIApp",
+  "bundle_id": "com.glyphforge.aiapp",
+  "version": "2.0.0",
+  "executable": {
+    "name": "AIApp",
+    "type": "script",
+    "arch": "shell",
+    "native": false
+  },
+  "capabilities": {
+    "network": true,
+    "camera": false,
+    "microphone": false,
+    "file_access": false,
+    "automation": false,
+    "sandbox": true
+  },
+  "entitlements": [
+    "com.apple.security.network.client",
+    "com.apple.security.network.server"
+  ],
+  "resources": {
+    "Assets": 1,
+    "Helpers": 1,
+    "Documentation": 1,
+    "Configuration": 1
+  },
+  "content_types": {
+    "script": 2,
+    "text": 1,
+    "json": 1,
+    "image": 1
+  },
+  "dependency_graph": {
+    "nodes": 5,
+    "edges": 3,
+    "has_dependencies": true
+  },
+  "bundle_path": "build/AIApp.app",
+  "launchable": true,
+  "signed": true
+}

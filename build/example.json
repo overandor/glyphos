@@ -1,0 +1,151 @@
+{
+  "type": "glyph_compiled",
+  "source_file": "example.glyph",
+  "compiled_at": 1782566308.813077,
+  "glyph_count": 12,
+  "operator_count": 3,
+  "noun_count": 9,
+  "operator_ratio": 0.25,
+  "node_count": 4,
+  "max_depth": 0,
+  "branch_count": 0,
+  "loop_count": 0,
+  "fn_count": 0,
+  "match_count": 0,
+  "state_count": 0,
+  "try_count": 0,
+  "token_count": 485,
+  "nodes": [
+    {
+      "op": "DERIVE",
+      "operands": [
+        "H",
+        "◇"
+      ],
+      "line": 2,
+      "children": []
+    },
+    {
+      "op": "DOT",
+      "operands": [
+        "H",
+        "H"
+      ],
+      "line": 3,
+      "children": []
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [
+        "R",
+        "R"
+      ],
+      "line": 4,
+      "children": []
+    },
+    {
+      "op": "CHAIN",
+      "operands": [
+        "◎",
+        "⊙̂",
+        "H"
+      ],
+      "line": 4,
+      "children": []
+    }
+  ],
+  "embeddings": {
+    "▷": {
+      "spinor": [
+        -1.0,
+        -4.651838719590128e-26
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_START",
+      "is_operator": true
+    },
+    "H": {
+      "spinor": [
+        -1.0,
+        -2.2010314836854655e-34
+      ],
+      "bloch_theta": 0.0,
+      "name": "HASH",
+      "is_operator": false
+    },
+    "◇": {
+      "spinor": [
+        2.6998718390413642e-05,
+        -0.9999999996355345
+      ],
+      "bloch_theta": 3.141538656153006,
+      "name": "DIAMOND_OPEN",
+      "is_operator": false
+    },
+    "→": {
+      "spinor": [
+        8.851785898045702e-59,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DERIVE",
+      "is_operator": true
+    },
+    "⊙": {
+      "spinor": [
+        -3.837843061135739e-53,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DOT",
+      "is_operator": true
+    },
+    "R": {
+      "spinor": [
+        -2.9176066329748107e-08,
+        -0.9999999999999996
+      ],
+      "bloch_theta": 3.1415925952376607,
+      "name": "RECEIPT",
+      "is_operator": false
+    },
+    "≡": {
+      "spinor": [
+        1.5868278538160468e-48,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "IDENTICAL",
+      "is_operator": true
+    },
+    "◎": {
+      "spinor": [
+        -1.0,
+        -1.3661105214792438e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFIED",
+      "is_operator": false
+    },
+    "⊙̂": {
+      "spinor": [
+        1.2246062966347575e-07,
+        -0.9999999999999925
+      ],
+      "bloch_theta": 3.141592408668534,
+      "name": "EMIT",
+      "is_operator": false
+    },
+    "◀": {
+      "spinor": [
+        -1.0,
+        -1.6799965129496125e-50
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_END",
+      "is_operator": true
+    }
+  },
+  "compile_time_ms": 0.62,
+  "sha256": "152ae8b52beaac1b3295e7a6c89b9e4480ad2c6b79290482cd0c91dead0ccc8e"
+}

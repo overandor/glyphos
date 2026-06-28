@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/SnapBarrier.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/SnapBarrier.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/Sources/SnapBarrier/SnapBarrierApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/SnapBarrierApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/SnapBarrierApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/SnapBarrierApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/SnapBarrier/.build/arm64-apple-macosx/release/SnapBarrier.build/SnapBarrierApp.dia"
+  }
+}

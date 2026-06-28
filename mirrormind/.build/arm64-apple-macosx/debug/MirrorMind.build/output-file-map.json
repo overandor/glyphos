@@ -1,0 +1,82 @@
+{
+  "": {
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/AirPlayChecker.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AirPlayChecker.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AirPlayChecker.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AirPlayChecker~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AirPlayChecker.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AirPlayChecker.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/AppState.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AppState.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AppState.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AppState~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AppState.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/AppState.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/LocalLLM.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/LocalLLM.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/LocalLLM.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/LocalLLM~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/LocalLLM.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/LocalLLM.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/MirrorMindApp.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindApp.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindApp.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/MirrorMindView.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindView.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindView.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindView~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindView.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/MirrorMindView.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/PrivacyScanner.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/PrivacyScanner.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/PrivacyScanner.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/PrivacyScanner~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/PrivacyScanner.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/PrivacyScanner.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/ReceiptLogger.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/ReceiptLogger.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/ReceiptLogger.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/ReceiptLogger~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/ReceiptLogger.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/ReceiptLogger.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/RemoteServer.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/RemoteServer.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/RemoteServer.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/RemoteServer~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/RemoteServer.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/RemoteServer.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/SessionExporter.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/SessionExporter.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/SessionExporter.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/SessionExporter~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/SessionExporter.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/SessionExporter.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/WallController.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallController.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallController.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallController~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallController.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallController.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/mirrormind/Sources/MirrorMind/WallWindowView.swift": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallWindowView.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallWindowView.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallWindowView~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallWindowView.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/mirrormind/.build/arm64-apple-macosx/debug/MirrorMind.build/WallWindowView.dia"
+  }
+}

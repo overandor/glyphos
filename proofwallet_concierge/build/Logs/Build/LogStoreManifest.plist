@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>12</integer>
+	<key>logs</key>
+	<dict>
+		<key>19F8D575-91D9-4A5F-824C-84A61D0F29B6</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>19F8D575-91D9-4A5F-824C-84A61D0F29B6.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>S</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>0</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ProofWalletConcierge project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ProofWalletConcierge</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project ProofWalletConcierge with scheme ProofWalletConcierge and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>804280999.85252702</real>
+			<key>timeStoppedRecording</key>
+			<real>804281003.52307999</real>
+			<key>title</key>
+			<string>Building project ProofWalletConcierge with scheme ProofWalletConcierge and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>19F8D575-91D9-4A5F-824C-84A61D0F29B6</string>
+		</dict>
+		<key>8289EF63-1562-47F8-AB02-8E48426281B5</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>8289EF63-1562-47F8-AB02-8E48426281B5.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>2</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>ProofWalletConcierge project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>ProofWalletConcierge</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project ProofWalletConcierge with scheme ProofWalletConcierge and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>804280977.36262298</real>
+			<key>timeStoppedRecording</key>
+			<real>804280987.17457998</real>
+			<key>title</key>
+			<string>Building project ProofWalletConcierge with scheme ProofWalletConcierge and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>8289EF63-1562-47F8-AB02-8E48426281B5</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

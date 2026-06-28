@@ -5,8 +5,12 @@ Crawls for test coverage, build configuration, and CI/CD setup.
 
 import asyncio
 import json
+import os
+import sys
 from typing import Dict, List, Optional
 from pathlib import Path
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from layer_crawler_etl.layer1_crawlers.base_crawler import BaseCrawler, CrawlResult
 from layer_crawler_etl.layer0_source_registry.source_registry import Source

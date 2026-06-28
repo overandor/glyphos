@@ -1,1395 +1,684 @@
 """
-GlyphLang — Glyphgramming Language Compiler
-=============================================
-A programming language where glyphs ARE the syntax.
+GlyphLang — Symbolic compression / representation layer.
 
-  ⧉◇@L → H@L Æ R Æ λ⁻¹ = ◎ → $
+.glyph = operator-dense policy programs (glyph-native syntax, no English keywords)
 
-Programs are written in glyph sequences. The compiler:
-  1. Lexes glyphs into tokens
-  2. Parses into AST
-  3. Type-checks glyph bindings
-  4. Transpiles to Python
-  5. Executes and produces receipts
-
-Example .glyph program:
-  program SortSolver
-    ◇@L → H@L
-    H@L Æ R
-    R Æ λ⁻¹
-    λ⁻¹ = ◎
-    ◎ → $
-  end
-
-Compile: python3 glyphlang.py compile sort.glyph
-Run:     python3 glyphlang.py run sort.glyph
-REPL:    python3 glyphlang.py repl
+Lexer, parser, and compiler for the glyph token system.
 """
 
-import sys
 import json
 import time
 import hashlib
+import struct
+import math
+import re
 import os
-from dataclasses import dataclass, field, asdict
-from typing import Optional
-from pathlib import Path
+import sys
+import sqlite3
+import zlib
+import base64
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import Optional, Any, Callable, Iterator, Generator
 
-# --- Glyph Token Types ---
-TOKEN_TYPES = {
+
+# =============================================================================
+# GLYPH TOKEN TABLE — 40% operators, no English keywords
+# =============================================================================
+
+GLYPH_TOKENS = {
+    # Nouns (60%)
     "□": "FILE", "◇": "ARTIFACT", "⧉": "STATIONARY",
     "H": "HASH", "L": "LOCATION", "R": "RECEIPT",
-    "λ": "FRICTION", "λ⁻¹": "TRANSFERABILITY",
-    "T": "TIME", "Σ": "SHARD", "M": "MERKLE", "ZK": "ZK_PROOF",
-    "Æ": "BIND", "→": "DERIVE", "=": "ASSERT",
-    "Δ": "DELTA", "◎": "VERIFIED", "✕": "INVALID",
-    "$": "VALUE", "Ω": "CANONICAL", "⟲": "LOOP",
-    "@": "ANCHOR", ";": "SEPARATOR",
+    "λ": "FRICTION", "T": "TIME", "Σ": "SHARD",
+    "M": "MERKLE", "ZK": "ZK_PROOF", "Δ": "DELTA",
+    "◎": "VERIFIED", "✕": "INVALID", "$": "VALUE",
+    "Ω": "CANONICAL", "@": "ANCHOR", "∇": "GRADIENT",
+    "∂": "PARTIAL", "∫": "INTEGRAL", "ℏ": "PLANCK",
+    "ℂ": "COMPLEX", "ℝ": "REAL", "ψ": "WAVEFUNCTION",
+    "φ": "PHASE", "θ": "ANGLE", "ρ": "DENSITY",
+    "σ": "PAULI", "π": "PI", "χ": "EIGENVECTOR",
+    "μ": "MEAN", "ν": "VARIANCE", "◈": "PROVE",
+    "⚡": "CLAIM", "¤": "PAY", "⊙̂": "EMIT",
+    "ξ": "RANDOM", "τ": "TENSOR", "η": "EFFICIENCY",
+    "κ": "CURVATURE", "ω": "FREQUENCY",
+    "ϒ": "UPSILON", "Θ": "THETA_BIG", "Φ": "PHI_BIG",
+    "Ψ": "PSI_BIG", "Ξ": "XI_BIG",
+    "Λ": "LAMBDA_BIG",
+    "α": "ALPHA", "β": "BETA", "γ": "GAMMA",
+    "δ": "DELTA_SMALL", "ε": "EPSILON", "ζ": "ZETA",
+    "ι": "IOTA", "υ": "UPSILON_SMALL",
+    "ϕ": "VAR_PHI",
+    "⌀": "DIAMETER", "⌖": "TARGET", "⌘": "COMMAND_KEY",
+    "⌥": "OPTION_KEY", "⇧": "SHIFT_KEY", "⌃": "CONTROL_KEY",
+    "⏎": "RETURN_KEY", "⎋": "ESCAPE_KEY", "␣": "SPACE_KEY",
+    "⇥": "TAB_KEY", "⇤": "HOME_KEY",
+    "␦": "SEPARATOR_NOUN", "␥": "PAD_NOUN",
+    "✦": "STAR_NOUN", "✧": "STAR_OPEN",
+    "◆": "DIAMOND_NOUN", "◇": "DIAMOND_OPEN",
+    "●": "CIRCLE_NOUN", "○": "CIRCLE_OPEN",
+    "■": "SQUARE_NOUN", "□": "SQUARE_OPEN",
+    "▲": "TRIANGLE_NOUN", "△": "TRIANGLE_OPEN",
+    "★": "STAR_FILLED", "☆": "STAR_EMPTY",
+    "⬡": "HEXAGON_NOUN", "⬢": "HEXAGON_FILLED",
+    "⏺": "RECORD_NOUN", "⏸": "PAUSE_NOUN",
+    "⏵": "PLAY_NOUN", "⏹": "STOP_NOUN",
+    "♻": "RECYCLE_NOUN", "✓": "CHECK_NOUN",
+    "✗": "CROSS_NOUN", "⚠": "WARNING_NOUN",
+    "ℹ": "INFO_NOUN", "⚙": "GEAR_NOUN",
+    "🗜": "COMPRESS_NOUN", "🔓": "UNLOCK_NOUN",
+    "🔐": "LOCK_NOUN", "🔑": "KEY_NOUN",
+    "🜔": "SALT_NOUN", "🜁": "AIR_NOUN",
+    "🜂": "FIRE_NOUN", "🜃": "EARTH_NOUN",
+    "🜄": "WATER_NOUN", "🜅": "QUINTESSENCE",
+    # Operators (40%)
+    "⊕": "ADD", "⊖": "SUB", "⊗": "MUL", "⊘": "DIV",
+    "⊙": "DOT", "⊚": "OUTER", "⊛": "KRON",
+    "∧": "AND", "∨": "OR", "¬": "NOT", "⊼": "NAND",
+    "⊽": "NOR", "⊻": "XOR",
+    "≡": "IDENTICAL", "≠": "DIFFERENT", "≲": "LESSEQ", "≳": "GREATEQ",
+    "⇉": "PIPE_FWD", "⇇": "PIPE_BWD", "⇈": "PAR_UP", "⇊": "PAR_DOWN",
+    "↺": "REWIND", "↻": "FORWARD", "⟳": "REPEAT",
+    "⨁": "SPIN_ADD", "⨂": "SPIN_MUL", "⨄": "SPIN_SUM",
+    "↑": "SPIN_UP", "↓": "SPIN_DOWN", "↕": "SPIN_FLIP",
+    "⊠": "TENSOR_BOX", "⊞": "TENSOR_ADD",
+    "Æ": "BIND", "ÆÆ": "DOUBLE_BIND", "Æ⁻": "BOND_BREAK",
+    "Æ⁺": "BOND_FORM", "Æ⁰": "BOND_NULL",
+    "→": "DERIVE", "=": "ASSERT", ";": "SEPARATOR",
+    "∮": "INTEGRATE", "∴": "THEREFORE", "∞": "DIVERGE",
+    "▷": "PROGRAM_START", "◀": "PROGRAM_END",
+    "⇒": "IMPLY", "⇐": "REVERSE_IMPLY", "⇔": "BICONDITIONAL",
+    "∝": "PROPORTIONAL", "ℵ": "CARDINALITY",
+    "⌁": "ELECTRIC_FLOW", "⌬": "BENZENE_RING",
+    "⏃": "ANTI_GRAVITY", "⏆": "GRAVITY_DOWN",
+    "⤓": "FLOW_DOWN", "⤒": "FLOW_UP",
+    "⥁": "CYCLE_OP", "⥎": "EXCHANGE",
+    "⧴": "MAPPING", "⧫": "DIAMOND_OP",
+    "⧠": "SQUARE_OP", "⧖": "HOURGLASS_OP",
+    # --- Control flow ---
+    "⟦": "BLOCK_OPEN", "⟧": "BLOCK_CLOSE",
+    "⟨": "GROUP_OPEN", "⟩": "GROUP_CLOSE",
+    "⦃": "SCOPE_OPEN", "⦄": "SCOPE_CLOSE",
+    "⦂": "BRANCH", "⦙": "BRANCH_ELSE",
+    "⤴": "JUMP_FWD", "⤵": "JUMP_BWD",
+    "⤶": "BREAK", "⤷": "CONTINUE",
+    "⥂": "LOOP", "⥃": "LOOP_UNTIL",
+    "⥄": "WHILE", "⥅": "FOR_EACH",
+    "⥆": "ITER_NEXT", "⥇": "ITER_DONE",
+    "⇜": "CALL", "⇝": "RETURN",
+    "⇞": "YIELD", "⇟": "AWAIT_OP",
+    "⇠": "SEND", "⇡": "RECEIVE",
+    # --- Variable / binding ---
+    "≔": "ASSIGN", "≕": "REASSIGN",
+    "⇎": "SWAP", "⇏": "DROP",
+    "⇬": "LIFT", "⇭": "LOWER",
+    "⇮": "FREEZE", "⇯": "THAW",
+    "⥤": "REF", "⥦": "DEREF",
+    "⥧": "WEAKREF", "⥨": "PIN",
+    # --- Type system ---
+    "Ⲷ": "TYPE_INT", "ⲷ": "TYPE_FLOAT",
+    "Ⲹ": "TYPE_STR", "ⲹ": "TYPE_BOOL",
+    "Ⲻ": "TYPE_BYTES", "ⲻ": "TYPE_LIST",
+    "Ⲽ": "TYPE_DICT", "ⲽ": "TYPE_SET",
+    "Ⲿ": "TYPE_TUPLE", "ⲿ": "TYPE_OPTIONAL",
+    "Ⳁ": "TYPE_RESULT", "ⳁ": "TYPE_ENUM",
+    "Ⳃ": "TYPE_STRUCT", "ⳃ": "TYPE_TRAIT",
+    "Ⳅ": "TYPE_UNION", "ⳅ": "TYPE_INTERSECT",
+    "Ⳇ": "TYPE_FN", "ⳇ": "TYPE_VOID",
+    "Ⳉ": "TYPE_NEVER", "ⳉ": "TYPE_ANY",
+    "Ⳋ": "TYPE_SELF", "ⳋ": "TYPE_UNKNOWN",
+    "⟜": "TYPE_CHECK", "⟛": "TYPE_CAST",
+    "⧴⧴": "TYPE_ASSERT",
+    # --- Function definition ---
+    "⏦": "FN_DEF", "⏧": "FN_END",
+    "⏨": "FN_PARAM", "⏩": "FN_BODY",
+    "⏪": "FN_RECURSE", "⏫": "FN_TAIL",
+    "⏬": "FN_INLINE", "⏭": "FN_MACRO",
+    "⏮": "FN_CLOSURE", "⏯": "FN_ANON",
+    # --- I/O primitives ---
+    "⇿": "READ", "⇾": "WRITE",
+    "⇽": "STDIN", "⇾⇾": "STDOUT",
+    "⇽⇽": "STDERR", "⥳": "PIPE",
+    "⥴": "CHANNEL", "⥵": "STREAM",
+    "⥶": "BUFFER", "⥷": "FLUSH",
+    "⥸": "CLOSE_FD", "⥹": "OPEN_FD",
+    "⥺": "SEEK", "⥻": "TELL",
+    "⦀": "EOF", "⦂⦂": "EOL",
+    # --- Concurrency ---
+    "⣢": "FORK", "⣡": "JOIN",
+    "⣠": "LOCK", "⣟": "UNLOCK",
+    "⣞": "SEMAPHORE", "⣝": "BARRIER",
+    "⣜": "RACE", "⣛": "SELECT_OP",
+    "⣚": "SPAWN", "⣙": "DETACH",
+    "⣘": "SYNC", "⣗": "ASYNC_OP",
+    "⣖": "PROMISE", "⣕": "RESOLVE",
+    "⣔": "REJECT", "⣓": "PENDING",
+    # --- State machine ---
+    "⦜": "STATE_DEF", "⦝": "STATE_TRANS",
+    "⦞": "STATE_GUARD", "⦟": "STATE_ACTION",
+    "⦠": "STATE_ENTRY", "⦡": "STATE_EXIT",
+    "⦢": "STATE_INIT", "⦣": "STATE_FINAL",
+    "⦤": "STATE_HISTORY", "⦥": "STATE_PARALLEL",
+    # --- Error handling ---
+    "⦦": "TRY_OP", "⦧": "CATCH",
+    "⦨": "FINALLY", "⦩": "RAISE",
+    "⦪": "RECOVER", "⦫": "PANIC",
+    "⦬": "ABORT", "⦭": "RETRY",
+    "⦮": "ERROR_VALUE", "⦯": "ERROR_KIND",
+    # --- Pattern matching ---
+    "⦰": "MATCH", "⦱": "CASE",
+    "⦲": "WILDCARD", "⦳": "GUARD",
+    "⦴": "BIND_PATTERN", "⦵": "DESTRUCT",
+    "⦶": "CONS_PATTERN", "⦷": "NIL_PATTERN",
+    "⦸": "SOME_PATTERN", "⦹": "NONE_PATTERN",
+    "⦺": "OK_PATTERN", "⦻": "ERR_PATTERN",
+    # --- Module system ---
+    "⧀": "IMPORT_OP", "⧁": "EXPORT_OP",
+    "⧂": "NAMESPACE", "⧃": "MODULE_DEF",
+    "⧄": "MODULE_END", "⧅": "USE",
+    "⧆": "HIDE", "⧇": "EXPOSE",
+    "⧈": "REEXPORT", "⧉⧉": "LINK",
+    # --- Comparison / logic (expanded) ---
+    "⪯": "LT", "⪰": "GT",
+    "⪱": "LE", "⪲": "GE",
+    "⪳": "EQ", "⪴": "NEQ",
+    "⪵": "IN_OP", "⪶": "NOT_IN",
+    "⪷": "SUBSET", "⪸": "SUPERSET",
+    "⪹": "SUBSETEQ", "⪺": "SUPERSETEQ",
+    "⪻": "DISJOINT", "⪼": "OVERLAP",
+    # --- Arithmetic (expanded) ---
+    "⨥": "ADD_SAT", "⨦": "SUB_SAT",
+    "⨧": "MUL_SAT", "⨨": "DIV_SAT",
+    "⨩": "REM", "⨪": "NEG",
+    "⨫": "ABS", "⨬": "SIGN",
+    "⨭": "MIN_OP", "⨮": "MAX_OP",
+    "⨯": "CROSS", "⨰": "DOT_PROD",
+    "⨱": "OUTER_PROD", "⨲": "HADAMARD",
+    "⨳": "CONVOLVE", "⨴": "CORRELATE",
+    "⨵": "FFT", "⨶": "IFFT",
+    # --- Bitwise (expanded) ---
+    "⤔": "SHL", "⤕": "SHR",
+    "⤖": "SAR", "⤗": "ROL",
+    "⤘": "ROR", "⤙": "POP_COUNT",
+    "⤚": "CLZ", "⤛": "CTZ",
+    "⤜": "BSWAP", "⤝": "BIT_REVERSE",
+    # --- String / sequence ops ---
+    "⫶": "CONCAT", "⫷": "SLICE",
+    "⫸": "INDEX", "⫹": "APPEND",
+    "⫺": "PREPEND", "⫻": "REVERSE",
+    "⫼": "SPLIT", "⫽": "JOIN_OP",
+    "⫾": "REPLACE", "⫿": "FIND",
+    "⬀": "CONTAINS", "⬁": "STARTS_WITH",
+    "⬂": "ENDS_WITH", "⬃": "MATCHES",
+    # --- Memory / layout ---
+    "⬄": "ALLOC", "⬅": "DEALLOC",
+    "⬆": "COPY_MEM", "⬇": "MOVE_MEM",
+    "⬌": "ZERO_MEM", "⬍": "FILL_MEM",
+    "⬎": "CMP_MEM", "⬏": "SIZEOF",
+    "⬐": "ALIGNOF", "⬑": "OFFSETOF",
+    # --- Crypto / hashing (expanded) ---
+    "⬠": "HASH_SHA256", "⬡": "HASH_SHA512",
+    "⬢": "HASH_BLAKE3", "⬣": "HASH_KECCAK",
+    "⬤": "HMAC_OP", "⬥": "AEAD_OP",
+    "⬦": "SIGN_OP", "⬧": "VERIFY_SIG",
+    "⬨": "ENCRYPT", "⬩": "DECRYPT",
+    "⬪": "KDF", "⬫": "PRF",
+    "⬬": "RNG", "⬭": "CSRNG",
+    # --- Time / temporal ---
+    "⭐": "NOW", "⭑": "TIMER",
+    "⭒": "DELAY", "⭓": "DEADLINE",
+    "⭔": "TIMEOUT", "⭕": "EPOCH",
+    "⭖": "DURATION", "⭗": "INTERVAL",
+    "⭘": "CLOCK_MONO", "⭙": "CLOCK_WALL",
+    # --- Debug / introspection ---
+    "⭚": "TRACE", "⭛": "DEBUG",
+    "⭜": "INSPECT", "⭝": "DUMP",
+    "⭞": "BREAKPOINT", "⭟": "WATCH",
+    "⭠": "PROFILE", "⭡": "BENCH",
+    # --- Network / distributed ---
+    "⭢": "CONNECT", "⭣": "DISCONNECT",
+    "⭤": "LISTEN", "⭥": "ACCEPT",
+    "⭦": "REQUEST", "⭧": "RESPONSE",
+    "⭨": "BROADCAST", "⭩": "MULTICAST",
+    "⭪": "ROUTE", "⭫": "PROXY",
+    "⭬": "GATEWAY", "⭭": "RELAY",
+    # --- Quantities / units ---
+    "⭮": "COUNT", "⭯": "SUM_OP",
+    "⭰": "PRODUCT", "⭱": "MEAN_OP",
+    "⭲": "MEDIAN", "⭳": "MODE",
+    "⭴": "VARIANCE_OP", "⭵": "STDDEV",
+    "⭶": "PERCENTILE", "⭷": "QUARTILE",
+    "⭸": "HISTOGRAM", "⭹": "CDF",
+    "⭺": "PDF", "⭻": "SAMPLE",
+    # --- MIDI notation ---
+    # Note names (sharps) — each glyph maps to MIDI note number
+    "♩": "NOTE_C",  # C  (0, 12, 24...  — MIDI 60 = C4)
+    "♩♯": "NOTE_CS", # C# / Db
+    "♪": "NOTE_D",  # D
+    "♪♯": "NOTE_DS", # D# / Eb
+    "♫": "NOTE_E",  # E
+    "♬": "NOTE_F",  # F
+    "♬♯": "NOTE_FS", # F# / Gb
+    "♭": "NOTE_G",  # G
+    "♭♯": "NOTE_GS", # G# / Ab
+    "♮": "NOTE_A",  # A
+    "♮♯": "NOTE_AS", # A# / Bb
+    "♯": "NOTE_B",  # B
+    # Octave indicators (MIDI octave numbers 0-8)
+    "𝄞": "OCTAVE_0", "𝄞¹": "OCTAVE_1", "𝄞²": "OCTAVE_2",
+    "𝄞³": "OCTAVE_3", "𝄞⁴": "OCTAVE_4", "𝄞⁵": "OCTAVE_5",
+    "𝄞⁶": "OCTAVE_6", "𝄞⁷": "OCTAVE_7", "𝄞⁸": "OCTAVE_8",
+    # Rest and duration
+    "𝄽": "REST",      # Musical rest
+    "𝅗𝅥": "HALF_NOTE", # 2 beats
+    "𝅘𝅥": "QUARTER_NOTE", # 1 beat
+    "𝅘𝅥𝅮": "EIGHTH_NOTE", # 1/2 beat
+    "𝅘𝅥𝅯": "SIXTEENTH_NOTE", # 1/4 beat
+    "𝅘𝅥𝅰": "THIRTYSECOND_NOTE", # 1/8 beat
+    # MIDI operators
+    "⬌": "PITCH_BEND",   # Pitch wheel
+    "⬆": "VELOCITY_UP",  # Increase velocity
+    "⬇": "VELOCITY_DOWN", # Decrease velocity
+    "🎹": "MIDI_CHANNEL", # Channel selector
+    "🎚": "CONTROL_CHANGE", # CC message
+    "🔊": "MIDI_VOLUME",  # Volume CC7
+    "🔇": "MIDI_MUTE",    # Mute
+    " sustain": "SUSTAIN_PEDAL", # Sustain pedal CC64
+    "🎸": "MIDI_PROGRAM", # Program change (instrument)
+    "🥁": "MIDI_DRUM",    # Drum channel (ch 10)
+    "⏱": "MIDI_TEMPO",   # Tempo (BPM)
+    "𝄫": "KEY_SIG",      # Key signature
+    "𝄪": "TIME_SIG",     # Time signature
+    "𝄢": "BASS_CLEF",    # Bass clef context
+    "𝄫¹": "TREBLE_CLEF", # Treble clef context
+    # MIDI sequence operators
+    "⇨": "NOTE_ON",      # Note on event
+    "⇦": "NOTE_OFF",     # Note off event
+    "⇧": "MIDI_HOLD",    # Hold note (duration)
+    "⇩": "MIDI_RELEASE", # Release note
+    "↻": "MIDI_ARPEGGIO", # Arpeggiate
+    "↺": "MIDI_TRILL",   # Trill between notes
+    "⇶": "MIDI_GLISSANDO", # Glide between pitches
+    "𝆑": "MIDI_FORTE",   # Loud (velocity 100-127)
+    "𝆏": "MIDI_PIANO",   # Soft (velocity 1-43)
+    "𝆐": "MIDI_MEZZO",   # Medium (velocity 44-99)
+    "𝆑𝆏": "MIDI_FORTISSIMO", # Very loud (velocity 110-127)
+    "𝆏𝆏": "MIDI_PIANISSIMO", # Very soft (velocity 1-20)
+    # MIDI meta
+    "🎼": "MIDI_TRACK",   # Track definition
+    "🎹¹": "MIDI_SYSEX",  # System exclusive
+    "𝄽¹": "MIDI_EOT",    # End of track
+    "🔀": "MIDI_QUANTIZE", # Quantize timing
+    "🌀": "MIDI_LOOP",    # Loop MIDI pattern
+    "📊": "MIDI_VELOCITY_CURVE", # Velocity automation
+    "🎯": "MIDI_TARGET",  # Target note for legato/portamento
 }
 
-KEYWORDS = {"program", "end", "if", "else", "loop", "break", "emit", "claim", "prove", "pay"}
+OPERATORS = {k: v for k, v in GLYPH_TOKENS.items() if v in {
+    "ADD", "SUB", "MUL", "DIV", "DOT", "OUTER", "KRON",
+    "AND", "OR", "NOT", "NAND", "NOR", "XOR",
+    "IDENTICAL", "DIFFERENT", "LESSEQ", "GREATEQ",
+    "PIPE_FWD", "PIPE_BWD", "PAR_UP", "PAR_DOWN",
+    "REWIND", "FORWARD", "REPEAT",
+    "SPIN_ADD", "SPIN_MUL", "SPIN_SUM",
+    "SPIN_UP", "SPIN_DOWN", "SPIN_FLIP",
+    "TENSOR_BOX", "TENSOR_ADD",
+    "BIND", "DOUBLE_BIND", "BOND_BREAK", "BOND_FORM", "BOND_NULL",
+    "DERIVE", "ASSERT", "SEPARATOR",
+    "INTEGRATE", "THEREFORE", "DIVERGE",
+    "PROGRAM_START", "PROGRAM_END",
+    "IMPLY", "REVERSE_IMPLY", "BICONDITIONAL",
+    "PROPORTIONAL", "CARDINALITY",
+    "ELECTRIC_FLOW", "BENZENE_RING",
+    "ANTI_GRAVITY", "GRAVITY_DOWN",
+    "FLOW_DOWN", "FLOW_UP",
+    "CYCLE_OP", "EXCHANGE",
+    "MAPPING", "DIAMOND_OP",
+    "SQUARE_OP", "HOURGLASS_OP",
+    # Control flow operators
+    "BLOCK_OPEN", "BLOCK_CLOSE", "GROUP_OPEN", "GROUP_CLOSE",
+    "SCOPE_OPEN", "SCOPE_CLOSE", "BRANCH", "BRANCH_ELSE",
+    "JUMP_FWD", "JUMP_BWD", "BREAK", "CONTINUE",
+    "LOOP", "LOOP_UNTIL", "WHILE", "FOR_EACH",
+    "ITER_NEXT", "ITER_DONE", "CALL", "RETURN",
+    "YIELD", "AWAIT_OP", "SEND", "RECEIVE",
+    # Variable / binding operators
+    "ASSIGN", "REASSIGN", "SWAP", "DROP",
+    "LIFT", "LOWER", "FREEZE", "THAW",
+    "REF", "DEREF", "WEAKREF", "PIN",
+    # Type operators
+    "TYPE_CHECK", "TYPE_CAST", "TYPE_ASSERT",
+    # Function operators
+    "FN_DEF", "FN_END", "FN_PARAM", "FN_BODY",
+    "FN_RECURSE", "FN_TAIL", "FN_INLINE", "FN_MACRO",
+    "FN_CLOSURE", "FN_ANON",
+    # I/O operators
+    "READ", "WRITE", "STDIN", "STDOUT", "STDERR",
+    "PIPE", "CHANNEL", "STREAM", "BUFFER", "FLUSH",
+    "CLOSE_FD", "OPEN_FD", "SEEK", "TELL", "EOF", "EOL",
+    # Concurrency operators
+    "FORK", "JOIN", "LOCK", "UNLOCK",
+    "SEMAPHORE", "BARRIER", "RACE", "SELECT_OP",
+    "SPAWN", "DETACH", "SYNC", "ASYNC_OP",
+    "PROMISE", "RESOLVE", "REJECT", "PENDING",
+    # State machine operators
+    "STATE_DEF", "STATE_TRANS", "STATE_GUARD", "STATE_ACTION",
+    "STATE_ENTRY", "STATE_EXIT", "STATE_INIT", "STATE_FINAL",
+    "STATE_HISTORY", "STATE_PARALLEL",
+    # Error handling operators
+    "TRY_OP", "CATCH", "FINALLY", "RAISE",
+    "RECOVER", "PANIC", "ABORT", "RETRY",
+    "ERROR_VALUE", "ERROR_KIND",
+    # Pattern matching operators
+    "MATCH", "CASE", "WILDCARD", "GUARD",
+    "BIND_PATTERN", "DESTRUCT",
+    "CONS_PATTERN", "NIL_PATTERN",
+    "SOME_PATTERN", "NONE_PATTERN",
+    "OK_PATTERN", "ERR_PATTERN",
+    # Module operators
+    "IMPORT_OP", "EXPORT_OP", "NAMESPACE", "MODULE_DEF",
+    "MODULE_END", "USE", "HIDE", "EXPOSE",
+    "REEXPORT", "LINK",
+    # Comparison / logic (expanded)
+    "LT", "GT", "LE", "GE", "EQ", "NEQ",
+    "IN_OP", "NOT_IN", "SUBSET", "SUPERSET",
+    "SUBSETEQ", "SUPERSETEQ", "DISJOINT", "OVERLAP",
+    # Arithmetic (expanded)
+    "ADD_SAT", "SUB_SAT", "MUL_SAT", "DIV_SAT",
+    "REM", "NEG", "ABS", "SIGN",
+    "MIN_OP", "MAX_OP", "CROSS", "DOT_PROD",
+    "OUTER_PROD", "HADAMARD", "CONVOLVE", "CORRELATE",
+    "FFT", "IFFT",
+    # Bitwise (expanded)
+    "SHL", "SHR", "SAR", "ROL", "ROR",
+    "POP_COUNT", "CLZ", "CTZ", "BSWAP", "BIT_REVERSE",
+    # String / sequence ops
+    "CONCAT", "SLICE", "INDEX", "APPEND", "PREPEND",
+    "REVERSE", "SPLIT", "JOIN_OP", "REPLACE", "FIND",
+    "CONTAINS", "STARTS_WITH", "ENDS_WITH", "MATCHES",
+    # Memory / layout
+    "ALLOC", "DEALLOC", "COPY_MEM", "MOVE_MEM",
+    "ZERO_MEM", "FILL_MEM", "CMP_MEM",
+    "SIZEOF", "ALIGNOF", "OFFSETOF",
+    # Crypto / hashing
+    "HASH_SHA256", "HASH_SHA512", "HASH_BLAKE3", "HASH_KECCAK",
+    "HMAC_OP", "AEAD_OP", "SIGN_OP", "VERIFY_SIG",
+    "ENCRYPT", "DECRYPT", "KDF", "PRF", "RNG", "CSRNG",
+    # Time / temporal
+    "NOW", "TIMER", "DELAY", "DEADLINE",
+    "TIMEOUT", "EPOCH", "DURATION", "INTERVAL",
+    "CLOCK_MONO", "CLOCK_WALL",
+    # Debug / introspection
+    "TRACE", "DEBUG", "INSPECT", "DUMP",
+    "BREAKPOINT", "WATCH", "PROFILE", "BENCH",
+    # Network / distributed
+    "CONNECT", "DISCONNECT", "LISTEN", "ACCEPT",
+    "REQUEST", "RESPONSE", "BROADCAST", "MULTICAST",
+    "ROUTE", "PROXY", "GATEWAY", "RELAY",
+    # Quantities / statistics
+    "COUNT", "SUM_OP", "PRODUCT", "MEAN_OP",
+    "MEDIAN", "MODE", "VARIANCE_OP", "STDDEV",
+    "PERCENTILE", "QUARTILE", "HISTOGRAM",
+    "CDF", "PDF", "SAMPLE",
+    # MIDI operators
+    "PITCH_BEND", "VELOCITY_UP", "VELOCITY_DOWN",
+    "CONTROL_CHANGE", "MIDI_VOLUME", "MIDI_MUTE",
+    "SUSTAIN_PEDAL", "MIDI_PROGRAM", "MIDI_DRUM",
+    "NOTE_ON", "NOTE_OFF", "MIDI_HOLD", "MIDI_RELEASE",
+    "MIDI_ARPEGGIO", "MIDI_TRILL", "MIDI_GLISSANDO",
+    "MIDI_FORTE", "MIDI_PIANO", "MIDI_MEZZO",
+    "MIDI_FORTISSIMO", "MIDI_PIANISSIMO",
+    "MIDI_QUANTIZE", "MIDI_LOOP", "MIDI_VELOCITY_CURVE",
+    "MIDI_TARGET",
+}}
 
+OPERATOR_RATIO = len(OPERATORS) / len(GLYPH_TOKENS)
+
+
+# =============================================================================
+# GLYPH FILE LEXER — .glyph source → tokens
+# =============================================================================
 
 @dataclass
 class GlyphToken:
-    type: str
-    value: str
+    glyph: str
+    name: str
+    is_operator: bool
     line: int
     col: int
 
 
+def lex_glyph(source: str) -> list[GlyphToken]:
+    """Lex .glyph source into tokens. No English keywords."""
+    tokens = []
+    for line_num, line in enumerate(source.split("\n"), 1):
+        col = 0
+        while col < len(line):
+            matched = False
+            # Try longest match first
+            for g in sorted(GLYPH_TOKENS.keys(), key=len, reverse=True):
+                if line[col:col+len(g)] == g:
+                    name = GLYPH_TOKENS[g]
+                    tokens.append(GlyphToken(g, name, g in OPERATORS, line_num, col))
+                    col += len(g)
+                    matched = True
+                    break
+            if not matched:
+                col += 1  # skip whitespace/comments
+    return tokens
+
+
+# =============================================================================
+# GLYPH FILE PARSER — tokens → AST
+# =============================================================================
+
 @dataclass
 class GlyphNode:
-    node_type: str
-    value: str = ""
+    op: str
+    operands: list = field(default_factory=list)
     children: list = field(default_factory=list)
     line: int = 0
 
-    def to_dict(self) -> dict:
-        return {"node_type": self.node_type, "value": self.value, "children": [c.to_dict() for c in self.children], "line": self.line}
-
 
 @dataclass
-class GlyphProgram:
+class GlyphAST:
     name: str = ""
-    statements: list = field(default_factory=list)
-    source: str = ""
-    hash: str = ""
-    compiled_at: float = 0.0
-
-    def to_dict(self) -> dict:
-        return {"name": self.name, "statements": [s.to_dict() for s in self.statements], "hash": self.hash, "compiled_at": self.compiled_at}
-
-
-class GlyphLexer:
-    """Tokenizes .glyph source into glyph tokens."""
-
-    def lex(self, source: str) -> list[GlyphToken]:
-        tokens = []
-        lines = source.split("\n")
-        for line_num, line in enumerate(lines, 1):
-            col = 0
-            stripped = line.strip()
-            if not stripped or stripped.startswith("#"):
-                continue
-
-            # Check for keywords (only first word on line)
-            words = stripped.split()
-            if words and words[0] in KEYWORDS and words[0] != "end":
-                tokens.append(GlyphToken("KEYWORD", words[0], line_num, col))
-                col += len(words[0]) + 1
-                # Rest of line: tokenize as glyphs
-                rest = stripped[len(words[0]):]
-                i = 0
-                while i < len(rest):
-                    ch = rest[i]
-                    if ch in " \t":
-                        i += 1
-                        col += 1
-                        continue
-                    matched = False
-                    for glyph in sorted(TOKEN_TYPES.keys(), key=len, reverse=True):
-                        if rest[i:i+len(glyph)] == glyph:
-                            tokens.append(GlyphToken(TOKEN_TYPES[glyph], glyph, line_num, col))
-                            i += len(glyph)
-                            col += len(glyph)
-                            matched = True
-                            break
-                    if not matched:
-                        if ch.isalpha() or ch == "_":
-                            j = i
-                            while j < len(rest) and (rest[j].isalnum() or rest[j] == "_"):
-                                j += 1
-                            tokens.append(GlyphToken("IDENT", rest[i:j], line_num, col))
-                            col += j - i
-                            i = j
-                        else:
-                            i += 1
-                            col += 1
-                continue
-
-            # Check for standalone end
-            if stripped == "end":
-                tokens.append(GlyphToken("KEYWORD", "end", line_num, col))
-                continue
-
-            # Tokenize glyph sequence
-            i = 0
-            while i < len(line):
-                ch = line[i]
-                if ch in " \t":
-                    i += 1
-                    col += 1
-                    continue
-
-                # Multi-char glyphs
-                matched = False
-                for glyph in sorted(TOKEN_TYPES.keys(), key=len, reverse=True):
-                    if line[i:i+len(glyph)] == glyph:
-                        tokens.append(GlyphToken(TOKEN_TYPES[glyph], glyph, line_num, col))
-                        i += len(glyph)
-                        col += len(glyph)
-                        matched = True
-                        break
-
-                if not matched:
-                    if ch.isalpha() or ch == "_":
-                        j = i
-                        while j < len(line) and (line[j].isalnum() or line[j] == "_"):
-                            j += 1
-                        word = line[i:j]
-                        if word in KEYWORDS:
-                            tokens.append(GlyphToken("KEYWORD", word, line_num, col))
-                        else:
-                            tokens.append(GlyphToken("IDENT", word, line_num, col))
-                        col += j - i
-                        i = j
-                    elif ch.isdigit():
-                        j = i
-                        while j < len(line) and (line[j].isdigit() or line[j] == "."):
-                            j += 1
-                        tokens.append(GlyphToken("NUMBER", line[i:j], line_num, col))
-                        col += j - i
-                        i = j
-                    else:
-                        tokens.append(GlyphToken("UNKNOWN", ch, line_num, col))
-                        i += 1
-                        col += 1
-
-        return tokens
+    nodes: list[GlyphNode] = field(default_factory=list)
+    glyph_count: int = 0
+    operator_count: int = 0
+    noun_count: int = 0
+    operator_ratio: float = 0.0
+    max_depth: int = 0
+    block_count: int = 0
+    branch_count: int = 0
+    loop_count: int = 0
+    fn_count: int = 0
+    match_count: int = 0
+    state_count: int = 0
+    try_count: int = 0
 
 
-class GlyphParser:
-    """Parses glyph tokens into AST."""
+# Block-opening operators that create a new nesting level
+_BLOCK_OPENERS = frozenset({
+    "BLOCK_OPEN", "SCOPE_OPEN", "GROUP_OPEN",
+    "BRANCH", "BRANCH_ELSE",
+    "LOOP", "LOOP_UNTIL", "WHILE", "FOR_EACH",
+    "FN_DEF", "FN_BODY", "FN_CLOSURE", "FN_ANON",
+    "TRY_OP", "CATCH", "FINALLY",
+    "MATCH", "CASE",
+    "STATE_DEF", "STATE_ENTRY", "STATE_EXIT",
+    "MODULE_DEF", "NAMESPACE",
+})
 
-    def __init__(self):
-        self.tokens: list[GlyphToken] = []
-        self.pos = 0
+_BLOCK_CLOSERS = frozenset({
+    "BLOCK_CLOSE", "SCOPE_CLOSE", "GROUP_CLOSE",
+    "FN_END", "MODULE_END",
+})
 
-    def parse(self, tokens: list[GlyphToken]) -> GlyphProgram:
-        self.tokens = tokens
-        self.pos = 0
-        prog = GlyphProgram()
 
-        # Expect: program <name>
-        if self.peek() and self.peek().type == "KEYWORD" and self.peek().value == "program":
-            self.advance()
-            # Skip any IDENT or KEYWORD that is the program name
-            if self.peek() and self.peek().type in ("IDENT", "KEYWORD") and self.peek().value != "end":
-                prog.name = self.advance().value
+def parse_glyph(tokens: list[GlyphToken]) -> GlyphAST:
+    """Parse glyph tokens into a nested AST with block structure support."""
+    ast = GlyphAST()
+    in_program = False
+    current_chain: list[GlyphToken] = []
+    stack: list[GlyphNode] = []  # block stack for nesting
+    depth = 0
 
-        # Parse statements until end
-        while self.pos < len(self.tokens):
-            tok = self.peek()
-            if tok is None:
-                break
-            if tok.type == "KEYWORD" and tok.value == "end":
-                break
-            stmt = self.parse_statement()
-            if stmt:
-                prog.statements.append(stmt)
-
-        return prog
-
-    def peek(self, offset=0) -> Optional[GlyphToken]:
-        idx = self.pos + offset
-        return self.tokens[idx] if idx < len(self.tokens) else None
-
-    def advance(self) -> Optional[GlyphToken]:
-        tok = self.peek()
-        if tok:
-            self.pos += 1
-        return tok
-
-    def parse_statement(self) -> Optional[GlyphNode]:
-        tok = self.peek()
-        if tok is None:
-            return None
-
-        # Keyword statements
-        if tok.type == "KEYWORD":
-            if tok.value == "if":
-                return self.parse_if()
-            elif tok.value == "loop":
-                return self.parse_loop()
-            elif tok.value == "emit":
-                self.advance()
-                expr = self.parse_glyph_chain()
-                return GlyphNode("emit", "emit", [expr] if expr else [], tok.line)
-            elif tok.value == "claim":
-                self.advance()
-                expr = self.parse_glyph_chain()
-                return GlyphNode("claim", "claim", [expr] if expr else [], tok.line)
-            elif tok.value == "prove":
-                self.advance()
-                expr = self.parse_glyph_chain()
-                return GlyphNode("prove", "prove", [expr] if expr else [], tok.line)
-            elif tok.value == "pay":
-                self.advance()
-                expr = self.parse_glyph_chain()
-                return GlyphNode("pay", "pay", [expr] if expr else [], tok.line)
+    def flush_chain():
+        """Flush current noun chain as a node."""
+        nonlocal current_chain
+        if current_chain:
+            node = GlyphNode(
+                op="CHAIN",
+                operands=[t.glyph for t in current_chain],
+                line=current_chain[0].line,
+            )
+            if stack:
+                stack[-1].children.append(node)
             else:
-                self.advance()
-                return GlyphNode("keyword", tok.value, [], tok.line)
+                ast.nodes.append(node)
+            current_chain = []
 
-        # Glyph chain: ◇@L → H@L Æ R Æ λ⁻¹ = ◎ → $
-        return self.parse_glyph_chain()
+    def emit_node(op_name: str, tok: GlyphToken):
+        """Emit an operator node, either into the current block or root."""
+        nonlocal current_chain
+        node = GlyphNode(op=op_name, operands=[t.glyph for t in current_chain], line=tok.line)
+        if stack:
+            stack[-1].children.append(node)
+        else:
+            ast.nodes.append(node)
+        current_chain = []
 
-    def parse_glyph_chain(self) -> Optional[GlyphNode]:
-        left = self.parse_glyph_expr()
-        if left is None:
-            return None
+    for tok in tokens:
+        if tok.name == "PROGRAM_START":
+            in_program = True
+            current_chain = []
+            continue
+        if tok.name == "PROGRAM_END":
+            flush_chain()
+            in_program = False
+            continue
 
-        chain = [left]
-        while self.peek() and self.peek().type in ("BIND", "DERIVE", "ASSERT", "SEPARATOR"):
-            op = self.advance()
-            right = self.parse_glyph_expr()
-            if right:
-                chain.append(GlyphNode("operator", op.value, [right], op.line))
+        if not in_program:
+            continue
 
-        if len(chain) == 1:
-            return chain[0]
-        return GlyphNode("chain", "chain", chain, left.line)
+        ast.glyph_count += 1
 
-    def parse_glyph_expr(self) -> Optional[GlyphNode]:
-        tok = self.peek()
-        if tok is None:
-            return None
+        if tok.is_operator:
+            ast.operator_count += 1
 
-        # Anchor: ◇@L
-        if tok.type in ("FILE", "ARTIFACT", "STATIONARY", "HASH", "RECEIPT"):
-            node = GlyphNode("glyph", tok.value, [], tok.line)
-            self.advance()
-            if self.peek() and self.peek().type == "ANCHOR":
-                self.advance()
-                if self.peek() and self.peek().type in ("LOCATION", "TIME"):
-                    anchored = self.advance()
-                    node.children.append(GlyphNode("anchor", anchored.value, [], tok.line))
-            return node
-
-        if tok.type in ("FRICTION", "TRANSFERABILITY", "DELTA", "VERIFIED",
-                        "INVALID", "VALUE", "CANONICAL", "SHARD", "MERKLE",
-                        "ZK_PROOF", "TIME", "LOOP", "RECEIPT", "HASH"):
-            self.advance()
-            return GlyphNode("glyph", tok.value, [], tok.line)
-
-        if tok.type in ("IDENT", "NUMBER"):
-            self.advance()
-            return GlyphNode("literal", tok.value, [], tok.line)
-
-        return None
-
-    def parse_if(self) -> GlyphNode:
-        line = self.advance().line  # if
-        cond = self.parse_glyph_chain()
-        body = []
-        while self.peek() and not (self.peek().type == "KEYWORD" and self.peek().value in ("else", "end")):
-            stmt = self.parse_statement()
-            if stmt:
-                body.append(stmt)
-        else_body = []
-        if self.peek() and self.peek().type == "KEYWORD" and self.peek().value == "else":
-            self.advance()
-            while self.peek() and not (self.peek().type == "KEYWORD" and self.peek().value == "end"):
-                stmt = self.parse_statement()
-                if stmt:
-                    else_body.append(stmt)
-        if self.peek() and self.peek().type == "KEYWORD" and self.peek().value == "end":
-            self.advance()
-        return GlyphNode("if", "if", [cond] + body, line)
-
-    def parse_loop(self) -> GlyphNode:
-        line = self.advance().line  # loop
-        body = []
-        while self.peek() and not (self.peek().type == "KEYWORD" and self.peek().value == "end"):
-            stmt = self.parse_statement()
-            if stmt:
-                body.append(stmt)
-        if self.peek() and self.peek().type == "KEYWORD" and self.peek().value == "end":
-            self.advance()
-        return GlyphNode("loop", "loop", body, line)
-
-
-class GlyphCompiler:
-    """Compiles .glyph programs to multiple target languages.
-
-    Glyphs superimpose semantic meaning onto any known language.
-    Write once in glyph prose, compile to C++, Swift, C, Obj-C, Rust, Python.
-
-    Semantic map:
-      ◇@L → H@L    =  declare artifact, compute hash
-      H@L Æ R       =  bind hash to receipt struct
-      R Æ λ⁻¹       =  receipt becomes transferable
-      λ⁻¹ = ◎       =  assert verified
-      ◎ → $         =  verified becomes payable
-      emit X        =  return / print X
-      claim X       =  create claim object
-      prove X       =  run verification
-      pay X         =  release payment
-    """
-
-    TARGETS = ["cpp", "swift", "c", "objc", "rust", "python"]
-
-    def __init__(self):
-        self.lexer = GlyphLexer()
-        self.parser = GlyphParser()
-
-    def compile(self, source: str, targets: list[str] = None) -> dict:
-        tokens = self.lexer.lex(source)
-        program = self.parser.parse(tokens)
-        program.source = source
-        program.hash = hashlib.sha256(source.encode()).hexdigest()[:16]
-        program.compiled_at = time.time()
-
-        targets = targets or self.TARGETS
-        errors = self.type_check(program)
-
-        # Transpile to all targets
-        outputs = {}
-        for target in targets:
-            outputs[target] = self.transpile(program, target)
-
-        return {
-            "program": program.to_dict(),
-            "outputs": outputs,
-            "token_count": len(tokens),
-            "statement_count": len(program.statements),
-            "errors": errors,
-            "hash": program.hash,
-            "compiled_at": program.compiled_at,
-            "status": "compiled" if not errors else "errors",
-            "targets": targets,
-        }
-
-    def transpile(self, program: GlyphProgram, target: str = "python") -> str:
-        dispatch = {
-            "python": self._to_python,
-            "cpp": self._to_cpp,
-            "swift": self._to_swift,
-            "c": self._to_c,
-            "objc": self._to_objc,
-            "rust": self._to_rust,
-        }
-        fn = dispatch.get(target, self._to_python)
-        return fn(program)
-
-    # --- Python target ---
-    def _to_python(self, program: GlyphProgram) -> str:
-        lines = [
-            f"# Auto-generated from .glyph: {program.name}",
-            f"# Hash: {program.hash}",
-            f"import time, hashlib, json",
-            f"",
-            f"class {program.name or 'GlyphProgram'}:",
-            f"    def __init__(self):",
-            f"        self.receipts = []",
-            f"        self.state = {{}}",
-            f"",
-            f"    def run(self):",
-        ]
-        for stmt in program.statements:
-            py = self._py_node(stmt, 8)
-            if py:
-                lines.append(py)
-        lines.append(f"        return self.receipts")
-        return "\n".join(lines)
-
-    def _py_node(self, node: GlyphNode, indent: int) -> str:
-        pad = " " * indent
-        if node.node_type == "chain":
-            parts = []
-            for child in node.children:
-                if child.node_type == "operator" and child.children:
-                    parts.append(child.value)
-                    parts.append(child.children[0].value)
+            # Block openers — push a new node onto the stack
+            if tok.name in _BLOCK_OPENERS:
+                flush_chain()
+                node = GlyphNode(op=tok.name, operands=[], line=tok.line)
+                if stack:
+                    stack[-1].children.append(node)
                 else:
-                    parts.append(child.value)
-            chain_str = " ".join(parts)
-            return f"{pad}self.receipts.append({{'type': 'chain', 'glyph': {repr(chain_str)}, 'ts': time.time()}})"
-        elif node.node_type == "glyph":
-            return f"{pad}self.state[{repr(node.value)}] = True"
-        elif node.node_type == "emit":
-            return f'{pad}self.receipts.append({{"type": "emit", "ts": time.time()}})'
-        elif node.node_type == "claim":
-            return f'{pad}self.receipts.append({{"type": "claim", "ts": time.time()}})'
-        elif node.node_type == "prove":
-            return f'{pad}self.receipts.append({{"type": "prove", "ts": time.time()}})'
-        elif node.node_type == "pay":
-            return f'{pad}self.receipts.append({{"type": "pay", "ts": time.time()}})'
-        elif node.node_type == "if":
-            lines = [f'{pad}if True:  # {node.value}']
-            for child in node.children[1:]:
-                py = self._py_node(child, indent + 4)
-                if py: lines.append(py)
-            return "\n".join(lines)
-        elif node.node_type == "loop":
-            lines = [f'{pad}for _ in range(1):  # loop']
-            for child in node.children:
-                py = self._py_node(child, indent + 4)
-                if py: lines.append(py)
-            return "\n".join(lines)
-        return f'{pad}pass  # {node.node_type}: {node.value}'
+                    ast.nodes.append(node)
+                stack.append(node)
+                depth += 1
+                ast.max_depth = max(ast.max_depth, depth)
+                if tok.name in ("BRANCH", "BRANCH_ELSE"):
+                    ast.branch_count += 1
+                elif tok.name in ("LOOP", "LOOP_UNTIL", "WHILE", "FOR_EACH"):
+                    ast.loop_count += 1
+                elif tok.name in ("FN_DEF", "FN_CLOSURE", "FN_ANON"):
+                    ast.fn_count += 1
+                elif tok.name in ("MATCH", "CASE"):
+                    ast.match_count += 1
+                elif tok.name in ("STATE_DEF", "STATE_ENTRY", "STATE_EXIT"):
+                    ast.state_count += 1
+                elif tok.name in ("TRY_OP", "CATCH", "FINALLY"):
+                    ast.try_count += 1
+                continue
 
-    # --- C++ target ---
-    def _to_cpp(self, program: GlyphProgram) -> str:
-        name = program.name or "GlyphProgram"
-        lines = [
-            f"// Auto-generated from .glyph: {name}",
-            f"// Hash: {program.hash}",
-            f"// Glyphs superimposed onto C++",
-            f"#include <iostream>",
-            f"#include <vector>",
-            f"#include <string>",
-            f"#include <chrono>",
-            f"#include <openssl/sha.h>",
-            f"",
-            f"struct Receipt {{",
-            f"    std::string type;",
-            f"    std::string glyph;",
-            f"    double timestamp;",
-            f"}};",
-            f"",
-            f"class {name} {{",
-            f"public:",
-            f"    std::vector<Receipt> receipts;",
-            f"    ",
-            f"    void run() {{",
-        ]
-        for stmt in program.statements:
-            cpp = self._cpp_node(stmt, 8)
-            if cpp: lines.append(cpp)
-        lines.append(f"    }}")
-        lines.append(f"}};")
-        lines.append(f"")
-        lines.append(f"int main() {{")
-        lines.append(f"    {name} prog;")
-        lines.append(f"    prog.run();")
-        lines.append(f"    for (const auto& r : prog.receipts)")
-        lines.append(f'        std::cout << r.type << ": " << r.glyph << std::endl;')
-        lines.append(f"    return 0;")
-        lines.append(f"}}")
-        return "\n".join(lines)
+            # Block closers — pop from the stack
+            if tok.name in _BLOCK_CLOSERS:
+                flush_chain()
+                if stack:
+                    stack.pop()
+                    depth -= 1
+                continue
 
-    def _cpp_node(self, node: GlyphNode, indent: int) -> str:
-        pad = " " * indent
-        if node.node_type == "chain":
-            parts = []
-            for child in node.children:
-                if child.node_type == "operator" and child.children:
-                    parts.append(child.value)
-                    parts.append(child.children[0].value)
-                else:
-                    parts.append(child.value)
-            chain_str = " ".join(parts)
-            return f'{pad}receipts.push_back({{"chain", "{chain_str}", now()}});'
-        elif node.node_type == "glyph":
-            return f'{pad}// glyph: {node.value}'
-        elif node.node_type == "emit":
-            return f'{pad}receipts.push_back({{"emit", "", now()}});'
-        elif node.node_type == "claim":
-            return f'{pad}receipts.push_back({{"claim", "", now()}});'
-        elif node.node_type == "prove":
-            return f'{pad}receipts.push_back({{"prove", "", now()}});'
-        elif node.node_type == "pay":
-            return f'{pad}receipts.push_back({{"pay", "", now()}});'
-        elif node.node_type == "if":
-            lines = [f'{pad}if (true) {{ // {node.value}']
-            for child in node.children[1:]:
-                cpp = self._cpp_node(child, indent + 4)
-                if cpp: lines.append(cpp)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        elif node.node_type == "loop":
-            lines = [f'{pad}for (int _i = 0; _i < 1; _i++) {{ // loop']
-            for child in node.children:
-                cpp = self._cpp_node(child, indent + 4)
-                if cpp: lines.append(cpp)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        return f'{pad}// {node.node_type}: {node.value}'
+            # Regular operator — terminates current chain
+            emit_node(tok.name, tok)
+        else:
+            ast.noun_count += 1
+            current_chain.append(tok)
 
-    # --- Swift target ---
-    def _to_swift(self, program: GlyphProgram) -> str:
-        name = program.name or "GlyphProgram"
-        lines = [
-            f"// Auto-generated from .glyph: {name}",
-            f"// Hash: {program.hash}",
-            f"// Glyphs superimposed onto Swift",
-            f"import Foundation",
-            f"import CryptoKit",
-            f"",
-            f"struct Receipt: Codable {{",
-            f"    var type: String",
-            f"    var glyph: String",
-            f"    var timestamp: Double",
-            f"}}",
-            f"",
-            f"class {name} {{",
-            f"    var receipts: [Receipt] = []",
-            f"    ",
-            f"    func run() {{",
-        ]
-        for stmt in program.statements:
-            sw = self._swift_node(stmt, 8)
-            if sw: lines.append(sw)
-        lines.append(f"    }}")
-        lines.append(f"}}")
-        lines.append(f"")
-        lines.append(f'let prog = {name}()')
-        lines.append(f"prog.run()")
-        lines.append(f'for r in prog.receipts {{ print("\\(r.type): \\(r.glyph)") }}')
-        return "\n".join(lines)
+    flush_chain()
+    # Auto-close any unclosed blocks
+    while stack:
+        stack.pop()
+        depth -= 1
 
-    def _swift_node(self, node: GlyphNode, indent: int) -> str:
-        pad = " " * indent
-        if node.node_type == "chain":
-            parts = []
-            for child in node.children:
-                if child.node_type == "operator" and child.children:
-                    parts.append(child.value)
-                    parts.append(child.children[0].value)
-                else:
-                    parts.append(child.value)
-            chain_str = " ".join(parts)
-            return f'receipts.append(Receipt(type: "chain", glyph: "{chain_str}", timestamp: Date().timeIntervalSince1970))'
-        elif node.node_type == "glyph":
-            return f'{pad}// glyph: {node.value}'
-        elif node.node_type == "emit":
-            return f'receipts.append(Receipt(type: "emit", glyph: "", timestamp: Date().timeIntervalSince1970))'
-        elif node.node_type == "claim":
-            return f'receipts.append(Receipt(type: "claim", glyph: "", timestamp: Date().timeIntervalSince1970))'
-        elif node.node_type == "prove":
-            return f'receipts.append(Receipt(type: "prove", glyph: "", timestamp: Date().timeIntervalSince1970))'
-        elif node.node_type == "pay":
-            return f'receipts.append(Receipt(type: "pay", glyph: "", timestamp: Date().timeIntervalSince1970))'
-        elif node.node_type == "if":
-            lines = [f'{pad}if true {{ // {node.value}']
-            for child in node.children[1:]:
-                sw = self._swift_node(child, indent + 4)
-                if sw: lines.append(sw)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        elif node.node_type == "loop":
-            lines = [f'{pad}for _ in 0..<1 {{ // loop']
-            for child in node.children:
-                sw = self._swift_node(child, indent + 4)
-                if sw: lines.append(sw)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        return f'{pad}// {node.node_type}: {node.value}'
-
-    # --- C target ---
-    def _to_c(self, program: GlyphProgram) -> str:
-        name = program.name or "glyph_program"
-        lines = [
-            f"/* Auto-generated from .glyph: {name} */",
-            f"/* Hash: {program.hash} */",
-            f"/* Glyphs superimposed onto C */",
-            f"#include <stdio.h>",
-            f"#include <stdlib.h>",
-            f"#include <string.h>",
-            f"#include <time.h>",
-            f"",
-            f"typedef struct {{",
-            f"    char type[32];",
-            f"    char glyph[256];",
-            f"    double timestamp;",
-            f"}} Receipt;",
-            f"",
-            f"static Receipt receipts[1024];",
-            f"static int receipt_count = 0;",
-            f"",
-            f"static double now_sec() {{",
-            f"    struct timespec ts;",
-            f"    clock_gettime(CLOCK_REALTIME, &ts);",
-            f"    return ts.tv_sec + ts.tv_nsec / 1e9;",
-            f"}}",
-            f"",
-            f"static void add_receipt(const char* type, const char* glyph) {{",
-            f"    if (receipt_count < 1024) {{",
-            f"        strncpy(receipts[receipt_count].type, type, 31);",
-            f"        strncpy(receipts[receipt_count].glyph, glyph, 255);",
-            f"        receipts[receipt_count].timestamp = now_sec();",
-            f"        receipt_count++;",
-            f"    }}",
-            f"}}",
-            f"",
-            f"void {name}_run() {{",
-        ]
-        for stmt in program.statements:
-            c = self._c_node(stmt, 4)
-            if c: lines.append(c)
-        lines.append(f"}}")
-        lines.append(f"")
-        lines.append(f"int main() {{")
-        lines.append(f"    {name}_run();")
-        lines.append(f'    for (int i = 0; i < receipt_count; i++)')
-        lines.append(f'        printf("%s: %s\\n", receipts[i].type, receipts[i].glyph);')
-        lines.append(f"    return 0;")
-        lines.append(f"}}")
-        return "\n".join(lines)
-
-    def _c_node(self, node: GlyphNode, indent: int) -> str:
-        pad = " " * indent
-        if node.node_type == "chain":
-            parts = []
-            for child in node.children:
-                if child.node_type == "operator" and child.children:
-                    parts.append(child.value)
-                    parts.append(child.children[0].value)
-                else:
-                    parts.append(child.value)
-            chain_str = " ".join(parts)
-            return f'{pad}add_receipt("chain", "{chain_str}");'
-        elif node.node_type == "glyph":
-            return f'{pad}/* glyph: {node.value} */'
-        elif node.node_type == "emit":
-            return f'{pad}add_receipt("emit", "");'
-        elif node.node_type == "claim":
-            return f'{pad}add_receipt("claim", "");'
-        elif node.node_type == "prove":
-            return f'{pad}add_receipt("prove", "");'
-        elif node.node_type == "pay":
-            return f'{pad}add_receipt("pay", "");'
-        elif node.node_type == "if":
-            lines = [f'{pad}if (1) {{ /* {node.value} */']
-            for child in node.children[1:]:
-                c = self._c_node(child, indent + 4)
-                if c: lines.append(c)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        elif node.node_type == "loop":
-            lines = [f'{pad}for (int _i = 0; _i < 1; _i++) {{ /* loop */']
-            for child in node.children:
-                c = self._c_node(child, indent + 4)
-                if c: lines.append(c)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        return f'{pad}/* {node.node_type}: {node.value} */'
-
-    # --- Objective-C target ---
-    def _to_objc(self, program: GlyphProgram) -> str:
-        name = program.name or "GlyphProgram"
-        lines = [
-            f"// Auto-generated from .glyph: {name}",
-            f"// Hash: {program.hash}",
-            f"// Glyphs superimposed onto Objective-C",
-            f"#import <Foundation/Foundation.h>",
-            f"#import <CommonCrypto/CommonDigest.h>",
-            f"",
-            f"@interface Receipt : NSObject",
-            f"@property (nonatomic, strong) NSString *type;",
-            f"@property (nonatomic, strong) NSString *glyph;",
-            f"@property (nonatomic, assign) NSTimeInterval timestamp;",
-            f"@end",
-            f"@implementation Receipt",
-            f"@end",
-            f"",
-            f"@interface {name} : NSObject",
-            f"@property (nonatomic, strong) NSMutableArray<Receipt *> *receipts;",
-            f"- (void)run;",
-            f"@end",
-            f"",
-            f"@implementation {name}",
-            f"",
-            f"- (instancetype)init {{",
-            f"    self = [super init];",
-            f"    if (self) {{",
-            f"        _receipts = [NSMutableArray array];",
-            f"    }}",
-            f"    return self;",
-            f"}}",
-            f"",
-            f"- (void)run {{",
-        ]
-        for stmt in program.statements:
-            objc = self._objc_node(stmt, 8)
-            if objc: lines.append(objc)
-        lines.append(f"}}")
-        lines.append(f"@end")
-        lines.append(f"")
-        lines.append(f"int main() {{")
-        lines.append(f"    @autoreleasepool {{")
-        lines.append(f"        {name} *prog = [[{name} alloc] init];")
-        lines.append(f"        [prog run];")
-        lines.append(f"        for (Receipt *r in prog.receipts)")
-        lines.append(f'            NSLog(@"%@: %@", r.type, r.glyph);')
-        lines.append(f"    }}")
-        lines.append(f"    return 0;")
-        lines.append(f"}}")
-        return "\n".join(lines)
-
-    def _objc_node(self, node: GlyphNode, indent: int) -> str:
-        pad = " " * indent
-        if node.node_type == "chain":
-            parts = []
-            for child in node.children:
-                if child.node_type == "operator" and child.children:
-                    parts.append(child.value)
-                    parts.append(child.children[0].value)
-                else:
-                    parts.append(child.value)
-            chain_str = " ".join(parts)
-            return (f'{pad}Receipt *r = [[Receipt alloc] init];\n'
-                    f'{pad}r.type = @"chain";\n'
-                    f'{pad}r.glyph = @"{chain_str}";\n'
-                    f'{pad}r.timestamp = [[NSDate date] timeIntervalSince1970];\n'
-                    f'{pad}[self.receipts addObject:r];')
-        elif node.node_type == "glyph":
-            return f'{pad}// glyph: {node.value}'
-        elif node.node_type == "emit":
-            return (f'{pad}Receipt *r = [[Receipt alloc] init];\n'
-                    f'{pad}r.type = @"emit";\n'
-                    f'{pad}r.timestamp = [[NSDate date] timeIntervalSince1970];\n'
-                    f'{pad}[self.receipts addObject:r];')
-        elif node.node_type == "claim":
-            return (f'{pad}Receipt *r = [[Receipt alloc] init];\n'
-                    f'{pad}r.type = @"claim";\n'
-                    f'{pad}r.timestamp = [[NSDate date] timeIntervalSince1970];\n'
-                    f'{pad}[self.receipts addObject:r];')
-        elif node.node_type == "prove":
-            return (f'{pad}Receipt *r = [[Receipt alloc] init];\n'
-                    f'{pad}r.type = @"prove";\n'
-                    f'{pad}r.timestamp = [[NSDate date] timeIntervalSince1970];\n'
-                    f'{pad}[self.receipts addObject:r];')
-        elif node.node_type == "pay":
-            return (f'{pad}Receipt *r = [[Receipt alloc] init];\n'
-                    f'{pad}r.type = @"pay";\n'
-                    f'{pad}r.timestamp = [[NSDate date] timeIntervalSince1970];\n'
-                    f'{pad}[self.receipts addObject:r];')
-        elif node.node_type == "if":
-            lines = [f'{pad}if (YES) {{ // {node.value}']
-            for child in node.children[1:]:
-                objc = self._objc_node(child, indent + 4)
-                if objc: lines.append(objc)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        elif node.node_type == "loop":
-            lines = [f'{pad}for (int _i = 0; _i < 1; _i++) {{ // loop']
-            for child in node.children:
-                objc = self._objc_node(child, indent + 4)
-                if objc: lines.append(objc)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        return f'{pad}// {node.node_type}: {node.value}'
-
-    # --- Rust target ---
-    def _to_rust(self, program: GlyphProgram) -> str:
-        name = program.name or "GlyphProgram"
-        # Rust uses snake_case for module names
-        rust_name = name
-        lines = [
-            f"// Auto-generated from .glyph: {name}",
-            f"// Hash: {program.hash}",
-            f"// Glyphs superimposed onto Rust",
-            f"use std::time::{{SystemTime, UNIX_EPOCH}};",
-            f"",
-            f"#[derive(Debug, Clone)]",
-            f"struct Receipt {{",
-            f"    r_type: String,",
-            f"    glyph: String,",
-            f"    timestamp: f64,",
-            f"}}",
-            f"",
-            f"fn now_sec() -> f64 {{",
-            f"    SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs_f64()",
-            f"}}",
-            f"",
-            f"struct {rust_name} {{",
-            f"    receipts: Vec<Receipt>,",
-            f"}}",
-            f"",
-            f"impl {rust_name} {{",
-            f"    fn new() -> Self {{",
-            f"        {rust_name} {{ receipts: Vec::new() }}",
-            f"    }}",
-            f"",
-            f"    fn run(&mut self) {{",
-        ]
-        for stmt in program.statements:
-            rs = self._rust_node(stmt, 12)
-            if rs: lines.append(rs)
-        lines.append(f"    }}")
-        lines.append(f"}}")
-        lines.append(f"")
-        lines.append(f"fn main() {{")
-        lines.append(f"    let mut prog = {rust_name}::new();")
-        lines.append(f"    prog.run();")
-        lines.append(f"    for r in &prog.receipts {{")
-        lines.append(f'        println!("{{}}: {{}}", r.r_type, r.glyph);')
-        lines.append(f"    }}")
-        lines.append(f"}}")
-        return "\n".join(lines)
-
-    def _rust_node(self, node: GlyphNode, indent: int) -> str:
-        pad = " " * indent
-        if node.node_type == "chain":
-            parts = []
-            for child in node.children:
-                if child.node_type == "operator" and child.children:
-                    parts.append(child.value)
-                    parts.append(child.children[0].value)
-                else:
-                    parts.append(child.value)
-            chain_str = " ".join(parts)
-            return f'{pad}self.receipts.push(Receipt {{ r_type: "chain".into(), glyph: "{chain_str}".into(), timestamp: now_sec() }});'
-        elif node.node_type == "glyph":
-            return f'{pad}// glyph: {node.value}'
-        elif node.node_type == "emit":
-            return f'{pad}self.receipts.push(Receipt {{ r_type: "emit".into(), glyph: "".into(), timestamp: now_sec() }});'
-        elif node.node_type == "claim":
-            return f'{pad}self.receipts.push(Receipt {{ r_type: "claim".into(), glyph: "".into(), timestamp: now_sec() }});'
-        elif node.node_type == "prove":
-            return f'{pad}self.receipts.push(Receipt {{ r_type: "prove".into(), glyph: "".into(), timestamp: now_sec() }});'
-        elif node.node_type == "pay":
-            return f'{pad}self.receipts.push(Receipt {{ r_type: "pay".into(), glyph: "".into(), timestamp: now_sec() }});'
-        elif node.node_type == "if":
-            lines = [f'{pad}if true {{ // {node.value}']
-            for child in node.children[1:]:
-                rs = self._rust_node(child, indent + 4)
-                if rs: lines.append(rs)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        elif node.node_type == "loop":
-            lines = [f'{pad}for _ in 0..1 {{ // loop']
-            for child in node.children:
-                rs = self._rust_node(child, indent + 4)
-                if rs: lines.append(rs)
-            lines.append(f'{pad}}}')
-            return "\n".join(lines)
-        return f'{pad}// {node.node_type}: {node.value}'
-
-    def type_check(self, program: GlyphProgram) -> list[str]:
-        errors = []
-        for i, stmt in enumerate(program.statements):
-            if stmt.node_type == "chain":
-                all_vals = self._collect_values(stmt)
-                has_verified = "◎" in all_vals or "✕" in all_vals
-                has_assert = "=" in all_vals
-                if has_assert and not has_verified:
-                    errors.append(f"Statement {i+1}: assertion '=' requires ◎ or ✕")
-        return errors
-
-    def _collect_values(self, node: GlyphNode) -> list[str]:
-        vals = [node.value]
-        for child in node.children:
-            vals.extend(self._collect_values(child))
-        return vals
-
-    def execute(self, source: str) -> dict:
-        result = self.compile(source, targets=["python"])
-        if result["errors"]:
-            result["status"] = "error"
-            result["receipts"] = []
-            result["receipt_count"] = 0
-            return result
-
-        # Execute the transpiled Python
-        import tempfile
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
-            f.write(result["outputs"]["python"])
-            f.flush()
-            try:
-                import importlib.util
-                spec = importlib.util.spec_from_file_location("glyph_module", f.name)
-                mod = importlib.util.module_from_spec(spec)
-                spec.loader.exec_module(mod)
-                cls = getattr(mod, result["program"]["name"] or "GlyphProgram")
-                instance = cls()
-                receipts = instance.run()
-                result["receipts"] = receipts
-                result["status"] = "executed"
-                result["receipt_count"] = len(receipts)
-            except Exception as e:
-                result["status"] = "runtime_error"
-                result["error"] = str(e)
-            finally:
-                os.unlink(f.name)
-
-        return result
+    total = ast.operator_count + ast.noun_count
+    ast.operator_ratio = ast.operator_count / max(total, 1)
+    ast.block_count = ast.max_depth  # approx
+    return ast
 
 
-# --- InkStream: Continuous Pen-Continuity Glyph Engine ---
-# Stores 234,322+ unique glyphs, generates 34/min continuously.
-# Like a WebSocket subscription but with ink — pen never leaves screen.
+# =============================================================================
+# GLYPH FILE COMPILER — AST → executable artifact
+# =============================================================================
 
-class InkStream:
-    """Continuous glyph generation engine.
+def compile_glyph(source: str, filename: str = "") -> dict:
+    """Compile a .glyph source file into an executable artifact."""
+    start = time.time()
 
-    Pen-continuity: glyphs flow as continuous ink, never lifting the pen.
-    Each glyph is chained to the previous via SHA-256.
-    Target: 234,322 unique glyphs, 34 new glyphs/minute.
-    """
+    tokens = lex_glyph(source)
+    ast = parse_glyph(tokens)
 
-    def __init__(self, target_count: int = 234322, rate_per_min: int = 34):
-        self.target_count = target_count
-        self.rate_per_min = rate_per_min
-        self.glyphs: list[dict] = []
-        self.glyph_index: dict[str, int] = {}
-        self.ink_chain: str = ""
-        self.operators = list(TOKEN_TYPES.keys())
-        self.start_time = time.time()
-        self.total_generated = 0
-        self.duplicates_rejected = 0
+    # Generate spinor embeddings for each glyph
+    embeddings = {}
+    for tok in tokens:
+        if tok.glyph not in embeddings:
+            h = hashlib.sha256(tok.glyph.encode()).digest()
+            a = struct.unpack('f', h[0:4])[0]
+            b = struct.unpack('f', h[4:8])[0]
+            norm = math.sqrt(abs(a)**2 + abs(b)**2) or 1.0
+            embeddings[tok.glyph] = {
+                "spinor": [a/norm, b/norm],
+                "bloch_theta": 2 * math.acos(max(0, min(1, abs(a/norm)))),
+                "name": tok.name,
+                "is_operator": tok.is_operator,
+            }
 
-        # Seed with master glyph
-        self._emit_glyph("⧉◇@L → H@L Æ R Æ λ⁻¹ = ◎ → $", "seed")
-
-    def _emit_glyph(self, symbol: str, source: str = "generated") -> dict:
-        """Emit a single glyph, chained to previous via ink hash."""
-        if symbol in self.glyph_index:
-            self.duplicates_rejected += 1
-            return None
-
-        ink_hash = hashlib.sha256((self.ink_chain + symbol).encode()).hexdigest()[:16]
-        self.ink_chain = ink_hash
-
-        glyph = {
-            "id": f"ink_{self.total_generated:06d}",
-            "symbol": symbol,
-            "ink_hash": ink_hash,
-            "prev_ink": self.glyphs[-1]["ink_hash"] if self.glyphs else "",
-            "source": source,
-            "generated_at": time.time() - self.start_time,
-            "index": self.total_generated,
-        }
-        self.glyphs.append(glyph)
-        self.glyph_index[symbol] = self.total_generated
-        self.total_generated += 1
-        return glyph
-
-    def _generate_symbol(self) -> str:
-        """Generate a unique glyph symbol by combining operators."""
-        import random as _r
-        patterns = [
-            lambda: f"{_r.choice(self.operators)}@{_r.choice(['L','T'])}",
-            lambda: f"{_r.choice(self.operators)} Æ {_r.choice(self.operators)}",
-            lambda: f"{_r.choice(self.operators)} → {_r.choice(self.operators)}",
-            lambda: f"{_r.choice(self.operators)} Æ {_r.choice(self.operators)} Æ {_r.choice(self.operators)}",
-            lambda: f"{_r.choice(self.operators)} = {_r.choice(['◎','✕'])}",
-            lambda: f"{_r.choice(self.operators)} → {_r.choice(self.operators)} → {_r.choice(['$','Ω'])}",
-            lambda: f"Σ{_r.choice(self.operators)} → {_r.choice(['M','ZK'])}",
-            lambda: f"{_r.choice(self.operators)} stays @L ; {_r.choice(self.operators)} travels →",
-            lambda: f"λ↓ → {_r.choice(self.operators)}↑ → $↑",
-            lambda: f"{_r.choice(self.operators)} Æ T_window Æ {_r.choice(['◎','✕'])} → {_r.choice(['$','Ω'])}",
-            lambda: f"Antonym:{_r.choice(['classify','blur','invert','redact'])} Æ {_r.choice(self.operators)}",
-            lambda: f"Oracle:{_r.choice(['hidden_test','on_chain','expert'])} → {_r.choice(['◎','✕'])}",
-            lambda: f"Bond:{_r.choice(['posted','returned','slashed'])} Æ {_r.choice(['◎','✕'])}",
-            lambda: f"χ{_r.choice(['visual','file','process','power','snapshot'])} → LCI",
-            lambda: f"Claim:{_r.choice(['artifact_existed','tests_passed','no_secrets'])} Æ ◎",
-            lambda: f"{_r.choice(self.operators)} → R → λ⁻¹ → Δ{_r.choice(self.operators)} ⟲",
-        ]
-        return _r.choice(patterns)()
-
-    def tick(self, count: int = None) -> list[dict]:
-        """Generate one tick of glyphs (default: rate_per_min)."""
-        n = count or self.rate_per_min
-        emitted = []
-        attempts = 0
-        while len(emitted) < n and attempts < n * 10:
-            symbol = self._generate_symbol()
-            glyph = self._emit_glyph(symbol, "tick")
-            if glyph:
-                emitted.append(glyph)
-            attempts += 1
-        return emitted
-
-    def stream(self, n: int = 20) -> list[dict]:
-        """Get the last N glyphs as a live stream."""
-        return self.glyphs[-n:]
-
-    def stats(self) -> dict:
+    # Build artifact
+    def serialize_node(n: GlyphNode) -> dict:
         return {
-            "total_generated": self.total_generated,
-            "unique_stored": len(self.glyphs),
-            "duplicates_rejected": self.duplicates_rejected,
-            "target": self.target_count,
-            "rate_per_min": self.rate_per_min,
-            "progress_pct": round(len(self.glyphs) / self.target_count * 100, 2),
-            "uptime_seconds": round(time.time() - self.start_time, 1),
-            "ink_chain_head": self.ink_chain,
-            "pen_continuity": "unbroken" if self.total_generated > 0 else "idle",
-            "glyphs_remaining": max(0, self.target_count - len(self.glyphs)),
-            "eta_minutes": round(max(0, self.target_count - len(self.glyphs)) / max(self.rate_per_min, 1), 1),
+            "op": n.op,
+            "operands": n.operands,
+            "line": n.line,
+            "children": [serialize_node(c) for c in n.children],
         }
 
-    def to_json(self) -> str:
-        return json.dumps({
-            "stats": self.stats(),
-            "recent": self.stream(50),
-        }, indent=2)
+    artifact = {
+        "type": "glyph_compiled",
+        "source_file": filename,
+        "compiled_at": time.time(),
+        "glyph_count": ast.glyph_count,
+        "operator_count": ast.operator_count,
+        "noun_count": ast.noun_count,
+        "operator_ratio": round(ast.operator_ratio, 4),
+        "node_count": len(ast.nodes),
+        "max_depth": ast.max_depth,
+        "branch_count": ast.branch_count,
+        "loop_count": ast.loop_count,
+        "fn_count": ast.fn_count,
+        "match_count": ast.match_count,
+        "state_count": ast.state_count,
+        "try_count": ast.try_count,
+        "token_count": len(GLYPH_TOKENS),
+        "nodes": [serialize_node(n) for n in ast.nodes],
+        "embeddings": embeddings,
+        "compile_time_ms": round((time.time() - start) * 1000, 2),
+    }
+
+    # SHA256 checksum
+    artifact_str = json.dumps(artifact, sort_keys=True)
+    artifact["sha256"] = hashlib.sha256(artifact_str.encode()).hexdigest()
+
+    return artifact
 
 
-# --- Quantum Glyph Superposition ---
-# Each glyph exists as 3 characters simultaneously (unresolved state).
-# Handwritten strokes superimpose — glitch-like irreducible shadowing.
-# You cannot decompose the superposition. The glyph IS all 3 at once.
-# This yields 345x informational density compression.
-# Target: 39,898,988,9 unique pico-glyphs at microscopic scale.
-
-import itertools as _it
-import struct as _struct
-import zlib as _zlib
-import base64 as _b64
-
-# The 3-layer superposition alphabet — each glyph carries 3 simultaneous states
-# Layer 0: structural (the shape you see)
-# Layer 1: semantic (the meaning it carries)  
-# Layer 2: shadow (the irreducible residue — glitch, the trace of handwriting)
-SUPERPOSITION_LAYERS = ["structural", "semantic", "shadow"]
-
-# Base character sets for each layer
-STRUCTURAL_CHARS = list("◇□⧉HRLλTΣMZKÆ→=Δ◎✕$Ω⟲@;")  # 22 glyphs
-SEMANTIC_CHARS = list("abcdefghijklmnopqrstuvwxyz0123456789")  # 36
-SHADOW_CHARS = list("░▒▓█▌▐▀▄■□●○◆◇►◄▲▼◄►")  # 18
-
-# Compression factor: 345x more data per glyph-bit
-COMPRESSION_FACTOR = 345
-
-
-class QuantumGlyph:
-    """A single glyph in superposition — 3 characters at once.
-
-    The glyph is unresolved. It is not one of three. It IS three simultaneously.
-    Like a handwritten stroke that glitches between meanings.
-    The shadow is irreducible — you cannot separate the layers.
-    """
-
-    __slots__ = ("structural", "semantic", "shadow", "hash", "superposition_id", "compressed_payload")
-
-    def __init__(self, structural: str, semantic: str, shadow: str):
-        self.structural = structural
-        self.semantic = semantic
-        self.shadow = shadow
-        # The superposition hash — combines all 3 layers irreducibly
-        raw = f"{structural}|{semantic}|{shadow}".encode()
-        self.hash = hashlib.sha256(raw).hexdigest()[:16]
-        # Compressed payload — 345x density
-        # Pack 3 characters into compressed bytes
-        payload = _zlib.compress(raw, 9)
-        self.compressed_payload = _b64.b64encode(payload).decode()
-        self.superposition_id = f"qg_{self.hash}"
-
-    def observe(self, layer: int = None) -> str:
-        """Observing collapses superposition to one layer.
-        Without observation, the glyph remains unresolved — all 3 at once.
-        """
-        if layer is None:
-            # Unobserved — return the superposition string (all 3 interleaved)
-            return f"{self.structural}·{self.semantic}·{self.shadow}"
-        elif layer == 0:
-            return self.structural
-        elif layer == 1:
-            return self.semantic
-        elif layer == 2:
-            return self.shadow
-        return self.observe()
-
-    def to_dict(self) -> dict:
-        return {
-            "id": self.superposition_id,
-            "hash": self.hash,
-            "structural": self.structural,
-            "semantic": self.semantic,
-            "shadow": self.shadow,
-            "superposition": self.observe(),
-            "compressed": self.compressed_payload,
-            "compression_ratio": COMPRESSION_FACTOR,
-            "state": "unresolved",
-        }
-
-    def __repr__(self):
-        return f"QuantumGlyph({self.structural}|{self.semantic}|{self.shadow})"
-
-
-class QuantumGlyphFactory:
-    """Generates quantum superposition glyphs at pico scale.
-
-    Target: 39,898,988,9 unique glyphs.
-    Each glyph = 3 characters simultaneously.
-    Compression: 345x more data per bit.
-    The shadow is irreducible — glitch handwriting that cannot be decomposed.
-    """
-
-    def __init__(self, target_count: int = 398989889):
-        self.target = target_count
-        self.glyphs: list[QuantumGlyph] = []
-        self.hash_index: dict[str, int] = {}
-        self.total_generated = 0
-        self.duplicates_rejected = 0
-        self.start_time = time.time()
-        self._combo_iter = self._generate_combinations()
-        self.compression_factor = COMPRESSION_FACTOR
-
-        # Seed with master superposition
-        self._emit("⧉", "master", "█")
-
-    def _generate_combinations(self):
-        """Infinite generator of unique (structural, semantic, shadow) triples."""
-        seen = set()
-        # First pass: cartesian product of all 3 layers
-        for s, m, sh in _it.product(STRUCTURAL_CHARS, SEMANTIC_CHARS, SHADOW_CHARS):
-            key = (s, m, sh)
-            if key not in seen:
-                seen.add(key)
-                yield s, m, sh
-        # Second pass: compound structural (2-char) × semantic × shadow
-        for s1, s2 in _it.product(STRUCTURAL_CHARS, STRUCTURAL_CHARS):
-            for m, sh in _it.product(SEMANTIC_CHARS, SHADOW_CHARS):
-                key = (s1 + s2, m, sh)
-                if key not in seen:
-                    seen.add(key)
-                    yield s1 + s2, m, sh
-        # Third pass: 3-char structural × 2-char semantic × 2-char shadow
-        for s1, s2, s3 in _it.product(STRUCTURAL_CHARS, STRUCTURAL_CHARS, STRUCTURAL_CHARS):
-            for m1, m2 in _it.product(SEMANTIC_CHARS, SEMANTIC_CHARS):
-                for sh1, sh2 in _it.product(SHADOW_CHARS, SHADOW_CHARS):
-                    key = (s1 + s2 + s3, m1 + m2, sh1 + sh2)
-                    if key not in seen:
-                        seen.add(key)
-                        yield s1 + s2 + s3, m1 + m2, sh1 + sh2
-
-    def _emit(self, structural: str, semantic: str, shadow: str) -> QuantumGlyph:
-        """Emit a single quantum glyph. Reject duplicates."""
-        g = QuantumGlyph(structural, semantic, shadow)
-        if g.hash in self.hash_index:
-            self.duplicates_rejected += 1
-            return None
-        self.glyphs.append(g)
-        self.hash_index[g.hash] = self.total_generated
-        self.total_generated += 1
-        return g
-
-    def generate(self, count: int = 1000) -> list[QuantumGlyph]:
-        """Generate N unique quantum glyphs."""
-        emitted = []
-        for _ in range(count):
-            try:
-                s, m, sh = next(self._combo_iter)
-                g = self._emit(s, m, sh)
-                if g:
-                    emitted.append(g)
-            except StopIteration:
-                break
-        return emitted
-
-    def burst(self, count: int = 10000) -> dict:
-        """Burst generate and return stats."""
-        glyphs = self.generate(count)
-        return {
-            "emitted": len(glyphs),
-            "total_unique": self.total_generated,
-            "duplicates_rejected": self.duplicates_rejected,
-            "target": self.target,
-            "progress_pct": round(self.total_generated / self.target * 100, 6),
-            "compression_factor": self.compression_factor,
-            "effective_bits": self.total_generated * self.compression_factor,
-            "elapsed": round(time.time() - self.start_time, 3),
-            "rate_per_sec": round(self.total_generated / max(time.time() - self.start_time, 0.001), 1),
-            "state": "unresolved",
-            "layers": SUPERPOSITION_LAYERS,
-        }
-
-    def stats(self) -> dict:
-        return {
-            "total_unique": self.total_generated,
-            "duplicates_rejected": self.duplicates_rejected,
-            "target": self.target,
-            "progress_pct": round(self.total_generated / self.target * 100, 6),
-            "compression_factor": self.compression_factor,
-            "effective_information_bits": self.total_generated * self.compression_factor,
-            "glyphs_remaining": max(0, self.target - self.total_generated),
-            "elapsed_seconds": round(time.time() - self.start_time, 3),
-            "rate_per_second": round(self.total_generated / max(time.time() - self.start_time, 0.001), 1),
-            "superposition_state": "unresolved",
-            "layers": SUPERPOSITION_LAYERS,
-            "structural_alphabet_size": len(STRUCTURAL_CHARS),
-            "semantic_alphabet_size": len(SEMANTIC_CHARS),
-            "shadow_alphabet_size": len(SHADOW_CHARS),
-            "theoretical_max_combos": len(STRUCTURAL_CHARS) * len(SEMANTIC_CHARS) * len(SHADOW_CHARS),
-            "pico_scale": True,
-            "shadow_irreducible": True,
-            "pen_continuity": "unbroken",
-        }
-
-    def stream(self, n: int = 20) -> list[dict]:
-        """Get the last N quantum glyphs as dictionaries."""
-        return [g.to_dict() for g in self.glyphs[-n:]]
-
-    def observe_glyph(self, index: int, layer: int = None) -> str:
-        """Observe a specific glyph, collapsing its superposition."""
-        if 0 <= index < len(self.glyphs):
-            return self.glyphs[index].observe(layer)
-        return None
-
-    def compress_data(self, data: str) -> dict:
-        """Compress arbitrary data using quantum glyph superposition.
-        345x density: each glyph-bit carries 345x more information.
-        """
-        # Map each byte to a quantum glyph
-        glyphs_used = []
-        for i, ch in enumerate(data):
-            s = STRUCTURAL_CHARS[ord(ch) % len(STRUCTURAL_CHARS)]
-            m = SEMANTIC_CHARS[ord(ch) % len(SEMANTIC_CHARS)]
-            sh = SHADOW_CHARS[ord(ch) % len(SHADOW_CHARS)]
-            g = QuantumGlyph(s, m, sh)
-            glyphs_used.append(g)
-
-        # Compress the glyph sequence
-        raw = "".join(g.observe() for g in glyphs_used)
-        compressed = _zlib.compress(raw.encode(), 9)
-        encoded = _b64.b64encode(compressed).decode()
-
-        return {
-            "input_bytes": len(data),
-            "glyph_count": len(glyphs_used),
-            "compressed_bytes": len(encoded),
-            "compression_ratio": round(len(data) / max(len(encoded), 1), 2),
-            "effective_density": f"{COMPRESSION_FACTOR}x",
-            "compressed": encoded,
-            "first_5_glyphs": [g.to_dict() for g in glyphs_used[:5]],
-            "state": "unresolved_superposition",
-        }
-
-
-# --- CLI ---
-def cli():
-    if len(sys.argv) < 2:
-        print("GlyphLang — Glyphgramming Language Compiler")
-        print()
-        print("Usage:")
-        print("  python3 glyphlang.py compile <file.glyph>   Compile a .glyph program")
-        print("  python3 glyphlang.py run <file.glyph>       Compile + execute")
-        print("  python3 glyphlang.py repl                   Interactive glyph REPL")
-        print("  python3 glyphlang.py ink                    Start InkStream engine")
-        print("  python3 glyphlang.py demo                   Run demo program")
-        sys.exit(0)
-
-    cmd = sys.argv[1]
-    compiler = GlyphCompiler()
-
-    if cmd == "compile":
-        if len(sys.argv) < 3:
-            print("Error: file path required")
-            sys.exit(1)
-        source = Path(sys.argv[2]).read_text()
-        result = compiler.compile(source)
-        print(f"Program: {result['program']['name']}")
-        print(f"Hash: {result['hash']}")
-        print(f"Tokens: {result['token_count']}")
-        print(f"Statements: {result['statement_count']}")
-        print(f"Status: {result['status']}")
-        print(f"Targets: {result['targets']}")
-        if result["errors"]:
-            print(f"Errors: {result['errors']}")
-        for target, code in result["outputs"].items():
-            print()
-            print(f"--- {target.upper()} ---")
-            print(code)
-
-    elif cmd == "run":
-        if len(sys.argv) < 3:
-            print("Error: file path required")
-            sys.exit(1)
-        source = Path(sys.argv[2]).read_text()
-        result = compiler.execute(source)
-        print(f"Program: {result['program']['name']}")
-        print(f"Status: {result['status']}")
-        print(f"Receipts: {result.get('receipt_count', 0)}")
-        if result.get("receipts"):
-            for r in result["receipts"]:
-                print(f"  {r}")
-
-    elif cmd == "repl":
-        print("GlyphLang REPL — type glyph sequences, Ctrl+C to exit")
-        print("Example: ◇@L → H@L Æ R Æ λ⁻¹ = ◎ → $")
-        print()
-        while True:
-            try:
-                line = input("glyph> ")
-                if not line.strip():
-                    continue
-                result = compiler.compile(f"program REPL\n  {line}\nend")
-                print(f"  tokens={result['token_count']} stmts={result['statement_count']} status={result['status']}")
-                if result["errors"]:
-                    for e in result["errors"]:
-                        print(f"  ERROR: {e}")
-            except KeyboardInterrupt:
-                print("\nbye")
-                break
-
-    elif cmd == "ink":
-        print("InkStream — Continuous Pen-Continuity Glyph Engine")
-        print(f"Target: 234,322 glyphs at 34/min")
-        print("Press Ctrl+C to stop")
-        print()
-        stream = InkStream()
-        try:
-            while True:
-                emitted = stream.tick()
-                stats = stream.stats()
-                print(f"[{stats['unique_stored']:6d}/{stats['target']}] {stats['progress_pct']:5.1f}% | +{len(emitted)} glyphs | chain={stats['ink_chain_head']} | pen={stats['pen_continuity']}")
-                time.sleep(60 / stream.rate_per_min)
-        except KeyboardInterrupt:
-            print(f"\nFinal: {stream.stats()}")
-
-    elif cmd == "demo":
-        demo = """program DemoWorkflow
-  ◇@L → H@L
-  H@L Æ R
-  R Æ λ⁻¹
-  λ⁻¹ = ◎
-  ◎ → $
-  emit ◇ Æ R Æ λ⁻¹ → $
-end"""
-        print("--- Source ---")
-        print(demo)
-        print()
-        # Compile to all targets
-        result = compiler.compile(demo)
-        print(f"Program: {result['program']['name']}")
-        print(f"Status: {result['status']}")
-        print(f"Tokens: {result['token_count']}")
-        print(f"Statements: {result['statement_count']}")
-        print(f"Targets: {result['targets']}")
-        print()
-        # Execute Python version
-        exec_result = compiler.execute(demo)
-        print(f"Execution: {exec_result['status']}, receipts={exec_result.get('receipt_count', 0)}")
-        if exec_result.get("receipts"):
-            for r in exec_result["receipts"]:
-                print(f"  {r}")
-        print()
-        # Show all target outputs
-        for target, code in result["outputs"].items():
-            print(f"--- {target.upper()} ---")
-            print(code)
-            print()
-
-    else:
-        print(f"Unknown command: {cmd}")
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    cli()

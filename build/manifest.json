@@ -1,0 +1,115 @@
+{
+  "build_time": 1782510627.438632,
+  "file_count": 21,
+  "glyph_files": 13,
+  "over_files": 8,
+  "operator_ratio": 0.7186,
+  "artifacts": [
+    {
+      "file": "dimensional_layer.glyph",
+      "sha256": "16e207137fab3469dab99d0341cf21b0d9d7d7e8bc891e200287be94b2e166fb",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "example.glyph",
+      "sha256": "fa903b2469bd5a6cc1f25de6f42a49aaa461c8bb262aa1857d0c64d065df2c9b",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "feature_layer.glyph",
+      "sha256": "408b0deb366f996733eeb26debc971d9fcb6c48445baa1fe0e3a0ff96cf966b5",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "glyph_layer.glyph",
+      "sha256": "a7e40a2b4a5e749f6775f79be65247be113f585d534dee92362824168ca80fb4",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "glyphlock_codec.glyph",
+      "sha256": "95cc57c746e25dd139480d4cc56fb4eb9e2dc55acf169a3e6563df01abf7899d",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "glyphlock_unfold.glyph",
+      "sha256": "29d07f7c035cb1f58c4f878b668b90e16385b7f19177b04f34aad671bcfad667",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "grammar_test.glyph",
+      "sha256": "f19ef607a2ce2f680a3fb4fb9983e6b7e589a99f2a99c9251ca76bf44cc09fe5",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "hyperglyph_supervisor.glyph",
+      "sha256": "5f1411fdfe451a3de9df8098a7d3b576e9d5760d72d394fcd9d47062c0500e41",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "jorki_engine.glyph",
+      "sha256": "4c209a7e2f427b8f93c86c806555bb88e4cdf8eddd52950cba35e3d4fb20466b",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "jorki_query.glyph",
+      "sha256": "32f0293a78de0e40174e92595d53833df188723a0adbbf93c2edddeaf823fc43",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "jorki_revoke.glyph",
+      "sha256": "049872a5189a2c2460327016f5d31c0989614bde22c0629cf35671d3f661c227",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "receipt_layer.glyph",
+      "sha256": "d04ed9f87a3930beebfa06063b9b4e6eac3faaa141ed36bcd5d40c0ead4f5a9b",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "supervisor_layer.glyph",
+      "sha256": "94ff0f591851214f0bdaca977f2e2ea7a58918883acda22fb089f121f0d3a3f5",
+      "type": "glyph_compiled"
+    },
+    {
+      "file": "example.over",
+      "sha256": "cb2bf2c491aeda8dd2f81b1cfa593375263816476373b73545413f9f81ed98d5",
+      "type": "over_compiled"
+    },
+    {
+      "file": "glyphlock_pack.over",
+      "sha256": "5a8240f6b64ca9ce759186cea9183bd1245aea7fae7363232202f7a15b6edef2",
+      "type": "over_compiled"
+    },
+    {
+      "file": "glyphlock_unfold.over",
+      "sha256": "bd368c2d54ad8be486740b371f1cc4bd583add68bb6a35961adf656511ebb1a0",
+      "type": "over_compiled"
+    },
+    {
+      "file": "hyperglyph_pipeline.over",
+      "sha256": "f00241c40d160e45123967f772f01cf956f143cb7cfdf4052860e81f924569f6",
+      "type": "over_compiled"
+    },
+    {
+      "file": "jorki_full_gateway.over",
+      "sha256": "1854349b6c703350083e4b1b68e663d34ec8b8ee9782310b06c845b7fec9ecef",
+      "type": "over_compiled"
+    },
+    {
+      "file": "jorki_gateway.over",
+      "sha256": "e306596915d4ffd4e32ebfe1f96593d1d8525a19c126bee08555f558b23dc886",
+      "type": "over_compiled"
+    },
+    {
+      "file": "jorki_llm_session.over",
+      "sha256": "9aa7709ac2a2aed1ef8a57170d63c7215398e852979f8ef54b7050a7b27ab038",
+      "type": "over_compiled"
+    },
+    {
+      "file": "layer4meter.over",
+      "sha256": "c5315925e9ba469c950953e459a0f1f6ad795bda4a39eaf7ca8dceefc5f4bb14",
+      "type": "over_compiled"
+    }
+  ],
+  "sha256": "3c3bc4a3050f5fed18c4900849589f99f80ed0f4c6a237c1a7c05bff2e08dd9f"
+}

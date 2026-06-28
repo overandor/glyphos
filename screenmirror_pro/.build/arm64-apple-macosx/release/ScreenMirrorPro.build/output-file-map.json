@@ -1,0 +1,37 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/ScreenMirrorPro.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/ScreenMirrorPro.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/Sources/ScreenMirrorPro/AuroraLLM.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/AuroraLLM.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/AuroraLLM~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/AuroraLLM.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/AuroraLLM.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/Sources/ScreenMirrorPro/CaptureEngine.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/CaptureEngine.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/CaptureEngine~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/CaptureEngine.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/CaptureEngine.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/Sources/ScreenMirrorPro/ContinuityManager.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/ContinuityManager.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/ContinuityManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/ContinuityManager.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/ContinuityManager.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/Sources/ScreenMirrorPro/MirrorPanel.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/MirrorPanel.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/MirrorPanel~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/MirrorPanel.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/MirrorPanel.dia"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/Sources/ScreenMirrorPro/Theme.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/Theme.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/Theme~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/Theme.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/screenmirror_pro/.build/arm64-apple-macosx/release/ScreenMirrorPro.build/Theme.dia"
+  }
+}

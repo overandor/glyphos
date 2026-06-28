@@ -12,7 +12,7 @@ r = s.get('https://rentmasseur.com/login')
 m = re.search(r'csrf["\s:=]+([A-Za-z0-9+/=]{20,})', r.text)
 csrf = m.group(1) if m else ''
 r = s.post('https://rentmasseur.com/api/v1/login', json={
-    'email': 'karpathianwolf', 'password': 'Lola369!', 'csrf': csrf, 'remember': True
+    'email': 'karpathianwolf', 'password': 'os.environ.get("RM_PASSWORD", "")', 'csrf': csrf, 'remember': True
 })
 s.headers['Authorization'] = 'Bearer ' + r.json()['accessToken']
 print('Login OK')

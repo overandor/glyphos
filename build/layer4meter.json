@@ -1,0 +1,189 @@
+{
+  "type": "over_compiled",
+  "source_file": "layer4meter.over",
+  "compiled_at": 1782507400.167539,
+  "workflow_name": "Layer4Meter",
+  "intent": "capture the invisible compute behind AI work and convert it into a signed production receipt",
+  "step_count": 13,
+  "steps": [
+    {
+      "step": 1,
+      "action": "start idle baseline (5 min)",
+      "outputs": [
+        "idle_baseline"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "start human-only baseline (manual task)",
+      "outputs": [
+        "human_baseline"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "start agent workload (Windsurf/Codex/Claude)",
+      "outputs": [
+        "agent_workload"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "capture screen checkpoints via ScreenCaptureKit",
+      "outputs": [
+        "visual_plane"
+      ]
+    },
+    {
+      "step": 5,
+      "action": "capture file deltas via FSEvents",
+      "outputs": [
+        "file_plane"
+      ]
+    },
+    {
+      "step": 6,
+      "action": "capture process events via Endpoint Security",
+      "outputs": [
+        "process_plane"
+      ]
+    },
+    {
+      "step": 7,
+      "action": "capture power metrics via MetricKit",
+      "outputs": [
+        "power_plane"
+      ]
+    },
+    {
+      "step": 8,
+      "action": "capture Time Machine snapshot delta",
+      "outputs": [
+        "snapshot_plane"
+      ]
+    },
+    {
+      "step": 9,
+      "action": "compute Latent Compute Index (LCI)",
+      "outputs": [
+        "lci_score"
+      ]
+    },
+    {
+      "step": 10,
+      "action": "compute Hidden Compute Lift = agent - human - idle",
+      "outputs": [
+        "hidden_lift"
+      ]
+    },
+    {
+      "step": 11,
+      "action": "compute cost per artifact and agent efficiency",
+      "outputs": [
+        "business_metrics"
+      ]
+    },
+    {
+      "step": 12,
+      "action": "build Merkle receipt with all planes",
+      "outputs": [
+        "substrate_receipt"
+      ]
+    },
+    {
+      "step": 13,
+      "action": "export PDF/ZIP receipt",
+      "outputs": [
+        "exportable_receipt"
+      ]
+    }
+  ],
+  "artifacts": [
+    "substrate_receipt",
+    "exportable_receipt"
+  ],
+  "value_claim": "quantify the invisible compute behind AI work — rank workflows by value per unit of substrate compute",
+  "receipt_chain": [
+    {
+      "step": 1,
+      "action": "start idle baseline (5 min)",
+      "hash": "426d9b25291655d59217a23bb56a00fe9a42a05adf6840cebe3e25ae55903af0",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "step": 2,
+      "action": "start human-only baseline (manual task)",
+      "hash": "b56e5db4bdf8fd779606100b6c2b3d411667edafba13b1ee6117dfffafee2d3d",
+      "prev_hash": "426d9b25291655d59217a23bb56a00fe9a42a05adf6840cebe3e25ae55903af0"
+    },
+    {
+      "step": 3,
+      "action": "start agent workload (Windsurf/Codex/Claude)",
+      "hash": "3a9cd4796350fbf2da06f76a022eab1458a01b517d15defbdd88205e066d1708",
+      "prev_hash": "b56e5db4bdf8fd779606100b6c2b3d411667edafba13b1ee6117dfffafee2d3d"
+    },
+    {
+      "step": 4,
+      "action": "capture screen checkpoints via ScreenCaptureKit",
+      "hash": "a2ee623ecf907f6b70efb8e6f74fa0a9eed247b50e0c3c9c5b8e559ceaed03cf",
+      "prev_hash": "3a9cd4796350fbf2da06f76a022eab1458a01b517d15defbdd88205e066d1708"
+    },
+    {
+      "step": 5,
+      "action": "capture file deltas via FSEvents",
+      "hash": "81fad5467c31a56952f0769905ab6e66778bd13f1ac448e6267133f19bfb1d69",
+      "prev_hash": "a2ee623ecf907f6b70efb8e6f74fa0a9eed247b50e0c3c9c5b8e559ceaed03cf"
+    },
+    {
+      "step": 6,
+      "action": "capture process events via Endpoint Security",
+      "hash": "6321525136f42fa804799c0ecdd87a7ef08055880ab5fe63973ce88b8b76d6c0",
+      "prev_hash": "81fad5467c31a56952f0769905ab6e66778bd13f1ac448e6267133f19bfb1d69"
+    },
+    {
+      "step": 7,
+      "action": "capture power metrics via MetricKit",
+      "hash": "fee8cdf75233310d629a1b24630b4de82a3a99acd139ca0fe2b951acb87ee309",
+      "prev_hash": "6321525136f42fa804799c0ecdd87a7ef08055880ab5fe63973ce88b8b76d6c0"
+    },
+    {
+      "step": 8,
+      "action": "capture Time Machine snapshot delta",
+      "hash": "e3ab09a9c4873db7fc6e6de8a48f0236ac77942e98d8dc029748dea8afc0660f",
+      "prev_hash": "fee8cdf75233310d629a1b24630b4de82a3a99acd139ca0fe2b951acb87ee309"
+    },
+    {
+      "step": 9,
+      "action": "compute Latent Compute Index (LCI)",
+      "hash": "3c8177f81d3681fe42072cf1ea077dbcd3c984b5a05c596fb4ae72801800d7e5",
+      "prev_hash": "e3ab09a9c4873db7fc6e6de8a48f0236ac77942e98d8dc029748dea8afc0660f"
+    },
+    {
+      "step": 10,
+      "action": "compute Hidden Compute Lift = agent - human - idle",
+      "hash": "0dd3de9ba9e3b93be50b59c271ee07a34036208af5b58f6c5ba2b3a765556dee",
+      "prev_hash": "3c8177f81d3681fe42072cf1ea077dbcd3c984b5a05c596fb4ae72801800d7e5"
+    },
+    {
+      "step": 11,
+      "action": "compute cost per artifact and agent efficiency",
+      "hash": "b38f852ab1b6d7a6ab5f82f7fb904589e6857a1d694429fa8d6b3fc0679c013b",
+      "prev_hash": "0dd3de9ba9e3b93be50b59c271ee07a34036208af5b58f6c5ba2b3a765556dee"
+    },
+    {
+      "step": 12,
+      "action": "build Merkle receipt with all planes",
+      "hash": "1f56411b056df66bdf6f6a22f1adeee27ff5a870be3fd72f5ee85f0ac71d8051",
+      "prev_hash": "b38f852ab1b6d7a6ab5f82f7fb904589e6857a1d694429fa8d6b3fc0679c013b"
+    },
+    {
+      "step": 13,
+      "action": "export PDF/ZIP receipt",
+      "hash": "2c6c7bdc63494f493f46848112697ff4ec78e0fedb594023427cba4660263ff4",
+      "prev_hash": "1f56411b056df66bdf6f6a22f1adeee27ff5a870be3fd72f5ee85f0ac71d8051"
+    }
+  ],
+  "merkle_root": "2c6c7bdc63494f493f46848112697ff4ec78e0fedb594023427cba4660263ff4",
+  "compile_time_ms": 0.04,
+  "sha256": "c60d7680d9942c70557d7fb3a644adff97aa23e735d2cbdb704fe26d7681190e"
+}

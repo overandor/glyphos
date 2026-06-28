@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/ReceiptVault.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/ReceiptVault.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/Sources/ReceiptVault/ReceiptVaultApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/ReceiptVaultApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/ReceiptVaultApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/ReceiptVaultApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/ReceiptVault/.build/arm64-apple-macosx/release/ReceiptVault.build/ReceiptVaultApp.dia"
+  }
+}

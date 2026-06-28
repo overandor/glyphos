@@ -1,0 +1,456 @@
+{
+  "type": "glyph_compiled",
+  "source_file": "app_render_layer.glyph",
+  "compiled_at": 1782562937.684173,
+  "glyph_count": 57,
+  "operator_count": 23,
+  "noun_count": 34,
+  "operator_ratio": 0.4035,
+  "node_count": 7,
+  "max_depth": 2,
+  "branch_count": 0,
+  "loop_count": 0,
+  "fn_count": 2,
+  "match_count": 0,
+  "state_count": 0,
+  "try_count": 0,
+  "token_count": 485,
+  "nodes": [
+    {
+      "op": "DERIVE",
+      "operands": [
+        "R",
+        "L",
+        "□"
+      ],
+      "line": 2,
+      "children": []
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "⧉",
+        "⧉"
+      ],
+      "line": 3,
+      "children": []
+    },
+    {
+      "op": "MUL",
+      "operands": [
+        "◇",
+        "◇"
+      ],
+      "line": 4,
+      "children": []
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "H"
+      ],
+      "line": 4,
+      "children": []
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "◎"
+      ],
+      "line": 5,
+      "children": []
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "⌖",
+        "⌖"
+      ],
+      "line": 6,
+      "children": []
+    },
+    {
+      "op": "FN_DEF",
+      "operands": [],
+      "line": 6,
+      "children": [
+        {
+          "op": "FN_DEF",
+          "operands": [],
+          "line": 7,
+          "children": [
+            {
+              "op": "DERIVE",
+              "operands": [],
+              "line": 7,
+              "children": []
+            },
+            {
+              "op": "DOT",
+              "operands": [
+                "⌘",
+                "⌘"
+              ],
+              "line": 8,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "⌥"
+              ],
+              "line": 8,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "␣",
+                "␣"
+              ],
+              "line": 9,
+              "children": []
+            },
+            {
+              "op": "MIDI_HOLD",
+              "operands": [],
+              "line": 9,
+              "children": []
+            },
+            {
+              "op": "MIDI_HOLD",
+              "operands": [],
+              "line": 10,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [],
+              "line": 10,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "⏎",
+                "⏎"
+              ],
+              "line": 11,
+              "children": []
+            },
+            {
+              "op": "MUL",
+              "operands": [
+                "◈",
+                "◈"
+              ],
+              "line": 12,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "◈"
+              ],
+              "line": 12,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "Σ",
+                "Σ"
+              ],
+              "line": 13,
+              "children": []
+            },
+            {
+              "op": "ADD",
+              "operands": [
+                "◎",
+                "◎"
+              ],
+              "line": 14,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "⚡"
+              ],
+              "line": 14,
+              "children": []
+            },
+            {
+              "op": "DERIVE",
+              "operands": [
+                "¤",
+                "¤"
+              ],
+              "line": 15,
+              "children": []
+            },
+            {
+              "op": "IDENTICAL",
+              "operands": [
+                "R",
+                "R"
+              ],
+              "line": 16,
+              "children": []
+            },
+            {
+              "op": "CHAIN",
+              "operands": [
+                "◎",
+                "⊙̂",
+                "R"
+              ],
+              "line": 16,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "embeddings": {
+    "▷": {
+      "spinor": [
+        -1.0,
+        -4.651838719590128e-26
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_START",
+      "is_operator": true
+    },
+    "R": {
+      "spinor": [
+        -2.9176066329748107e-08,
+        -0.9999999999999996
+      ],
+      "bloch_theta": 3.1415925952376607,
+      "name": "RECEIPT",
+      "is_operator": false
+    },
+    "L": {
+      "spinor": [
+        -0.9999999999999805,
+        1.9777965275452742e-07
+      ],
+      "bloch_theta": 3.9537248496477665e-07,
+      "name": "LOCATION",
+      "is_operator": false
+    },
+    "□": {
+      "spinor": [
+        2.962010454420608e-10,
+        1.0
+      ],
+      "bloch_theta": 3.141592652997391,
+      "name": "SQUARE_OPEN",
+      "is_operator": false
+    },
+    "→": {
+      "spinor": [
+        8.851785898045702e-59,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DERIVE",
+      "is_operator": true
+    },
+    "⧉": {
+      "spinor": [
+        -1.0,
+        -1.6218442323364233e-12
+      ],
+      "bloch_theta": 0.0,
+      "name": "STATIONARY",
+      "is_operator": false
+    },
+    "◇": {
+      "spinor": [
+        2.6998718390413642e-05,
+        -0.9999999996355345
+      ],
+      "bloch_theta": 3.141538656153006,
+      "name": "DIAMOND_OPEN",
+      "is_operator": false
+    },
+    "⊗": {
+      "spinor": [
+        1.0,
+        6.380481369403163e-13
+      ],
+      "bloch_theta": 0.0,
+      "name": "MUL",
+      "is_operator": true
+    },
+    "H": {
+      "spinor": [
+        -1.0,
+        -2.2010314836854655e-34
+      ],
+      "bloch_theta": 0.0,
+      "name": "HASH",
+      "is_operator": false
+    },
+    "◎": {
+      "spinor": [
+        -1.0,
+        -1.3661105214792438e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFIED",
+      "is_operator": false
+    },
+    "⌖": {
+      "spinor": [
+        8.672846433041704e-26,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "TARGET",
+      "is_operator": false
+    },
+    "⏦": {
+      "spinor": [
+        1.0,
+        -7.940600395981939e-13
+      ],
+      "bloch_theta": 0.0,
+      "name": "FN_DEF",
+      "is_operator": true
+    },
+    "⌘": {
+      "spinor": [
+        1.0,
+        4.48371902818929e-15
+      ],
+      "bloch_theta": 0.0,
+      "name": "COMMAND_KEY",
+      "is_operator": false
+    },
+    "⊙": {
+      "spinor": [
+        -3.837843061135739e-53,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DOT",
+      "is_operator": true
+    },
+    "⌥": {
+      "spinor": [
+        -3.3637563819576633e-26,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "OPTION_KEY",
+      "is_operator": false
+    },
+    "␣": {
+      "spinor": [
+        -3.3316386090136185e-27,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "SPACE_KEY",
+      "is_operator": false
+    },
+    "⇧": {
+      "spinor": [
+        -4.6208594848220563e-20,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "MIDI_HOLD",
+      "is_operator": true
+    },
+    "⏎": {
+      "spinor": [
+        6.624505033994651e-28,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "RETURN_KEY",
+      "is_operator": false
+    },
+    "◈": {
+      "spinor": [
+        1.0,
+        -6.74250707572453e-23
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROVE",
+      "is_operator": false
+    },
+    "Σ": {
+      "spinor": [
+        1.0,
+        -5.780272432389221e-42
+      ],
+      "bloch_theta": 0.0,
+      "name": "SHARD",
+      "is_operator": false
+    },
+    "⊕": {
+      "spinor": [
+        1.0,
+        4.032662374509044e-40
+      ],
+      "bloch_theta": 0.0,
+      "name": "ADD",
+      "is_operator": true
+    },
+    "⚡": {
+      "spinor": [
+        -4.81409569509479e-08,
+        0.9999999999999988
+      ],
+      "bloch_theta": 3.141592557307879,
+      "name": "CLAIM",
+      "is_operator": false
+    },
+    "¤": {
+      "spinor": [
+        2.5260668213449805e-19,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "PAY",
+      "is_operator": false
+    },
+    "≡": {
+      "spinor": [
+        1.5868278538160468e-48,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "IDENTICAL",
+      "is_operator": true
+    },
+    "⊙̂": {
+      "spinor": [
+        1.2246062966347575e-07,
+        -0.9999999999999925
+      ],
+      "bloch_theta": 3.141592408668534,
+      "name": "EMIT",
+      "is_operator": false
+    },
+    "◀": {
+      "spinor": [
+        -1.0,
+        -1.6799965129496125e-50
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_END",
+      "is_operator": true
+    }
+  },
+  "compile_time_ms": 2.17,
+  "sha256": "55e147119cfe038191da43ea1ead5c3324ab3bb799c407f45e58522d4767ff83"
+}

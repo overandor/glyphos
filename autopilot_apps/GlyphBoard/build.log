@@ -1,0 +1,10 @@
+Building for production...
+[0/4] Write sources
+[1/4] Write swift-version--58304C5D6DBC2206.txt
+[3/5] Compiling GlyphBoard GlyphBoardApp.swift
+[3/5] Write Objects.LinkFileList
+[4/5] Linking GlyphBoard
+Build complete! (3.53s)
+
+warning: 'glyphboard': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /Users/alep/Downloads/windsurf-smoke/autopilot_apps/GlyphBoard/Sources/GlyphBoard/Info.plist

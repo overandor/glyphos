@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/FocusBeam.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/FocusBeam.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/Sources/FocusBeam/FocusBeamApp.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/FocusBeamApp.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/FocusBeamApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/FocusBeamApp.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/autopilot_apps/FocusBeam/.build/arm64-apple-macosx/release/FocusBeam.build/FocusBeamApp.dia"
+  }
+}

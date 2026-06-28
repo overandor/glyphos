@@ -28,7 +28,7 @@ from selenium.common.exceptions import (
 
 BASE_URL = "https://rentmasseur.com"
 USERNAME = "karpathianwolf"
-PASSWORD = "Lola369!"
+PASSWORD = os.environ.get("RM_PASSWORD", "")
 CHROME_PROFILE = "/tmp/rm_action_api"
 OUT = Path(__file__).parent
 CAPTURE_FILE = OUT / "action_api_map.json"

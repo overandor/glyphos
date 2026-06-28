@@ -1,0 +1,13 @@
+{
+  "": {
+    "dependencies": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/QuadrantOSTests.d",
+    "object": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/QuadrantOSTests.o",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/primary.swiftdeps"
+  },
+  "/Users/alep/Downloads/windsurf-smoke/quadrantos/Tests/QuadrantOSTests/BuilderCursorTests.swift": {
+    "object": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/BuilderCursorTests.swift.o",
+    "swiftmodule": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/BuilderCursorTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/BuilderCursorTests.swiftdeps",
+    "diagnostics": "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/release/QuadrantOSTests.build/BuilderCursorTests.dia"
+  }
+}

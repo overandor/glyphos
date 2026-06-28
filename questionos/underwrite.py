@@ -145,13 +145,13 @@ def generate_value_claim_packet(
 
         # Detect gaming flags from collateral score
         gaming = GamingFlags()
-        if score.secret_risk > 0:
+        if score.secret_leak_haircut > 0:
             gaming.unverifiable_delta = False  # secrets don't mean no delta
-        if score.missing_tests > 0:
+        if score.no_tests_haircut > 0:
             gaming.unverifiable_delta = True
-        if score.unverifiable_claims > 0:
+        if getattr(score, 'unverifiable_claims', 0) > 0:
             gaming.unverifiable_delta = True
-        if score.no_users > 0:
+        if getattr(score, 'no_users', 0) > 0:
             gaming.non_poolable = True
         if score.collateral_score < 20:
             gaming.non_poolable = True
@@ -287,7 +287,7 @@ def print_report(vcp: Dict):
 
     print("  COLLATERAL SCORES:")
     for s in vcp['systems']:
-        print(f"    {s['system_name']:30s}  Score: {s['collateral_score']:5.1f}  Grade: {s['grade']}")
+        print(f"    {s['system']:30s}  Score: {s['collateral_score']:5.1f}  Grade: {s['grade']}")
     print()
 
     print("  ADVERSARIAL ATTRIBUTION UNDERWRITING:")

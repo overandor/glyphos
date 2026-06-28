@@ -124,17 +124,21 @@ class BrowserRuntimeCrawler(BaseCrawler):
             start_time = asyncio.get_event_loop().time()
             try:
                 await page.goto(source.url, wait_until="networkidle", timeout=30000)
-                load_time = (asyncio.get_event_loop(). (alternative to Playwright).        metrics.page_load_time_ms = load_time
-        Reqeixcsi as e: drics.conso nstlld.
-       r"""rmance metrics
-       ipt_pat = o    p_pa=h /   uppc  er_mrawi;r.js"
-                        return {
-                            loadTime: timing.loadEventEnd - timing.navigationStart,
-                            domContentLoaded: timing.domContentLoadedEventEnd - timing.navigationStart,
-                            firstPaint: performance.getEntriesByType('paint')[0]?.startTime || 0
-                        };
-                    }
-                """)
+                load_time = (asyncio.get_event_loop().time() - start_time) * 1000
+                metrics.page_load_time_ms = load_time
+            except Exception as e:
+                metrics.console_errors.append(str(e))
+
+            # Performance metrics
+            try:
+                perf_metrics = await page.evaluate("""() => {
+                    const timing = performance.timing;
+                    return {
+                        loadTime: timing.loadEventEnd - timing.navigationStart,
+                        domContentLoaded: timing.domContentLoadedEventEnd - timing.navigationStart,
+                        firstPaint: performance.getEntriesByType('paint')[0]?.startTime || 0
+                    };
+                }""")
                 metrics.first_contentful_paint_ms = perf_metrics.get("firstPaint", 0) * 1000
                 metrics.largest_contentful_paint_ms = perf_metrics.get("loadTime", 0)
             except:
@@ -146,14 +150,7 @@ class BrowserRuntimeCrawler(BaseCrawler):
             metrics.failed_requests = failed_requests
             metrics.network_requests_count = len(network_requests)
             metrics.js_errors_count = len(metrics.console_errors)
-  const networkRequests = [];
-  p ge.on('request', request => {{
-    net orkRequests.push(request.url());
-  }});
-  
-  const st rtT me = Da e.now();
-  await     , timeout: 30000);
-  const loadTime = Date.now( - startTime
+
             # Get memory usage (Chrome-specific)
             try:
                 memory_metrics = await page.evaluate("""
@@ -165,30 +162,23 @@ class BrowserRuntimeCrawler(BaseCrawler):
                             };
                         }
                         return null;
-    networkRequestsCount: networkRequests.length,
                     }
-                """),
-    loadTime,
-    timestamp: new Date().toISOString()
+                """)
                 if memory_metrics:
                     metrics.memory_usage_mb = memory_metrics.get("usedJSHeapSize", 0)
             except:
                 pass
-            
+
             # Take screenshot
-"" 
-        
-        script_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(script_path,  w ) as f:
-            f.write(script)
-                 try:
-                awaitpt_ aphagestr(.scrpt_path), "output_path": str(output_eaeh)nshot(path=str(screenshot_path), full_page=False)
+            try:
+                screenshot_path = self.output_dir / f"{source.source_id}_screenshot.png"
+                await page.screenshot(path=str(screenshot_path), full_page=False)
                 metrics.screenshot_path = str(screenshot_path)
             except Exception as e:
                 metrics.console_warnings.append(f"Screenshot failed: {str(e)}")
-            
+
             await browser.close()
-        
+
         return metrics
     
     async def _launch_puppeteer_script(self, url: str, output_path: Path) -> Dict:

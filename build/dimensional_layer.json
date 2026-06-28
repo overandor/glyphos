@@ -1,0 +1,439 @@
+{
+  "type": "glyph_compiled",
+  "source_file": "dimensional_layer.glyph",
+  "compiled_at": 1782507400.158647,
+  "glyph_count": 64,
+  "operator_count": 32,
+  "noun_count": 32,
+  "operator_ratio": 0.5,
+  "node_count": 32,
+  "nodes": [
+    {
+      "op": "DERIVE",
+      "operands": [
+        "L",
+        "ψ"
+      ],
+      "line": 2
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "χ",
+        "χ"
+      ],
+      "line": 3
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 3
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "TENSOR_BOX",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "TENSOR_ADD",
+      "operands": [],
+      "line": 4
+    },
+    {
+      "op": "TENSOR_ADD",
+      "operands": [],
+      "line": 5
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 5
+    },
+    {
+      "op": "MUL",
+      "operands": [
+        "◎",
+        "χ"
+      ],
+      "line": 6
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "χ"
+      ],
+      "line": 6
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "Σ",
+        "Σ"
+      ],
+      "line": 7
+    },
+    {
+      "op": "IDENTICAL",
+      "operands": [
+        "κ",
+        "κ"
+      ],
+      "line": 8
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "◈",
+        "κ",
+        "∇"
+      ],
+      "line": 10
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "∂",
+        "∂"
+      ],
+      "line": 11
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "∫",
+        "∫"
+      ],
+      "line": 12
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "ω",
+        "ω"
+      ],
+      "line": 13
+    },
+    {
+      "op": "MUL",
+      "operands": [
+        "τ",
+        "τ"
+      ],
+      "line": 14
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "τ"
+      ],
+      "line": 14
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "Σ",
+        "Σ"
+      ],
+      "line": 15
+    },
+    {
+      "op": "DERIVE",
+      "operands": [
+        "◎",
+        "⊙̂",
+        "Σ",
+        "ξ"
+      ],
+      "line": 17
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 17
+    },
+    {
+      "op": "ADD",
+      "operands": [],
+      "line": 18
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 18
+    },
+    {
+      "op": "DIVERGE",
+      "operands": [],
+      "line": 18
+    },
+    {
+      "op": "DIVERGE",
+      "operands": [],
+      "line": 19
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 19
+    },
+    {
+      "op": "THEREFORE",
+      "operands": [],
+      "line": 19
+    },
+    {
+      "op": "THEREFORE",
+      "operands": [],
+      "line": 20
+    },
+    {
+      "op": "DERIVE",
+      "operands": [],
+      "line": 20
+    },
+    {
+      "op": "THEREFORE",
+      "operands": [
+        "◎",
+        "◈"
+      ],
+      "line": 21
+    }
+  ],
+  "embeddings": {
+    "▷": {
+      "spinor": [
+        -1.0,
+        -4.651838719590128e-26
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_START",
+      "is_operator": true
+    },
+    "L": {
+      "spinor": [
+        -0.9999999999999805,
+        1.9777965275452742e-07
+      ],
+      "bloch_theta": 3.9537248496477665e-07,
+      "name": "LOCATION",
+      "is_operator": false
+    },
+    "ψ": {
+      "spinor": [
+        -1.0,
+        -1.6085223224972146e-64
+      ],
+      "bloch_theta": 0.0,
+      "name": "WAVEFUNCTION",
+      "is_operator": false
+    },
+    "→": {
+      "spinor": [
+        8.851785898045702e-59,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "DERIVE",
+      "is_operator": true
+    },
+    "χ": {
+      "spinor": [
+        1.0787618383397742e-08,
+        -0.9999999999999999
+      ],
+      "bloch_theta": 3.1415926320145564,
+      "name": "EIGENVECTOR",
+      "is_operator": false
+    },
+    "⊠": {
+      "spinor": [
+        -1.5819177040950907e-08,
+        -0.9999999999999999
+      ],
+      "bloch_theta": 3.141592621951439,
+      "name": "TENSOR_BOX",
+      "is_operator": true
+    },
+    "⊕": {
+      "spinor": [
+        1.0,
+        4.032662374509044e-40
+      ],
+      "bloch_theta": 0.0,
+      "name": "ADD",
+      "is_operator": true
+    },
+    "⊞": {
+      "spinor": [
+        -1.8736236727487458e-45,
+        1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "TENSOR_ADD",
+      "is_operator": true
+    },
+    "◎": {
+      "spinor": [
+        -1.0,
+        -1.3661105214792438e-22
+      ],
+      "bloch_theta": 0.0,
+      "name": "VERIFIED",
+      "is_operator": false
+    },
+    "⊗": {
+      "spinor": [
+        1.0,
+        6.380481369403163e-13
+      ],
+      "bloch_theta": 0.0,
+      "name": "MUL",
+      "is_operator": true
+    },
+    "Σ": {
+      "spinor": [
+        1.0,
+        -5.780272432389221e-42
+      ],
+      "bloch_theta": 0.0,
+      "name": "SHARD",
+      "is_operator": false
+    },
+    "κ": {
+      "spinor": [
+        1.0,
+        3.8264929443573103e-11
+      ],
+      "bloch_theta": 0.0,
+      "name": "CURVATURE",
+      "is_operator": false
+    },
+    "≡": {
+      "spinor": [
+        1.5868278538160468e-48,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "IDENTICAL",
+      "is_operator": true
+    },
+    "◈": {
+      "spinor": [
+        1.0,
+        -6.74250707572453e-23
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROVE",
+      "is_operator": false
+    },
+    "∇": {
+      "spinor": [
+        9.85422322575087e-08,
+        0.9999999999999951
+      ],
+      "bloch_theta": 3.141592456505329,
+      "name": "GRADIENT",
+      "is_operator": false
+    },
+    "∂": {
+      "spinor": [
+        -6.358649671602754e-44,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "PARTIAL",
+      "is_operator": false
+    },
+    "∫": {
+      "spinor": [
+        2.5899609789233057e-12,
+        -1.0
+      ],
+      "bloch_theta": 3.1415926535846133,
+      "name": "INTEGRAL",
+      "is_operator": false
+    },
+    "ω": {
+      "spinor": [
+        -1.4615294965011576e-41,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "FREQUENCY",
+      "is_operator": false
+    },
+    "τ": {
+      "spinor": [
+        -1.9986000585769362e-44,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589793,
+      "name": "TENSOR",
+      "is_operator": false
+    },
+    "⊙̂": {
+      "spinor": [
+        1.2246062966347575e-07,
+        -0.9999999999999925
+      ],
+      "bloch_theta": 3.141592408668534,
+      "name": "EMIT",
+      "is_operator": false
+    },
+    "ξ": {
+      "spinor": [
+        -3.3856732225071636e-13,
+        -1.0
+      ],
+      "bloch_theta": 3.141592653589116,
+      "name": "RANDOM",
+      "is_operator": false
+    },
+    "∞": {
+      "spinor": [
+        -4.522049094190469e-09,
+        -1.0
+      ],
+      "bloch_theta": 3.1415926445456948,
+      "name": "DIVERGE",
+      "is_operator": true
+    },
+    "∴": {
+      "spinor": [
+        0.002332154445738995,
+        -0.9999972805241228
+      ],
+      "bloch_theta": 3.1369283404701522,
+      "name": "THEREFORE",
+      "is_operator": true
+    },
+    "◀": {
+      "spinor": [
+        -1.0,
+        -1.6799965129496125e-50
+      ],
+      "bloch_theta": 0.0,
+      "name": "PROGRAM_END",
+      "is_operator": true
+    }
+  },
+  "compile_time_ms": 0.89,
+  "sha256": "f2653649ce3f23e22b49a94b52f14c54e65e2f163f8d051142d969b661b5b54b"
+}

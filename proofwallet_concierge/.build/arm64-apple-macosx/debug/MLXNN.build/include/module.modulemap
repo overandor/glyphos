@@ -1,0 +1,3 @@
+module MLXNN {
+    header "/Users/alep/Downloads/windsurf-smoke/proofwallet_concierge/.build/arm64-apple-macosx/debug/MLXNN.build/include/MLXNN-Swift.h"
+}

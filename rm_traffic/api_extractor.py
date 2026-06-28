@@ -26,7 +26,7 @@ from selenium.common.exceptions import (
 
 BASE_URL = "https://rentmasseur.com"
 USERNAME = "karpathianwolf"
-PASSWORD = "Lola369!"
+PASSWORD = os.environ.get("RM_PASSWORD", "")
 CHROME_PROFILE = "/tmp/rm_api_chrome"
 OUT_DIR = Path(__file__).parent
 LOG_FILE = OUT_DIR / "api_capture.log"

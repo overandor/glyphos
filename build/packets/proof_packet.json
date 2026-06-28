@@ -1,0 +1,149 @@
+{
+  "schema": "reality_compiler.proof_packet.v1",
+  "artifact_hash": "981d799866db2363159d29ec3290043120d402e54f07a8aa85b73409da9e99a0",
+  "source_hash": "f6ec58a2b1d4301a9724386c5e8aed4480aa9f965f061557cf522cdffcb78428",
+  "merkle_root": "d887fd1705463382bb66c4ada32843bd2aaa4ee0d4ccefd610a045ea68168a15",
+  "receipt_chain": [],
+  "provenance": {
+    "schema": "reality_compiler.provenance.v1",
+    "subject": "build/AIApp.app",
+    "build_definition": {
+      "intent": "build zip-to-app AI pipeline",
+      "source_dir": "src",
+      "artifacts": [
+        "build/AIApp.app"
+      ],
+      "value_claim": "AI-native zip to .app renderer with binary analysis, entitlements, self-heal"
+    },
+    "run_details": {
+      "agent_id": "windsurf",
+      "build_log": "python3 forge.py ziptoapp",
+      "wall_time_ms": 1.39,
+      "cpu_time_ms": 1.39,
+      "ram_peak_mb": 22.34,
+      "platform": "Darwin"
+    },
+    "materials": [
+      {
+        "path": "app_render_layer.glyph",
+        "hash": "111f6ba39bc07e0f3ac156201d9c1762623bb365a80fcccda41d526019138af4"
+      },
+      {
+        "path": "dimensional_layer.glyph",
+        "hash": "4dd2d0ad532be72f1a39ce525c5d62496890b34d195c65861233326f70651854"
+      },
+      {
+        "path": "example.glyph",
+        "hash": "a108c1c35cf7cfcdfbdc9e92c75fd5c164d8d957c4b7e93e895a6ba5933550f1"
+      },
+      {
+        "path": "example.over",
+        "hash": "dce304241f7cb99cc14fbd7679804d30cfad9c27f676d9039bfedd1d9d951f71"
+      },
+      {
+        "path": "feature_layer.glyph",
+        "hash": "22e7d68a876710a1ed6c2d403bd1babb71b30ab99eaf2b45303775daa37f7f42"
+      },
+      {
+        "path": "glyph_layer.glyph",
+        "hash": "82dcf635847d9793a92b95a965cdb123ca9836258a33d579379bd0c1b045a30b"
+      },
+      {
+        "path": "glyphlock_codec.glyph",
+        "hash": "86b854c833feac0cd2e12b74c7e3a6b585f90320d22be0cb3a29078a69deb7fc"
+      },
+      {
+        "path": "glyphlock_pack.over",
+        "hash": "d1303d236cca82de8fa7a4b9794065db69ad0bf93040e5edff6069a606caa543"
+      },
+      {
+        "path": "glyphlock_unfold.glyph",
+        "hash": "27f97efb3bffe9cbd59eb1fa62360dedf4b30ea81682b8ddcf29759199690cbd"
+      },
+      {
+        "path": "glyphlock_unfold.over",
+        "hash": "a967d706cdfa0b66822b0a5539426ac143496a38a511be44360402fb75e0d417"
+      },
+      {
+        "path": "grammar_test.glyph",
+        "hash": "8a7b9dbcdf7f665e08a0639ff4dbd90662fbe17c38164b796ef33de9ebf10489"
+      },
+      {
+        "path": "hyperglyph_pipeline.over",
+        "hash": "15ca1e1d5ed35d1f78a110e103e6cbea085819d56f55c0ce117d22ee4c06d1ac"
+      },
+      {
+        "path": "hyperglyph_supervisor.glyph",
+        "hash": "08322e08075b4a86409807e5785382b97684dbce24b74ce7b8aa160c05c3a8b7"
+      },
+      {
+        "path": "jorki_engine.glyph",
+        "hash": "130dfe4fddb43385034bad29647c61685faec59185bc322225bd07e55d6e97e8"
+      },
+      {
+        "path": "jorki_full_gateway.over",
+        "hash": "9bc3cb588db904725e1eb6897ffc93dcf2e5ce46cd7f25ae9e1f9185ee7dcc95"
+      },
+      {
+        "path": "jorki_gateway.over",
+        "hash": "faa9256dd10816d978c8464778f9e734b4c540741c66b12e35d74d73701d4932"
+      },
+      {
+        "path": "jorki_llm_session.over",
+        "hash": "45684b3578b2fab8964ad09d43b91ecbd204b4e6fcfccf2a2f195b8ae4d52835"
+      },
+      {
+        "path": "jorki_query.glyph",
+        "hash": "c2f8c251c2526543ed75875c35dbae2f502bdbd626df3adda5e1c2ef546c516d"
+      },
+      {
+        "path": "jorki_revoke.glyph",
+        "hash": "4b46f2234c1b9cbfea0f5c55850786b632e70f0d2f880a82e8864bc71cfe687c"
+      },
+      {
+        "path": "layer4meter.over",
+        "hash": "4dab5fff60a91176369d6382e19b63ee4dd13f141782c9cc7eb43b6c0caeeb40"
+      },
+      {
+        "path": "receipt_layer.glyph",
+        "hash": "7d0a2a24c6e90319223c41a4c345c034c16340e0ab318e99a915675bf6167d51"
+      },
+      {
+        "path": "supervisor_layer.glyph",
+        "hash": "4d80ceb478e6169a2166d634fdfc29ebfa20e9368d7c422cfe42318d83a7a143"
+      },
+      {
+        "path": "zip_to_app.over",
+        "hash": "3644984ccee259fe7563f9c552f9c77484c56c2d0c3c27ed64d7417b6ad1178b"
+      }
+    ],
+    "byproducts": [
+      {
+        "path": "receipts/",
+        "type": "receipt_chain"
+      }
+    ],
+    "generated_at": "2026-06-27T09:06:55.695278",
+    "builder": {
+      "id": "windsurf",
+      "platform": "Darwin",
+      "python": "3.13.12"
+    },
+    "provenance_hash": "c8f80e621f5fe44d5169cee1b8d5b98e19ad4c0252f3559b96cb28fee2d4ab32"
+  },
+  "ledger_verification": {
+    "receipt_ledger": {
+      "total_receipts": 2,
+      "ledger_intact": true,
+      "broken_receipts": []
+    },
+    "proof_chain": {
+      "total_entries": 2,
+      "chain_intact": true,
+      "broken_entries": []
+    },
+    "all_intact": true
+  },
+  "exported_at": "2026-06-27T09:06:55.696925",
+  "packet_hash": "ef732da8ada83a9aa9ccedcd3f675ef9c6447f8ed82465ed04c7723246f5e26b"
+}

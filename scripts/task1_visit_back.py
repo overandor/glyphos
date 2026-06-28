@@ -29,7 +29,7 @@ def main():
     try:
         from rm_traffic.api_client import RentMasseurAPI
         api = RentMasseurAPI()
-        api.login("karpathianwolf", "Lola369!")
+        api.login("karpathianwolf", "os.environ.get("RM_PASSWORD", "")")
         token = api.session.headers.get("Authorization", "").replace("Bearer ", "")
         driver.get(BASE)
         time.sleep(1)

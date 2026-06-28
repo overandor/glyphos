@@ -1,12 +1,16 @@
 """Test script for RECEPT language — interpreter, transpiler, receipts."""
 import py_compile
 import os
+import sys
 import json
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from membra_gpt.recept.interpreter import run_source
 from membra_gpt.recept.transpiler import transpile_source
 
-source = open('membra_gpt/recept/example.recept').read()
+_source_path = os.path.join(os.path.dirname(__file__), 'example.recept')
+source = open(_source_path).read()
 
 # 1. Interpreter
 result = run_source(source, receipts_dir='/tmp/recept_test_receipts')

@@ -1,0 +1,176 @@
+{
+  "type": "over_compiled",
+  "source_file": "jorki_gateway.over",
+  "compiled_at": 1782507400.1673758,
+  "workflow_name": "JorkiFileGateway",
+  "intent": "let LLMs query huge files by URL/index without full upload",
+  "step_count": 12,
+  "steps": [
+    {
+      "step": 1,
+      "action": "right-click file in Finder",
+      "outputs": [
+        "file_selected"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "local C++ engine creates compact searchable index",
+      "outputs": [
+        "local_index"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "compute SHA256 and Merkle root",
+      "outputs": [
+        "file_identity"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "upload index to Hugging Face Space",
+      "outputs": [
+        "query_gateway"
+      ]
+    },
+    {
+      "step": 5,
+      "action": "LLM reads /meta endpoint",
+      "outputs": [
+        "file_metadata"
+      ]
+    },
+    {
+      "step": 6,
+      "action": "LLM reads /summary endpoint",
+      "outputs": [
+        "file_summary"
+      ]
+    },
+    {
+      "step": 7,
+      "action": "LLM searches /search for candidate locations",
+      "outputs": [
+        "search_results"
+      ]
+    },
+    {
+      "step": 8,
+      "action": "LLM retrieves /chunk for necessary ranges",
+      "outputs": [
+        "file_chunks"
+      ]
+    },
+    {
+      "step": 9,
+      "action": "LLM queries /query/sql for read-only SELECT",
+      "outputs": [
+        "sql_results"
+      ]
+    },
+    {
+      "step": 10,
+      "action": "verify merkle_root and receipt fields",
+      "outputs": [
+        "integrity_verified"
+      ]
+    },
+    {
+      "step": 11,
+      "action": "revoke URL when session ends",
+      "outputs": [
+        "url_revoked"
+      ]
+    },
+    {
+      "step": 12,
+      "action": "confirm post-revoke 404",
+      "outputs": [
+        "access_closed"
+      ]
+    }
+  ],
+  "artifacts": [
+    "query_gateway",
+    "file_identity"
+  ],
+  "value_claim": "AI file gateway for large local artifacts — not file transfer, context transfer",
+  "receipt_chain": [
+    {
+      "step": 1,
+      "action": "right-click file in Finder",
+      "hash": "0a456c41c854fe284a77a6f6637790b5fa90ca64f1cc91aede03eaeee82e951f",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "step": 2,
+      "action": "local C++ engine creates compact searchable index",
+      "hash": "33cc09c36b0a367bfd32b88fbafdc2a3bb8190d493253981f69232c1cee1e3a8",
+      "prev_hash": "0a456c41c854fe284a77a6f6637790b5fa90ca64f1cc91aede03eaeee82e951f"
+    },
+    {
+      "step": 3,
+      "action": "compute SHA256 and Merkle root",
+      "hash": "bcd9c9454f2b9fc0899a04b59e7bb8276e15d4141d8760684d924e5edbfe29d5",
+      "prev_hash": "33cc09c36b0a367bfd32b88fbafdc2a3bb8190d493253981f69232c1cee1e3a8"
+    },
+    {
+      "step": 4,
+      "action": "upload index to Hugging Face Space",
+      "hash": "39fa9703bbd9e6beab4baed841ee3e1470df3ee0c90d053609dd9981b15e554d",
+      "prev_hash": "bcd9c9454f2b9fc0899a04b59e7bb8276e15d4141d8760684d924e5edbfe29d5"
+    },
+    {
+      "step": 5,
+      "action": "LLM reads /meta endpoint",
+      "hash": "c92a81b2f159327b7249f647aaf85a97de5d24d0a6ab82caf3b7ff72262d7f36",
+      "prev_hash": "39fa9703bbd9e6beab4baed841ee3e1470df3ee0c90d053609dd9981b15e554d"
+    },
+    {
+      "step": 6,
+      "action": "LLM reads /summary endpoint",
+      "hash": "e81f8e8846fd97ef2f65e51e1b310ca62d83c2c9dacf01a38c1959f2a5f2f0d2",
+      "prev_hash": "c92a81b2f159327b7249f647aaf85a97de5d24d0a6ab82caf3b7ff72262d7f36"
+    },
+    {
+      "step": 7,
+      "action": "LLM searches /search for candidate locations",
+      "hash": "c42b84b24e6ae6382a8625760e19f0317fec02e2f78aa719bbaaa0c52127e065",
+      "prev_hash": "e81f8e8846fd97ef2f65e51e1b310ca62d83c2c9dacf01a38c1959f2a5f2f0d2"
+    },
+    {
+      "step": 8,
+      "action": "LLM retrieves /chunk for necessary ranges",
+      "hash": "1a6d94ddde90e35d7907132a57e42134e04f19c956745764bf4312b5e8f9ed42",
+      "prev_hash": "c42b84b24e6ae6382a8625760e19f0317fec02e2f78aa719bbaaa0c52127e065"
+    },
+    {
+      "step": 9,
+      "action": "LLM queries /query/sql for read-only SELECT",
+      "hash": "ef2ba826b11bb4af2847908d9e8cf1ee4417fe41af63f75d0cd63789a3e22ae3",
+      "prev_hash": "1a6d94ddde90e35d7907132a57e42134e04f19c956745764bf4312b5e8f9ed42"
+    },
+    {
+      "step": 10,
+      "action": "verify merkle_root and receipt fields",
+      "hash": "200b08d5ab18e3cd3624433636638e85609ba203319cfa3d2c9477bc8722f743",
+      "prev_hash": "ef2ba826b11bb4af2847908d9e8cf1ee4417fe41af63f75d0cd63789a3e22ae3"
+    },
+    {
+      "step": 11,
+      "action": "revoke URL when session ends",
+      "hash": "021e49834afd5204aca3f71e47db408ecee0a8323c53bbfd7a80673b3c2e310e",
+      "prev_hash": "200b08d5ab18e3cd3624433636638e85609ba203319cfa3d2c9477bc8722f743"
+    },
+    {
+      "step": 12,
+      "action": "confirm post-revoke 404",
+      "hash": "9de8d1c146010a6ebc864d51055614c444386a3c37d83091d7485056882b3aad",
+      "prev_hash": "021e49834afd5204aca3f71e47db408ecee0a8323c53bbfd7a80673b3c2e310e"
+    }
+  ],
+  "merkle_root": "9de8d1c146010a6ebc864d51055614c444386a3c37d83091d7485056882b3aad",
+  "compile_time_ms": 0.04,
+  "sha256": "d2e32eab53fde5a8f2e91ec54e556d4e531a7aa8bf995703296bf3ae6d147158"
+}

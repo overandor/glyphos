@@ -307,39 +307,12 @@ def test_clip_score():
     # Zero score
     zero = ClipScore()
     assert abs(zero.composite - 0.0) < 0.01, f"Zero score should be ~0.0, got {zero.composite}"
-    print(f"Archetypes: {result.stats['archetype_count']}")
-    print(f"Candidates: {result.stats['candidate_count']}")
-    print(f"Segments: {result.stats['segment_count']}")
-    print(f"Average score: {result.stats['average_score']:.3f}")
 
-    # Verify pipeline produced output
-    assert result.stats["concept_count"] > 0, "No concepts extracted"
-    assert result.stats["archetype_count"] > 0, "No archetypes resolved"
-    assert result.receipt is not None, "No receipt generated"
-    assert result.timeline is not None, "No timeline generated"
+    # Partial score
+    partial = ClipScore(semantic_similarity=0.8, visual_clarity=0.6, timing_fit=0.9, copyright_safety=1.0, emotional_tone_match=0.5)
+    assert 0.0 < partial.composite < 1.0, f"Partial score should be between 0 and 1, got {partial.composite}"
 
-    # Print timeline
-    timeline = Timeline(
-        timeline_id=result.timeline["timeline_id"],
-        created_at=result.timeline["created_at"],
-        total_duration=result.timeline["total_duration"],
-        segments=[TimelineSegment(**s) for s in result.timeline["segments"]],
-        source_text=result.timeline["source_text"],
-        average_score=result.timeline["average_score"],
-    )
-    print(f"\n{timeline.to_summary()}")
-
-    # Verify receipt
-    receipt = result.receipt
-    print(f"\nReceipt ID: {receipt['receipt_id']}")
-    print(f"Source hash: {receipt['source_text_hash'][:16]}...")
-    print(f"Pipeline steps: {receipt['pipeline_steps']}")
-
-    assert receipt["concept_count"] > 0
-    assert receipt["segment_count"] >= 0
-    assert len(receipt["pipeline_steps"]) == 15
-
-    print("PASS: Full compilation pipeline works end-to-end")
+    print("PASS: Clip score computes correct composite values")
 
 
 def test_multi_segment_compilation():

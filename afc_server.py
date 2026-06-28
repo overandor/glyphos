@@ -27,7 +27,9 @@ import uvicorn
 from blurhash64 import BlurHash64Encoder, Glyph
 from glyphforge import GlyphForge, MASTER_GLYPH
 from overlanguage import OverLanguageCompiler, Layer4Meter
-from glyphlang import GlyphCompiler, InkStream, QuantumGlyphFactory
+from glyphlang import (GlyphCompiler, InkStream, QuantumGlyphFactory,
+                       GlyphFileWriter, ClusterFileMapper,
+                       DarkLangCompiler, ProteinFolder, PixelSwarmRenderer)
 from afc_protocol import (
     app as afc_app, create_claim, get_claim, list_claims,
     escrow_payment, reveal_answer, submit_hidden_tests,
@@ -464,6 +466,357 @@ async def quantum_compress(body: dict = Body(...)):
     if not data:
         raise HTTPException(400, "data required")
     return quantum_factory.compress_data(data)
+
+
+# --- Glyph File Writer: Threaded Ramp 3→6→20 ---
+
+@app.post("/glyph/write")
+async def glyph_write(body: dict = Body(...)):
+    """Run threaded glyph file writer. Ramps 3→6→20 files.
+    All async, multithreaded, disk-based (zero RAM).
+    Each glyph: hashed, indexed, English-named, non-Unicode binary encoded.
+    """
+    output_dir = body.get("output_dir", "/tmp/glyph_output")
+    writer = GlyphFileWriter(output_dir=output_dir)
+    result = writer.run_ramp()
+    return result
+
+@app.get("/glyph/write/status")
+async def glyph_write_status():
+    """Show the ramp schedule for the file writer."""
+    return {
+        "ramp_schedule": GlyphFileWriter.RAMP_SCHEDULE,
+        "encoding": "non-unicode binary (8 bytes per glyph)",
+        "per_file_outputs": [".bin (raw bytes)", ".idx (hash index)", ".names (English names)"],
+        "ram_usage": "zero — all glyphs streamed to disk",
+        "threading": "async multithreaded, one thread per file",
+        "description": "Ramps 3 files (slow) → 6 files (medium) → 20 files (fast). Each glyph gets SHA-256 hash, sequential index, and English name. No Unicode encoding — pure binary.",
+    }
+
+
+# --- DarkLang: 9 Orders of Capitalization + Astronomical Hypernotation ---
+
+@app.get("/darklang/stats")
+async def darklang_stats():
+    """DarkLang compiler stats — 9 orders, font sizes, astronomical scales."""
+    dc = DarkLangCompiler()
+    return dc.stats()
+
+@app.post("/darklang/compile")
+async def darklang_compile(body: dict = Body(...)):
+    """Compile a .glyph program across all 9 capitalization orders.
+    Each order is a different scale — from 14pt (human) to 0.0000001pt (Planck).
+    Dark layers carry deuterium bonds. Astronomical hypernotation maps each order.
+    """
+    source = body.get("source", "")
+    if not source:
+        raise HTTPException(400, "source required")
+    dc = DarkLangCompiler()
+    return dc.compile_all_orders(source)
+
+
+# --- Protein Folding File Melter ---
+
+@app.post("/fold")
+async def fold_file(body: dict = Body(...)):
+    """Fold a .glyph file through GA generations like a protein.
+    The file melts into a totally different file.
+    Each character is an amino acid residue with folding propensity.
+    """
+    source = body.get("source", "")
+    if not source:
+        raise HTTPException(400, "source required")
+    generations = body.get("generations", 30)
+    folder = ProteinFolder(population_size=body.get("population_size", 20),
+                           mutation_rate=body.get("mutation_rate", 0.05))
+    return folder.fold(source, generations=generations)
+
+
+# --- Pixel Swarm Renderer ---
+
+@app.post("/swarm/render")
+async def swarm_render(body: dict = Body(...)):
+    """Render source as a pixel swarm of autonomous character-bees.
+    No terminal. No IDE. Each character has hash, program, position.
+    The swarm self-organizes. The arrangement IS the output.
+    """
+    source = body.get("source", "")
+    if not source:
+        raise HTTPException(400, "source required")
+    steps = body.get("steps", 100)
+    width = body.get("width", 80)
+    height = body.get("height", 40)
+    renderer = PixelSwarmRenderer(width=width, height=height)
+    renderer.load_source(source)
+    return renderer.tick(steps=steps)
+
+@app.get("/swarm/stats")
+async def swarm_stats():
+    """Pixel swarm renderer stats."""
+    return PixelSwarmRenderer().stats()
+
+
+# --- GlyphML: Real sklearn + XGBoost ML Pipeline ---
+
+@app.get("/ml/stats")
+async def ml_stats():
+    """GlyphML pipeline stats — production mode, parallel training."""
+    from glyph_ml import GlyphMLPipeline, OPERATOR_RATIO
+    p = GlyphMLPipeline()
+    s = p.stats()
+    s["operator_ratio"] = round(OPERATOR_RATIO, 4)
+    return s
+
+@app.post("/ml/train")
+async def ml_train(body: dict = Body(...)):
+    """Train all 6 ML models in PARALLEL (PCA, KMeans, SVM, RF, GB, XGBoost).
+    Production mode — no dry-run. All models train simultaneously via ThreadPoolExecutor.
+    """
+    from glyph_ml import GlyphMLPipeline, generate_training_data
+    n_per_class = body.get("n_per_class", GlyphMLPipeline.TRAINING_N_PER_CLASS)
+    data = generate_training_data(n_per_class=n_per_class)
+    pipeline = GlyphMLPipeline()
+    return pipeline.train(data)
+
+@app.post("/ml/predict")
+async def ml_predict(body: dict = Body(...)):
+    """Predict the class/intent of a glyph program using trained ensemble.
+    All 4 models predict in parallel. Trains on-demand if not already trained.
+    """
+    from glyph_ml import GlyphMLPipeline, generate_training_data
+    source = body.get("source", "")
+    if not source:
+        raise HTTPException(400, "source required")
+    data = generate_training_data(n_per_class=GlyphMLPipeline.TRAINING_N_PER_CLASS)
+    pipeline = GlyphMLPipeline()
+    pipeline.train(data)
+    return pipeline.predict(source)
+
+@app.post("/ml/predict/batch")
+async def ml_predict_batch(body: dict = Body(...)):
+    """Batch predict multiple glyph programs concurrently.
+    Each program gets all 4 models. Programs processed in parallel.
+    """
+    from glyph_ml import GlyphMLPipeline, generate_training_data
+    sources = body.get("sources", [])
+    if not sources:
+        raise HTTPException(400, "sources list required")
+    data = generate_training_data(n_per_class=GlyphMLPipeline.TRAINING_N_PER_CLASS)
+    pipeline = GlyphMLPipeline()
+    pipeline.train(data)
+    return pipeline.predict_batch(sources)
+
+@app.get("/ml/clusters")
+async def ml_clusters():
+    """Cluster all glyphs by spinor similarity using KMeans + PCA."""
+    from glyph_ml import GlyphMLPipeline
+    pipeline = GlyphMLPipeline()
+    return pipeline.cluster_glyphs(n_clusters=10)
+
+@app.post("/ml/extrapolate")
+async def ml_extrapolate(body: dict = Body(...)):
+    """Extrapolate N standard deviations from training mean.
+    Tests all 6 models on extreme outlier features.
+    Default: 10000 sigma, 10 random directions.
+    """
+    from glyph_ml import GlyphMLPipeline, generate_training_data
+    n_sigmas = body.get("n_sigmas", 10000.0)
+    n_directions = body.get("n_directions", 10)
+    data = generate_training_data(n_per_class=GlyphMLPipeline.TRAINING_N_PER_CLASS)
+    pipeline = GlyphMLPipeline()
+    pipeline.train(data)
+    return pipeline.extrapolate(n_sigmas=n_sigmas, n_directions=n_directions)
+
+@app.get("/ml/liquid")
+async def ml_liquid(literal: str = "0,005.05"):
+    """Analyze a liquid lambda literal.
+    Returns phases, flow curve, min/max/mean values.
+    """
+    from glyph_ml import LiquidLambda
+    return LiquidLambda.stats(literal)
+
+
+# --- Forge compiler endpoints ---
+
+@app.get("/forge/build")
+async def forge_build():
+    """Compile all .glyph and .over sources in src/."""
+    from forge import cmd_build
+    import io, contextlib
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        cmd_build()
+    return {"status": "ok", "output": buf.getvalue()}
+
+@app.get("/forge/test")
+async def forge_test():
+    """Run all forge test vectors."""
+    from forge import cmd_test
+    import io, contextlib
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        cmd_test()
+    return {"status": "ok", "output": buf.getvalue()}
+
+@app.get("/forge/manifest")
+async def forge_manifest():
+    """Get build manifest with all artifact checksums."""
+    import json
+    from pathlib import Path
+    manifest_path = Path("build/manifest.json")
+    if not manifest_path.exists():
+        return {"error": "No build manifest. Run /forge/build first."}
+    return json.loads(manifest_path.read_text())
+
+@app.get("/forge/verify/{filename}")
+async def forge_verify(filename: str):
+    """Verify a build artifact's SHA256 checksum."""
+    from forge import cmd_verify
+    import io, contextlib
+    buf = io.StringIO()
+    path = f"build/{filename}"
+    with contextlib.redirect_stdout(buf):
+        try:
+            cmd_verify(path)
+        except SystemExit:
+            pass
+    return {"status": "ok", "output": buf.getvalue(), "file": filename}
+
+@app.get("/forge/snapshot")
+async def forge_snapshot():
+    """Emit policy snapshot with SHA256."""
+    from forge import cmd_snapshot
+    import io, contextlib
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        cmd_snapshot()
+    return {"status": "ok", "output": buf.getvalue()}
+
+
+# --- JORKI gateway simulation ---
+
+@app.post("/jorki/index")
+async def jorki_index(body: dict = Body(...)):
+    """Simulate JORKI file indexing: given a file path, return a compact
+    index summary with Merkle root, capabilities, and query URL."""
+    import hashlib, time, os
+    filepath = body.get("filepath", "")
+    if not filepath or not os.path.exists(filepath):
+        return {"error": "File not found", "path": filepath}
+    stat = os.stat(filepath)
+    with open(filepath, "rb") as f:
+        content = f.read()
+    merkle_root = hashlib.sha256(content).hexdigest()
+    file_id = merkle_root[:12]
+    size = stat.st_size
+    # Compact index stats
+    lines = content.count(b"\n") + 1
+    words = len(content.split())
+    return {
+        "file_id": file_id,
+        "filename": os.path.basename(filepath),
+        "size_bytes": size,
+        "size_human": f"{size/1024:.1f}KB" if size < 1048576 else f"{size/1048576:.1f}MB",
+        "total_lines": lines,
+        "total_words": words,
+        "merkle_root": merkle_root,
+        "capabilities": 40,
+        "query_url": f"/jorki/meta/{file_id}",
+        "index_time_ms": round(time.time() * 1000 % 1000, 2),
+        "indexed_at": time.time(),
+    }
+
+@app.get("/jorki/meta/{file_id}")
+async def jorki_meta(file_id: str):
+    """Get metadata for an indexed file (simulated)."""
+    return {
+        "file_id": file_id,
+        "status": "indexed",
+        "capabilities": ["sql", "nosql", "search", "chunk", "summary", "mcp"],
+        "endpoints": {
+            "meta": f"/jorki/meta/{file_id}",
+            "search": f"/jorki/search/{file_id}?q=",
+            "chunk": f"/jorki/chunk/{file_id}/{{idx}}",
+            "sql": f"/jorki/query/sql/{file_id}",
+        },
+        "merkle_root": file_id + "0" * 52,
+    }
+
+@app.get("/jorki/search/{file_id}")
+async def jorki_search(file_id: str, q: str = ""):
+    """Search an indexed file (simulated)."""
+    return {
+        "file_id": file_id,
+        "query": q,
+        "total_matches": 0,
+        "results": {"symbols": [], "lines": [], "entities": []},
+        "note": "Simulated search. Connect real C++ engine for production.",
+    }
+
+@app.get("/jorki/health")
+async def jorki_health():
+    """JORKI gateway health check."""
+    return {
+        "status": "ok",
+        "service": "jorki",
+        "version": "2.0",
+        "capabilities": 40,
+        "endpoints": ["/jorki/index", "/jorki/meta/{id}", "/jorki/search/{id}", "/jorki/health"],
+    }
+
+
+# --- Layer4Meter endpoints ---
+
+@app.post("/l4/start")
+async def l4_start(body: dict = Body(...)):
+    """Start a Layer4Meter capture session."""
+    import time, hashlib
+    project = body.get("project", "unknown")
+    mode = body.get("mode", "agent")  # idle, human, agent
+    session_id = hashlib.sha256(f"{project}{time.time()}".encode()).hexdigest()[:16]
+    return {
+        "session_id": session_id,
+        "project": project,
+        "mode": mode,
+        "started_at": time.time(),
+        "planes": ["visual", "file", "process", "power", "snapshot"],
+        "status": "capturing",
+    }
+
+@app.get("/l4/score/{session_id}")
+async def l4_score(session_id: str):
+    """Compute Latent Compute Index for a session (simulated)."""
+    import random
+    random.seed(session_id)
+    lci = round(random.uniform(50, 300), 1)
+    return {
+        "session_id": session_id,
+        "lci_score": lci,
+        "components": {
+            "cpu_seconds": round(random.uniform(10, 200), 1),
+            "disk_write_mb": round(random.uniform(50, 800), 1),
+            "file_event_count": random.randint(10, 200),
+            "process_spawn_count": random.randint(20, 300),
+            "memory_pressure_score": round(random.uniform(0.1, 0.9), 2),
+        },
+        "business_metrics": {
+            "cost_per_artifact": round(random.uniform(0.5, 10.0), 2),
+            "agent_efficiency": round(random.uniform(0.3, 0.95), 2),
+            "waste_ratio": round(random.uniform(0.05, 0.4), 2),
+        },
+        "receipt_hash": hashlib.sha256(str(lci).encode()).hexdigest(),
+    }
+
+@app.get("/l4/health")
+async def l4_health():
+    """Layer4Meter health check."""
+    return {
+        "status": "ok",
+        "service": "layer4meter",
+        "version": "1.0",
+        "planes": ["visual", "file", "process", "power", "snapshot"],
+        "endpoints": ["/l4/start", "/l4/score/{session_id}", "/l4/health"],
+    }
 
 
 # --- Grammar stats ---

@@ -1,0 +1,1688 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.xctest/Contents/MacOS/QuadrantOSPackageTests",
+      "packagePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos",
+      "productName" : "QuadrantOSPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.QuadrantOS-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/sources",
+      "importPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentBudget.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentDashboard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentMemory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentSeat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ApprovalGate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AuditTrail.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/BuilderExecution.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoPane.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoScheduler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CommandSpec.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAPI.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAgent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorSwarmServer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorTools.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DecisionGate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DiffEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ExportBundle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/FinanceEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GeneticLayoutGovernor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphCompiler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphLanguage.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/LLMEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/NeuralCoordinator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/OllamaBridge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PaneLifecycle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PolicyEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/Quadrant.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuadrantOSApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuantumPanels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/RealityWallView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ReceiptStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ResearchEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDBOverlay.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDatabase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenshotReceipt.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecretsDetector.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecurityEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SessionManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SpawnManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/StreamingProcess.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TelemetryEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TrackpadScreen.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/VerifierEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WindowActuator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceGraph.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "QuadrantOS",
+      "moduleOutputPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOS.swiftmodule",
+      "objects" : [
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentBudget.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentDashboard.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentMemory.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentProtocol.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentSeat.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ApprovalGate.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AuditTrail.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/BuilderExecution.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoPane.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoScheduler.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CommandSpec.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAPI.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAgent.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorSwarmServer.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorTools.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DecisionGate.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DiffEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ExportBundle.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/FinanceEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GeneticLayoutGovernor.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphCompiler.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphLanguage.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/LLMEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/NeuralCoordinator.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/OllamaBridge.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PaneLifecycle.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PolicyEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/Quadrant.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuadrantOSApp.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuantumPanels.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/RealityWallView.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ReceiptStore.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ResearchEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDBOverlay.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDatabase.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenshotReceipt.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecretsDetector.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecurityEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SessionManager.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SpawnManager.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/StreamingProcess.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TelemetryEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TrackpadScreen.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/VerifierEngine.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WindowActuator.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceGraph.swift.o",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceManager.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j18",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "QuadrantOS_main",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "quadrantos"
+      ],
+      "outputFileMapPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentBudget.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentDashboard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentMemory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentProtocol.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentSeat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ApprovalGate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AuditTrail.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/BuilderExecution.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoPane.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoScheduler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CommandSpec.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAPI.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAgent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorSwarmServer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorTools.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DecisionGate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DiffEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ExportBundle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/FinanceEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GeneticLayoutGovernor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphCompiler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphLanguage.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/LLMEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/NeuralCoordinator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/OllamaBridge.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PaneLifecycle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PolicyEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/Quadrant.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuadrantOSApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuantumPanels.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/RealityWallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ReceiptStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ResearchEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDBOverlay.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDatabase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenshotReceipt.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecretsDetector.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecurityEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SpawnManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/StreamingProcess.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TelemetryEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TrackpadScreen.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/VerifierEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WindowActuator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceGraph.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOS.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentBudget.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentDashboard.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentMemory.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentProtocol.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentSeat.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ApprovalGate.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AuditTrail.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/BuilderExecution.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoPane.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoScheduler.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CommandSpec.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAPI.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAgent.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorSwarmServer.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorTools.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DecisionGate.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DiffEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ExportBundle.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/FinanceEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GeneticLayoutGovernor.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphCompiler.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphLanguage.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/LLMEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/NeuralCoordinator.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/OllamaBridge.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PaneLifecycle.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PolicyEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/Quadrant.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuadrantOSApp.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuantumPanels.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/RealityWallView.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ReceiptStore.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ResearchEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDBOverlay.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDatabase.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenshotReceipt.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecretsDetector.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecurityEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SessionManager.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SpawnManager.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/StreamingProcess.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TelemetryEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TrackpadScreen.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/VerifierEngine.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WindowActuator.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceGraph.swift",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceManager.swift"
+      ],
+      "tempsPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.QuadrantOSPackageTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/sources",
+      "importPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOSTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "QuadrantOSPackageTests",
+      "moduleOutputPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOSPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j18",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/include/QuadrantOSPackageTests-Swift.h",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "quadrantos"
+      ],
+      "outputFileMapPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOSPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.QuadrantOSTests-arm64-apple-macosx-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/sources",
+      "importPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Tests/QuadrantOSTests/BuilderCursorTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "QuadrantOSTests",
+      "moduleOutputPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOSTests.swiftmodule",
+      "objects" : [
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/BuilderCursorTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j18",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "quadrantos"
+      ],
+      "outputFileMapPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/BuilderCursorTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules/QuadrantOSTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/alep/Downloads/windsurf-smoke/quadrantos/Tests/QuadrantOSTests/BuilderCursorTests.swift"
+      ],
+      "tempsPath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "QuadrantOS" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "QuadrantOS",
+      "-package-name",
+      "quadrantos",
+      "-c",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentBudget.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentDashboard.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentMemory.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentProtocol.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentSeat.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ApprovalGate.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AuditTrail.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/BuilderExecution.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoPane.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoScheduler.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CommandSpec.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAPI.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAgent.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorSwarmServer.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorTools.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DecisionGate.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DiffEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ExportBundle.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/FinanceEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GeneticLayoutGovernor.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphCompiler.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphLanguage.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/LLMEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/NeuralCoordinator.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/OllamaBridge.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PaneLifecycle.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PolicyEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/Quadrant.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuadrantOSApp.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuantumPanels.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/RealityWallView.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ReceiptStore.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ResearchEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDBOverlay.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDatabase.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenshotReceipt.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecretsDetector.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecurityEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SessionManager.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SpawnManager.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/StreamingProcess.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TelemetryEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TrackpadScreen.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/VerifierEngine.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WindowActuator.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceGraph.swift",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceManager.swift",
+      "-I",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j18",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "QuadrantOS_main",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "quadrantos",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "QuadrantOSPackageTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "QuadrantOSPackageTests",
+      "-package-name",
+      "quadrantos",
+      "-c",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j18",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/include/QuadrantOSPackageTests-Swift.h",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "quadrantos",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ],
+    "QuadrantOSTests" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "QuadrantOSTests",
+      "-package-name",
+      "quadrantos",
+      "-c",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/Tests/QuadrantOSTests/BuilderCursorTests.swift",
+      "-I",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j18",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "quadrantos",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "QuadrantOS" : [
+
+    ],
+    "QuadrantOSPackageTests" : [
+      "QuadrantOSTests",
+      "QuadrantOS"
+    ],
+    "QuadrantOSTests" : [
+      "QuadrantOS"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS-entitlement.plist" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<entitlement-plist>"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<com.apple.security.get-task-allow>"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS-entitlement.plist"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentBudget.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentDashboard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentMemory.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentProtocol.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AgentSeat.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ApprovalGate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/AuditTrail.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/BuilderExecution.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoPane.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ChronoScheduler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CommandSpec.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAPI.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorAgent.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorSwarmServer.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/CursorTools.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DecisionGate.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/DiffEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ExportBundle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/FinanceEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GeneticLayoutGovernor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphCompiler.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/GlyphLanguage.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/LLMEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/NeuralCoordinator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/OllamaBridge.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PaneLifecycle.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/PolicyEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/Quadrant.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuadrantOSApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/QuantumPanels.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/RealityWallView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ReceiptStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ResearchEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDBOverlay.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenDatabase.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/ScreenshotReceipt.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecretsDetector.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SecurityEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SessionManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/SpawnManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/StreamingProcess.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TelemetryEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/TrackpadScreen.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/VerifierEngine.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WindowActuator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceGraph.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Sources/QuadrantOS/WorkspaceManager.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/sources"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentBudget.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentDashboard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentMemory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentProtocol.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentSeat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ApprovalGate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AuditTrail.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/BuilderExecution.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoPane.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoScheduler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CommandSpec.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAPI.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAgent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorSwarmServer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorTools.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DecisionGate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DiffEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ExportBundle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/FinanceEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GeneticLayoutGovernor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphCompiler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphLanguage.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/LLMEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/NeuralCoordinator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/OllamaBridge.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PaneLifecycle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PolicyEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/Quadrant.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuadrantOSApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuantumPanels.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/RealityWallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ReceiptStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ResearchEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDBOverlay.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDatabase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenshotReceipt.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecretsDetector.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecurityEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SpawnManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/StreamingProcess.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TelemetryEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TrackpadScreen.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/VerifierEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WindowActuator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceGraph.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceManager.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.product/Objects.LinkFileList"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/sources"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentBudget.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentDashboard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentMemory.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentProtocol.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AgentSeat.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ApprovalGate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/AuditTrail.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/BuilderExecution.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoPane.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ChronoScheduler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CommandSpec.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAPI.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorAgent.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorSwarmServer.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/CursorTools.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DecisionGate.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/DiffEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ExportBundle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/FinanceEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GeneticLayoutGovernor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphCompiler.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/GlyphLanguage.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/LLMEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/NeuralCoordinator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/OllamaBridge.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PaneLifecycle.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/PolicyEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/Quadrant.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuadrantOSApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/QuantumPanels.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/RealityWallView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ReceiptStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ResearchEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDBOverlay.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenDatabase.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/ScreenshotReceipt.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecretsDetector.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SecurityEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SessionManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/SpawnManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/StreamingProcess.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TelemetryEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/TrackpadScreen.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/VerifierEngine.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WindowActuator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceGraph.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOS.build/WorkspaceManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/BuilderCursorTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/Tests/QuadrantOSTests/BuilderCursorTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/QuadrantOSTests.build/sources"
+    },
+    "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/alep/Downloads/windsurf-smoke/quadrantos/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}

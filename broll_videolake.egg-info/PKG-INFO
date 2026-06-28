@@ -29,7 +29,7 @@ Requires-Dist: httpx>=0.25; extra == "dev"
 ---
 title: HyperFlow Ledger OS
 emoji: ⚡
-colorFrom: dark
+colorFrom: purple
 colorTo: blue
 sdk: docker
 app_file: app.py
