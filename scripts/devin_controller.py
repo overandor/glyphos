@@ -1314,6 +1314,17 @@ def cmd_loop(function_id: str = None):
     return result
 
 
+def cmd_social(platform: str = "all"):
+    """Run the social traffic tunnel — Reddit + X.com lead pipeline."""
+    try:
+        from rm_traffic.social_traffic_tunnel import run_tunnel_cycle, show_stats
+    except ImportError as e:
+        print(f"  ⟁ social_traffic_tunnel not available: {e}", file=sys.stderr); return None
+    result = run_tunnel_cycle(cycle_num=0, platforms=platform)
+    show_stats()
+    return result
+
+
 def cmd_money():
     """Run the money loop — closed-loop revenue optimization."""
     if not MONEY_LOOP_AVAILABLE:
@@ -1339,6 +1350,7 @@ def main():
     elif cmd == "rm": cmd_rm()
     elif cmd == "rm-loop": cmd_rm_loop(sys.argv[2] if len(sys.argv) > 2 else "all")
     elif cmd == "loop": cmd_loop(sys.argv[2] if len(sys.argv) > 2 else None)
+    elif cmd == "social": cmd_social(sys.argv[2] if len(sys.argv) > 2 else "all")
     elif cmd == "money": cmd_money()
     else:
         print(f"Unknown command: {cmd}"); print(__doc__); sys.exit(1)
