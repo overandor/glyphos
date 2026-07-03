@@ -37,6 +37,8 @@ class RentMasseurAPI:
         self.username = None
         self.last_request = 0.0
         self.min_request_interval = min_request_interval
+        self._read_cache = {}
+        self._cache_ttl = 15.0
 
     def _wait(self):
         """Respectful rate limiting between requests."""
@@ -48,6 +50,27 @@ class RentMasseurAPI:
     def _get(self, path: str, params: Optional[Dict] = None) -> requests.Response:
         self._wait()
         return self.session.get(f"{API}{path}", params=params, timeout=15)
+
+    def _cached_get(self, path: str, cache_key: str = None) -> Dict:
+        """GET with in-memory TTL cache for read endpoints."""
+        key = cache_key or path
+        now = time.time()
+        cached = self._read_cache.get(key)
+        if cached and (now - cached[0]) < self._cache_ttl:
+            return cached[1]
+        resp = self._get(path)
+        resp.raise_for_status()
+        data = resp.json()
+        self._read_cache[key] = (now, data)
+        return data
+
+    def invalidate_cache(self, *keys: str):
+        """Invalidate specific cache keys after a mutation."""
+        for k in keys:
+            self._read_cache.pop(k, None)
+
+    def invalidate_all(self):
+        self._read_cache.clear()
 
     def _post(self, path: str, json_data: Dict) -> requests.Response:
         self._wait()
@@ -106,14 +129,10 @@ class RentMasseurAPI:
     # ------------------------------------------------------------------
 
     def get_dashboard(self) -> Dict:
-        resp = self._get("/account/dashboard")
-        resp.raise_for_status()
-        return resp.json()
+        return self._cached_get("/account/dashboard", "dashboard")
 
     def get_availability(self) -> Dict:
-        resp = self._get("/account/dashboard/availability")
-        resp.raise_for_status()
-        return resp.json()
+        return self._cached_get("/account/dashboard/availability", "availability")
 
     def set_availability(self, option: int = 1, duration: int = 5) -> Dict:
         """
@@ -123,22 +142,17 @@ class RentMasseurAPI:
         """
         resp = self._put("/account/dashboard/availability", {"option": option, "duration": duration})
         resp.raise_for_status()
+        self.invalidate_cache("availability")
         return resp.json()
 
     def get_ad_statistics(self) -> Dict:
-        resp = self._get("/account/dashboard/ad-statistics")
-        resp.raise_for_status()
-        return resp.json()
+        return self._cached_get("/account/dashboard/ad-statistics", "ad_statistics")
 
     def get_keeponline(self) -> Dict:
-        resp = self._get("/account/keeponline")
-        resp.raise_for_status()
-        return resp.json()
+        return self._cached_get("/account/keeponline", "keeponline")
 
     def get_about(self) -> Dict:
-        resp = self._get("/settings/about")
-        resp.raise_for_status()
-        return resp.json()
+        return self._cached_get("/settings/about", "about")
 
     def get_mailbox(self, page: int = 1, folder: int = 1, sort: int = 1) -> Dict:
         resp = self._get("/mailbox", params={"page": page, "folder": folder, "sort": sort})
@@ -157,21 +171,25 @@ class RentMasseurAPI:
     def set_visibility(self, visible: bool) -> Dict:
         resp = self._put("/settings/visibility", {"isAdHidden": not visible})
         resp.raise_for_status()
+        self.invalidate_cache("keeponline", "dashboard")
         return resp.json()
 
     def set_sms_alerts(self, enabled: bool) -> Dict:
         resp = self._put("/settings/sms", {"sms": enabled})
         resp.raise_for_status()
+        self.invalidate_cache("dashboard")
         return resp.json()
 
     def set_track_actions(self, enabled: bool) -> Dict:
         resp = self._put("/settings/track-actions", {"trackActions": enabled})
         resp.raise_for_status()
+        self.invalidate_cache("dashboard")
         return resp.json()
 
     def set_about(self, headline: str, description: str) -> Dict:
         resp = self._put("/settings/about", {"headline": headline, "description": description})
         resp.raise_for_status()
+        self.invalidate_cache("about")
         try:
             return resp.json()
         except Exception:

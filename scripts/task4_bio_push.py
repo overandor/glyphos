@@ -8,7 +8,7 @@ import json, time, os, sys
 def main():
     from rm_traffic.api_client import RentMasseurAPI
     api = RentMasseurAPI()
-    assert api.login("karpathianwolf", "os.environ.get("RM_PASSWORD", "")"), "Login failed"
+    assert api.login(os.environ.get("RM_USER", ""), os.environ.get("RM_PASS", "")), "Login failed"
 
     bio_id = os.getenv("BIO_ID", "controlled_wolf_v1")
     bio_dir = os.path.join(os.path.dirname(__file__), "..", "content", "bios")

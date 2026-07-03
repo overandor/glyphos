@@ -8,7 +8,7 @@ import json, time, os, sys, requests
 def main():
     from rm_traffic.api_client import RentMasseurAPI
     api = RentMasseurAPI()
-    assert api.login("karpathianwolf", "os.environ.get("RM_PASSWORD", "")"), "Login failed"
+    assert api.login(os.environ.get("RM_USER", ""), os.environ.get("RM_PASS", "")), "Login failed"
 
     # Collect real metrics
     dash = api.get_dashboard()
