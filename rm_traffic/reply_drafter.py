@@ -1,13 +1,13 @@
 """
-LLM Reply Drafter — generates booking-oriented replies using LLM.
+LLM Reply Drafter — template-first reply drafting for client messages.
+
+Template is canonical. LLM is optional polish only (local, 8s timeout).
+Uses local-only providers for private client text:
+  template canonical → local Ollama/Transformers optional polish → template retained if invalid.
+No Groq. No OpenRouter. No cloud fallback.
 
 Drafts replies, does NOT auto-send. Human approval required for first contact.
-Safe template auto-reply only for repeat/opt-in clients.
-
-Uses the existing llm_client.py multi-provider fallback:
-  transformers.js (local, free) → ollama → groq → openrouter
-
-Falls back to fixed templates if LLM is unavailable.
+Ready-for-fast-approval only for repeat/opt-in clients with valid templates.
 
 Reply structure (always):
   - availability
@@ -24,11 +24,17 @@ import json
 import logging
 import os
 import re
-from dataclasses import dataclass
-from typing import Dict, List, Optional
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional, Tuple
 
 from .intent_engine import classify, IntentResult
-from .llm_client import generate_with_fallback
+
+# Local-only LLM imports — NO cloud providers for private client text
+try:
+    from .llm_client import LLMClient
+    _HAS_LLM = True
+except ImportError:
+    _HAS_LLM = False
 
 log = logging.getLogger("reply_drafter")
 
@@ -61,61 +67,37 @@ class DraftReply:
     risk_level: str = RISK_SAFE
     needs_human_approval: bool = True
     reason: str = ""
-    suggested_time_slots: List[str] = None
+    suggested_time_slots: List[str] = field(default_factory=list)
     error: str = ""
 
-    def __post_init__(self):
-        if self.suggested_time_slots is None:
-            self.suggested_time_slots = []
 
-
-def _build_prompt(message: str, intent: IntentResult, context: Dict) -> str:
-    """Build LLM prompt for reply generation."""
+def _build_polish_prompt(template_text: str, message: str, intent: IntentResult, context: Dict) -> str:
+    """Build LLM prompt for polishing an existing template draft.
+    The model rewrites the template for clarity — it does NOT generate from scratch."""
     username = context.get("username", "")
-    is_premium = context.get("is_premium", False)
     is_repeat = intent.classification in ("repeat_client", "high_value_repeat")
-    rate = context.get("rate", "$200")
-    phone = context.get("phone", "")
-    location = context.get("location", "Manhattan incall")
 
-    intent_desc = {
-        "booking_now": "Client is asking to book now — wants time/availability today",
-        "price_question": "Client is asking about rates",
-        "availability_question": "Client is asking when you're available",
-        "location_question": "Client is asking about location/incall/outcall",
-        "repeat_client": "Returning client — has booked before",
-        "high_value_repeat": "High-value returning client with booking intent",
-        "ghosted_lead": "Lead that went silent and came back",
-        "unknown": "General inquiry — intent unclear",
-    }.get(intent.classification, "General inquiry")
+    prompt = f"""Rewrite this existing draft only for clarity. Do not add facts. Do not change rates, location, session length, phone, or availability. Return one reply only.
 
-    prompt = f"""You are a professional massage therapist replying to a client message on RentMasseur.
+Existing draft:
+"{template_text}"
 
-Client message: "{message[:500]}"
+Client message: "{message[:300]}"
 Client username: {username}
-Client intent: {intent.classification} (confidence: {intent.confidence:.2f})
-Intent description: {intent_desc}
-Booking probability: {intent.booking_probability:.2f}
+Intent: {intent.classification}
 Is repeat client: {is_repeat}
-Is premium member: {is_premium}
-
-Your business:
-- Deep tissue & sports recovery massage
-- {location}
-- Rate: {rate} for 60 min, $280 for 90 min, $360 for 120 min
-- Contact: text {phone} to book
 
 Rules:
-- Professional tone, no sexual language, no innuendo
-- Include: availability, location, rate, session length
-- End with ONE next-step question
-- Keep under 80 words
-- Do not pressure or push
-- If repeat client, acknowledge familiarity
-- If price question, state rates clearly
-- If booking intent, offer 2-3 specific time slots
+- Rewrite the existing draft for clarity and warmth only
+- Do NOT add new facts, rates, locations, or availability not in the existing draft
+- Do NOT change the rate, location, session length, or phone number
+- Keep it under 80 words
+- End with exactly ONE next-step question
+- Professional tone, first person singular (I/my, not we/us/our)
+- No sexual language, no innuendo
+- Return only the rewritten reply text, nothing else
 
-Write the reply:"""
+Rewritten reply:"""
 
     return prompt
 
@@ -224,9 +206,128 @@ def _determine_risk(intent: IntentResult, is_first_contact: bool = True) -> str:
     return RISK_SAFE
 
 
+def validate_reply_text(text: str, context: Dict = None) -> Tuple[bool, str]:
+    """Validate reply text against quality and safety rules.
+    Returns (is_valid, reason)."""
+    if not text or not text.strip():
+        return False, "empty_text"
+
+    if context is None:
+        context = {}
+
+    text_lower = text.lower()
+    word_count = len(text.split())
+
+    # ─── Reject: bad pronouns (first person plural = wrong voice) ───
+    if re.search(r'\b(we|us|our)\b', text_lower):
+        return False, "first_person_plural_detected"
+
+    # ─── Reject: "app" reference ───
+    if re.search(r'\bapp\b', text_lower):
+        return False, "app_reference_detected"
+
+    # ─── Reject: known bad phrases ───
+    bad_phrases = ["sorry to hear", "reaching out to us", "last-minute app",
+                   "thank you for reaching out"]
+    if any(p in text_lower for p in bad_phrases):
+        return False, f"bad_phrase_detected"
+
+    # ─── Reject: sexual/innuendo terms ───
+    sexual_kw = ["sexual", "erotic", "sensual", "nude", "naked", "happy ending",
+                 "full service", "extras", "menu", "gfe", "bb", "bareback"]
+    if any(kw in text_lower for kw in sexual_kw):
+        return False, "sexual_innuendo_detected"
+
+    # ─── Reject: phone number when not allowed ───
+    allow_phone = os.environ.get("ALLOW_PHONE_IN_DRAFT", "false").lower() == "true"
+    if not allow_phone:
+        phone_in_context = context.get("phone", "")
+        # Check for raw phone numbers (not the word "text")
+        if re.search(r'\b\d{3}[-.]?\d{3}[-.]?\d{4}\b', text):
+            return False, "raw_phone_in_draft_not_allowed"
+        if phone_in_context and phone_in_context in text and not allow_phone:
+            return False, "phone_in_draft_not_allowed"
+
+    # ─── Reject: over 80 words ───
+    if word_count > 80:
+        return False, f"too_many_words ({word_count})"
+
+    # ─── Reject: no question mark (no next-step question) ───
+    if "?" not in text:
+        return False, "no_next_step_question"
+
+    # ─── Reject: multiple questions (rule is one next-step question) ───
+    question_count = text.count("?")
+    if question_count > 2:  # allow up to 2 for compound questions like "What time and duration?"
+        return False, f"too_many_questions ({question_count})"
+
+    # ─── Reject: missing rate (for booking/price/location intents) ───
+    rate = context.get("rate", "$200")
+    intent_class = context.get("intent_class", "")
+    if intent_class in ("booking_now", "price_question", "location_question", "availability_question"):
+        if rate and rate not in text:
+            return False, "missing_rate"
+
+    # ─── Reject: missing location ───
+    location = context.get("location", "Manhattan")
+    if location and location.lower() not in text_lower and "manhattan" not in text_lower:
+        return False, "missing_location"
+
+    # ─── Reject: missing session length ───
+    if intent_class in ("booking_now", "price_question"):
+        if not re.search(r'\b(60|90|120)\s*min', text_lower) and "min" not in text_lower:
+            return False, "missing_session_length"
+
+    return True, "valid"
+
+
+def _try_local_llm_polish(template_text: str, message: str, intent: IntentResult,
+                            context: Dict, timeout_seconds: int = 8) -> Optional[str]:
+    """Try local-only LLM (Ollama or Transformers.js) for light polish.
+    Rewrites the existing template — does NOT generate from scratch.
+    NO cloud providers. Returns None if unavailable or too slow."""
+    if not _HAS_LLM:
+        return None
+
+    import threading
+
+    prompt = _build_polish_prompt(template_text, message, intent, context)
+
+    result = [None]
+    def _call():
+        try:
+            # Try Ollama only (local), then Transformers.js (local)
+            # NO Groq, NO OpenRouter — private client text stays local
+            for provider, model in [("ollama", "llama3.2"), ("transformers", None)]:
+                try:
+                    client = LLMClient(provider=provider, model=model)
+                    resp = client.generate(prompt, max_tokens=150)
+                    if resp and len(resp) > 20:
+                        result[0] = resp
+                        return
+                except Exception:
+                    continue
+        except Exception:
+            return
+
+    t = threading.Thread(target=_call, daemon=True)
+    t.start()
+    t.join(timeout=timeout_seconds)
+
+    if t.is_alive():
+        log.info(f"  ⟁ Local LLM timed out ({timeout_seconds}s) — using template")
+        return None
+
+    return result[0]
+
+
 def draft_reply(message: str, context: Dict = None) -> DraftReply:
     """
-    Generate an LLM-powered draft reply for a client message.
+    Generate a template-first draft reply for a client message.
+
+    Template is canonical. LLM is optional polish only (local, 8s timeout).
+    No cloud providers ever called on private client text.
+    All first-contact drafts are approval-gated.
 
     Args:
         message: The client's message text
@@ -259,26 +360,29 @@ def draft_reply(message: str, context: Dict = None) -> DraftReply:
         draft.reason = f"BLOCKED: {intent.classification} with risk flags {intent.risk_flags}"
         return draft
 
-    # Try LLM generation
-    prompt = _build_prompt(message, intent, context)
-    llm_response = generate_with_fallback(prompt, max_tokens=200)
+    # ─── Template first (canonical) ───
+    draft.reply_text = _template_fallback(intent, context)
+    draft.reason += " | template-canonical"
+    log.info(f"  ◉ Template reply for {draft.username}: {draft.reply_text[:80]}...")
 
-    if llm_response:
-        draft.reply_text = _clean_llm_output(llm_response)
-        draft.reason += " | LLM-generated"
-        log.info(f"  ◉ LLM reply for {draft.username}: {draft.reply_text[:80]}...")
-    else:
-        # Fallback to template
-        draft.reply_text = _template_fallback(intent, context)
-        draft.reason += " | template-fallback"
-        log.info(f"  ◉ Template reply for {draft.username}: {draft.reply_text[:80]}...")
+    # ─── Optional local LLM polish (8s timeout, no cloud) ───
+    polished = _try_local_llm_polish(draft.reply_text, message, intent, context, timeout_seconds=8)
+    if polished:
+        cleaned = _clean_llm_output(polished)
+        # Validate polished output against strict quality rules
+        validation_context = {**context, "intent_class": intent.classification}
+        is_valid, reject_reason = validate_reply_text(cleaned, validation_context)
+        if is_valid:
+            draft.reply_text = cleaned
+            draft.reason += " | llm-polished"
+            log.info(f"  ◉ Polished reply for {draft.username}: {draft.reply_text[:80]}...")
+        else:
+            draft.reason += f" | llm-polish-rejected:{reject_reason}"
+            log.info(f"  ⟁ LLM polish rejected ({reject_reason}) — keeping template")
 
-    # Approval gate
+    # Approval gate — all first contact needs approval
     is_repeat = intent.classification in ("repeat_client", "high_value_repeat")
-    is_safe_template = draft.reason.endswith("template-fallback")
-
-    if is_repeat and is_safe_template and not context.get("is_first_contact", True):
-        # Repeat client + safe template + not first contact = can auto-send
+    if is_repeat and not context.get("is_first_contact", True):
         draft.needs_human_approval = False
     else:
         draft.needs_human_approval = True
@@ -333,7 +437,7 @@ def format_drafts_summary(drafts: List[DraftReply]) -> str:
             lines.append(f"     {d.reason}")
             continue
 
-        approval = "🔒 approval" if d.needs_human_approval else "⚡ auto-ok"
+        approval = "🔒 approval" if d.needs_human_approval else "⚡ ready_for_fast_approval"
         lines.append(f"  ◉ {d.username} [{d.intent_class}] conf={d.confidence:.2f} {approval}")
         lines.append(f"    Reply: \"{d.reply_text[:120]}\"")
         if d.suggested_time_slots:

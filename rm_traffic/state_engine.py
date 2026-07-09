@@ -61,6 +61,11 @@ class TrafficState:
     revenue_pressure: float = 0.0
     pressure_components: Dict[str, float] = field(default_factory=dict)
 
+    # Endpoint health (for measurement validity)
+    endpoint_errors: List[str] = field(default_factory=list)
+    endpoint_error_count: int = 0
+    measurement_valid: bool = True
+
     # State hash (for receipt comparison)
     state_hash: str = ""
 
@@ -68,7 +73,7 @@ class TrafficState:
     _raw: Dict[str, Any] = field(default_factory=dict)
 
     def compute_hash(self) -> str:
-        d = {k: v for k, v in asdict(self).items() if k not in ("_raw", "mailbox_leads", "pressure_components")}
+        d = {k: v for k, v in asdict(self).items() if k not in ("_raw", "mailbox_leads", "pressure_components", "endpoint_errors")}
         self.state_hash = hashlib.sha256(
             json.dumps(d, sort_keys=True, default=str).encode()
         ).hexdigest()[:16]
@@ -94,6 +99,8 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
         state.profile_hidden = dash.get("isAdHidden", False)
         log.info(f"  ◉ Dashboard: views={state.views} contacts={state.contact_clicks} CTR={state.contact_rate}%")
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"dashboard:{err[:60]}")
         log.warning(f"  ⟁ dashboard error: {e}")
 
     # 2. Ad statistics — same profileStatistics but with visits breakdown
@@ -108,6 +115,8 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
             if state.views > 0:
                 state.contact_rate = round(state.contact_clicks / state.views * 100, 2)
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"ad_statistics:{err[:60]}")
         log.warning(f"  ⟁ ad_statistics error: {e}")
 
     # 3. KeepOnline — new emails, new visits, frozen status
@@ -119,6 +128,8 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
         state.profile_hidden = state.profile_hidden or keep.get("isAdHidden", False)
         log.info(f"  ◉ KeepOnline: new_emails={state.new_emails} new_visits={state.new_visits}")
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"keeponline:{err[:60]}")
         log.warning(f"  ⟁ keeponline error: {e}")
 
     # 4. Availability — selected label + countdown
@@ -132,6 +143,8 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
             state.availability_seconds_left = max(0, state.availability_countdown - time.time())
         log.info(f"  ◉ Availability: {state.available_status} ({state.availability_seconds_left:.0f}s left)")
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"availability:{err[:60]}")
         log.warning(f"  ⟁ availability error: {e}")
 
     # 5. About — headline
@@ -143,6 +156,8 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
         state.headline = assets.get("headline", "")
         log.info(f"  ◉ Headline: '{state.headline}'")
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"about:{err[:60]}")
         log.warning(f"  ⟁ about error: {e}")
 
     # 6. Mailbox — leads
@@ -188,6 +203,8 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
 
         log.info(f"  ◉ Mailbox: {state.mailbox_count} conversations, intent={state.mailbox_intent_score}")
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"mailbox:{err[:60]}")
         log.warning(f"  ⟁ mailbox error: {e}")
 
     # 7. Search rank (optional — can be slow)
@@ -207,7 +224,17 @@ def collect_state(api, tenant_id: str = "") -> TrafficState:
                 break
         log.info(f"  ◉ Search: rank=#{state.search_rank} of {state.search_total}")
     except Exception as e:
+        err = str(e)
+        state.endpoint_errors.append(f"search:{err[:60]}")
         log.warning(f"  ⟁ search error: {e}")
+
+    # Determine measurement validity — 3+ endpoint errors = invalid
+    state.endpoint_error_count = len(state.endpoint_errors)
+    critical_endpoints = {"dashboard", "ad_statistics", "keeponline", "availability", "mailbox"}
+    critical_failures = sum(1 for e in state.endpoint_errors if any(c in e for c in critical_endpoints))
+    if critical_failures >= 3:
+        state.measurement_valid = False
+        log.warning(f"  ⟁ MEASUREMENT INVALID: {critical_failures} critical endpoint failures")
 
     # Compute revenue pressure
     compute_revenue_pressure(state)

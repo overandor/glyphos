@@ -45,7 +45,7 @@ from .api_client import RentMasseurAPI
 from .state_engine import collect_state, TrafficState
 from .action_bandit import select_action, record_outcome, ActionOutcome, explain_last_action, ACTIONS
 from .intent_engine import classify_mailbox
-from .reward_engine import compute_delta, compute_reward, delta_to_dict
+from .reward_engine import compute_delta, compute_reward, delta_to_dict, is_measurement_valid
 from .receipts import write_receipt, Receipt, get_recent_receipts, verify_chain
 
 log = logging.getLogger("overclock_ai")
@@ -117,6 +117,28 @@ def execute_action(action: str, api: RentMasseurAPI, state: TrafficState,
                 "auto_ok": len([d for d in drafts if not d.needs_human_approval and d.risk_level != "blocked"]),
                 "classifications": [d.intent_class for d in drafts if d.risk_level != "blocked"],
                 "sample_draft": drafts[0].reply_text[:100] if drafts else "",
+            }
+
+        elif action == "visitor_revisit":
+            from .visitor_revisit_engine import build_revisit_queue, write_revisit_queue, format_queue_summary
+            queue = build_revisit_queue(api, state, tenant_id)
+            filepath = write_revisit_queue(queue)
+            print(format_queue_summary(queue))
+            p0 = len([c for c in queue if c.urgency == "P0_revisit_now"])
+            p1 = len([c for c in queue if c.urgency == "P1_reengage_today"])
+            warm = len([c for c in queue if c.urgency == "WARM_observe"])
+            ignored = len([c for c in queue if c.urgency == "IGNORE"])
+            drafts_queued = len([c for c in queue if c.draft_text and c.approval_required])
+            result["result"] = {
+                "total_contacts": len(queue),
+                "p0_revisit_now": p0,
+                "p1_reengage_today": p1,
+                "warm_observe": warm,
+                "ignored": ignored,
+                "drafts_queued": drafts_queued,
+                "needs_approval": drafts_queued,
+                "auto_ok": 0,  # all approval-gated
+                "csv_path": filepath,
             }
 
         elif action == "city_rank_scan":
@@ -205,38 +227,57 @@ def run_cycle(tenant_id: str = "", username: str = "", password: str = "") -> Di
     api.invalidate_cache()  # clear all caches
     state_after = collect_state(api, tenant_id)
     print(f"  ◉ State hash: {state_after.state_hash}")
+    if not state_after.measurement_valid:
+        print(f"  ⟁ MEASUREMENT INVALID: {state_after.endpoint_error_count} endpoint errors")
+        print(f"  ⟁ Errors: {state_after.endpoint_errors}")
 
     # 5. Compute reward
     print("\n[REWARD] Computing metric delta and reward...")
+    measurement_valid = is_measurement_valid(state_before, state_after)
     delta = compute_delta(state_before, state_after)
-    reward = compute_reward(delta, action, error)
+
+    # For reply_draft_queue and visitor_revisit, pass action_result for draft-quality-based reward
+    action_result = exec_result.get("result", {}) if action in ("reply_draft_queue", "visitor_revisit") else None
+    reward = compute_reward(delta, action, error,
+                             measurement_valid=measurement_valid,
+                             action_result=action_result)
     print(f"  ◉ Delta: {json.dumps(delta_to_dict(delta))}")
     print(f"  ◉ Reward: {reward:.3f}")
+    if not measurement_valid:
+        print(f"  ⟁ MEASUREMENT INVALID — reward=0.0, bandit NOT updated")
 
-    # 6. Record outcome for bandit learning
-    outcome = ActionOutcome(
-        action=action,
-        reward=reward,
-        metric_delta=delta_to_dict(delta),
-        state_before_hash=state_before.state_hash,
-        state_after_hash=state_after.state_hash,
-        error=error,
-        timestamp=datetime.now(timezone.utc).isoformat(),
-    )
-    record_outcome(outcome, tenant_id)
+    # 6. Record outcome for bandit learning (skip if measurement invalid)
+    if measurement_valid:
+        outcome = ActionOutcome(
+            action=action,
+            reward=reward,
+            metric_delta=delta_to_dict(delta),
+            state_before_hash=state_before.state_hash,
+            state_after_hash=state_after.state_hash,
+            error=error,
+            timestamp=datetime.now(timezone.utc).isoformat(),
+        )
+        record_outcome(outcome, tenant_id)
+        print(f"  ◉ Recorded: {action} reward={reward:.3f}")
+    else:
+        print(f"  ⟁ SKIPPED bandit update — measurement invalid")
 
     # 7. Write tamper-evident receipt
+    receipt_reason = f"ROA-selected: pressure={state_before.revenue_pressure:.3f}"
+    if not measurement_valid:
+        receipt_reason = f"measurement_invalid_after_snapshot_403: {state_after.endpoint_error_count} errors"
+
     receipt = Receipt(
         tenant_id=tenant_id,
         state_before_hash=state_before.state_hash,
         state_after_hash=state_after.state_hash,
         action=action,
-        reason=f"ROA-selected: pressure={state_before.revenue_pressure:.3f}",
+        reason=receipt_reason,
         model_used="contextual_bandit_v1",
         metric_delta=delta_to_dict(delta),
         reward=reward,
-        error=error,
-        revenue_estimate=reward * 50.0,  # rough estimate: reward units × avg session value
+        error=error if measurement_valid else "measurement_invalid",
+        revenue_estimate=reward * 50.0,
     )
     receipt_hash = write_receipt(receipt)
 
