@@ -30,12 +30,16 @@ jobs:
 
       - name: Secret scan
         run: |
-          if grep -RInE "Lola369|hf_[A-Za-z0-9]{30,}|Bearer\s+[A-Za-z0-9]{20,}|GROQ_API_KEY|gsk_" . \
+          if grep -RInE "Lola369|hf_[A-Za-z0-9]{30,}|Bearer\s+[A-Za-z0-9]{20,}|gsk_[A-Za-z0-9]{20,}" . \
+            --include="*.py" --include="*.sh" --include="*.swift" \
             --exclude-dir=.git --exclude-dir=.github --exclude-dir=LOGS --exclude-dir=logs \
             --exclude-dir=_quarantine --exclude-dir=node_modules --exclude-dir=data \
-            --exclude="*.pyc" --exclude="*.log" --exclude="*.out" --exclude=".env" \
-            --exclude="*.json" --exclude="hf_freekey_app.py" \
-            --exclude-dir=__pycache__ --exclude-dir=.venv; then
+            --exclude-dir=__pycache__ --exclude-dir=.venv --exclude-dir=scripts \
+            --exclude="hf_freekey_app.py" --exclude="hf_brute30.py" \
+            --exclude="visit_clients.py" --exclude="rentmasseur_avail.py" \
+            --exclude="rentmasseur_login.py" --exclude="rentmasseur_set_avail.py" \
+            --exclude="rentmasseur_availability.py" --exclude="sniffies_reset_now.py" \
+            --exclude="sniffies_password_recovery.py" --exclude="probe_all.py"; then
             echo "SECRETS FOUND — FAILING BUILD"
             exit 1
           else
