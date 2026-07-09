@@ -105,11 +105,18 @@ def execute_action(action: str, api: RentMasseurAPI, state: TrafficState,
         elif action == "reply_draft_queue":
             mailbox = api.get_mailbox(page=1, folder=1, sort=1)
             emails = mailbox.get("emails", [])
-            classified = classify_mailbox(emails)
-            drafts = [c for c in classified if c["suggested_reply_class"] and c["classification"] != "do_not_contact"]
+            from .reply_drafter import draft_mailbox_replies, format_drafts_summary
+            phone = os.environ.get("RM_PHONE", "")
+            ctx = {"rate": "$200", "phone": phone, "location": "Manhattan incall"}
+            drafts = draft_mailbox_replies(emails, ctx)
+            print(format_drafts_summary(drafts))
             result["result"] = {
-                "drafts_queued": len(drafts),
-                "classifications": [c["classification"] for c in drafts],
+                "drafts_queued": len([d for d in drafts if d.risk_level != "blocked"]),
+                "blocked": len([d for d in drafts if d.risk_level == "blocked"]),
+                "needs_approval": len([d for d in drafts if d.needs_human_approval]),
+                "auto_ok": len([d for d in drafts if not d.needs_human_approval and d.risk_level != "blocked"]),
+                "classifications": [d.intent_class for d in drafts if d.risk_level != "blocked"],
+                "sample_draft": drafts[0].reply_text[:100] if drafts else "",
             }
 
         elif action == "city_rank_scan":
