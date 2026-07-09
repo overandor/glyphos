@@ -971,6 +971,42 @@ def run_pipeline(mode: str = "full"):
         generate_report(ir)
         return 2
 
+    # Precondition: availability_guard — runs first in EVERY execution
+    # Traffic only converts when the profile is actionable.
+    # If unavailable: set available. If API fails: mark YELLOW/RED.
+    print("[GUARD] Availability check — precondition for all lanes...")
+    try:
+        avail = api.get_availability()
+        avail_data = avail.get("data", avail)
+        avail_option = int(avail_data.get("option", 0))
+        labels = {0: "Not Set", 1: "Available", 2: "Not Available"}
+        current = labels.get(avail_option, "Unknown")
+        print(f"  ◉ Current availability: {current}")
+
+        if avail_option != 1:
+            print("  ◆ Setting availability to Available (6h)...")
+            try:
+                api.set_availability(option=1, duration=5)
+                api.invalidate_cache("availability")
+                ir.profile.availability_option = 1
+                ir.profile.availability_label = "Available"
+                print("  ◉ Availability set to Available")
+                ir.learnings.append("AVAILABILITY_GUARD: was not Available, set to Available")
+            except Exception as e:
+                print(f"  ⟁ Failed to set availability: {e}")
+                ir.status = "YELLOW"
+                ir.learnings.append(f"AVAILABILITY_GUARD: FAILED to set availability — {e}")
+        else:
+            ir.profile.availability_option = 1
+            ir.profile.availability_label = "Available"
+            print("  ◉ Already Available — OK")
+    except Exception as e:
+        print(f"  ⟁ Availability check failed: {e}")
+        ir.status = "YELLOW"
+        ir.learnings.append(f"AVAILABILITY_GUARD: check failed — {e}")
+    print("[GUARD] Done.")
+    print()
+
     # Lane 1: Revenue Truth
     ir = lane1_revenue_truth(api, ir, conn)
 
