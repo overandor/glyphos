@@ -256,10 +256,9 @@ def lane1_revenue_truth(api: RentMasseurAPI, ir: TrafficOverclockIR,
     try:
         avail = api.get_availability()
         ir._raw["availability"] = avail
-        data = avail.get("data", avail)
-        ir.profile.availability_option = int(data.get("option", 0))
-        labels = {0: "Not Set", 1: "Available", 2: "Not Available"}
-        ir.profile.availability_label = labels.get(ir.profile.availability_option, "Unknown")
+        selected = avail.get("selected", "")
+        ir.profile.availability_label = selected or "Unknown"
+        ir.profile.availability_option = {"Not Set": 0, "Available": 1, "Not Available": 2}.get(selected, 0)
         print(f"  ◉ Availability: {ir.profile.availability_label}")
     except Exception as e:
         print(f"  ⟁ availability error: {e}")
@@ -977,13 +976,10 @@ def run_pipeline(mode: str = "full"):
     print("[GUARD] Availability check — precondition for all lanes...")
     try:
         avail = api.get_availability()
-        avail_data = avail.get("data", avail)
-        avail_option = int(avail_data.get("option", 0))
-        labels = {0: "Not Set", 1: "Available", 2: "Not Available"}
-        current = labels.get(avail_option, "Unknown")
-        print(f"  ◉ Current availability: {current}")
+        avail_selected = avail.get("selected", "")
+        print(f"  ◉ Current availability: {avail_selected or 'Unknown'}")
 
-        if avail_option != 1:
+        if avail_selected != "Available":
             print("  ◆ Setting availability to Available (6h)...")
             try:
                 api.set_availability(option=1, duration=5)

@@ -196,6 +196,117 @@ class RentMasseurAPI:
             return {"status": "ok", "raw": resp.text[:500]}
 
     # ------------------------------------------------------------------
+    # Blog endpoints
+    # ------------------------------------------------------------------
+
+    def get_blog(self, blog_id: str) -> Dict:
+        resp = self._get(f"/blogs/{blog_id}")
+        resp.raise_for_status()
+        return resp.json()
+
+    def create_blog(self, title: str, body: str, tags: list = None) -> Dict:
+        payload = {"title": title, "body": body}
+        if tags:
+            payload["tags"] = tags
+        resp = self._post("/blogs", payload)
+        resp.raise_for_status()
+        self.invalidate_cache("blogs")
+        try:
+            return resp.json()
+        except Exception:
+            return {"status": "ok", "raw": resp.text[:500]}
+
+    def update_blog(self, blog_id: str, title: str = None, body: str = None) -> Dict:
+        payload = {}
+        if title:
+            payload["title"] = title
+        if body:
+            payload["body"] = body
+        resp = self._put(f"/blogs/{blog_id}", payload)
+        resp.raise_for_status()
+        self.invalidate_cache("blogs")
+        try:
+            return resp.json()
+        except Exception:
+            return {"status": "ok", "raw": resp.text[:500]}
+
+    def delete_blog(self, blog_id: str) -> Dict:
+        self._wait()
+        resp = self.session.delete(f"{API}/blogs/{blog_id}", timeout=15)
+        resp.raise_for_status()
+        self.invalidate_cache("blogs")
+        try:
+            return resp.json()
+        except Exception:
+            return {"status": "ok", "raw": resp.text[:500]}
+
+    # ------------------------------------------------------------------
+    # Search (confirmed working 2026-07-09)
+    # ------------------------------------------------------------------
+
+    def search_masseurs(self, city: str = "manhattan-ny", page: int = 1) -> Dict:
+        resp = self._post("/search", {"searchCity": city, "page": page, "skipUsers": "0"})
+        resp.raise_for_status()
+        return resp.json()
+
+    # ------------------------------------------------------------------
+    # Profile visit (read-only profile fetch)
+    # ------------------------------------------------------------------
+
+    def visit_profile(self, username: str) -> Dict:
+        self._wait()
+        resp = self.session.get(f"{API}/profile/{username}", timeout=15)
+        try:
+            return resp.json()
+        except Exception:
+            return {"status": "visited", "username": username, "http": resp.status_code}
+
+    def get_profile(self, username: str) -> Dict:
+        return self._cached_get(f"/profile/{username}", f"profile_{username}")
+
+    # ------------------------------------------------------------------
+    # Audit — verify all endpoints are live
+    # ------------------------------------------------------------------
+
+    def audit_endpoints(self) -> Dict:
+        """Test all confirmed endpoints and return status report."""
+        results = {}
+        tests = [
+            ("dashboard", lambda: self.get_dashboard()),
+            ("availability", lambda: self.get_availability()),
+            ("ad_statistics", lambda: self.get_ad_statistics()),
+            ("keeponline", lambda: self.get_keeponline()),
+            ("about", lambda: self.get_about()),
+            ("mailbox", lambda: self.get_mailbox()),
+            ("search", lambda: self.search_masseurs()),
+        ]
+        for name, fn in tests:
+            try:
+                fn()
+                results[name] = "OK"
+            except Exception as e:
+                results[name] = f"FAIL: {e}"
+        return results
+
+    # ------------------------------------------------------------------
+    # Messaging
+    # ------------------------------------------------------------------
+
+    def send_message(self, username: str, message: str) -> Dict:
+        resp = self._post("/mailbox/send", {"username": username, "message": message})
+        resp.raise_for_status()
+        self.invalidate_cache("mailbox")
+        try:
+            return resp.json()
+        except Exception:
+            return {"status": "ok", "raw": resp.text[:500]}
+
+    def get_conversation(self, username: str, page: int = 1) -> Dict:
+        resp = self._get(f"/mailbox/conversation/{username}", params={"page": page})
+        resp.raise_for_status()
+        return resp.json()
+
+    # ------------------------------------------------------------------
     # Search (read-only)
     # ------------------------------------------------------------------
 
@@ -219,4 +330,5 @@ class RentMasseurAPI:
             "stats": self.get_ad_statistics(),
             "keeponline": self.get_keeponline(),
             "about": self.get_about(),
+            "interview": self.get_interview(),
         }
