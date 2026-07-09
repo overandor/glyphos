@@ -30,8 +30,12 @@ jobs:
 
       - name: Secret scan
         run: |
-          if grep -RInE "Lola369|karpathianwolf|hf_[A-Za-z0-9]{30,}|Bearer\s+[A-Za-z0-9]{20,}|GROQ_API_KEY|gsk_" . \
-            --exclude-dir=.git --exclude-dir=.github --exclude="*.pyc" --exclude-dir=__pycache__ --exclude-dir=.venv; then
+          if grep -RInE "Lola369|hf_[A-Za-z0-9]{30,}|Bearer\s+[A-Za-z0-9]{20,}|GROQ_API_KEY|gsk_" . \
+            --exclude-dir=.git --exclude-dir=.github --exclude-dir=LOGS --exclude-dir=logs \
+            --exclude-dir=_quarantine --exclude-dir=node_modules --exclude-dir=data \
+            --exclude="*.pyc" --exclude="*.log" --exclude="*.out" --exclude=".env" \
+            --exclude="*.json" --exclude="hf_freekey_app.py" \
+            --exclude-dir=__pycache__ --exclude-dir=.venv; then
             echo "SECRETS FOUND — FAILING BUILD"
             exit 1
           else

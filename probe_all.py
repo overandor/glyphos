@@ -3,8 +3,10 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from rm_traffic.api_client import RentMasseurAPI
 
+import os
 api = RentMasseurAPI(min_request_interval=0.1)
-api.login("karpathianwolf", "Lola369!")
+api.login(os.environ.get("RENTMASSEUR_USER", os.environ.get("RM_USER", "")),
+          os.environ.get("RENTMASSEUR_PASS", os.environ.get("RM_PASS", "")))
 token = api.session.headers.get("Authorization", "")
 cookies = {c.name: c.value for c in api.session.cookies}
 
