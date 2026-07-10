@@ -1,24 +1,16 @@
-FROM node:20-slim AS ui-builder
-WORKDIR /jorki
-COPY jorki/package.json jorki/package-lock.json ./
-RUN npm ci
-COPY jorki/ .
-RUN npm run build
-
 FROM python:3.11-slim
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc g++ git && \
+    gcc g++ && \
     rm -rf /var/lib/apt/lists/*
 
 COPY requirements-prod.txt .
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
-COPY . .
-
-COPY --from=ui-builder /jorki/dist /app/jorki_ui_dist
+COPY hf_space_app.py .
+COPY frontend/dist ./frontend/dist
 
 RUN mkdir -p /tmp/systemlake_v4b
 

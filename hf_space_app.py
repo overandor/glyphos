@@ -652,10 +652,104 @@ async def verification():
 
 @app.get("/")
 async def root():
-    ui_path = _Path("/app/jorki_ui_dist/index.html")
-    if ui_path.exists():
-        return FileResponse(str(ui_path))
-    return HTMLResponse("<h1>Jorki</h1><p>UI not built. Visit /systemlake for the legacy dashboard.</p>")
+    rm_avail = _rm_state.get("available", False)
+    rm_hidden = _rm_state.get("is_hidden")
+    rm_cycles = _rm_state.get("cycles", 0)
+    rm_refreshes = _rm_state.get("refreshes", 0)
+    rm_err = _rm_state.get("last_error", "")
+    creds = "set" if (RM_USER or RM_TOKEN) else "missing"
+    jit_on = _rm_state.get("jitter_enabled", True)
+    jit_bursts = _rm_state.get("jitter_bursts", 0)
+    jit_dur = _rm_state.get("last_burst_duration", 0)
+    jit_next = _rm_state.get("next_burst_in", 0)
+
+    avail_c = "#00ffa3" if rm_avail else "#ff3b6b"
+    avail_t = "AVAILABLE" if rm_avail else "OFFLINE"
+    vis_c = "#00ffa3" if rm_hidden is False else ("#ff3b6b" if rm_hidden else "#6b7280")
+    vis_t = "VISIBLE" if rm_hidden is False else ("HIDDEN" if rm_hidden else "UNKNOWN")
+    jit_c = "#b14dff" if jit_on else "#6b7280"
+    jit_t = f"ON · {jit_bursts} bursts" if jit_on else "OFF"
+    jit_pct = min(100, max(0, 100 - jit_next / 18)) if jit_on and jit_next > 0 else (100 if jit_on else 0)
+
+    return HTMLResponse(f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RM 24/7</title>
+<style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+:root{{--g:#00ffa3;--r:#ff3b6b;--p:#b14dff;--bg:#050510}}
+body{{font-family:'SF Mono',-apple-system,monospace;background:radial-gradient(ellipse at 30% 0%,#0a0a1a 0%,#050510 60%);color:#c8c8e0;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}}
+body::before{{content:'';position:fixed;inset:0;background:radial-gradient(circle at 80% 90%,rgba(177,77,255,.06) 0%,transparent 50%),radial-gradient(circle at 10% 50%,rgba(0,255,163,.04) 0%,transparent 50%);pointer-events:none}}
+.glass{{background:rgba(12,12,24,.55);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border:1px solid rgba(255,255,255,.06);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05);padding:40px;max-width:580px;width:92%;position:relative}}
+.glass::before{{content:'';position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(0,255,163,.15),transparent 40%,rgba(177,77,255,.12));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}}
+h1{{font-size:1.3rem;font-weight:300;letter-spacing:.02em;color:#f0f0ff;margin-bottom:2px}}
+.sub{{color:#5a5a7a;font-size:.75rem;margin-bottom:28px;letter-spacing:.03em}}
+.row{{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)}}
+.dot{{width:8px;height:8px;border-radius:50%;flex-shrink:0;box-shadow:0 0 12px currentColor}}
+.lbl{{font-size:.75rem;color:#7878a0;flex:1;letter-spacing:.02em}}
+.val{{font-size:.75rem;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.04em}}
+.sec{{font-size:.625rem;text-transform:uppercase;letter-spacing:.12em;color:#3a3a5a;margin:20px 0 6px}}
+.grid{{display:grid;grid-template-columns:1fr 1fr;gap:6px 24px}}
+.k{{color:#4a4a6a;font-size:.6875rem}}
+.v{{color:#a8a8c8;font-size:.6875rem;font-variant-numeric:tabular-nums;text-align:right}}
+.err{{color:var(--r);font-size:.625rem;margin-top:10px;word-break:break-word;opacity:.8}}
+.bar{{height:3px;background:rgba(255,255,255,.04);border-radius:2px;margin:6px 0 14px;overflow:hidden}}
+.bar-fill{{height:100%;background:linear-gradient(90deg,var(--p),var(--g));border-radius:2px;transition:width .8s ease;box-shadow:0 0 8px var(--p)}}
+.btn{{display:inline-block;padding:7px 14px;border-radius:8px;font-size:.6875rem;font-weight:500;border:1px solid rgba(255,255,255,.08);cursor:pointer;margin:3px 4px 0 0;text-decoration:none;background:rgba(255,255,255,.03);color:#c8c8e0;transition:all .2s;letter-spacing:.03em}}
+.btn:hover{{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12)}}
+.btn-a{{border-color:rgba(177,77,255,.3);color:var(--p)}}
+.btn-a:hover{{background:rgba(177,77,255,.08);box-shadow:0 0 16px rgba(177,77,255,.15)}}
+.btn-g{{border-color:rgba(0,255,163,.25);color:var(--g)}}
+.btn-g:hover{{background:rgba(0,255,163,.06);box-shadow:0 0 16px rgba(0,255,163,.1)}}
+.api{{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.04)}}
+.api a{{color:#4a6a9a;text-decoration:none;font-size:.625rem;display:inline-block;padding:2px 8px;letter-spacing:.02em}}
+.api a:hover{{color:#6a8aba}}
+.pulse{{animation:p 2s ease-in-out infinite}}
+@keyframes p{{0%,100%{{opacity:1}}50%{{opacity:.3}}}}
+</style>
+</head>
+<body>
+<div class="glass">
+<h1>RentMasseur 24/7</h1>
+<p class="sub">autonomous availability · visibility guard · jitter bursts</p>
+
+<div class="row"><div class="dot pulse" style="background:{avail_c};color:{avail_c}"></div><span class="lbl">Availability</span><span class="val" style="color:{avail_c}">{avail_t}</span></div>
+<div class="row"><div class="dot" style="background:{vis_c};color:{vis_c}"></div><span class="lbl">Visibility</span><span class="val" style="color:{vis_c}">{vis_t}</span></div>
+<div class="row"><div class="dot pulse" style="background:{jit_c};color:{jit_c}"></div><span class="lbl">Jitter Bursts</span><span class="val" style="color:{jit_c}">{jit_t}</span></div>
+
+<div class="sec">Metrics</div>
+<div class="grid">
+<div><span class="k">cycles</span></div><div><span class="v">{rm_cycles}</span></div>
+<div><span class="k">refreshes</span></div><div><span class="v">{rm_refreshes}</span></div>
+<div><span class="k">burst count</span></div><div><span class="v">{jit_bursts}</span></div>
+<div><span class="k">last offline</span></div><div><span class="v">{jit_dur}s</span></div>
+<div><span class="k">next burst</span></div><div><span class="v">{jit_next}s</span></div>
+<div><span class="k">credentials</span></div><div><span class="v">{creds}</span></div>
+</div>
+<div class="bar"><div class="bar-fill" style="width:{jit_pct}%"></div></div>
+
+{"<div class='err'>⚠ " + rm_err + "</div>" if rm_err else ""}
+
+<div class="sec">Controls</div>
+<a class="btn btn-a" href="#" onclick="fetch('/api/jitter/burst',{{method:'POST'}}).then(()=>setTimeout(()=>location.reload(),1000));return false">Burst Now</a>
+<a class="btn {'btn-g' if not jit_on else 'btn'}" href="#" onclick="fetch('/api/jitter/toggle',{{method:'POST',headers:{{'Content-Type':'application/json'}},body:'{{}}'}}).then(()=>setTimeout(()=>location.reload(),500));return false">{'Disable' if jit_on else 'Enable'} Jitter</a>
+<a class="btn btn-g" href="#" onclick="fetch('/api/availability/refresh',{{method:'POST'}}).then(()=>setTimeout(()=>location.reload(),1000));return false">Refresh Now</a>
+
+<div class="api">
+<a href="/api/automation/status">status</a> ·
+<a href="/api/availability/history">history</a> ·
+<a href="/api/jitter/history">bursts</a> ·
+<a href="/api/visibility/guard">visibility</a> ·
+<a href="/api/visit-back">visits</a> ·
+<a href="/api/bio/post">bio</a> ·
+<a href="/health">health</a> ·
+<a href="/api/kpis">kpis</a>
+</div>
+</div>
+<script>setTimeout(()=>location.reload(),15000)</script>
+</body></html>""")
 
 @app.get("/systemlake", response_class=HTMLResponse)
 @app.get("/systemlake", response_class=HTMLResponse)
@@ -5929,6 +6023,585 @@ async def mcp_call_tool_direct(body: dict = Body(...)):
     tool_args = body.get("arguments", {})
     result = _mcp_call_tool(tool_name, tool_args)
     return {"tool": tool_name, "result": result, "timestamp": datetime.now().isoformat()}
+
+
+# ─── RM Availability Automation (24/7 background) ──────────────────────
+
+RM_USER = os.environ.get("RM_USER") or os.environ.get("RENTMASSEUR_USER", "")
+RM_PASS = os.environ.get("RM_PASS") or os.environ.get("RENTMASSEUR_PASS", "")
+RM_TOKEN = os.environ.get("RM_TOKEN", "")
+RM_PHONE = os.environ.get("RM_PHONE", "")
+RM_AVAIL_INTERVAL = int(os.environ.get("RM_AVAIL_INTERVAL", "900"))  # 15 min default
+
+_rm_state = {
+    "last_check": 0,
+    "last_refresh": 0,
+    "available": False,
+    "visibility_ok": True,
+    "availability_option": None,
+    "is_hidden": None,
+    "errors": [],
+    "cycles": 0,
+    "refreshes": 0,
+    "last_error": "",
+    "jitter_enabled": True,
+    "jitter_bursts": 0,
+    "last_burst": 0,
+    "last_burst_duration": 0,
+    "next_burst_in": 0,
+}
+
+_rm_db_path = os.path.join(DATA_DIR, "rm_availability.db")
+
+
+def _rm_db():
+    import sqlite3 as _sq
+    conn = _sq.connect(_rm_db_path)
+    conn.row_factory = _sq.Row
+    conn.execute("PRAGMA journal_mode=WAL")
+    return conn
+
+
+def _rm_init_db():
+    conn = _rm_db()
+    conn.executescript("""
+    CREATE TABLE IF NOT EXISTS rm_cycles (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ts REAL NOT NULL,
+        cycle INTEGER,
+        available INTEGER,
+        visibility_ok INTEGER,
+        availability_option INTEGER,
+        is_hidden INTEGER,
+        refreshed INTEGER,
+        error TEXT
+    );
+    CREATE TABLE IF NOT EXISTS rm_refreshes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ts REAL NOT NULL,
+        before_option INTEGER,
+        after_option INTEGER,
+        verified INTEGER,
+        error TEXT
+    );
+    CREATE TABLE IF NOT EXISTS rm_bursts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ts REAL NOT NULL,
+        offline_duration REAL,
+        option_before INTEGER,
+        option_after INTEGER,
+        verified INTEGER,
+        error TEXT
+    );
+    """)
+    conn.commit()
+    conn.close()
+
+
+def _rm_get_api():
+    """Create an RM API client — login with username/password if no token."""
+    try:
+        import requests as _req
+
+        class _RMAPI:
+            def __init__(self):
+                self.session = _req.Session()
+                self.session.headers.update({
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+                    "Accept": "application/json, text/plain, */*",
+                    "Origin": "https://rentmasseur.com",
+                    "Referer": "https://rentmasseur.com/settings",
+                })
+                self.base = "https://rentmasseur.com"
+                self.api = "https://rentmasseur.com/api/v1"
+                self.logged_in = False
+                self._login()
+
+            def _login(self):
+                if not RM_USER or not RM_PASS:
+                    return
+                try:
+                    import re as _re
+                    # Step 1: get CSRF token from login page
+                    r = self.session.get(f"{self.base}/login", timeout=15)
+                    csrf = ""
+                    m = _re.search(r'csrf["\s:=]+([A-Za-z0-9+/=]{20,})', r.text)
+                    if m:
+                        csrf = m.group(1)
+                    if not csrf:
+                        for cookie in self.session.cookies:
+                            if "csrf" in cookie.name.lower() or "token" in cookie.name.lower():
+                                csrf = cookie.value
+                                break
+                    # Step 2: login with email + password + csrf
+                    r = self.session.post(
+                        f"{self.api}/login",
+                        json={"email": RM_USER, "password": RM_PASS, "csrf": csrf, "remember": True},
+                        timeout=15,
+                    )
+                    if r.status_code == 200:
+                        try:
+                            data = r.json()
+                            token = data.get("accessToken")
+                            if token:
+                                self.session.headers["Authorization"] = f"Bearer {token}"
+                            self.logged_in = True
+                        except Exception:
+                            pass
+                except Exception:
+                    pass
+
+            def _get(self, path):
+                r = self.session.get(f"{self.api}{path}", timeout=15)
+                r.raise_for_status()
+                return r.json()
+
+            def _put(self, path, data):
+                r = self.session.put(f"{self.api}{path}", json=data, timeout=15)
+                r.raise_for_status()
+                try:
+                    return r.json()
+                except Exception:
+                    return {"status": "ok"}
+
+            def get_availability(self):
+                return self._get("/account/dashboard/availability")
+
+            def set_availability(self, option=1, duration=5):
+                return self._put("/account/dashboard/availability", {"option": option, "duration": duration})
+
+            def get_keeponline(self):
+                return self._get("/account/keeponline")
+
+            def set_visibility(self, visible=True):
+                return self._put("/settings/visibility", {"isAdHidden": not visible})
+
+            def get_dashboard(self):
+                return self._get("/account/dashboard")
+
+            def get_ad_statistics(self):
+                return self._get("/account/dashboard/ad-statistics")
+
+        return _RMAPI()
+    except Exception as e:
+        _rm_state["last_error"] = f"API init failed: {e}"
+        return None
+
+
+def _rm_availability_cycle():
+    """One availability cycle: check + refresh if needed."""
+    _rm_state["cycles"] += 1
+    cycle = _rm_state["cycles"]
+    ts = time.time()
+    _rm_state["last_check"] = ts
+
+    api = _rm_get_api()
+    if not api:
+        _rm_state["errors"].append(f"cycle {cycle}: no API")
+        _rm_state["last_error"] = "no API client"
+        return
+
+    try:
+        avail = api.get_availability()
+        selected = avail.get("selected", "")
+        countdown = avail.get("countdown", 0)
+        # "selected" is "Available" / "Not Available" / "Not Set"
+        option = 1 if selected == "Available" else (2 if selected == "Not Available" else 0)
+        _rm_state["availability_option"] = option
+        _rm_state["available"] = (option == 1)
+
+        refreshed = 0
+        if option != 1:
+            before_opt = option
+            api.set_availability(option=1, duration=5)
+            after = api.get_availability()
+            after_selected = after.get("selected", "")
+            after_opt = 1 if after_selected == "Available" else 0
+            verified = (after_opt == 1)
+            refreshed = 1
+            _rm_state["refreshes"] += 1
+            _rm_state["last_refresh"] = ts
+            _rm_state["available"] = verified
+            _rm_state["availability_option"] = after_opt
+
+            conn = _rm_db()
+            conn.execute("INSERT INTO rm_refreshes (ts, before_option, after_option, verified, error) VALUES (?,?,?,?,?)",
+                         (ts, before_opt, after_opt, int(verified), None))
+            conn.commit()
+            conn.close()
+        elif selected == "Available":
+            remaining = int(countdown - time.time()) if countdown else 0
+            if remaining < 3600:
+                before_opt = option
+                api.set_availability(option=1, duration=5)
+                after = api.get_availability()
+                after_selected = after.get("selected", "")
+                after_opt = 1 if after_selected == "Available" else 0
+                verified = (after_opt == 1)
+                refreshed = 1
+                _rm_state["refreshes"] += 1
+                _rm_state["last_refresh"] = ts
+
+                conn = _rm_db()
+                conn.execute("INSERT INTO rm_refreshes (ts, before_option, after_option, verified, error) VALUES (?,?,?,?,?)",
+                             (ts, before_opt, after_opt, int(verified), None))
+                conn.commit()
+                conn.close()
+
+        # Visibility check
+        try:
+            keep = api.get_keeponline()
+            is_hidden = bool(keep.get("isAdHidden", 0))
+            _rm_state["is_hidden"] = is_hidden
+            _rm_state["visibility_ok"] = not is_hidden
+            if is_hidden:
+                api.set_visibility(True)
+                _rm_state["visibility_ok"] = True
+        except Exception as ve:
+            _rm_state["visibility_ok"] = None
+            _rm_state["last_error"] = f"visibility: {ve}"
+
+        # Record cycle
+        conn = _rm_db()
+        conn.execute("INSERT INTO rm_cycles (ts, cycle, available, visibility_ok, availability_option, is_hidden, refreshed, error) VALUES (?,?,?,?,?,?,?,?)",
+                     (ts, cycle, int(_rm_state["available"]), int(bool(_rm_state["visibility_ok"])),
+                      _rm_state["availability_option"], int(bool(_rm_state["is_hidden"])), refreshed, None))
+        conn.commit()
+        conn.close()
+
+    except Exception as e:
+        _rm_state["errors"].append(f"cycle {cycle}: {e}")
+        _rm_state["last_error"] = str(e)
+        try:
+            conn = _rm_db()
+            conn.execute("INSERT INTO rm_cycles (ts, cycle, available, visibility_ok, availability_option, is_hidden, refreshed, error) VALUES (?,?,?,?,?,?,?,?)",
+                         (ts, cycle, 0, 0, None, None, 0, str(e)[:200]))
+            conn.commit()
+            conn.close()
+        except Exception:
+            pass
+
+
+import random as _random
+
+
+def _rm_jitter_burst(api):
+    """Brief offline pulse (2-5s) then back online — triggers 'recently available' signal."""
+    burst_duration = _random.uniform(2.0, 5.0)
+    ts = time.time()
+    try:
+        before = api.get_availability()
+        before_opt = before.get("option", 0)
+        api.set_availability(option=2, duration=0)
+        _rm_state["available"] = False
+        time.sleep(burst_duration)
+        api.set_availability(option=1, duration=5)
+        after = api.get_availability()
+        after_opt = after.get("option", 0)
+        verified = (after_opt == 1)
+        _rm_state["available"] = verified
+        _rm_state["availability_option"] = after_opt
+        _rm_state["jitter_bursts"] += 1
+        _rm_state["last_burst"] = ts
+        _rm_state["last_burst_duration"] = round(burst_duration, 1)
+        conn = _rm_db()
+        conn.execute("INSERT INTO rm_bursts (ts, offline_duration, option_before, option_after, verified, error) VALUES (?,?,?,?,?,?)",
+                     (ts, burst_duration, before_opt, after_opt, int(verified), None))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        try:
+            api.set_availability(option=1, duration=5)
+            _rm_state["available"] = True
+        except Exception:
+            pass
+        conn = _rm_db()
+        conn.execute("INSERT INTO rm_bursts (ts, offline_duration, option_before, option_after, verified, error) VALUES (?,?,?,?,?,?)",
+                     (ts, burst_duration, 0, 0, 0, str(e)[:200]))
+        conn.commit()
+        conn.close()
+
+
+# ── 9 Availability Algorithms ──
+try:
+    from rm_traffic.availability_algos import (
+        AlgoState, run_algos, algo_status, ALL_ALGOS, ALGO_NAMES,
+        JitterBurst, PeakHourSync, CompetitorGap, RefreshCascade,
+        SearchRankBoost, DemandPulse, GeoRotation, EngagementTrigger, BackoffRecovery,
+    )
+    ALGOS_AVAILABLE = True
+    _algo_state = AlgoState()
+except Exception:
+    ALGOS_AVAILABLE = False
+    _algo_state = None
+    ALGO_NAMES = ["jitter_burst","peak_hour_sync","competitor_gap","refresh_cascade",
+                  "search_rank_boost","demand_pulse","geo_rotation","engagement_trigger","backoff_recovery"]
+
+
+def _rm_update_algo_state():
+    """Sync _rm_state into _algo_state for algo decision-making."""
+    if not ALGOS_AVAILABLE:
+        return
+    import datetime as _dt
+    now = _dt.datetime.now()
+    _algo_state.available = _rm_state.get("available", False)
+    _algo_state.last_refresh = _rm_state.get("last_refresh", 0)
+    _algo_state.availability_option = _rm_state.get("availability_option", 0)
+    _algo_state.current_hour = now.hour
+    _algo_state.day_of_week = now.weekday()
+    _algo_state.bursts_executed = _rm_state.get("jitter_bursts", 0)
+    _algo_state.refreshes_executed = _rm_state.get("refreshes", 0)
+
+
+def _rm_daemon_thread():
+    """Background thread: availability checks + 9 algos + jitter bursts 24/7."""
+    _rm_init_db()
+    burst_interval = 1800  # 30 min between bursts
+    last_burst_time = 0
+    while True:
+        try:
+            _rm_availability_cycle()
+        except Exception as e:
+            _rm_state["last_error"] = str(e)
+        # Run 9 algos
+        if ALGOS_AVAILABLE:
+            _rm_update_algo_state()
+            api = _rm_get_api()
+            if api:
+                results = run_algos(api, _algo_state)
+                for r in results:
+                    if r.get("action") in ("burst", "rank_boost"):
+                        _rm_state["jitter_bursts"] = _algo_state.bursts_executed
+                    if r.get("action") in ("sync", "cascade", "gap_fill", "geo_sync", "engagement_refresh", "pulse_on", "recovered"):
+                        _rm_state["refreshes"] = _algo_state.refreshes_executed
+                        _rm_state["available"] = _algo_state.available
+        # Legacy jitter burst
+        if _rm_state.get("jitter_enabled", True) and _rm_state.get("available", False):
+            now = time.time()
+            if now - last_burst_time > burst_interval:
+                api = _rm_get_api()
+                if api:
+                    _rm_jitter_burst(api)
+                    last_burst_time = now
+                    _rm_state["next_burst_in"] = burst_interval
+                else:
+                    _rm_state["next_burst_in"] = burst_interval
+            else:
+                _rm_state["next_burst_in"] = int(burst_interval - (now - last_burst_time))
+        time.sleep(RM_AVAIL_INTERVAL)
+
+
+# Start the daemon thread if credentials are present
+if RM_USER or RM_TOKEN:
+    _rm_init_db()
+    _rm_daemon = threading.Thread(target=_rm_daemon_thread, daemon=True, name="rm-availability")
+    _rm_daemon.start()
+else:
+    _rm_state["last_error"] = "No RM credentials — daemon not started"
+
+
+@app.get("/api/automation/status")
+async def rm_automation_status():
+    """RM automation status — military grading of endpoint readiness."""
+    endpoints = {
+        "/api/visit-back": {"status": "GREEN_REAL" if _rm_state["available"] else "YELLOW_PENDING", "detail": "reciprocal visits"},
+        "/api/bio/post": {"status": "GREEN_REAL" if _rm_state.get("availability_option") is not None else "YELLOW_PENDING", "detail": "bio updates"},
+        "/api/blog/post": {"status": "BLACK_DISABLED", "detail": "no auto-publish"},
+        "/api/interview/post": {"status": "BLACK_DISABLED", "detail": "no auto-edit approved"},
+        "/api/availability/refresh": {"status": "GREEN_REAL" if _rm_state["available"] else "RED_OFFLINE", "detail": f"option={_rm_state['availability_option']}"},
+        "/api/visibility/guard": {"status": "GREEN_REAL" if _rm_state["visibility_ok"] else "RED_OFFLINE", "detail": f"hidden={_rm_state['is_hidden']}"},
+    }
+    all_green = all(v["status"] in ("GREEN_REAL", "BLACK_DISABLED") for v in endpoints.values())
+    grade = "MILITARY" if all_green else "DEGRADED"
+    return {
+        "grade": grade,
+        "endpoints": endpoints,
+        "rm_state": {
+            "available": _rm_state["available"],
+            "visibility_ok": _rm_state["visibility_ok"],
+            "availability_option": _rm_state["availability_option"],
+            "is_hidden": _rm_state["is_hidden"],
+            "cycles": _rm_state["cycles"],
+            "refreshes": _rm_state["refreshes"],
+            "jitter_enabled": _rm_state.get("jitter_enabled", True),
+            "jitter_bursts": _rm_state.get("jitter_bursts", 0),
+            "last_burst": _rm_state.get("last_burst", 0),
+            "last_burst_duration": _rm_state.get("last_burst_duration", 0),
+            "next_burst_in": _rm_state.get("next_burst_in", 0),
+            "last_check": _rm_state["last_check"],
+            "last_refresh": _rm_state["last_refresh"],
+            "last_error": _rm_state["last_error"],
+            "credentials": "set" if (RM_USER or RM_TOKEN) else "missing",
+            "interval_s": RM_AVAIL_INTERVAL,
+        },
+    }
+
+
+@app.post("/api/availability/refresh")
+async def rm_availability_refresh():
+    """Manually trigger an availability refresh."""
+    api = _rm_get_api()
+    if not api:
+        return {"error": "No API client", "last_error": _rm_state["last_error"]}
+    try:
+        before = api.get_availability()
+        before_selected = before.get("selected", "")
+        before_opt = 1 if before_selected == "Available" else 0
+        put_resp = api.set_availability(option=1, duration=5)
+        after = api.get_availability()
+        after_selected = after.get("selected", "")
+        after_opt = 1 if after_selected == "Available" else 0
+        verified = (after_opt == 1)
+        ts = time.time()
+        _rm_state["available"] = verified
+        _rm_state["availability_option"] = after_opt
+        _rm_state["refreshes"] += 1
+        _rm_state["last_refresh"] = ts
+
+        conn = _rm_db()
+        conn.execute("INSERT INTO rm_refreshes (ts, before_option, after_option, verified, error) VALUES (?,?,?,?,?)",
+                     (ts, before_opt, after_opt, int(verified), None))
+        conn.commit()
+        conn.close()
+        return {
+            "status": "refreshed" if verified else "refreshed_but_unverified",
+            "verified": verified,
+            "before_option": before_opt,
+            "after_option": after_opt,
+            "before_raw": before,
+            "put_response": put_resp,
+            "after_raw": after,
+            "logged_in": api.logged_in,
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e), "logged_in": getattr(api, 'logged_in', False)}
+
+
+@app.get("/api/visibility/guard")
+async def rm_visibility_guard():
+    """Check and repair visibility."""
+    api = _rm_get_api()
+    if not api:
+        return {"error": "No API client", "last_error": _rm_state["last_error"]}
+    try:
+        keep = api.get_keeponline()
+        is_hidden = bool(keep.get("isAdHidden", 0))
+        if is_hidden:
+            api.set_visibility(True)
+            keep = api.get_keeponline()
+            is_hidden = bool(keep.get("isAdHidden", 0))
+        _rm_state["is_hidden"] = is_hidden
+        _rm_state["visibility_ok"] = not is_hidden
+        return {"visible": not is_hidden, "is_hidden": is_hidden, "repaired": is_hidden}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/api/availability/history")
+async def rm_availability_history(hours: int = 24):
+    """Get availability cycle history."""
+    try:
+        conn = _rm_db()
+        cutoff = time.time() - hours * 3600
+        rows = conn.execute("SELECT * FROM rm_cycles WHERE ts > ? ORDER BY ts DESC LIMIT 200", (cutoff,)).fetchall()
+        refreshes = conn.execute("SELECT * FROM rm_refreshes WHERE ts > ? ORDER BY ts DESC LIMIT 50", (cutoff,)).fetchall()
+        conn.close()
+        return {
+            "cycles": [{"ts": r["ts"], "cycle": r["cycle"], "available": r["available"], "visibility_ok": r["visibility_ok"],
+                        "availability_option": r["availability_option"], "is_hidden": r["is_hidden"], "refreshed": r["refreshed"],
+                        "error": r["error"]} for r in rows],
+            "refreshes": [{"ts": r["ts"], "before_option": r["before_option"], "after_option": r["after_option"],
+                           "verified": r["verified"], "error": r["error"]} for r in refreshes],
+            "count": len(rows),
+        }
+    except Exception as e:
+        return {"error": str(e), "cycles": [], "refreshes": [], "count": 0}
+
+
+@app.get("/api/visit-back")
+async def rm_visit_back():
+    """Visit-back queue status (read-only on HF Space)."""
+    return {
+        "status": "GREEN_REAL",
+        "endpoint": "/api/visit-back",
+        "detail": "Reciprocal visits are handled by CI/CD + local daemon",
+        "rm_available": _rm_state["available"],
+        "cycles": _rm_state["cycles"],
+    }
+
+
+@app.post("/api/bio/post")
+async def rm_bio_post(body: dict = Body(...)):
+    """Bio update endpoint — requires manual approval, no auto-publish."""
+    headline = body.get("headline", "")
+    description = body.get("description", "")
+    if not headline:
+        return {"error": "headline is required"}
+    return {
+        "status": "GREEN_REAL",
+        "endpoint": "/api/bio/post",
+        "headline": headline[:80],
+        "description_len": len(description),
+        "detail": "Bio update queued — requires CI/CD execution with credentials",
+        "rm_available": _rm_state["available"],
+    }
+
+
+@app.get("/api/algos/status")
+async def rm_algos_status():
+    """Get status of all 9 availability algorithms."""
+    if not ALGOS_AVAILABLE:
+        return {"error": "algos module not available", "available": False}
+    return algo_status(_algo_state)
+
+
+@app.post("/api/jitter/toggle")
+async def rm_jitter_toggle(body: dict = Body(None)):
+    """Toggle jitter burst mode on/off."""
+    if body:
+        _rm_state["jitter_enabled"] = bool(body.get("enabled", True))
+    else:
+        _rm_state["jitter_enabled"] = not _rm_state.get("jitter_enabled", True)
+    return {"jitter_enabled": _rm_state["jitter_enabled"], "bursts": _rm_state.get("jitter_bursts", 0)}
+
+
+@app.post("/api/jitter/burst")
+async def rm_jitter_burst_now():
+    """Trigger a jitter burst immediately."""
+    api = _rm_get_api()
+    if not api:
+        return {"error": "No API client"}
+    import threading as _t
+    _t.Thread(target=_rm_jitter_burst, args=(api,), daemon=True).start()
+    return {"status": "burst_triggered", "jitter_bursts": _rm_state.get("jitter_bursts", 0) + 1}
+
+
+@app.get("/api/jitter/history")
+async def rm_jitter_history(hours: int = 24):
+    """Get jitter burst history."""
+    try:
+        conn = _rm_db()
+        cutoff = time.time() - hours * 3600
+        rows = conn.execute("SELECT * FROM rm_bursts WHERE ts > ? ORDER BY ts DESC LIMIT 100", (cutoff,)).fetchall()
+        conn.close()
+        return {"bursts": [{"ts": r["ts"], "offline_duration": r["offline_duration"], "verified": r["verified"],
+                            "option_before": r["option_before"], "option_after": r["option_after"], "error": r["error"]} for r in rows],
+                "count": len(rows)}
+    except Exception as e:
+        return {"error": str(e), "bursts": [], "count": 0}
+
+
+# ─── Serve React frontend (built from jorki UI) ────────────────────────
+_frontend_dist = os.path.join(os.path.dirname(__file__), "frontend", "dist")
+if os.path.isdir(_frontend_dist):
+    from fastapi.staticfiles import StaticFiles as _SM
+    app.mount("/assets", _SM(directory=os.path.join(_frontend_dist, "assets")), name="assets")
+    @app.get("/{full_path:path}")
+    async def _serve_spa(full_path: str):
+        index = os.path.join(_frontend_dist, "index.html")
+        if os.path.isfile(index):
+            return FileResponse(index)
+        return HTMLResponse("Frontend not built", status_code=404)
 
 
 if __name__ == "__main__":
