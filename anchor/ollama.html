@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ollama — Always-On Chat</title>
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#06060a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2306060a'/><text x='50' y='68' font-size='48' text-anchor='middle' fill='%237878c8' font-family='monospace' font-weight='bold'>O</text></svg>">
+<style>
+:root {
+  --bg: #06060a;
+  --surface: #0d0d14;
+  --card: #111119;
+  --border: rgba(80,80,120,.18);
+  --text: #e0e0f0;
+  --dim: #666680;
+  --accent: #7878c8;
+  --accent2: #4ade80;
+  --warn: #fbbf24;
+  --red: #f87171;
+  --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Header */
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+header h1 { font-size: 16px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+.endpoint-pill { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-family: var(--mono); color: var(--dim); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.status-dot.online { background: var(--accent2); box-shadow: 0 0 8px var(--accent2); }
+.status-dot.offline { background: var(--red); }
+.status-dot.checking { background: var(--warn); animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.3; } }
+.model-select { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; color: var(--text); font-size: 13px; font-family: var(--sans); cursor: pointer; }
+.model-select:disabled { opacity: 0.4; cursor: not-allowed; }
+.refresh-btn { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; color: var(--dim); font-size: 13px; cursor: pointer; transition: color .2s; }
+.refresh-btn:hover { color: var(--text); }
+.spacer { flex: 1; }
+
+/* Chat area */
+#chat { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+#chat::-webkit-scrollbar { width: 6px; }
+#chat::-webkit-scrollbar-track { background: transparent; }
+#chat::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.msg { max-width: 780px; width: 100%; margin: 0 auto; }
+.msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.msg-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.msg-role.user { color: var(--accent); }
+.msg-role.assistant { color: var(--accent2); }
+.msg-role.system { color: var(--warn); }
+.msg-time { font-size: 10px; color: var(--dim); font-family: var(--mono); }
+.msg-body { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.msg-body.user { background: rgba(120,120,200,.08); }
+.msg-body.assistant { background: var(--surface); }
+.msg-body pre { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; overflow-x: auto; margin: 8px 0; font-family: var(--mono); font-size: 12px; }
+.msg-body code { font-family: var(--mono); font-size: 13px; }
+.msg-body p { margin: 4px 0; }
+
+/* Welcome */
+.welcome { text-align: center; padding: 60px 20px; color: var(--dim); }
+.welcome h2 { font-size: 22px; color: var(--text); margin-bottom: 8px; }
+.welcome p { font-size: 13px; margin-bottom: 4px; }
+.welcome .endpoints { margin-top: 20px; font-family: var(--mono); font-size: 11px; }
+
+/* Input */
+#input-area { background: var(--surface); border-top: 1px solid var(--border); padding: 16px 20px; flex-shrink: 0; }
+#input-wrap { max-width: 780px; margin: 0 auto; display: flex; gap: 12px; align-items: flex-end; }
+#msg-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; color: var(--text); font-size: 14px; font-family: var(--sans); resize: none; min-height: 48px; max-height: 200px; line-height: 1.5; }
+#msg-input:focus { outline: none; border-color: var(--accent); }
+#msg-input::placeholder { color: var(--dim); }
+#send-btn { background: var(--accent); color: #fff; border: none; border-radius: 12px; padding: 12px 20px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: opacity .2s; }
+#send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+#send-btn:not(:disabled):hover { opacity: 0.85; }
+
+/* Config bar */
+#config-bar { background: var(--surface); border-top: 1px solid var(--border); padding: 8px 20px; font-size: 11px; font-family: var(--mono); color: var(--dim); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; flex-shrink: 0; }
+#config-bar a { color: var(--accent); text-decoration: none; }
+#config-bar a:hover { text-decoration: underline; }
+#endpoint-input { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; color: var(--text); font-size: 11px; font-family: var(--mono); width: 280px; }
+#endpoint-input:focus { outline: none; border-color: var(--accent); }
+#save-endpoint { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; color: var(--accent); font-size: 11px; cursor: pointer; }
+#save-endpoint:hover { background: rgba(120,120,200,.1); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🦙 Ollama Chat</h1>
+  <div class="status-dot checking" id="status-dot"></div>
+  <div class="endpoint-pill" id="endpoint-display">connecting...</div>
+  <select class="model-select" id="model-select" disabled>
+    <option>loading models...</option>
+  </select>
+  <button class="refresh-btn" id="refresh-models" title="Refresh models">↻</button>
+  <div class="spacer"></div>
+</header>
+
+<div id="chat">
+  <div class="welcome" id="welcome">
+    <h2>Ollama — Always-On</h2>
+    <p>Static interface. Connects to any Ollama endpoint.</p>
+    <p>Your laptop doesn't need to be on if cloud endpoint is configured.</p>
+    <div class="endpoints" id="welcome-endpoints"></div>
+  </div>
+</div>
+
+<div id="input-area">
+  <div id="input-wrap">
+    <textarea id="msg-input" placeholder="Type a message... (Shift+Enter for newline)" rows="1" disabled></textarea>
+    <button id="send-btn" disabled>Send</button>
+  </div>
+</div>
+
+<div id="config-bar">
+  <span>endpoint:</span>
+  <input type="text" id="endpoint-input" placeholder="https://your-ollama-endpoint.com" />
+  <button id="save-endpoint">save</button>
+  <span>|</span>
+  <span id="latency-display">latency: —</span>
+  <span>|</span>
+  <span><a href="ollama-config.json" target="_blank">config</a></span>
+  <span>|</span>
+  <span><a href="tunnel.json" target="_blank">tunnel</a></span>
+</div>
+
+<script>
+const CONFIG_URL = './ollama-config.json';
+const LS_KEY = 'ollama-endpoint';
+let currentEndpoint = null;
+let currentModel = null;
+let isStreaming = false;
+
+// --- Endpoint management ---
+function getStoredEndpoint() {
+  return localStorage.getItem(LS_KEY) || null;
+}
+function setStoredEndpoint(url) {
+  localStorage.setItem(LS_KEY, url);
+}
+
+async function loadConfig() {
+  try {
+    const r = await fetch(CONFIG_URL + '?t=' + Date.now());
+    if (!r.ok) throw new Error('no config');
+    return await r.json();
+  } catch {
+    return {};
+  }
+}
+
+async function resolveEndpoint() {
+  // Priority: localStorage > config.primary_endpoint > config.local_endpoint
+  const stored = getStoredEndpoint();
+  if (stored) return stored;
+
+  const config = await loadConfig();
+  if (config.primary_endpoint) return config.primary_endpoint;
+  if (config.local_endpoint) return config.local_endpoint;
+  return null;
+}
+
+// --- API calls ---
+async function checkHealth(endpoint) {
+  const start = performance.now();
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 8000);
+    const r = await fetch(endpoint + '/api/tags', { signal: ctrl.signal, cache: 'no-store' });
+    clearTimeout(t);
+    if (!r.ok) return { online: false, models: [], latency: null };
+    const data = await r.json();
+    const latency = Math.round(performance.now() - start);
+    return { online: true, models: data.models || [], latency };
+  } catch {
+    return { online: false, models: [], latency: null };
+  }
+}
+
+async function loadModels(endpoint) {
+  try {
+    const r = await fetch(endpoint + '/api/tags', { cache: 'no-store' });
+    if (!r.ok) return [];
+    const data = await r.json();
+    return data.models || [];
+  } catch {
+    return [];
+  }
+}
+
+// --- Streaming chat ---
+async function streamChat(endpoint, model, messages, onToken, onDone, onError) {
+  try {
+    const r = await fetch(endpoint + '/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model, messages, stream: true }),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+
+    const reader = r.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let fullText = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        try {
+          const chunk = JSON.parse(line);
+          if (chunk.message?.content) {
+            fullText += chunk.message.content;
+            onToken(chunk.message.content);
+          }
+          if (chunk.done) {
+            onDone(fullText);
+            return;
+          }
+        } catch {}
+      }
+    }
+    onDone(fullText);
+  } catch (e) {
+    onError(e.message);
+  }
+}
+
+// --- UI ---
+const chat = document.getElementById('chat');
+const welcome = document.getElementById('welcome');
+const msgInput = document.getElementById('msg-input');
+const sendBtn = document.getElementById('send-btn');
+const modelSelect = document.getElementById('model-select');
+const statusDot = document.getElementById('status-dot');
+const endpointDisplay = document.getElementById('endpoint-display');
+const endpointInput = document.getElementById('endpoint-input');
+const saveEndpointBtn = document.getElementById('save-endpoint');
+const latencyDisplay = document.getElementById('latency-display');
+const welcomeEndpoints = document.getElementById('welcome-endpoints');
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function formatMarkdown(text) {
+  // Basic markdown: code blocks, inline code, bold
+  let html = escapeHtml(text);
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (m, lang, code) => `<pre><code>${code}</code></pre>`);
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return html;
+}
+
+function addMessage(role, content, streaming = false) {
+  if (welcome) welcome.style.display = 'none';
+
+  const msg = document.createElement('div');
+  msg.className = 'msg';
+  msg.innerHTML = `
+    <div class="msg-header">
+      <span class="msg-role ${role}">${role}</span>
+      <span class="msg-time">${new Date().toLocaleTimeString()}</span>
+    </div>
+    <div class="msg-body ${role}"></div>
+  `;
+  const body = msg.querySelector('.msg-body');
+  chat.appendChild(msg);
+  chat.scrollTop = chat.scrollHeight;
+
+  if (streaming) {
+    return (token) => {
+      body.textContent += token;
+      chat.scrollTop = chat.scrollHeight;
+    };
+  } else {
+    body.innerHTML = formatMarkdown(content);
+    chat.scrollTop = chat.scrollHeight;
+  }
+}
+
+// --- Init ---
+async function init() {
+  currentEndpoint = await resolveEndpoint();
+  if (currentEndpoint) {
+    endpointInput.value = currentEndpoint;
+    endpointDisplay.textContent = currentEndpoint;
+    await connect(currentEndpoint);
+  } else {
+    statusDot.className = 'status-dot offline';
+    endpointDisplay.textContent = 'no endpoint configured';
+    welcomeEndpoints.innerHTML = 'Set an endpoint below or update ollama-config.json';
+  }
+
+  // Show available endpoints from config
+  const config = await loadConfig();
+  let epHtml = '';
+  if (config.primary_endpoint) epHtml += `primary: ${escapeHtml(config.primary_endpoint)}<br>`;
+  if (config.local_endpoint) epHtml += `local: ${escapeHtml(config.local_endpoint)}<br>`;
+  if (config.cloud_endpoint) epHtml += `cloud: ${escapeHtml(config.cloud_endpoint)}<br>`;
+  if (config.fallback_endpoints?.length) epHtml += `fallbacks: ${config.fallback_endpoints.length}<br>`;
+  if (epHtml) welcomeEndpoints.innerHTML = epHtml;
+}
+
+async function connect(endpoint) {
+  currentEndpoint = endpoint;
+  endpointDisplay.textContent = endpoint;
+  statusDot.className = 'status-dot checking';
+
+  const health = await checkHealth(endpoint);
+  if (health.online) {
+    statusDot.className = 'status-dot online';
+    msgInput.disabled = false;
+    sendBtn.disabled = false;
+    modelSelect.disabled = false;
+    latencyDisplay.textContent = `latency: ${health.latency}ms`;
+
+    // Populate models
+    modelSelect.innerHTML = '';
+    if (health.models.length === 0) {
+      modelSelect.innerHTML = '<option value="">no models — pull one first</option>';
+    } else {
+      health.models.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.name;
+        opt.textContent = m.name + (m.size ? ` (${(m.size / 1e9).toFixed(1)}GB)` : '');
+        modelSelect.appendChild(opt);
+      });
+      currentModel = health.models[0].name;
+    }
+    msgInput.focus();
+  } else {
+    statusDot.className = 'status-dot offline';
+    msgInput.disabled = true;
+    sendBtn.disabled = true;
+    modelSelect.disabled = true;
+    latencyDisplay.textContent = 'latency: unreachable';
+
+    // Try fallback endpoints from config
+    const config = await loadConfig();
+    const fallbacks = config.fallback_endpoints || [];
+    for (const fb of fallbacks) {
+      const fbHealth = await checkHealth(fb);
+      if (fbHealth.online) {
+        setStoredEndpoint(fb);
+        await connect(fb);
+        return;
+      }
+    }
+  }
+}
+
+// --- Events ---
+sendBtn.addEventListener('click', sendMessage);
+msgInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+msgInput.addEventListener('input', () => {
+  msgInput.style.height = 'auto';
+  msgInput.style.height = Math.min(msgInput.scrollHeight, 200) + 'px';
+});
+
+document.getElementById('refresh-models').addEventListener('click', async () => {
+  if (currentEndpoint) await connect(currentEndpoint);
+});
+
+saveEndpointBtn.addEventListener('click', () => {
+  const url = endpointInput.value.trim();
+  if (url) {
+    setStoredEndpoint(url);
+    connect(url);
+  }
+});
+
+endpointInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') saveEndpointBtn.click();
+});
+
+async function sendMessage() {
+  const text = msgInput.value.trim();
+  if (!text || !currentEndpoint || isStreaming) return;
+
+  const model = modelSelect.value;
+  if (!model) {
+    addMessage('system', 'No model selected. Pull a model first: ollama pull llama3');
+    return;
+  }
+
+  addMessage('user', text);
+  msgInput.value = '';
+  msgInput.style.height = 'auto';
+
+  // Build message history
+  const messages = [];
+  const allMsgs = chat.querySelectorAll('.msg');
+  allMsgs.forEach(m => {
+    const role = m.querySelector('.msg-role')?.textContent;
+    const body = m.querySelector('.msg-body')?.textContent;
+    if (role && body && role !== 'system') {
+      messages.push({ role, content: body });
+    }
+  });
+
+  isStreaming = true;
+  sendBtn.disabled = true;
+  sendBtn.textContent = '...';
+
+  const appendToken = addMessage('assistant', '', true);
+
+  await streamChat(currentEndpoint, model, messages,
+    (token) => appendToken(token),
+    (fullText) => {
+      isStreaming = false;
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send';
+    },
+    (err) => {
+      isStreaming = false;
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send';
+      appendToken(`\n[error: ${err}]`);
+    }
+  );
+}
+
+init();
+</script>
+</body>
+</html>

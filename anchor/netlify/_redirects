@@ -1,0 +1,10 @@
+# Netlify _redirects — Tunnel Anchor
+# The /api/redirect function handles dynamic routing with health checks
+# These are simple fallbacks
+
+/api/redirect  /.netlify/functions/redirect 200
+/go  /.netlify/functions/redirect 200
+/r   /.netlify/functions/redirect 200
+
+# If no function match, serve the static anchor page
+/*  /index.html 200

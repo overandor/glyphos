@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "functions": {
+    "api/redirect.js": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "rewrites": [
+    { "source": "/", "destination": "/api/redirect" },
+    { "source": "/go", "destination": "/api/redirect" },
+    { "source": "/r", "destination": "/api/redirect" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    }
+  ]
+}

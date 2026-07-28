@@ -1,0 +1,29 @@
+---
+name: Sync Tunnel Config to Pages
+on:
+  push:
+    paths:
+      - 'anchor/tunnel.json'
+      - 'anchor/index.html'
+      - 'anchor/ollama.html'
+      - 'anchor/ollama-config.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-anchor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload anchor
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: anchor/
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

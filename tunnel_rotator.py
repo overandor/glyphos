@@ -185,6 +185,27 @@ def check_local_health(port, timeout=3):
         return False
 
 
+def check_ollama(timeout=3):
+    """Check if Ollama is reachable and return model count."""
+    try:
+        r = urllib.request.urlopen("http://localhost:11434/api/tags", timeout=timeout)
+        data = json.loads(r.read())
+        return len(data.get("models", []))
+    except Exception:
+        return None
+
+
+def measure_tunnel_latency(url, timeout=5):
+    """Measure round-trip latency to the tunnel URL in milliseconds."""
+    try:
+        import time as _t
+        start = _t.time()
+        urllib.request.urlopen(url, timeout=timeout)
+        return int((_t.time() - start) * 1000)
+    except Exception:
+        return None
+
+
 def start_tunnel(port, provider):
     """Start an ephemeral tunnel and update the anchor."""
     cfg = PROVIDERS.get(provider)
@@ -252,6 +273,10 @@ def start_tunnel(port, provider):
     # Check local service is also reachable
     local_ok = check_local_health(port)
 
+    # Check Ollama and measure latency
+    ollama_models = check_ollama()
+    latency_ms = measure_tunnel_latency(url)
+
     # Read rotation count
     rotation_count = current.get("rotation_count", 0)
 
@@ -276,6 +301,9 @@ def start_tunnel(port, provider):
         "receipt_hash": receipt_hash,
         "thermal_mode": "active",
         "local_reachable": local_ok,
+        "ollama_reachable": ollama_models is not None,
+        "ollama_models": ollama_models,
+        "latency_ms": latency_ms,
         "rotation_count": rotation_count,
         "fallback_urls": [],
     })
@@ -354,6 +382,10 @@ def rotate_tunnel():
     if old_url and old_url not in fallback:
         fallback = [old_url] + fallback[:2]  # Keep last 2 fallbacks
 
+    # Check Ollama and measure latency for new tunnel
+    ollama_models = check_ollama()
+    latency_ms = measure_tunnel_latency(new_url)
+
     # Update anchor to new URL
     receipt_hash = write_receipt("rotate_complete", {
         "old_url": old_url,
@@ -374,6 +406,9 @@ def rotate_tunnel():
         "thermal_mode": "active",
         "port": port,
         "pid": new_proc.pid,
+        "ollama_reachable": ollama_models is not None,
+        "ollama_models": ollama_models,
+        "latency_ms": latency_ms,
         "rotation_count": rotation_count + 1,
         "fallback_urls": fallback,
     })
