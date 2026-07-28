@@ -3,37 +3,18 @@ title: Ollama
 emoji: 🦙
 colorFrom: indigo
 colorTo: purple
-sdk: docker
-app_port: 11434
+sdk: gradio
+app_port: 7860
 pinned: false
 license: mit
 ---
-# Always-On Ollama on HuggingFace Spaces
+# Always-On Ollama on HuggingFace Spaces (Free Tier)
 
-This Space runs Ollama with pre-pulled models. It gives you a permanent API endpoint that works without your laptop.
+Runs Ollama inside a Gradio Space with a chat UI. Also exposes the Ollama API on port 7860.
 
-## Endpoint
-After deployment: `https://<your-username>-ollama.hf.space`
+## After deployment
+- Chat UI: `https://josephrw-ollama.hf.space`
+- API: `https://josephrw-ollama.hf.space` (Gradio backend, Ollama runs locally inside)
 
-## Usage
-```bash
-# List models
-curl https://<your-username>-ollama.hf.space/api/tags
-
-# Chat
-curl https://<your-username>-ollama.hf.space/api/chat -d '{
-  "model": "llama3.2:3b",
-  "messages": [{"role": "user", "content": "Hello!"}]
-}'
-```
-
-## Add models
-Edit the Dockerfile and add `ollama pull <model>` lines, then rebuild.
-
-## Connect to static UI
-Update `ollama-config.json`:
-```json
-{
-  "cloud_endpoint": "https://<your-username>-ollama.hf.space"
-}
-```
+## Add more models
+Edit `app.py` and add `subprocess.Popen(["ollama", "pull", "model_name"])` lines.
