@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "MasseurBoost Bridge",
+  "version": "0.1.0",
+  "description": "Connects RentMasseur to MasseurBoost dashboard — imports visitor counts, inserts approved bios, detects login state.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://rentmasseur.com/*",
+    "https://www.rentmasseur.com/*",
+    "http://localhost:*/*",
+    "https://overandor.github.io/*",
+    "https://anchor-blond-sigma.vercel.app/*",
+    "https://josephrw-ollama.hf.space/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://rentmasseur.com/*",
+        "https://www.rentmasseur.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:*/*",
+      "https://overandor.github.io/*",
+      "https://anchor-blond-sigma.vercel.app/*",
+      "https://josephrw-ollama.hf.space/*"
+    ]
+  }
+}

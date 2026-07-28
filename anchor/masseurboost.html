@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MasseurBoost — AI Workspace for RentMasseur Providers</title>
+  <meta name="description"
+    content="AI-powered workspace for RentMasseur providers: bio generation, blog creation, photo recommendations, availability optimization, and visitor competition leaderboard.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0a14">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src *; font-src 'self'; frame-src https:">
+  <style>
+    :root {
+      --bg: #0a0a14;
+      --bg2: #11111e;
+      --card: rgba(20, 20, 35, .92);
+      --border: rgba(80, 80, 120, .25);
+      --text: #c8c8e0;
+      --dim: #666680;
+      --accent: #7c6ce0;
+      --accent2: #10b981;
+      --warn: #ff9944;
+      --red: #ef4444;
+      --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --rm-brand: #e84855;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -.3px;
+    }
+
+    .topbar h1 span {
+      color: var(--rm-brand);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-family: var(--mono);
+      font-weight: 500;
+    }
+
+    .status-pill.connecting {
+      background: rgba(255, 153, 68, .15);
+      color: var(--warn);
+      border: 1px solid rgba(255, 153, 68, .3);
+    }
+
+    .status-pill.connected {
+      background: rgba(16, 185, 129, .15);
+      color: var(--accent2);
+      border: 1px solid rgba(16, 185, 129, .3);
+    }
+
+    .status-pill.blocked {
+      background: rgba(239, 68, 68, .15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, .3);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 0;
+      height: calc(100vh - 57px);
+    }
+
+    .iframe-panel {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      min-width: 0;
+    }
+
+    .iframe-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .iframe-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .iframe-toolbar .url-display {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+      max-width: 400px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all .15s;
+      font-family: var(--sans);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #6c5cd0;
+    }
+
+    .btn-success {
+      background: var(--accent2);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background: #0da678;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .btn-danger {
+      background: var(--rm-brand);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: #d63e4b;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+
+    .iframe-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    .iframe-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg2);
+      z-index: 10;
+    }
+
+    .iframe-overlay.hidden {
+      display: none;
+    }
+
+    .overlay-content {
+      text-align: center;
+      max-width: 400px;
+      padding: 32px;
+    }
+
+    .overlay-content .icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .overlay-content h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .overlay-content p {
+      color: var(--dim);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .ai-panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .ai-tabs {
+      display: flex;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      scrollbar-width: thin;
+    }
+
+    .ai-tab {
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--dim);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: all .15s;
+    }
+
+    .ai-tab:hover {
+      color: var(--text);
+    }
+
+    .ai-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .ai-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .ai-section {
+      display: none;
+    }
+
+    .ai-section.active {
+      display: block;
+    }
+
+    .ai-section h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .ai-section p.hint {
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 12px;
+    }
+
+    .field-group {
+      margin-bottom: 14px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 4px;
+    }
+
+    .field-group input,
+    .field-group textarea,
+    .field-group select {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: var(--sans);
+      resize: vertical;
+    }
+
+    .field-group textarea {
+      min-height: 80px;
+      font-family: var(--mono);
+    }
+
+    .field-group input:focus,
+    .field-group textarea:focus,
+    .field-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .ai-output {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    .ai-output.visible {
+      display: block;
+    }
+
+    .ai-output .copy-btn {
+      float: right;
+      font-size: 11px;
+      color: var(--accent);
+      cursor: pointer;
+      opacity: .7;
+    }
+
+    .ai-output .copy-btn:hover {
+      opacity: 1;
+    }
+
+    .leaderboard {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .leaderboard-entry {
+      display: grid;
+      grid-template-columns: 28px 1fr 60px 50px;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .leaderboard-entry .rank {
+      font-family: var(--mono);
+      font-weight: 600;
+      text-align: center;
+      color: var(--dim);
+    }
+
+    .leaderboard-entry .rank.top1 {
+      color: #ffd700;
+    }
+
+    .leaderboard-entry .rank.top2 {
+      color: #c0c0c0;
+    }
+
+    .leaderboard-entry .rank.top3 {
+      color: #cd7f32;
+    }
+
+    .leaderboard-entry .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .leaderboard-entry .visitors {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-align: right;
+      color: var(--accent2);
+    }
+
+    .leaderboard-entry .change {
+      font-family: var(--mono);
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .leaderboard-entry .change.up {
+      color: var(--accent2);
+    }
+
+    .leaderboard-entry .change.down {
+      color: var(--red);
+    }
+
+    .leaderboard-entry .change.flat {
+      color: var(--dim);
+    }
+
+    .traffic-import {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .traffic-import h4 {
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .traffic-import p {
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 10px;
+    }
+
+    .traffic-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .traffic-input-row input {
+      flex: 1;
+      padding: 6px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .login-confirmation {
+      display: none;
+      background: rgba(16, 185, 129, .08);
+      border: 1px solid rgba(16, 185, 129, .3);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .login-confirmation.visible {
+      display: block;
+    }
+
+    .login-confirmation p {
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: var(--accent2);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .info-banner {
+      background: rgba(124, 108, 224, .08);
+      border: 1px solid rgba(124, 108, 224, .2);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: var(--dim);
+    }
+
+    .info-banner strong {
+      color: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60vh 1fr;
+        height: auto;
+      }
+
+      .iframe-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+  </style>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a14'/><text x='50' y='68' font-size='40' text-anchor='middle' fill='%237c6ce0' font-family='monospace' font-weight='bold'>M</text></svg>">
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>Masseur<span>Boost</span></h1>
+      <div class="status-pill connecting" id="conn-status">
+        <span id="conn-icon">○</span>
+        <span id="conn-text">Connecting…</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-ghost btn-sm" id="btn-open-external" style="display:none">
+        Open in secure window ↗
+      </button>
+      <button class="btn btn-ghost btn-sm" id="btn-reconnect" style="display:none">
+        Reconnect
+      </button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Left: RM iframe panel -->
+    <div class="iframe-panel">
+      <div class="iframe-toolbar">
+        <div class="iframe-toolbar-left">
+          <span style="font-size:12px;color:var(--dim)">RentMasseur</span>
+          <span class="url-display" id="rm-url-display">—</span>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="btn-refresh-iframe" title="Reload iframe">
+          ↻ Refresh
+        </button>
+      </div>
+      <div class="iframe-container">
+        <!-- CONNECTING overlay -->
+        <div class="iframe-overlay" id="overlay-connecting">
+          <div class="overlay-content">
+            <div class="spinner"></div>
+            <h2>Connecting to RentMasseur</h2>
+            <p>Loading the secure login page. Your credentials stay between you and RentMasseur — MasseurBoost never
+              sees your password.</p>
+          </div>
+        </div>
+
+        <!-- BLOCKED overlay -->
+        <div class="iframe-overlay hidden" id="overlay-blocked">
+          <div class="overlay-content">
+            <div class="icon">🚫</div>
+            <h2>iframe Blocked by RentMasseur</h2>
+            <p>RentMasseur prevents embedding in third-party pages (X-Frame-Options or CSP frame-ancestors). Use the
+              secure window fallback instead.</p>
+            <button class="btn btn-primary" id="btn-open-fallback">
+              Open RentMasseur in secure window ↗
+            </button>
+          </div>
+        </div>
+
+        <!-- The iframe itself — real RentMasseur site -->
+        <iframe id="rm-iframe" src="" title="RentMasseur" allow="clipboard-read; clipboard-write"
+          referrerpolicy="strict-origin-when-cross-origin"
+          style="display:none;width:100%;height:100%;border:0"></iframe>
+      </div>
+    </div>
+
+    <!-- Right: AI workspace panel -->
+    <div class="ai-panel">
+      <div class="ai-tabs">
+        <div class="ai-tab active" data-tab="connect">Connect</div>
+        <div class="ai-tab" data-tab="bio">Bio</div>
+        <div class="ai-tab" data-tab="blog">Blog</div>
+        <div class="ai-tab" data-tab="photos">Photos</div>
+        <div class="ai-tab" data-tab="availability">Schedule</div>
+        <div class="ai-tab" data-tab="market">Market</div>
+        <div class="ai-tab" data-tab="leaderboard">Race</div>
+      </div>
+
+      <div class="ai-content">
+        <!-- CONNECT TAB -->
+        <div class="ai-section active" id="section-connect">
+          <div class="info-banner">
+            <strong>How this works:</strong> RentMasseur loads inside the left panel. You log in normally. MasseurBoost
+            never receives your password — the browser's same-origin policy prevents it. After logging in, click
+            <strong>I'm logged in</strong> to activate AI tools.
+          </div>
+
+          <div class="login-confirmation" id="login-confirm">
+            <p>✓ You're logged in. AI workspace activated.</p>
+            <button class="btn btn-ghost btn-sm" id="btn-logout-confirm">Log out / Disconnect</button>
+          </div>
+
+          <div class="field-group">
+            <label>RentMasseur URL</label>
+            <input type="url" id="rm-login-url" placeholder="https://rentmasseur.com/" value="https://rentmasseur.com/">
+          </div>
+
+          <button class="btn btn-primary" id="btn-connect-rm" style="width:100%;justify-content:center">
+            Connect RentMasseur
+          </button>
+
+          <div class="divider"></div>
+
+          <div class="info-banner">
+            <strong>Browser Extension Bridge:</strong> The iframe is a window into RentMasseur, not a data bridge. To
+            automatically import visitor counts, insert bios, and detect login state, install the MasseurBoost browser
+            extension. Without it, all data transfer is manual (copy/paste).
+          </div>
+
+          <button class="btn btn-ghost" id="btn-install-extension" style="width:100%;justify-content:center">
+            Install MasseurBoost Extension →
+          </button>
+
+          <div class="divider"></div>
+
+          <div class="field-group">
+            <label>Your provider name (for leaderboard)</label>
+            <input type="text" id="provider-name" placeholder="e.g. AlexMassage">
+          </div>
+
+          <div class="field-group">
+            <label>Your city / region</label>
+            <input type="text" id="provider-city" placeholder="e.g. New York">
+          </div>
+
+          <div class="field-group">
+            <label>Ollama endpoint (for local AI generation)</label>
+            <input type="url" id="ollama-url" placeholder="http://localhost:11434" value="http://localhost:11434">
+          </div>
+
+          <button class="btn btn-ghost" id="btn-save-profile" style="width:100%;justify-content:center">
+            Save Profile
+          </button>
+        </div>
+
+        <!-- BIO TAB -->
+        <div class="ai-section" id="section-bio">
+          <h3>AI Bio Generation</h3>
+          <p class="hint">Generate an optimized RentMasseur bio. Paste the result into your RM profile editor on the
+            left.</p>
+
+          <div class="field-group">
+            <label>Your specialties (comma-separated)</label>
+            <input type="text" id="bio-specialties" placeholder="deep tissue, Swedish, sports massage, trigger point">
+          </div>
+
+          <div class="field-group">
+            <label>Years of experience</label>
+            <input type="number" id="bio-experience" placeholder="8" min="0" max="50">
+          </div>
+
+          <div class="field-group">
+            <label>Tone</label>
+            <select id="bio-tone">
+              <option value="professional">Professional</option>
+              <option value="warm">Warm & welcoming</option>
+              <option value="confident">Confident & direct</option>
+              <option value="luxury">Luxury / premium</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>Unique selling points (optional)</label>
+            <textarea id="bio-usp"
+              placeholder="certified, private studio, table shower available, late hours"></textarea>
+          </div>
+
+          <button class="btn btn-primary" id="btn-generate-bio" style="width:100%;justify-content:center">
+            Generate Bio
+          </button>
+
+          <div class="ai-output" id="bio-output">
+            <span class="copy-btn" data-copy-target="bio-output-text">Copy</span>
+            <div id="bio-output-text"></div>
+          </div>
+        </div>
+
+        <!-- BLOG TAB -->
+        <div class="ai-section" id="section-blog">
+          <h3>Blog Post Generation</h3>
+          <p class="hint">Generate SEO-friendly blog content to attract organic traffic to your RM profile.</p>
+
+          <div class="field-group">
+            <label>Topic / keyword</label>
+            <input type="text" id="blog-topic" placeholder="benefits of deep tissue massage">
+          </div>
+
+          <div class="field-group">
+            <label>Length</label>
+            <select id="blog-length">
+              <option value="short">Short (200-300 words)</option>
+              <option value="medium" selected>Medium (400-600 words)</option>
+              <option value="long">Long (800-1000 words)</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label>Style</label>
+            <select id="blog-style">
+              <option value="informational">Informational / educational</option>
+              <option value="personal">Personal experience</option>
+              <option value="promotional">Promotional</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" id="btn-generate-blog" style="width:100%;justify-content:center">
+            Generate Blog Post
+          </button>
+
+          <div class="ai-output" id="blog-output">
+            <span class="copy-btn" data-copy-target="blog-output-text">Copy</span>
+            <div id="blog-output-text"></div>
+          </div>
+        </div>
+
+        <!-- PHOTOS TAB -->
+        <div class="ai-section" id="section-photos">
+          <h3>Photo Recommendations</h3>
+          <p class="hint">AI analysis of your current photos with suggestions for improvement.</p>
+
+          <div class="field-group">
+            <label>Number of current photos</label>
+            <input type="number" id="photo-count" placeholder="5" min="0" max="20">
+          </div>
+
+          <div class="field-group">
+            <label>What types of photos do you have?</label>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+              <label><input type="checkbox" class="photo-type" value="studio"> Studio / professional</label>
+              <label><input type="checkbox" class="photo-type" value="outdoor"> Outdoor</label>
+              <label><input type="checkbox" class="photo-type" value="action"> Massage in action</label>
+              <label><input type="checkbox" class="photo-type" value="portrait"> Portrait / headshot</label>
+              <label><input type="checkbox" class="photo-type" value="body"> Body / physique</label>
+              <label><input type="checkbox" class="photo-type" value="space"> Studio space</label>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>What's missing? (optional)</label>
+            <textarea id="photo-gaps" placeholder="I don't have any outdoor shots or videos"></textarea>
+          </div>
+
+          <button class="btn btn-primary" id="btn-photo-recs" style="width:100%;justify-content:center">
+            Get Recommendations
+          </button>
+
+          <div class="ai-output" id="photo-output">
+            <span class="copy-btn" data-copy-target="photo-output-text">Copy</span>
+            <div id="photo-output-text"></div>
+          </div>
+        </div>
+
+        <!-- AVAILABILITY TAB -->
+        <div class="ai-section" id="section-availability">
+          <h3>Availability Optimization</h3>
+          <p class="hint">Analyze peak demand hours and suggest optimal availability windows.</p>
+
+          <div class="field-group">
+            <label>Current availability (e.g. Mon-Fri 10am-8pm)</label>
+            <input type="text" id="avail-current" placeholder="Mon-Fri 10am-8pm, Sat 12pm-6pm">
+          </div>
+
+          <div class="field-group">
+            <label>City</label>
+            <input type="text" id="avail-city" placeholder="New York">
+          </div>
+
+          <div class="field-group">
+            <label>When do you get the most inquiries?</label>
+            <select id="avail-peak">
+              <option value="morning">Morning (6am-12pm)</option>
+              <option value="afternoon">Afternoon (12pm-5pm)</option>
+              <option value="evening" selected>Evening (5pm-10pm)</option>
+              <option value="late">Late night (10pm-2am)</option>
+              <option value="weekend">Weekends</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" id="btn-optimize-avail" style="width:100%;justify-content:center">
+            Optimize Schedule
+          </button>
+
+          <div class="ai-output" id="avail-output">
+            <span class="copy-btn" data-copy-target="avail-output-text">Copy</span>
+            <div id="avail-output-text"></div>
+          </div>
+        </div>
+
+        <!-- MARKET TAB -->
+        <div class="ai-section" id="section-market">
+          <h3>Market Comparison</h3>
+          <p class="hint">Compare your profile against top providers in your area.</p>
+
+          <div class="field-group">
+            <label>Your hourly rate</label>
+            <input type="number" id="market-rate" placeholder="120" min="0">
+          </div>
+
+          <div class="field-group">
+            <label>City</label>
+            <input type="text" id="market-city" placeholder="New York">
+          </div>
+
+          <div class="field-group">
+            <label>Your estimated monthly visitors</label>
+            <input type="number" id="market-visitors" placeholder="300" min="0">
+          </div>
+
+          <button class="btn btn-primary" id="btn-market-compare" style="width:100%;justify-content:center">
+            Compare Market
+          </button>
+
+          <div class="ai-output" id="market-output">
+            <span class="copy-btn" data-copy-target="market-output-text">Copy</span>
+            <div id="market-output-text"></div>
+          </div>
+        </div>
+
+        <!-- LEADERBOARD TAB -->
+        <div class="ai-section" id="section-leaderboard">
+          <h3>Visitor Race Leaderboard</h3>
+          <p class="hint">Track visitor count changes. Submit your own numbers manually — the iframe cannot read RM data
+            automatically.</p>
+
+          <div class="traffic-import">
+            <h4>Submit Your Visitor Count</h4>
+            <p>Read your visitor stats from the RM dashboard on the left, then enter the number here.</p>
+            <div class="traffic-input-row">
+              <input type="number" id="traffic-count" placeholder="Current visitors" min="0">
+              <button class="btn btn-success btn-sm" id="btn-submit-traffic">Submit</button>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h3 style="margin-top:16px">Leaderboard</h3>
+          <div class="leaderboard" id="leaderboard-list">
+            <div class="leaderboard-entry">
+              <span class="rank top1">1</span>
+              <span class="name">— No entries yet —</span>
+              <span class="visitors">—</span>
+              <span class="change flat">—</span>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="info-banner">
+            <strong>Privacy note:</strong> Visitor counts are self-reported. MasseurBoost cannot automatically extract
+            data from the RM iframe due to same-origin policy. All submissions are manual and user-confirmed.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // === CONFIG ===
+    const RM_DEFAULT_URL = 'https://rentmasseur.com/';
+    const IFRAME_LOAD_TIMEOUT = 10000; // 10s before fallback
+    const STORAGE_KEY = 'masseurboost_state';
+
+    // === STATE ===
+    let connectionState = 'CONNECTING'; // CONNECTING | CONNECTED_MANUAL | IFRAME_BLOCKED
+    let isLoggedIn = false;
+    let leaderboardData = [];
+
+    // === DOM ===
+    const iframe = document.getElementById('rm-iframe');
+    const overlayConnecting = document.getElementById('overlay-connecting');
+    const overlayBlocked = document.getElementById('overlay-blocked');
+    const connStatus = document.getElementById('conn-status');
+    const connIcon = document.getElementById('conn-icon');
+    const connText = document.getElementById('conn-text');
+    const btnConnect = document.getElementById('btn-connect-rm');
+    const btnOpenFallback = document.getElementById('btn-open-fallback');
+    const btnOpenExternal = document.getElementById('btn-open-external');
+    const btnReconnect = document.getElementById('btn-reconnect');
+    const btnRefresh = document.getElementById('btn-refresh-iframe');
+    const loginConfirm = document.getElementById('login-confirm');
+    const rmUrlDisplay = document.getElementById('rm-url-display');
+
+    // === STATE MANAGEMENT ===
+
+    function setConnectionState(state) {
+      connectionState = state;
+      connStatus.className = 'status-pill ' + state.toLowerCase().replace('_manual', '').replace('connected', 'connected').replace('connecting', 'connecting').replace('blocked', 'blocked');
+
+      if (state === 'CONNECTING') {
+        connIcon.textContent = '○';
+        connText.textContent = 'Connecting…';
+        overlayConnecting.classList.remove('hidden');
+        overlayBlocked.classList.add('hidden');
+        iframe.style.display = 'none';
+        btnOpenExternal.style.display = 'none';
+        btnReconnect.style.display = 'none';
+      } else if (state === 'CONNECTED_MANUAL') {
+        connIcon.textContent = '✓';
+        connText.textContent = 'Connected';
+        overlayConnecting.classList.add('hidden');
+        overlayBlocked.classList.add('hidden');
+        iframe.style.display = 'block';
+        btnOpenExternal.style.display = 'inline-flex';
+        btnReconnect.style.display = 'none';
+      } else if (state === 'IFRAME_BLOCKED') {
+        connIcon.textContent = '✕';
+        connText.textContent = 'iframe Blocked';
+        overlayConnecting.classList.add('hidden');
+        overlayBlocked.classList.remove('hidden');
+        iframe.style.display = 'none';
+        btnOpenExternal.style.display = 'inline-flex';
+        btnReconnect.style.display = 'inline-flex';
+      }
+    }
+
+    function setLoggedIn(loggedIn) {
+      isLoggedIn = loggedIn;
+      if (loggedIn) {
+        loginConfirm.classList.add('visible');
+        // Activate AI tabs
+        document.querySelectorAll('.ai-tab').forEach(t => {
+          if (t.dataset.tab !== 'connect') t.style.opacity = '1';
+        });
+      } else {
+        loginConfirm.classList.remove('visible');
+      }
+    }
+
+    // === IFRAME LOGIC ===
+
+    function connectRM() {
+      const url = document.getElementById('rm-login-url').value || RM_DEFAULT_URL;
+      setConnectionState('CONNECTING');
+      rmUrlDisplay.textContent = url;
+
+      // Set iframe src
+      iframe.src = url;
+      iframe.style.display = 'block';
+
+      // Timeout: if iframe doesn't fire load event, it's likely blocked
+      const timeout = setTimeout(() => {
+        if (connectionState === 'CONNECTING') {
+          setConnectionState('IFRAME_BLOCKED');
+        }
+      }, IFRAME_LOAD_TIMEOUT);
+
+      // Listen for load event
+      iframe.onload = function () {
+        clearTimeout(timeout);
+        // iframe loaded — but we can't verify content due to same-origin policy
+        // Check if it's actually visible (not blocked by X-Frame-Options)
+        try {
+          // This will throw if cross-origin (which it should be)
+          // If it doesn't throw, the page might be a blank error page
+          const test = iframe.contentWindow.location.href;
+          // Same-origin — unlikely for RM, but handle it
+          setConnectionState('CONNECTED_MANUAL');
+        } catch (e) {
+          // Cross-origin — this is expected and means the iframe loaded
+          setConnectionState('CONNECTED_MANUAL');
+        }
+      };
+
+      // Listen for error (some browsers fire this for blocked iframes)
+      iframe.onerror = function () {
+        clearTimeout(timeout);
+        setConnectionState('IFRAME_BLOCKED');
+      };
+    }
+
+    function openFallback() {
+      const url = document.getElementById('rm-login-url').value || RM_DEFAULT_URL;
+      window.open(url, '_blank', 'noopener,noreferrer,width=1024,height=768');
+    }
+
+    function refreshIframe() {
+      if (iframe.src) {
+        iframe.src = iframe.src;
+      }
+    }
+
+    function reconnect() {
+      iframe.src = '';
+      connectRM();
+    }
+
+    // === AI GENERATION (via Ollama) ===
+
+    let availableModels = [];
+    let selectedModel = null;
+
+    async function fetchOllamaModels() {
+      const ollamaUrl = document.getElementById('ollama-url').value || 'http://localhost:11434';
+      try {
+        const r = await fetch(ollamaUrl + '/api/tags', { signal: AbortSignal.timeout(5000) });
+        if (r.ok) {
+          const data = await r.json();
+          availableModels = (data.models || []).map(m => m.name);
+          if (availableModels.length > 0) selectedModel = availableModels[0];
+        }
+      } catch (e) { /* offline */ }
+    }
+
+    async function generateWithOllama(prompt, systemPrompt) {
+      const ollamaUrl = document.getElementById('ollama-url').value || 'http://localhost:11434';
+      const model = selectedModel || 'llama3';
+
+      try {
+        const response = await fetch(ollamaUrl + '/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: model,
+            prompt: prompt,
+            system: systemPrompt || 'You are an expert copywriter for massage therapy professionals. Write compelling, professional content. Keep it concise and actionable.',
+            stream: false,
+            options: { temperature: 0.7, top_p: 0.9 }
+          }),
+          signal: AbortSignal.timeout(30000)
+        });
+
+        if (!response.ok) throw new Error('Ollama returned ' + response.status);
+        const data = await response.json();
+        return data.response || 'No response generated.';
+      } catch (e) {
+        return '⚠ Could not connect to Ollama at ' + ollamaUrl + '. Is it running? Error: ' + e.message;
+      }
+    }
+
+    function showOutput(elementId, text) {
+      const output = document.getElementById(elementId);
+      const textEl = document.getElementById(elementId + '-text');
+      textEl.textContent = text;
+      output.classList.add('visible');
+    }
+
+    // === BIO GENERATION ===
+
+    async function generateBio() {
+      const specialties = document.getElementById('bio-specialties').value || 'massage therapy';
+      const experience = document.getElementById('bio-experience').value || '5';
+      const tone = document.getElementById('bio-tone').value;
+      const usp = document.getElementById('bio-usp').value || '';
+      const name = document.getElementById('provider-name').value || 'your name';
+      const city = document.getElementById('provider-city').value || 'your city';
+
+      const prompt = `Write a RentMasseur profile bio for ${name}, a massage provider in ${city}.
+Specialties: ${specialties}
+Experience: ${experience} years
+Tone: ${tone}
+Unique selling points: ${usp}
+
+Write a compelling 150-200 word bio that:
+1. Opens with a strong hook
+2. Highlights specialties and experience
+3. Mentions unique selling points
+4. Ends with a call to action
+5. Is professional and ${tone}
+Do not use emojis. Do not make medical claims.`;
+
+      showOutput('bio-output', 'Generating…');
+      const result = await generateWithOllama(prompt, 'You are an expert copywriter for massage therapy professionals. Write compelling, professional bios. Keep under 200 words. No emojis. No medical claims.');
+      showOutput('bio-output', result);
+    }
+
+    // === BLOG GENERATION ===
+
+    async function generateBlog() {
+      const topic = document.getElementById('blog-topic').value || 'massage benefits';
+      const length = document.getElementById('blog-length').value;
+      const style = document.getElementById('blog-style').value;
+      const city = document.getElementById('provider-city').value || 'your city';
+
+      const wordCounts = { short: '200-300', medium: '400-600', long: '800-1000' };
+
+      const prompt = `Write a ${style} blog post about "${topic}" for a massage provider's website in ${city}.
+Length: ${wordCounts[length]} words.
+Include:
+1. An engaging title
+2. A compelling opening
+3. 3-4 main points with subheadings
+4. A natural mention of booking a session
+5. A call to action
+
+Style: ${style}. No emojis. No medical claims. SEO-friendly.`;
+
+      showOutput('blog-output', 'Generating…');
+      const result = await generateWithOllama(prompt, 'You are an expert SEO content writer for the wellness industry. Write engaging, professional blog posts. No emojis. No medical claims.');
+      showOutput('blog-output', result);
+    }
+
+    // === PHOTO RECOMMENDATIONS ===
+
+    async function photoRecs() {
+      const count = document.getElementById('photo-count').value || '0';
+      const types = Array.from(document.querySelectorAll('.photo-type:checked')).map(c => c.value);
+      const gaps = document.getElementById('photo-gaps').value || '';
+
+      const prompt = `A RentMasseur provider has ${count} photos.
+Current photo types: ${types.join(', ') || 'none specified'}
+Gaps identified: ${gaps}
+
+Provide 5-7 specific photo recommendations to improve their profile:
+1. What types of photos to add
+2. Lighting and composition tips
+3. Order/arrangement suggestions
+4. What to avoid
+Format as a numbered list. Be specific and actionable.`;
+
+      showOutput('photo-output', 'Generating…');
+      const result = await generateWithOllama(prompt, 'You are a professional photography consultant for massage therapy profiles. Provide specific, actionable advice. No emojis.');
+      showOutput('photo-output', result);
+    }
+
+    // === AVAILABILITY OPTIMIZATION ===
+
+    async function optimizeAvailability() {
+      const current = document.getElementById('avail-current').value || 'not specified';
+      const city = document.getElementById('avail-city').value || 'your city';
+      const peak = document.getElementById('avail-peak').value;
+
+      const peakLabels = {
+        morning: 'morning (6am-12pm)',
+        afternoon: 'afternoon (12pm-5pm)',
+        evening: 'evening (5pm-10pm)',
+        late: 'late night (10pm-2am)',
+        weekend: 'weekends'
+      };
+
+      const prompt = `A massage provider in ${city} has these hours: ${current}.
+Their peak inquiry time is ${peakLabels[peak]}.
+
+Provide an optimized availability schedule that:
+1. Maximizes coverage during peak demand
+2. Suggests 2-3 additional time slots to capture missed traffic
+3. Recommends rest blocks to prevent burnout
+4. Includes a sample weekly schedule
+Format as a clear schedule table. Be practical.`;
+
+      showOutput('avail-output', 'Generating…');
+      const result = await generateWithOllama(prompt, 'You are a scheduling optimization expert for service providers. Provide practical, actionable schedules. No emojis.');
+      showOutput('avail-output', result);
+    }
+
+    // === MARKET COMPARISON ===
+
+    async function marketCompare() {
+      const rate = document.getElementById('market-rate').value || 'unknown';
+      const city = document.getElementById('market-city').value || 'your city';
+      const visitors = document.getElementById('market-visitors').value || 'unknown';
+
+      const prompt = `A massage provider in ${city} has:
+- Hourly rate: $${rate}
+- Monthly visitors: ${visitors}
+
+Provide a market comparison analysis:
+1. Typical rate ranges for ${city}
+2. How their visitor count compares to average/top providers
+3. 3 specific recommendations to improve market position
+4. Suggested rate adjustments (if any)
+5. Profile optimization tips
+Be realistic and data-informed. Note that actual market data requires research.`;
+
+      showOutput('market-output', 'Generating…');
+      const result = await generateWithOllama(prompt, 'You are a market analyst for the massage therapy industry. Provide realistic, actionable comparisons. Acknowledge when you lack real-time data. No emojis.');
+      showOutput('market-output', result);
+    }
+
+    // === LEADERBOARD ===
+
+    function submitTraffic() {
+      const count = parseInt(document.getElementById('traffic-count').value);
+      const name = document.getElementById('provider-name').value || 'You';
+      if (!count || count < 0) return;
+
+      const existing = leaderboardData.find(e => e.name === name);
+      const now = Date.now();
+
+      if (existing) {
+        existing.prevCount = existing.count;
+        existing.count = count;
+        existing.ts = now;
+      } else {
+        leaderboardData.push({
+          name: name,
+          count: count,
+          prevCount: null,
+          ts: now
+        });
+      }
+
+      renderLeaderboard();
+      document.getElementById('traffic-count').value = '';
+      saveState();
+    }
+
+    function renderLeaderboard() {
+      const list = document.getElementById('leaderboard-list');
+      leaderboardData.sort((a, b) => b.count - a.count);
+
+      if (leaderboardData.length === 0) {
+        list.innerHTML = '<div class="leaderboard-entry"><span class="rank">—</span><span class="name">No entries yet</span><span class="visitors">—</span><span class="change flat">—</span></div>';
+        return;
+      }
+
+      list.innerHTML = leaderboardData.map((entry, i) => {
+        const rank = i + 1;
+        const rankClass = rank <= 3 ? 'top' + rank : '';
+        let change = '—';
+        let changeClass = 'flat';
+        if (entry.prevCount !== null) {
+          const diff = entry.count - entry.prevCount;
+          if (diff > 0) { change = '+' + diff; changeClass = 'up'; }
+          else if (diff < 0) { change = diff; changeClass = 'down'; }
+          else { change = '±0'; changeClass = 'flat'; }
+        }
+        return `<div class="leaderboard-entry">
+          <span class="rank ${rankClass}">${rank}</span>
+          <span class="name">${escapeHtml(entry.name)}</span>
+          <span class="visitors">${entry.count}</span>
+          <span class="change ${changeClass}">${change}</span>
+        </div>`;
+      }).join('');
+    }
+
+    // === UTILITIES ===
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function saveState() {
+      try {
+        const state = {
+          providerName: document.getElementById('provider-name').value,
+          providerCity: document.getElementById('provider-city').value,
+          ollamaUrl: document.getElementById('ollama-url').value,
+          rmUrl: document.getElementById('rm-login-url').value,
+          leaderboard: leaderboardData
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) { }
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        if (state.providerName) document.getElementById('provider-name').value = state.providerName;
+        if (state.providerCity) document.getElementById('provider-city').value = state.providerCity;
+        if (state.ollamaUrl) document.getElementById('ollama-url').value = state.ollamaUrl;
+        if (state.rmUrl) document.getElementById('rm-login-url').value = state.rmUrl;
+        if (state.leaderboard) {
+          leaderboardData = state.leaderboard;
+          renderLeaderboard();
+        }
+      } catch (e) { }
+    }
+
+    // === COPY TO CLIPBOARD ===
+
+    document.addEventListener('click', function (e) {
+      if (e.target.classList.contains('copy-btn')) {
+        const targetId = e.target.dataset.copyTarget;
+        const text = document.getElementById(targetId).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          e.target.textContent = 'Copied!';
+          setTimeout(() => { e.target.textContent = 'Copy'; }, 2000);
+        });
+      }
+    });
+
+    // === TAB SWITCHING ===
+
+    document.querySelectorAll('.ai-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.ai-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.ai-section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('section-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // === EVENT BINDINGS ===
+
+    btnConnect.addEventListener('click', connectRM);
+    btnOpenFallback.addEventListener('click', openFallback);
+    btnOpenExternal.addEventListener('click', openFallback);
+    btnReconnect.addEventListener('click', reconnect);
+    btnRefresh.addEventListener('click', refreshIframe);
+    document.getElementById('btn-logout-confirm').addEventListener('click', () => setLoggedIn(false));
+    document.getElementById('btn-save-profile').addEventListener('click', saveState);
+    document.getElementById('btn-install-extension').addEventListener('click', () => {
+      window.open('./extension/README.md', '_blank');
+    });
+    document.getElementById('btn-generate-bio').addEventListener('click', generateBio);
+    document.getElementById('btn-generate-blog').addEventListener('click', generateBlog);
+    document.getElementById('btn-photo-recs').addEventListener('click', photoRecs);
+    document.getElementById('btn-optimize-avail').addEventListener('click', optimizeAvailability);
+    document.getElementById('btn-market-compare').addEventListener('click', marketCompare);
+    document.getElementById('btn-submit-traffic').addEventListener('click', submitTraffic);
+
+    // "I'm logged in" button in the connect tab
+    // We add it dynamically after connection
+    const loggedInBtn = document.createElement('button');
+    loggedInBtn.className = 'btn btn-success';
+    loggedInBtn.style.cssText = 'width:100%;justify-content:center;margin-top:12px;display:none';
+    loggedInBtn.textContent = "✓ I'm logged in — Activate AI Tools";
+    loggedInBtn.id = 'btn-logged-in';
+    loggedInBtn.addEventListener('click', () => setLoggedIn(true));
+    document.getElementById('section-connect').insertBefore(loggedInBtn, loginConfirm);
+
+    // Show "I'm logged in" button when connected
+    const originalSetState = setConnectionState;
+    setConnectionState = function (state) {
+      originalSetState(state);
+      loggedInBtn.style.display = (state === 'CONNECTED_MANUAL') ? 'flex' : 'none';
+    };
+
+    // === EXTENSION BRIDGE LISTENER ===
+    // Receive messages from MasseurBoost browser extension
+    window.addEventListener('message', (event) => {
+      // Only accept from same origin (extension posts via content script)
+      if (event.data && event.data.type) {
+        switch (event.data.type) {
+          case 'RM_LOGIN_DETECTED':
+            setLoggedIn(true);
+            break;
+          case 'RM_LOGOUT_DETECTED':
+            setLoggedIn(false);
+            break;
+          case 'RM_VISITOR_COUNT':
+            document.getElementById('traffic-count').value = event.data.count;
+            // Auto-submit to leaderboard
+            submitTraffic();
+            break;
+          case 'RM_PROFILE_DATA':
+            if (event.data.data?.name) {
+              document.getElementById('provider-name').value = event.data.data.name;
+            }
+            if (event.data.data?.location) {
+              document.getElementById('provider-city').value = event.data.data.location;
+            }
+            break;
+        }
+      }
+    });
+
+    // Also listen for chrome.runtime messages (if extension uses externally_connectable)
+    if (typeof chrome !== 'undefined' && chrome.runtime) {
+      chrome.runtime.onMessageExternal?.addListener((message, sender, sendResponse) => {
+        if (message.type === 'RM_VISITOR_COUNT') {
+          document.getElementById('traffic-count').value = message.count;
+          submitTraffic();
+          sendResponse({ ok: true });
+        }
+        if (message.type === 'RM_LOGIN_DETECTED') {
+          setLoggedIn(true);
+          sendResponse({ ok: true });
+        }
+      });
+    }
+
+    // === INIT ===
+
+    loadState();
+    // Auto-load Ollama config from ollama-config.json
+    fetch('./ollama-config.json').then(r => r.json()).then(cfg => {
+      if (cfg.primary_endpoint && !document.getElementById('ollama-url').value) {
+        document.getElementById('ollama-url').value = cfg.primary_endpoint;
+      }
+      fetchOllamaModels();
+    }).catch(() => fetchOllamaModels());
+    // Don't auto-connect — let user click "Connect RentMasseur"
+    setConnectionState('CONNECTING');
+    overlayConnecting.querySelector('h2').textContent = 'Ready to Connect';
+    overlayConnecting.querySelector('p').textContent = 'Click "Connect RentMasseur" on the right to load the login page.';
+    overlayConnecting.querySelector('.spinner').style.display = 'none';
+  </script>
+</body>
+
+</html>
