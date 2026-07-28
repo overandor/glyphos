@@ -640,8 +640,6 @@
               <li>Log in normally — your credentials go directly to RentMasseur, never to MasseurBoost.</li>
               <li>If RM blocks the iframe, a secure popup window opens automatically.</li>
               <li>Keep MasseurBoost open alongside RM. Click <strong>I'm logged in</strong> to activate AI tools.</li>
-              <li>Install the <strong>browser extension</strong> below for automatic visitor count import and bio
-                insertion.</li>
             </ol>
             <p style="margin-top:8px;color:var(--dim);font-size:12px">
               MasseurBoost never copies, proxies, logs, or stores your RentMasseur password.
@@ -660,21 +658,6 @@
 
           <button class="btn btn-primary" id="btn-connect-rm" style="width:100%;justify-content:center">
             Connect RentMasseur
-          </button>
-
-          <div class="divider"></div>
-
-          <div class="info-banner">
-            <strong>Browser Extension Bridge:</strong> The iframe is a window into RentMasseur, not a data bridge.
-            The browser's same-origin policy prevents MasseurBoost from reading iframe content — this protects your
-            credentials.
-            To automatically import visitor counts, insert bios, and detect login state, install the MasseurBoost
-            browser
-            extension. Without it, all data transfer is manual (copy/paste).
-          </div>
-
-          <button class="btn btn-ghost" id="btn-install-extension" style="width:100%;justify-content:center">
-            Install MasseurBoost Extension →
           </button>
 
           <div class="divider"></div>
@@ -1405,9 +1388,6 @@ Be realistic and data-informed. Note that actual market data requires research.`
     btnRefresh.addEventListener('click', refreshIframe);
     document.getElementById('btn-logout-confirm').addEventListener('click', () => setLoggedIn(false));
     document.getElementById('btn-save-profile').addEventListener('click', saveState);
-    document.getElementById('btn-install-extension').addEventListener('click', () => {
-      window.open('./extension/README.md', '_blank');
-    });
     document.getElementById('btn-generate-bio').addEventListener('click', generateBio);
     document.getElementById('btn-generate-blog').addEventListener('click', generateBlog);
     document.getElementById('btn-photo-recs').addEventListener('click', photoRecs);
@@ -1431,50 +1411,6 @@ Be realistic and data-informed. Note that actual market data requires research.`
       originalSetState(state);
       loggedInBtn.style.display = (state === 'CONNECTED_MANUAL') ? 'flex' : 'none';
     };
-
-    // === EXTENSION BRIDGE LISTENER ===
-    // Receive messages from MasseurBoost browser extension
-    window.addEventListener('message', (event) => {
-      // Only accept from same origin (extension posts via content script)
-      if (event.data && event.data.type) {
-        switch (event.data.type) {
-          case 'RM_LOGIN_DETECTED':
-            setLoggedIn(true);
-            break;
-          case 'RM_LOGOUT_DETECTED':
-            setLoggedIn(false);
-            break;
-          case 'RM_VISITOR_COUNT':
-            document.getElementById('traffic-count').value = event.data.count;
-            // Auto-submit to leaderboard
-            submitTraffic();
-            break;
-          case 'RM_PROFILE_DATA':
-            if (event.data.data?.name) {
-              document.getElementById('provider-name').value = event.data.data.name;
-            }
-            if (event.data.data?.location) {
-              document.getElementById('provider-city').value = event.data.data.location;
-            }
-            break;
-        }
-      }
-    });
-
-    // Also listen for chrome.runtime messages (if extension uses externally_connectable)
-    if (typeof chrome !== 'undefined' && chrome.runtime) {
-      chrome.runtime.onMessageExternal?.addListener((message, sender, sendResponse) => {
-        if (message.type === 'RM_VISITOR_COUNT') {
-          document.getElementById('traffic-count').value = message.count;
-          submitTraffic();
-          sendResponse({ ok: true });
-        }
-        if (message.type === 'RM_LOGIN_DETECTED') {
-          setLoggedIn(true);
-          sendResponse({ ok: true });
-        }
-      });
-    }
 
     // === INIT ===
 

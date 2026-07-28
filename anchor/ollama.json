@@ -1,0 +1,20 @@
+{
+  "models": 14,
+  "names": [
+    "alpha-gpt:latest",
+    "chatgpt-pilot:latest",
+    "llava:latest",
+    "gemma2:latest",
+    "mistral:latest",
+    "llama3.1:latest",
+    "llama3.2:latest",
+    "qwen2.5:0.5b",
+    "llama2:latest",
+    "llama3.2:1b",
+    "llama3.1:8b",
+    "phi3:mini",
+    "deepseek-r1:latest",
+    "deepseek-coder:1.3b"
+  ],
+  "timestamp": "2026-07-28T16:57:37.849222+00:00"
+}

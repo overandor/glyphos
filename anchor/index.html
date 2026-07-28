@@ -1164,10 +1164,10 @@
 
     async function checkOllama() {
       try {
-        const r = await fetch('http://localhost:11434/api/tags', { signal: AbortSignal.timeout(3000) });
+        const r = await fetch('./ollama.json?t=' + Date.now(), { signal: AbortSignal.timeout(3000) });
         if (!r.ok) return null;
         const data = await r.json();
-        return data.models ? data.models.length : 0;
+        return data.models != null ? data.models : null;
       } catch (e) {
         return null;
       }
@@ -1229,7 +1229,13 @@
 
         // Dynamic verification — Ollama models (live, not from tunnel.json)
         const ollamaCount = await checkOllama();
-        set('lv-ollama', ollamaCount !== null ? ollamaCount + ' models' : 'unreachable');
+        if (ollamaCount !== null) {
+          set('lv-ollama', ollamaCount + ' models (live)');
+        } else if (data.ollama_models != null) {
+          set('lv-ollama', data.ollama_models + ' models (config)');
+        } else {
+          set('lv-ollama', 'unreachable');
+        }
 
         // Dynamic verification — live latency measurement
         if (data.state === 'active' && safeUrl) {

@@ -1,0 +1,27 @@
+name = "hdar-anchor"
+compatibility_date = "2024-09-01"
+pages_build_output_dir = "."
+
+# Deploy with: npx wrangler pages deploy . --project-name hdar-anchor
+# Or connect a Git repo and Cloudflare Pages will auto-deploy on push.
+
+# Headers for security and caching
+[headers]
+# Security headers on all routes
+"/*" = [
+  { name = "X-Content-Type-Options", value = "nosniff" },
+  { name = "X-Frame-Options", value = "DENY" },
+  { name = "Referrer-Policy", value = "strict-origin-when-cross-origin" },
+  { name = "Permissions-Policy", value = "geolocation=(), microphone=(), camera=()" },
+]
+
+# tunnel.json — short cache so rotator updates propagate quickly
+"/tunnel.json" = [
+  { name = "Cache-Control", value = "public, max-age=5" },
+  { name = "Access-Control-Allow-Origin", value = "*" },
+]
+
+# index.html — no cache so changes are immediate
+"/index.html" = [
+  { name = "Cache-Control", value = "public, max-age=0, must-revalidate" },
+]
