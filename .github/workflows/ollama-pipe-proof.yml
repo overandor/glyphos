@@ -1,0 +1,233 @@
+name: Ollama Pipe Proof
+
+on:
+  push:
+    branches:
+      - demo/ollama-pipe-proof-20260728
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove-live-inference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OLLAMA_BASE_URL: https://hypothetical-hurricane-colon-classes.trycloudflare.com
+      OLLAMA_MODEL: llama3.2
+      OLLAMA_URL: https://hypothetical-hurricane-colon-classes.trycloudflare.com/api/generate
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install proof dependencies
+        shell: bash
+        run: python3 -m pip install --disable-pip-version-check requests
+
+      - name: Check public Ollama root
+        shell: bash
+        run: |
+          set -euo pipefail
+          body="$(curl --fail --silent --show-error --max-time 30 "$OLLAMA_BASE_URL/")"
+          printf 'PUBLIC_ROOT_RESPONSE=%s\n' "$body"
+          test "$body" = "Ollama is running"
+
+      - name: Execute live chat inference and create receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          import urllib.request
+          from datetime import datetime, timezone
+
+          base = os.environ["OLLAMA_BASE_URL"].rstrip("/")
+          model = os.environ["OLLAMA_MODEL"]
+          github_sha = os.environ.get("GITHUB_SHA", "unknown")
+          prompt = (
+              "Generate one concise sentence confirming a live Ollama inference. "
+              f"Include this GitHub commit marker verbatim: {github_sha[:12]}"
+          )
+          payload = {
+              "model": model,
+              "messages": [{"role": "user", "content": prompt}],
+              "stream": False,
+              "keep_alive": "10m",
+          }
+          request = urllib.request.Request(
+              f"{base}/api/chat",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={"Content-Type": "application/json"},
+              method="POST",
+          )
+          with urllib.request.urlopen(request, timeout=90) as response:
+              status = response.status
+              raw = response.read().decode("utf-8")
+
+          result = json.loads(raw)
+          content = ((result.get("message") or {}).get("content") or "").strip()
+
+          assert status == 200, f"unexpected HTTP status: {status}"
+          assert result.get("model") == model, result
+          assert result.get("done") is True, result
+          assert result.get("done_reason") in {"stop", "length"}, result
+          assert content, "empty generated content"
+          assert int(result.get("eval_count") or 0) > 0, result
+
+          receipt = {
+              "proof_type": "remote_ollama_chat_inference",
+              "verified_at": datetime.now(timezone.utc).isoformat(),
+              "github_repository": os.environ.get("GITHUB_REPOSITORY"),
+              "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+              "github_commit": github_sha,
+              "endpoint": f"{base}/api/chat",
+              "request": payload,
+              "response": result,
+              "validation": {
+                  "http_status": status,
+                  "model_matches": True,
+                  "done": True,
+                  "nonempty_generated_content": True,
+                  "positive_eval_count": True,
+              },
+          }
+          canonical = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode("utf-8")
+          receipt["sha256"] = hashlib.sha256(canonical).hexdigest()
+
+          with open("ollama-inference-receipt.json", "w", encoding="utf-8") as file:
+              json.dump(receipt, file, indent=2, sort_keys=True)
+              file.write("\n")
+
+          print("OLLAMA_PIPE_PROOF=PASS")
+          print(f"MODEL={result['model']}")
+          print(f"CREATED_AT={result.get('created_at')}")
+          print(f"DONE_REASON={result.get('done_reason')}")
+          print(f"PROMPT_EVAL_COUNT={result.get('prompt_eval_count')}")
+          print(f"EVAL_COUNT={result.get('eval_count')}")
+          print(f"RECEIPT_SHA256={receipt['sha256']}")
+          print("GENERATED_CONTENT_BEGIN")
+          print(content)
+          print("GENERATED_CONTENT_END")
+          PY
+
+      - name: Execute repository bio-generation pipe
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          from datetime import datetime, timezone
+
+          from rm_traffic.llm_bio_writer import build_prompt, parse_llm_output
+          from rm_traffic.llm_client import LLMClient
+
+          profile_data = {
+              "dashboard": {
+                  "onlineBookmarks": 7,
+                  "service": {
+                      "therapeutic": {
+                          "activated": True,
+                          "price": {"incall": 159, "outcall": 229},
+                          "label": "Therapeutic Massage",
+                      }
+                  },
+              },
+              "stats": {
+                  "profileStatistics": {
+                      "totalPageViews": 81455,
+                      "totalContactClicks": 115,
+                      "visits": [
+                          {"day": "Today", "count": 82},
+                          {"day": "Yesterday", "count": 76},
+                          {"day": "Monday", "count": 69},
+                      ],
+                  }
+              },
+          }
+          history = [
+              {"ts": "2026-07-26T12:00:00Z", "views": 69, "contact_clicks": 4, "visits": 8},
+              {"ts": "2026-07-27T12:00:00Z", "views": 76, "contact_clicks": 6, "visits": 10},
+              {"ts": "2026-07-28T12:00:00Z", "views": 82, "contact_clicks": 7, "visits": 12},
+          ]
+          prompt = build_prompt(
+              profile_data,
+              history,
+              "Professional Manhattan Massage",
+              "Experienced massage provider offering personalized therapeutic sessions.",
+              "Manhattan, NYC",
+          )
+
+          client = LLMClient(provider="ollama", model=os.environ["OLLAMA_MODEL"])
+          raw_output = client.generate(prompt, max_tokens=700)
+          assert raw_output, "repository LLMClient returned no output"
+
+          parsed = parse_llm_output(raw_output)
+          assert parsed, f"bio writer could not parse model output: {raw_output[:500]}"
+          assert parsed["headline"].strip(), parsed
+          assert parsed["bio"].strip(), parsed
+
+          receipt = {
+              "proof_type": "glyphos_rm_traffic_bio_generation",
+              "verified_at": datetime.now(timezone.utc).isoformat(),
+              "github_repository": os.environ.get("GITHUB_REPOSITORY"),
+              "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+              "github_commit": os.environ.get("GITHUB_SHA"),
+              "code_path": [
+                  "rm_traffic.llm_bio_writer.build_prompt",
+                  "rm_traffic.llm_client.LLMClient(provider=ollama)",
+                  "POST /api/generate",
+                  "rm_traffic.llm_bio_writer.parse_llm_output",
+              ],
+              "ollama_url": os.environ["OLLAMA_URL"],
+              "model": os.environ["OLLAMA_MODEL"],
+              "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+              "raw_output": raw_output,
+              "parsed_output": parsed,
+              "validation": {
+                  "repository_module_imported": True,
+                  "remote_generation_nonempty": True,
+                  "json_parsed": True,
+                  "headline_nonempty": True,
+                  "bio_nonempty": True,
+              },
+          }
+          canonical = json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode("utf-8")
+          receipt["sha256"] = hashlib.sha256(canonical).hexdigest()
+
+          with open("rm-bio-pipeline-receipt.json", "w", encoding="utf-8") as file:
+              json.dump(receipt, file, indent=2, sort_keys=True)
+              file.write("\n")
+
+          print("RM_BIO_PIPE_PROOF=PASS")
+          print(f"BIO_HEADLINE={parsed['headline']}")
+          print(f"BIO_CHARACTERS={len(parsed['bio'])}")
+          print(f"BIO_RECEIPT_SHA256={receipt['sha256']}")
+          print("BIO_BEGIN")
+          print(parsed["bio"])
+          print("BIO_END")
+          PY
+
+      - name: Show receipts
+        shell: bash
+        run: |
+          cat ollama-inference-receipt.json
+          cat rm-bio-pipeline-receipt.json
+
+      - name: Upload proof artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ollama-inference-proof-${{ github.run_id }}
+          path: |
+            ollama-inference-receipt.json
+            rm-bio-pipeline-receipt.json
+          if-no-files-found: error
+          retention-days: 30
