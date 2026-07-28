@@ -3,7 +3,11 @@
   "fallback_endpoints": [],
   "local_endpoint": "http://localhost:11434",
   "cloud_endpoint": null,
-  "hosted_at": "https://josephrw-ollama.hf.space",
+  "hosted_at": "https://anchor-blond-sigma.vercel.app",
+  "vercel_url": "https://anchor-blond-sigma.vercel.app",
+  "netlify_url": "https://hdar-anchor.netlify.app",
+  "hf_space_url": "https://josephrw-ollama.hf.space",
+  "github_pages_url": "https://overandor.github.io/glyphos/",
   "last_updated": "2026-07-28T13:59:00Z",
   "note": "primary_endpoint is the Ollama tunnel (port 11434). When laptop is off, use cloud_endpoint. Static UI hosted at HuggingFace Space + GitHub Pages."
 }
