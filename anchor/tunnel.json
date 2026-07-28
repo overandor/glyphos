@@ -1,0 +1,21 @@
+{
+  "state": "active",
+  "url": "https://intl-hartford-downloads-what.trycloudflare.com",
+  "provider": "cloudflared",
+  "port": 8000,
+  "pid": 70063,
+  "materialized_at": "2026-07-28T12:55:00Z",
+  "updated_at": "2026-07-28T12:55:00Z",
+  "lease_expires": "ephemeral",
+  "predecessor_hash": null,
+  "receipt_hash": null,
+  "last_seen": "2026-07-28T12:55:00Z",
+  "thermal_mode": "active",
+  "ollama_reachable": true,
+  "ollama_models": 14,
+  "latency_ms": 146,
+  "local_reachable": true,
+  "total_nodes": 0,
+  "rotation_count": 0,
+  "fallback_urls": []
+}

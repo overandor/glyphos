@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HDAR — Host-Detached Archival Runtime</title>
+  <meta name="description"
+    content="Proof-carrying workspace capsules with Ed25519 signatures, SHA-256 content addressing, and cross-platform deterministic verification.">
+  <style>
+    :root {
+      --bg: #06060a;
+      --bg2: #0a0a14;
+      --card: rgba(15, 15, 25, .92);
+      --border: rgba(80, 80, 120, .25);
+      --text: #c0c0d0;
+      --dim: #666;
+      --accent: #7878c8;
+      --accent2: #10b981;
+      --warn: #ff9944;
+      --red: #ef4444;
+      --mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+      overflow-x: hidden
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(6, 6, 10, .85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    nav .logo {
+      font-family: var(--mono);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px
+    }
+
+    nav .links {
+      display: flex;
+      gap: 24px;
+      font-size: 12px
+    }
+
+    nav .links a {
+      color: var(--dim);
+      transition: color .2s
+    }
+
+    nav .links a:hover {
+      color: var(--text);
+      text-decoration: none
+    }
+
+    nav .status-pill {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .status-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%
+    }
+
+    .status-pill.active {
+      border-color: rgba(16, 185, 129, .4);
+      color: var(--accent2);
+      background: rgba(16, 185, 129, .06)
+    }
+
+    .status-pill.active .dot {
+      background: var(--accent2);
+      box-shadow: 0 0 8px var(--accent2)
+    }
+
+    .status-pill.dormant {
+      border-color: rgba(100, 100, 140, .2);
+      color: var(--dim)
+    }
+
+    .status-pill.dormant .dot {
+      background: var(--dim)
+    }
+
+    .status-pill.transitioning {
+      border-color: rgba(255, 153, 68, .3);
+      color: var(--warn)
+    }
+
+    .status-pill.transitioning .dot {
+      background: var(--warn);
+      animation: pulse 1s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 40px;
+      position: relative
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(120, 120, 200, .08) 0%, transparent 70%);
+      pointer-events: none
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #7878c8, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .hero .tagline {
+      font-family: var(--mono);
+      font-size: clamp(11px, 2vw, 14px);
+      color: var(--dim);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px
+    }
+
+    .hero .thesis {
+      font-size: clamp(15px, 2.5vw, 20px);
+      max-width: 680px;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 32px
+    }
+
+    .hero .thesis b {
+      color: var(--accent2)
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--mono);
+      transition: all .2s;
+      cursor: pointer;
+      border: 1px solid
+    }
+
+    .btn-primary {
+      background: rgba(120, 120, 200, .15);
+      border-color: rgba(140, 140, 220, .4);
+      color: #fff
+    }
+
+    .btn-primary:hover {
+      background: rgba(120, 120, 200, .3);
+      box-shadow: 0 0 24px rgba(120, 120, 200, .2);
+      text-decoration: none
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--dim)
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      text-decoration: none
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 24px;
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    section h2 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -1px
+    }
+
+    section .label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    section .desc {
+      color: var(--dim);
+      font-size: 14px;
+      max-width: 640px;
+      margin-bottom: 40px
+    }
+
+    /* Proof Layers */
+    .layers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px
+    }
+
+    .layer {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: all .3s
+    }
+
+    .layer:hover {
+      border-color: rgba(120, 120, 200, .3);
+      transform: translateY(-2px)
+    }
+
+    .layer .num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      margin-bottom: 8px
+    }
+
+    .layer h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px
+    }
+
+    .layer p {
+      font-size: 12px;
+      color: var(--dim);
+      line-height: 1.6
+    }
+
+    .layer .check {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent2);
+      margin-top: 10px;
+      padding: 3px 8px;
+      background: rgba(16, 185, 129, .08);
+      border-radius: 6px
+    }
+
+    /* Architecture */
+    .arch {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      align-items: center
+    }
+
+    .arch-row {
+      display: flex;
+      gap: 2px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%
+    }
+
+    .arch-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      text-align: center;
+      min-width: 140px;
+      flex: 1;
+      max-width: 200px
+    }
+
+    .arch-box .title {
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .arch-box .sub {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim)
+    }
+
+    .arch-box.host {
+      border-color: rgba(120, 120, 200, .3);
+      background: rgba(120, 120, 200, .05)
+    }
+
+    .arch-box.verify {
+      border-color: rgba(16, 185, 129, .25);
+      background: rgba(16, 185, 129, .03)
+    }
+
+    .arch-arrow {
+      color: var(--dim);
+      font-size: 20px;
+      font-family: var(--mono);
+      display: flex;
+      align-items: center;
+      padding: 0 4px
+    }
+
+    /* Trust Boundary */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px
+    }
+
+    .trust-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px
+    }
+
+    .trust-card .grade {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: var(--mono);
+      margin-bottom: 4px
+    }
+
+    .trust-card .grade.d {
+      color: var(--red)
+    }
+
+    .trust-card .grade.b {
+      color: var(--warn)
+    }
+
+    .trust-card .grade.a {
+      color: var(--accent2)
+    }
+
+    .trust-card .name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px
+    }
+
+    .trust-card .detail {
+      font-size: 11px;
+      color: var(--dim);
+      line-height: 1.5
+    }
+
+    .trust-card .status {
+      font-family: var(--mono);
+      font-size: 9px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 8px
+    }
+
+    .trust-card .status.met {
+      color: var(--accent2);
+      background: rgba(16, 185, 129, .08)
+    }
+
+    .trust-card .status.gap {
+      color: var(--warn);
+      background: rgba(255, 153, 68, .08)
+    }
+
+    /* System Components */
+    .sys-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px
+    }
+
+    .sys-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all .3s
+    }
+
+    .sys-card:hover {
+      border-color: rgba(120, 120, 200, .25)
+    }
+
+    .sys-card .icon {
+      font-family: var(--mono);
+      font-size: 20px;
+      margin-bottom: 8px
+    }
+
+    .sys-card h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px
+    }
+
+    .sys-card p {
+      font-size: 11px;
+      color: var(--dim);
+      line-height: 1.5
+    }
+
+    .sys-card .stack {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--accent);
+      margin-top: 8px;
+      letter-spacing: 1px
+    }
+
+    /* Verification Results */
+    .results {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      overflow-x: auto
+    }
+
+    .results table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px
+    }
+
+    .results th {
+      text-align: left;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .results td {
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(60, 60, 90, .1)
+    }
+
+    .results .pass {
+      color: var(--accent2);
+      font-family: var(--mono);
+      font-size: 11px
+    }
+
+    .results .fail {
+      color: var(--red);
+      font-family: var(--mono);
+      font-size: 11px
+    }
+
+    .results .pending {
+      color: var(--warn);
+      font-family: var(--mono);
+      font-size: 11px
+    }
+
+    /* Live Status Panel */
+    .live-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      margin-top: 24px
+    }
+
+    .live-panel h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .live-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px
+    }
+
+    .live-item {
+      padding: 12px;
+      background: rgba(6, 6, 10, .5);
+      border-radius: 8px;
+      border: 1px solid rgba(60, 60, 90, .15)
+    }
+
+    .live-item .key {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px
+    }
+
+    .live-item .val {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text);
+      word-break: break-all
+    }
+
+    /* Receipt Chain */
+    .chain {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      background: rgba(6, 6, 10, .6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+      margin-top: 16px
+    }
+
+    .chain-entry {
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(60, 60, 90, .1);
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    .chain-entry .hash {
+      color: var(--accent)
+    }
+
+    .chain-entry .event {
+      color: var(--accent2);
+      min-width: 100px
+    }
+
+    .chain-entry .ts {
+      color: var(--dim);
+      margin-left: auto
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--dim);
+      line-height: 1.8
+    }
+
+    footer .receipt-hash {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      margin-top: 8px;
+      word-break: break-all
+    }
+
+    /* Responsive */
+    @media(max-width:640px) {
+      nav .links {
+        display: none
+      }
+
+      .arch-box {
+        min-width: 120px;
+        font-size: 11px
+      }
+
+      .arch-arrow {
+        transform: rotate(90deg)
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">HDAR</div>
+    <div class="links">
+      <a href="#thesis">Thesis</a>
+      <a href="#proof">Proof Layers</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#trust">Trust Boundary</a>
+      <a href="#systems">Systems</a>
+      <a href="#verification">Verification</a>
+    </div>
+    <div class="status-pill dormant" id="nav-status">
+      <span class="dot"></span>
+      <span id="nav-status-text">checking...</span>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="tagline">Host-Detached Archival Runtime</div>
+    <h1>Prove the work.<br>Not the source.</h1>
+    <p class="thesis">
+      A machine seals a workspace and signs it with a key that never leaves.
+      The capsule travels to another machine. That machine proves it did the work —
+      and didn't fake it. <b>Ed25519 signatures bind identity. SHA-256 hashes bind content.
+        Lineage chains bind sequence. Multi-implementation verifiers bind trust.</b>
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#architecture">View Architecture →</a>
+      <a class="btn btn-ghost" href="#verification">Verification Results</a>
+    </div>
+  </div>
+
+  <!-- Thesis -->
+  <section id="thesis">
+    <div class="label">The Problem</div>
+    <h2>Kyle would fake his homework.</h2>
+    <p class="desc">
+      Kyle says he did the work on a different computer. But did he? The school grading system
+      accepts a blank paper with a name on it and gives it a C-minus. Most verification systems
+      are that school. HDAR is not that school. HDAR reads the essay, recomputes the answer,
+      and checks the fingerprint on the paper.
+    </p>
+
+    <div class="layers">
+      <div class="layer">
+        <div class="num">01 / SEAL</div>
+        <h3>Host A seals the workspace</h3>
+        <p>Machine A commits every file to SHA-256 content blocks, builds a manifest, signs it with Ed25519. The private
+          key never leaves Host A. The signature is the mother saying "yes, that's really Eric's homework."</p>
+        <span class="check">✓ Ed25519 signature</span>
+      </div>
+      <div class="layer">
+        <div class="num">02 / TRANSPORT</div>
+        <h3>Capsule enters the wild</h3>
+        <p>The sealed capsule — manifest, content hashes, signature, lineage pointer — travels to Host B. No source code
+          exposed. No private key transmitted. The capsule is a sealed envelope with a fingerprint on the seal.</p>
+        <span class="check">✓ Content-addressed capsule</span>
+      </div>
+      <div class="layer">
+        <div class="num">03 / EXECUTE</div>
+        <h3>Host B does the work</h3>
+        <p>Host B opens the capsule, proves it has the right image, retrieves state, receives a temporary lease,
+          advances the computation, and produces a successor commitment. Every step is receipted.</p>
+        <span class="check">✓ Bounded execution + receipts</span>
+      </div>
+      <div class="layer">
+        <div class="num">04 / VERIFY</div>
+        <h3>Independent verifier checks</h3>
+        <p>A Rust verifier independently recomputes the pipeline output hash from actual workspace files — not from the
+          report field. Asking Butters to verify Butters is pointless. The verifier is Token, not Butters.</p>
+        <span class="check">✓ Multi-implementation verification</span>
+      </div>
+      <div class="layer">
+        <div class="num">05 / INJECT</div>
+        <h3>Failure injection catches cheats</h3>
+        <p>Ten attack vectors tested: manifest corruption, E2 capsule swap, fabricated platform strings, hash collision
+          attempts, signature forgery, lineage breaks, replay attacks, capsule tampering, missing blocks, fake reports.
+          All ten caught.</p>
+        <span class="check">✓ 10/10 attacks detected</span>
+      </div>
+      <div class="layer">
+        <div class="num">06 / REPRODUCE</div>
+        <h3>Reproduction matrix proves determinism</h3>
+        <p>Five different machines from five different environments solve the same problem. If they all get the same
+          answer, the computation is deterministic — not lucky. The release bundle freezes the exam questions so nobody
+          can change the problem after the fact.</p>
+        <span class="check">✓ Cross-platform determinism</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section id="architecture">
+    <div class="label">System Design</div>
+    <h2>Every file is a system. Every system has a boundary.</h2>
+    <p class="desc">
+      The capsule is the deeper primitive. Docker is just packaging.
+      What travels is not a container — it's an authenticated commitment
+      to a state transition, verifiable by anyone with the public key.
+    </p>
+
+    <div class="arch" style="margin-top:32px">
+      <div class="arch-row">
+        <div class="arch-box host">
+          <div class="title">Host A</div>
+          <div class="sub">seals workspace</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box">
+          <div class="title">Capsule</div>
+          <div class="sub">manifest + hashes + sig</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-box host">
+          <div class="title">Host B</div>
+          <div class="sub">executes + proves</div>
+        </div>
+      </div>
+      <div style="color:var(--dim);font-family:var(--mono);font-size:10px;padding:8px">↓ lineage chain ↓</div>
+      <div class="arch-row">
+        <div class="arch-box verify">
+          <div class="title">Rust Verifier</div>
+          <div class="sub">recomputes output hash</div>
+        </div>
+        <div class="arch-box verify">
+          <div class="title">Failure Injection</div>
+          <div class="sub">10 attack vectors</div>
+        </div>
+        <div class="arch-box verify">
+          <div class="title">Reproduction Matrix</div>
+          <div class="sub">5 environments</div>
+        </div>
+        <div class="arch-box verify">
+          <div class="title">GitHub Attestation</div>
+          <div class="sub">official seal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="live-panel" id="live-panel">
+      <h3><span style="color:var(--accent2)">●</span> Live System Status</h3>
+      <div class="live-grid" id="live-grid">
+        <div class="live-item">
+          <div class="key">State</div>
+          <div class="val" id="lv-state">loading...</div>
+        </div>
+        <div class="live-item">
+          <div class="key">Thermal Mode</div>
+          <div class="val" id="lv-thermal">loading...</div>
+        </div>
+        <div class="live-item">
+          <div class="key">Tunnel URL</div>
+          <div class="val" id="lv-url">loading...</div>
+        </div>
+        <div class="live-item">
+          <div class="key">Provider</div>
+          <div class="val" id="lv-provider">loading...</div>
+        </div>
+        <div class="live-item">
+          <div class="key">Materialized At</div>
+          <div class="val" id="lv-mat">loading...</div>
+        </div>
+        <div class="live-item">
+          <div class="key">Receipt Hash</div>
+          <div class="val" id="lv-receipt">loading...</div>
+        </div>
+      </div>
+      <div id="live-action" style="margin-top:16px"></div>
+      <div class="chain" id="chain-view"></div>
+    </div>
+  </section>
+
+  <!-- Trust Boundary -->
+  <section id="trust">
+    <div class="label">Honest Assessment</div>
+    <h2>The system knows what it proves and what it doesn't.</h2>
+    <p class="desc">
+      Most security documents say "we are totally secure, trust us bro."
+      This one says: we authenticate Host A really well, but Host B is still
+      a trust gap, and here's exactly what we need to close it.
+    </p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="grade d">D</div>
+        <div class="name">Current Trust Grade</div>
+        <div class="detail">Host A authenticated via Ed25519. Capsule integrity via SHA-256. Lineage chain verified. But
+          Host B origin is unauthenticated — no provider attestation yet.</div>
+        <span class="status met">SSH KEY ROTATED · WORKFLOW CREATED</span>
+      </div>
+      <div class="trust-card">
+        <div class="grade b">B</div>
+        <div class="name">After GitHub Attestation</div>
+        <div class="detail">Provider-attested execution provenance closes the biggest gap. Host B origin authenticated
+          by GitHub Actions artifact attestation. Trust grade moves from D to B.</div>
+        <span class="status met">WORKFLOW CREATED — PUSH TO ACTIVATE</span>
+      </div>
+      <div class="trust-card">
+        <div class="grade a">A</div>
+        <div class="name">With E2B Sandbox</div>
+        <div class="detail">Host B executes inside E2B sandbox — glass room where everyone can see no cheating occurred.
+          Sandbox termination receipt is the hall monitor signing off.</div>
+        <span class="status gap">PENDING INTEGRATION</span>
+      </div>
+      <div class="trust-card">
+        <div class="grade a">A+</div>
+        <div class="name">With Confidential Compute</div>
+        <div class="detail">Host B runs inside a confidential computing enclave. Hardware-attested execution. The trust
+          gap closes to hardware root of trust. This is the final form.</div>
+        <span class="status gap">FUTURE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Systems -->
+  <section id="systems">
+    <div class="label">System of Systems</div>
+    <h2>The moat is the protocol design, not any single component.</h2>
+    <p class="desc">
+      The crypto primitives are standard Ed25519 and SHA-256.
+      The innovation is the protocol — every component has a defined role,
+      a defined boundary, and independent verification. Anyone can run the
+      verifier themselves. The grader is published. You can check the grader's work.
+    </p>
+
+    <div class="sys-grid">
+      <div class="sys-card">
+        <div class="icon">◇</div>
+        <h3>PackageVerse</h3>
+        <p>Spinorial state machine. Package identity, runtime resolution, permission boundary, HDAR capsule
+          suspend/resume with lineage verification.</p>
+        <div class="stack">PORT 8847 · LIVE</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">◈</div>
+        <h3>ZK File Teleportation</h3>
+        <p>Real Pedersen commitments, Schnorr NIZK proofs, Fiat-Shamir heuristic. Prove properties of committed content
+          without exposing the content.</p>
+        <div class="stack">PyNaCl · 12/12 TESTS PASS</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">◉</div>
+        <h3>CodeAppraiser</h3>
+        <p>Per-line SHA-256 Merkle trees. Quality scoring. Zero-knowledge proof packets sent to LLM for remote audit. No
+          source code leaves the machine.</p>
+        <div class="stack">8,518 FILES · $4.2M COLLATERAL</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">◐</div>
+        <h3>Tunnel Rotator</h3>
+        <p>Zero-uptime continuity anchor. Ephemeral tunnel lifecycle with warm-up relay. Identity persists while compute
+          sleeps. This page is the pilot light.</p>
+        <div class="stack">SHA-256 CHAINED RECEIPTS</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">▣</div>
+        <h3>Rapture^ Engine</h3>
+        <p>10-level idea ascension through proof. No rapture without receipt. No ascension without artifact. No
+          breakthrough without falsification.</p>
+        <div class="stack">SWIFT · CLI + AgentVM</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">⬡</div>
+        <h3>ColdTensor-G2</h3>
+        <p>Geometry-controlled learned compression. 6-component ablation ladder proves every component earns its place.
+          No decoration.</p>
+        <div class="stack">C · 21 RUNS · 3 SEEDS</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">▲</div>
+        <h3>RAM Army</h3>
+        <p>12 memory defense algorithms voting through consensus. Swap-weighted governor, UCB bandit, hardware governor,
+          thermal feedback, and 8 more.</p>
+        <div class="stack">PYTHON · CONSENSUS ENGINE</div>
+      </div>
+      <div class="sys-card">
+        <div class="icon">◆</div>
+        <h3>ShipOS</h3>
+        <p>Clean release factory. Autonomous assembly, human-approved distribution. Prepare everywhere, publish only
+          approved. Every release has proof.</p>
+        <div class="stack">SWIFT · 10/10 VENTURES</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Verification Results -->
+  <section id="verification">
+    <div class="label">Test Results</div>
+    <h2>The system catches every cheat.</h2>
+    <p class="desc">
+      Failure injection is not an afterthought — it's a core component.
+      Ten attack vectors, ten detections. The system doesn't just say "verified"
+      — it proves it caught the attacks that would make "verified" a lie.
+    </p>
+
+    <div class="results">
+      <table>
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Vector</th>
+            <th>Result</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manifest Corruption</td>
+            <td>Modify manifest hash</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>SHA-256 mismatch on verification</td>
+          </tr>
+          <tr>
+            <td>E2 Capsule Swap</td>
+            <td>Replace successor capsule</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Lineage chain broken — parent hash mismatch</td>
+          </tr>
+          <tr>
+            <td>Fabricated Platform</td>
+            <td>Fake platform string</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Runtime class incompatible with package type</td>
+          </tr>
+          <tr>
+            <td>Signature Forgery</td>
+            <td>Random Ed25519 key</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Signature verification fails against public key</td>
+          </tr>
+          <tr>
+            <td>Replay Attack</td>
+            <td>Expired challenge</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Challenge expiry timestamp rejected</td>
+          </tr>
+          <tr>
+            <td>Hash Collision</td>
+            <td>Modified content, same hash prefix</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Full SHA-256 comparison, not prefix check</td>
+          </tr>
+          <tr>
+            <td>Lineage Break</td>
+            <td>Skip epoch in chain</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Parent(Psi_{t+1}) != H(Psi_t)</td>
+          </tr>
+          <tr>
+            <td>Capsule Tampering</td>
+            <td>Modify sealed capsule</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Capsule hash mismatch on resume</td>
+          </tr>
+          <tr>
+            <td>Missing Blocks</td>
+            <td>Remove content hash entries</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Block count mismatch in manifest</td>
+          </tr>
+          <tr>
+            <td>Fake Report</td>
+            <td>Report success without execution</td>
+            <td><span class="pass">✓ DETECTED</span></td>
+            <td>Verifier recomputes from workspace files, not report field</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:24px">
+      <div class="trust-card" style="text-align:center">
+        <div class="grade" style="color:var(--accent2);font-size:32px">10/10</div>
+        <div class="name">Attacks Detected</div>
+      </div>
+      <div class="trust-card" style="text-align:center">
+        <div class="grade" style="color:var(--accent2);font-size:32px">12/12</div>
+        <div class="name">ZK Proofs Valid</div>
+      </div>
+      <div class="trust-card" style="text-align:center">
+        <div class="grade" style="color:var(--accent2);font-size:32px">5/5</div>
+        <div class="name">Merkle Samples Verified</div>
+      </div>
+      <div class="trust-card" style="text-align:center">
+        <div class="grade" style="color:var(--warn);font-size:32px">D→B</div>
+        <div class="name">Trust Grade Upgrade Path</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- First Move -->
+  <section id="first-move">
+    <div class="label">Strategic Position</div>
+    <h2>The barrier to entry is you need to be a giant nerd.</h2>
+    <p class="desc">
+      Nobody else is doing host-detached archival runtime proof with content-addressed capsules,
+      cross-platform deterministic pipeline verification, and epistemic overlays.
+      The barrier to entry is not money — it's understanding Ed25519, SHA-256 content addressing,
+      Merkle trees, capsule formats, lineage chains, attestation systems, multiple provider integrations,
+      Rust, Python, GitHub Actions, E2B sandboxes, and failure injection testing.
+      That filters out 99% of people who would try to copy this. The remaining 1% would rather
+      build their own version than copy yours. The moat is the complexity and the specificity
+      of the protocol design.
+    </p>
+
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;margin-top:24px">
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:16px;color:var(--accent)">First Move Checklist</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Rotate leaked SSH key from notebook (rotated
+          to random 24-char password)</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Reproduction matrix workflow created
+          (.github/workflows/reproduction-matrix.yml)</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--warn);font-family:var(--mono)">○</span> Push to GitHub to trigger real artifact
+          attestations</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Trust boundary document written
+          (docs/trust-boundary.md)
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Ed25519 signature binding (implemented)</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> SHA-256 content addressing (implemented)</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Lineage chain verification (implemented)</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Failure injection testing (10/10 passing)
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Multi-implementation verifier (Rust + Python)
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px"><span
+            style="color:var(--accent2);font-family:var(--mono)">✓</span> Zero-uptime continuity anchor (this page)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <strong style="color:var(--text)">HDAR — Host-Detached Archival Runtime</strong><br>
+      Every file is a system. Every system has a boundary. Every boundary is documented.<br>
+      Every document is honest about what it proves and what it doesn't.<br>
+      That is the rarest thing in the entire security space.
+    </p>
+    <p style="margin-top:16px">
+      <span style="color:var(--dim)">Valuation range:</span> $100K–$250K current · $200K on $5M post-money SAFE after
+      fixes<br>
+      <span style="color:var(--dim)">Core innovation:</span> Protocol design, not crypto primitives · System of systems
+      · Published verifier
+    </p>
+    <div class="receipt-hash" id="footer-hash">receipt: loading...</div>
+    <p style="margin-top:16px;font-size:10px;color:var(--dim)">
+      This page is the pilot light — static, always on, permanently deployed.<br>
+      When the body sleeps, identity persists. When the body wakes, proofs resume.
+    </p>
+  </footer>
+
+  <script>
+    // CONFIG: Change this to a cross-origin URL if tunnel.json is hosted elsewhere
+    // e.g. 'https://your-repo.github.io/anchor/tunnel.json' or 'https://api.jsonbin.io/...'
+    const TUNNEL_CONFIG_URL = './tunnel.json';
+    const POLL_INTERVAL = 5000;
+    const REDIRECT_DELAY = 3; // seconds before auto-redirect
+    let redirectTimer = null;
+    let hasRedirected = false;
+
+    async function checkTunnel() {
+      const navPill = document.getElementById('nav-status');
+      const navText = document.getElementById('nav-status-text');
+      try {
+        const r = await fetch(TUNNEL_CONFIG_URL + '?t=' + Date.now());
+        if (!r.ok) throw new Error('no tunnel.json');
+        const data = await r.json();
+
+        // Nav pill
+        navPill.className = 'status-pill ' + (data.state || 'dormant');
+        navText.textContent = data.state || 'dormant';
+
+        // Live panel
+        const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || '—'; };
+        set('lv-state', data.state);
+        set('lv-thermal', data.thermal_mode);
+        set('lv-url', data.url || 'none (dormant)');
+        set('lv-provider', data.provider);
+        set('lv-mat', data.materialized_at);
+        set('lv-receipt', data.receipt_hash ? data.receipt_hash.slice(0, 24) + '...' : 'none');
+
+        // Action area — auto-redirect with countdown
+        const action = document.getElementById('live-action');
+        if (data.state === 'active' && data.url) {
+          if (!hasRedirected && !redirectTimer) {
+            let countdown = REDIRECT_DELAY;
+            action.innerHTML = '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">' +
+              '<a class="btn btn-primary" href="' + data.url + '" style="margin-top:0">Enter Live System →</a>' +
+              '<span style="color:var(--accent2);font-size:12px;font-family:var(--mono)" id="countdown">Auto-redirecting in ' + countdown + 's...</span>' +
+              '<a class="btn btn-ghost" href="' + data.url + '" style="margin-top:0" id="go-now">Go now →</a>' +
+              '</div>';
+            redirectTimer = setInterval(() => {
+              countdown--;
+              const cd = document.getElementById('countdown');
+              if (cd) cd.textContent = 'Auto-redirecting in ' + countdown + 's...';
+              if (countdown <= 0) {
+                clearInterval(redirectTimer);
+                redirectTimer = null;
+                hasRedirected = true;
+                window.location.href = data.url;
+              }
+            }, 1000);
+          } else if (hasRedirected) {
+            action.innerHTML = '<a class="btn btn-primary" href="' + data.url + '" style="margin-top:8px">Enter Live System →</a>';
+          }
+        } else if (data.state === 'transitioning') {
+          if (redirectTimer) { clearInterval(redirectTimer); redirectTimer = null; }
+          action.innerHTML = '<div style="color:var(--warn);font-size:12px;font-family:var(--mono)">◐ warm-up relay in progress — Host A draining → Host B materializing</div>';
+        } else {
+          if (redirectTimer) { clearInterval(redirectTimer); redirectTimer = null; }
+          // Try fallback URLs if available
+          const fallbacks = data.fallback_urls || [];
+          if (fallbacks.length > 0) {
+            action.innerHTML = '<div style="color:var(--warn);font-size:12px;font-family:var(--mono)">○ primary tunnel dormant — trying fallbacks...</div>';
+            fallbacks.forEach(fb => {
+              fetch(fb + '?t=' + Date.now(), { method: 'HEAD', mode: 'no-cors' })
+                .then(() => { if (!hasRedirected) { hasRedirected = true; window.location.href = fb; } })
+                .catch(() => { });
+            });
+          } else {
+            action.innerHTML = '<div style="color:var(--dim);font-size:12px;font-family:var(--mono)">○ zero active compute — identity persists — ignition will materialize a new body</div>';
+          }
+        }
+
+        // Footer hash
+        const fh = document.getElementById('footer-hash');
+        if (fh) fh.textContent = 'receipt: ' + (data.receipt_hash || 'none') + ' · predecessor: ' + (data.predecessor_hash || 'genesis');
+
+        // Chain view
+        const chain = document.getElementById('chain-view');
+        if (chain) {
+          let html = '<div class="chain-entry"><span class="event">materialize</span><span class="hash">' + (data.receipt_hash || '—').slice(0, 16) + '...</span><span class="ts">' + (data.materialized_at || 'never') + '</span></div>' +
+            '<div class="chain-entry"><span class="event">predecessor</span><span class="hash">' + (data.predecessor_hash || 'genesis').slice(0, 16) + '...</span><span class="ts">—</span></div>' +
+            '<div class="chain-entry"><span class="event">thermal</span><span class="hash">' + (data.thermal_mode || '—') + '</span><span class="ts">current</span></div>';
+          if (data.rotation_count) {
+            html += '<div class="chain-entry"><span class="event">rotations</span><span class="hash">' + data.rotation_count + '</span><span class="ts">' + (data.updated_at || '—') + '</span></div>';
+          }
+          const fbs = data.fallback_urls || [];
+          fbs.forEach((fb, i) => {
+            html += '<div class="chain-entry"><span class="event">fallback[' + i + ']</span><span class="hash">' + fb.slice(0, 40) + '...</span><span class="ts">—</span></div>';
+          });
+          chain.innerHTML = html;
+        }
+      } catch (e) {
+        navPill.className = 'status-pill dormant';
+        navText.textContent = 'dormant';
+        if (redirectTimer) { clearInterval(redirectTimer); redirectTimer = null; }
+        const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+        set('lv-state', 'dormant');
+        set('lv-thermal', 'deep dormancy');
+        set('lv-url', 'no tunnel config');
+        set('lv-provider', '—');
+        set('lv-mat', 'never');
+        set('lv-receipt', 'none');
+        document.getElementById('live-action').innerHTML = '<div style="color:var(--dim);font-size:12px;font-family:var(--mono)">○ no tunnel.json found — deploy tunnel manager to activate</div>';
+      }
+    }
+
+    checkTunnel();
+    setInterval(checkTunnel, POLL_INTERVAL);
+  </script>
+</body>
+
+</html>
