@@ -690,7 +690,7 @@
         const body = { model, messages, stream: true };
         if (options.temperature !== undefined) body.options = { temperature: options.temperature, num_predict: options.maxTokens };
         const headers = { 'Content-Type': 'application/json' };
-        if (apiKey && !url.includes('trycloudflare.com') && !url.includes('localhost:11434')) headers['X-Prism-Api-Key'] = apiKey;
+        if (apiKey && !url.includes('trycloudflare.com') && !url.includes('localhost:11434') && !url.includes('fly.dev')) headers['X-Prism-Api-Key'] = apiKey;
         const r = await fetch(url + '/api/chat', { method: 'POST', headers, body: JSON.stringify(body) });
         if (!r.ok) throw new Error('HTTP ' + r.status);
         const reader = r.body.getReader();
