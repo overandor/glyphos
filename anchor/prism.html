@@ -1,486 +1,926 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prism — Inference Gateway</title>
-<meta name="theme-color" content="#0a0a12">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0a12'/><path d='M50 15 L75 50 L50 85 L25 50 Z' fill='none' stroke='%237c6cf0' stroke-width='4'/><circle cx='50' cy='50' r='8' fill='%237c6cf0'/></svg>">
-<style>
-:root {
-  --bg: #0a0a12;
-  --surface: #12121e;
-  --card: #161624;
-  --border: rgba(124,108,240,.15);
-  --border2: rgba(124,108,240,.3);
-  --text: #d4d4e8;
-  --dim: #6b6b8a;
-  --accent: #7c6cf0;
-  --accent2: #4ade80;
-  --warn: #fbbf24;
-  --red: #f87171;
-  --mono: 'SF Mono','Fira Code','Cascadia Code',monospace;
-  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prism — Inference Gateway</title>
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230a0a12'/><path d='M50 15 L75 50 L50 85 L25 50 Z' fill='none' stroke='%237c6cf0' stroke-width='4'/><circle cx='50' cy='50' r='8' fill='%237c6cf0'/></svg>">
+  <style>
+    :root {
+      --bg: #0a0a12;
+      --surface: #12121e;
+      --card: #161624;
+      --border: rgba(124, 108, 240, .15);
+      --border2: rgba(124, 108, 240, .3);
+      --text: #d4d4e8;
+      --dim: #6b6b8a;
+      --accent: #7c6cf0;
+      --accent2: #4ade80;
+      --warn: #fbbf24;
+      --red: #f87171;
+      --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
 
-/* Header */
-header{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;gap:14px;flex-shrink:0}
-.logo{display:flex;align-items:center;gap:8px}
-.logo svg{width:24px;height:24px}
-.logo span{font-size:15px;font-weight:700;color:var(--accent);letter-spacing:.5px}
-.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.status-dot.online{background:var(--accent2);box-shadow:0 0 8px var(--accent2)}
-.status-dot.offline{background:var(--red)}
-.status-dot.checking{background:var(--warn);animation:pulse 1s infinite}
-@keyframes pulse{50%{opacity:.3}}
-.model-select{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);font-size:13px;cursor:pointer;max-width:200px}
-.model-select:disabled{opacity:.4}
-.icon-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--dim);font-size:14px;cursor:pointer;transition:all .2s}
-.icon-btn:hover{color:var(--text);border-color:var(--border2)}
-.spacer{flex:1}
-.endpoint-pill{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:10px;font-family:var(--mono);color:var(--dim);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
 
-/* Settings drawer */
-#settings{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;display:none;flex-shrink:0}
-#settings.open{display:block}
-.settings-inner{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
-.setting-row{display:flex;gap:24px;flex-wrap:wrap}
-.setting-group{display:flex;flex-direction:column;gap:4px}
-.setting-label{font-size:11px;color:var(--dim);font-family:var(--mono);letter-spacing:.3px}
-.setting-label span{color:var(--accent)}
-input[type=range]{accent-color:var(--accent);width:180px}
-textarea,input[type=text],input[type=password]{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;font-family:var(--sans);resize:vertical}
-textarea:focus,input:focus{outline:none;border-color:var(--accent)}
-.api-key-row{display:flex;gap:8px;align-items:center}
-.api-key-row input{flex:1;font-family:var(--mono);font-size:12px}
-.endpoint-row{display:flex;gap:8px;align-items:center}
-.endpoint-row input{flex:1;font-family:var(--mono);font-size:12px}
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
 
-/* Chat */
-#chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
-#chat::-webkit-scrollbar{width:6px}
-#chat::-webkit-scrollbar-track{background:transparent}
-#chat::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.msg{max-width:820px;width:100%;margin:0 auto}
-.msg-header{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.msg-role{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.msg-role.user{color:var(--accent)}
-.msg-role.assistant{color:var(--accent2)}
-.msg-role.system{color:var(--warn)}
-.msg-role.error{color:var(--red)}
-.msg-time{font-size:10px;color:var(--dim);font-family:var(--mono)}
-.msg-body{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:14px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
-.msg-body.user{background:rgba(124,108,240,.08);border-color:rgba(124,108,240,.2)}
-.msg-body.assistant{background:var(--surface)}
-.msg-body pre{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;margin:8px 0;font-family:var(--mono);font-size:12px}
-.msg-body code{font-family:var(--mono);font-size:13px}
+    /* Header */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0
+    }
 
-/* Welcome */
-.welcome{text-align:center;padding:50px 20px;color:var(--dim)}
-.welcome h2{font-size:24px;color:var(--text);margin-bottom:8px;font-weight:600}
-.welcome p{font-size:13px;margin-bottom:4px}
-.welcome .stats{margin-top:20px;display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
-.welcome .stat{text-align:center}
-.welcome .stat-num{font-size:28px;font-weight:700;color:var(--accent);font-family:var(--mono)}
-.welcome .stat-label{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px}
-.welcome .models{margin-top:16px;font-family:var(--mono);font-size:11px;color:var(--dim);max-width:500px;margin-left:auto;margin-right:auto}
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
 
-/* Input */
-#input-area{background:var(--surface);border-top:1px solid var(--border);padding:14px 20px;flex-shrink:0}
-#input-wrap{max-width:820px;margin:0 auto;display:flex;gap:10px;align-items:flex-end}
-#msg-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:var(--text);font-size:14px;font-family:var(--sans);resize:none;min-height:48px;max-height:200px;line-height:1.5}
-#msg-input:focus{outline:none;border-color:var(--accent)}
-#msg-input::placeholder{color:var(--dim)}
-#send-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .2s}
-#send-btn:disabled{opacity:.3;cursor:not-allowed}
-#send-btn:not(:disabled):hover{opacity:.85}
+    .logo svg {
+      width: 24px;
+      height: 24px
+    }
 
-/* Config bar */
-#config-bar{background:var(--surface);border-top:1px solid var(--border);padding:6px 20px;font-size:10px;font-family:var(--mono);color:var(--dim);display:flex;gap:14px;align-items:center;flex-wrap:wrap;flex-shrink:0}
-#config-bar a{color:var(--accent);text-decoration:none}
-#config-bar a:hover{text-decoration:underline}
+    .logo span {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .5px
+    }
 
-/* Auth overlay */
-#auth-overlay{position:fixed;inset:0;background:rgba(10,10,18,.95);display:flex;align-items:center;justify-content:center;z-index:100}
-#auth-overlay.hidden{display:none}
-.auth-card{background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:40px;max-width:400px;text-align:center}
-.auth-card h2{color:var(--accent);font-size:20px;margin-bottom:8px}
-.auth-card p{color:var(--dim);font-size:13px;margin-bottom:20px}
-.auth-card input{width:100%;margin-bottom:12px;font-family:var(--mono);font-size:13px}
-.auth-card button{width:100%;background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;cursor:pointer}
-.auth-card button:hover{opacity:.85}
-.auth-error{color:var(--red);font-size:12px;margin-top:8px;display:none}
-</style>
-</head>
-<body>
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
 
-<div id="auth-overlay">
-  <div class="auth-card">
-    <h2>Prism Gateway</h2>
-    <p>Enter your API key to access the inference gateway</p>
-    <input type="password" id="auth-key-input" placeholder="X-Prism-Api-Key" autofocus>
-    <button id="auth-submit">Connect</button>
-    <div class="auth-error" id="auth-error">Invalid API key or gateway unreachable</div>
-  </div>
-</div>
+    .status-dot.online {
+      background: var(--accent2);
+      box-shadow: 0 0 8px var(--accent2)
+    }
 
-<header>
-  <div class="logo">
-    <svg viewBox="0 0 100 100"><path d="M50 15 L75 50 L50 85 L25 50 Z" fill="none" stroke="#7c6cf0" stroke-width="4"/><circle cx="50" cy="50" r="8" fill="#7c6cf0"/></svg>
-    <span>Prism</span>
-  </div>
-  <div class="status-dot checking" id="status-dot"></div>
-  <div class="endpoint-pill" id="endpoint-display">connecting...</div>
-  <select class="model-select" id="model-select" disabled><option>loading...</option></select>
-  <button class="icon-btn" id="refresh-models" title="Refresh models">↻</button>
-  <button class="icon-btn" id="clear-chat" title="Clear chat">✕</button>
-  <button class="icon-btn" id="toggle-settings" title="Settings">⚙</button>
-  <div class="spacer"></div>
-</header>
+    .status-dot.offline {
+      background: var(--red)
+    }
 
-<div id="settings">
-  <div class="settings-inner">
-    <div class="setting-group">
-      <div class="setting-label">System Prompt</div>
-      <textarea id="system-prompt" placeholder="You are a helpful assistant..." rows="2"></textarea>
-    </div>
-    <div class="setting-row">
-      <div class="setting-group">
-        <div class="setting-label">Temperature: <span id="temp-val">0.7</span></div>
-        <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7">
-      </div>
-      <div class="setting-group">
-        <div class="setting-label">Max Tokens: <span id="tokens-val">512</span></div>
-        <input type="range" id="max-tokens" min="64" max="4096" step="64" value="512">
-      </div>
-      <div class="setting-group">
-        <div class="setting-label">API Key</div>
-        <div class="api-key-row">
-          <input type="password" id="api-key-input" placeholder="01KYN0...">
-          <button class="icon-btn" id="save-key">save</button>
-        </div>
-      </div>
-      <div class="setting-group">
-        <div class="setting-label">Gateway URL</div>
-        <div class="endpoint-row">
-          <input type="text" id="endpoint-input" placeholder="https://...">
-          <button class="icon-btn" id="save-endpoint">save</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    .status-dot.checking {
+      background: var(--warn);
+      animation: pulse 1s infinite
+    }
 
-<div id="chat">
-  <div class="welcome" id="welcome">
-    <h2>Prism Inference Gateway</h2>
-    <p>OpenAI-compatible proxy for local Ollama models</p>
-    <div class="stats" id="welcome-stats"></div>
-    <div class="models" id="welcome-models"></div>
-  </div>
-</div>
-
-<div id="input-area">
-  <div id="input-wrap">
-    <textarea id="msg-input" placeholder="Type a message... (Shift+Enter for newline)" rows="1" disabled></textarea>
-    <button id="send-btn" disabled>Send</button>
-  </div>
-</div>
-
-<div id="config-bar">
-  <span id="latency-display">latency: —</span>
-  <span>|</span>
-  <span><a href="ollama-config.json" target="_blank">config</a></span>
-  <span>|</span>
-  <span><a href="ollama.html" target="_blank">raw ollama</a></span>
-</div>
-
-<script>
-const DEFAULT_GATEWAY = 'https://another-sample-investigations-ensures.trycloudflare.com';
-const CONFIG_URL = './ollama-config.json';
-const LS_KEY = 'prism-api-key';
-const LS_EP = 'prism-endpoint';
-const LS_SETTINGS = 'prism-settings';
-let apiKey = '';
-let gatewayUrl = '';
-let currentModel = null;
-let isStreaming = false;
-
-// --- Storage ---
-function getKey() { return localStorage.getItem(LS_KEY) || ''; }
-function setKey(k) { localStorage.setItem(LS_KEY, k); }
-function getEndpoint() { return localStorage.getItem(LS_EP) || ''; }
-function setEndpoint(u) { localStorage.setItem(LS_EP, u); }
-function loadSettings() { try { return JSON.parse(localStorage.getItem(LS_SETTINGS)) || {}; } catch { return {}; } }
-function saveSettings(s) { localStorage.setItem(LS_SETTINGS, JSON.stringify(s)); }
-
-// --- Config ---
-async function loadConfig() {
-  try {
-    const r = await fetch(CONFIG_URL + '?t=' + Date.now());
-    if (!r.ok) return {};
-    return await r.json();
-  } catch { return {}; }
-}
-
-async function resolveGateway() {
-  const stored = getEndpoint();
-  if (stored) return stored;
-  const cfg = await loadConfig();
-  return cfg.primary_endpoint || DEFAULT_GATEWAY;
-}
-
-// --- API ---
-async function checkHealth(url) {
-  const start = performance.now();
-  try {
-    const ctrl = new AbortController();
-    const t = setTimeout(() => ctrl.abort(), 8000);
-    const r = await fetch(url + '/api/tags', { signal: ctrl.signal, cache: 'no-store' });
-    clearTimeout(t);
-    if (!r.ok) return { online: false, models: [], latency: null };
-    const data = await r.json();
-    return { online: true, models: data.models || [], latency: Math.round(performance.now() - start) };
-  } catch { return { online: false, models: [], latency: null }; }
-}
-
-async function streamChat(url, model, messages, options, onToken, onDone, onError) {
-  try {
-    const body = { model, messages, stream: true };
-    if (options.temperature !== undefined) body.options = { temperature: options.temperature, num_predict: options.maxTokens };
-    const headers = { 'Content-Type': 'application/json' };
-    if (apiKey) headers['X-Prism-Api-Key'] = apiKey;
-    const r = await fetch(url + '/api/chat', { method: 'POST', headers, body: JSON.stringify(body) });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const reader = r.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = '', fullText = '';
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split('\n');
-      buffer = lines.pop() || '';
-      for (const line of lines) {
-        if (!line.trim()) continue;
-        try {
-          const chunk = JSON.parse(line);
-          if (chunk.message?.content) { fullText += chunk.message.content; onToken(chunk.message.content); }
-          if (chunk.done) { onDone(fullText); return; }
-        } catch {}
+    @keyframes pulse {
+      50% {
+        opacity: .3
       }
     }
-    onDone(fullText);
-  } catch (e) { onError(e.message); }
-}
 
-// --- UI helpers ---
-const chat = document.getElementById('chat');
-const welcome = document.getElementById('welcome');
-const msgInput = document.getElementById('msg-input');
-const sendBtn = document.getElementById('send-btn');
-const modelSelect = document.getElementById('model-select');
-const statusDot = document.getElementById('status-dot');
-const endpointDisplay = document.getElementById('endpoint-display');
-const latencyDisplay = document.getElementById('latency-display');
-
-function escapeHtml(s) { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;') : ''; }
-function formatMarkdown(text) {
-  let html = escapeHtml(text);
-  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (m,l,c) => `<pre><code>${c}</code></pre>`);
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  return html;
-}
-
-function addMessage(role, content, streaming = false) {
-  if (welcome) welcome.style.display = 'none';
-  const msg = document.createElement('div');
-  msg.className = 'msg';
-  msg.innerHTML = `<div class="msg-header"><span class="msg-role ${role}">${role}</span><span class="msg-time">${new Date().toLocaleTimeString()}</span></div><div class="msg-body ${role}"></div>`;
-  const body = msg.querySelector('.msg-body');
-  chat.appendChild(msg);
-  chat.scrollTop = chat.scrollHeight;
-  if (streaming) {
-    return (token) => { body.textContent += token; chat.scrollTop = chat.scrollHeight; };
-  } else {
-    body.innerHTML = formatMarkdown(content);
-    chat.scrollTop = chat.scrollHeight;
-  }
-}
-
-// --- Connect ---
-async function connect(url) {
-  gatewayUrl = url;
-  endpointDisplay.textContent = url;
-  statusDot.className = 'status-dot checking';
-  const health = await checkHealth(url);
-  if (health.online) {
-    statusDot.className = 'status-dot online';
-    msgInput.disabled = false;
-    sendBtn.disabled = false;
-    modelSelect.disabled = false;
-    latencyDisplay.textContent = `latency: ${health.latency}ms`;
-    modelSelect.innerHTML = '';
-    if (health.models.length === 0) {
-      modelSelect.innerHTML = '<option value="">no models</option>';
-    } else {
-      health.models.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m.name;
-        opt.textContent = m.name + (m.size ? ` (${(m.size/1e9).toFixed(1)}GB)` : '');
-        modelSelect.appendChild(opt);
-      });
-      currentModel = health.models[0].name;
+    .model-select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: var(--text);
+      font-size: 13px;
+      cursor: pointer;
+      max-width: 200px
     }
-    // Update welcome stats
-    const statsDiv = document.getElementById('welcome-stats');
-    const modelsDiv = document.getElementById('welcome-models');
-    statsDiv.innerHTML = `
+
+    .model-select:disabled {
+      opacity: .4
+    }
+
+    .icon-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: var(--dim);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .2s
+    }
+
+    .icon-btn:hover {
+      color: var(--text);
+      border-color: var(--border2)
+    }
+
+    .spacer {
+      flex: 1
+    }
+
+    .endpoint-pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 10px;
+      font-family: var(--mono);
+      color: var(--dim);
+      max-width: 260px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    /* Settings drawer */
+    #settings {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: none;
+      flex-shrink: 0
+    }
+
+    #settings.open {
+      display: block
+    }
+
+    .settings-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .setting-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap
+    }
+
+    .setting-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .setting-label {
+      font-size: 11px;
+      color: var(--dim);
+      font-family: var(--mono);
+      letter-spacing: .3px
+    }
+
+    .setting-label span {
+      color: var(--accent)
+    }
+
+    input[type=range] {
+      accent-color: var(--accent);
+      width: 180px
+    }
+
+    textarea,
+    input[type=text],
+    input[type=password] {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: var(--text);
+      font-size: 13px;
+      font-family: var(--sans);
+      resize: vertical
+    }
+
+    textarea:focus,
+    input:focus {
+      outline: none;
+      border-color: var(--accent)
+    }
+
+    .api-key-row {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .api-key-row input {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 12px
+    }
+
+    .endpoint-row {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .endpoint-row input {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 12px
+    }
+
+    /* Chat */
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    #chat::-webkit-scrollbar {
+      width: 6px
+    }
+
+    #chat::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    #chat::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px
+    }
+
+    .msg {
+      max-width: 820px;
+      width: 100%;
+      margin: 0 auto
+    }
+
+    .msg-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px
+    }
+
+    .msg-role {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px
+    }
+
+    .msg-role.user {
+      color: var(--accent)
+    }
+
+    .msg-role.assistant {
+      color: var(--accent2)
+    }
+
+    .msg-role.system {
+      color: var(--warn)
+    }
+
+    .msg-role.error {
+      color: var(--red)
+    }
+
+    .msg-time {
+      font-size: 10px;
+      color: var(--dim);
+      font-family: var(--mono)
+    }
+
+    .msg-body {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word
+    }
+
+    .msg-body.user {
+      background: rgba(124, 108, 240, .08);
+      border-color: rgba(124, 108, 240, .2)
+    }
+
+    .msg-body.assistant {
+      background: var(--surface)
+    }
+
+    .msg-body pre {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      overflow-x: auto;
+      margin: 8px 0;
+      font-family: var(--mono);
+      font-size: 12px
+    }
+
+    .msg-body code {
+      font-family: var(--mono);
+      font-size: 13px
+    }
+
+    /* Welcome */
+    .welcome {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--dim)
+    }
+
+    .welcome h2 {
+      font-size: 24px;
+      color: var(--text);
+      margin-bottom: 8px;
+      font-weight: 600
+    }
+
+    .welcome p {
+      font-size: 13px;
+      margin-bottom: 4px
+    }
+
+    .welcome .stats {
+      margin-top: 20px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    .welcome .stat {
+      text-align: center
+    }
+
+    .welcome .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--mono)
+    }
+
+    .welcome .stat-label {
+      font-size: 11px;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: .5px
+    }
+
+    .welcome .models {
+      margin-top: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    /* Input */
+    #input-area {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 14px 20px;
+      flex-shrink: 0
+    }
+
+    #input-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end
+    }
+
+    #msg-input {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: var(--sans);
+      resize: none;
+      min-height: 48px;
+      max-height: 200px;
+      line-height: 1.5
+    }
+
+    #msg-input:focus {
+      outline: none;
+      border-color: var(--accent)
+    }
+
+    #msg-input::placeholder {
+      color: var(--dim)
+    }
+
+    #send-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .2s
+    }
+
+    #send-btn:disabled {
+      opacity: .3;
+      cursor: not-allowed
+    }
+
+    #send-btn:not(:disabled):hover {
+      opacity: .85
+    }
+
+    /* Config bar */
+    #config-bar {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 6px 20px;
+      font-size: 10px;
+      font-family: var(--mono);
+      color: var(--dim);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-shrink: 0
+    }
+
+    #config-bar a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    #config-bar a:hover {
+      text-decoration: underline
+    }
+
+    /* Auth overlay */
+    #auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 18, .95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100
+    }
+
+    #auth-overlay.hidden {
+      display: none
+    }
+
+    .auth-card {
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 400px;
+      text-align: center
+    }
+
+    .auth-card h2 {
+      color: var(--accent);
+      font-size: 20px;
+      margin-bottom: 8px
+    }
+
+    .auth-card p {
+      color: var(--dim);
+      font-size: 13px;
+      margin-bottom: 20px
+    }
+
+    .auth-card input {
+      width: 100%;
+      margin-bottom: 12px;
+      font-family: var(--mono);
+      font-size: 13px
+    }
+
+    .auth-card button {
+      width: 100%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer
+    }
+
+    .auth-card button:hover {
+      opacity: .85
+    }
+
+    .auth-error {
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 8px;
+      display: none
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="auth-overlay">
+    <div class="auth-card">
+      <h2>Prism Gateway</h2>
+      <p>Enter your API key to access the inference gateway</p>
+      <input type="password" id="auth-key-input" placeholder="X-Prism-Api-Key" autofocus>
+      <button id="auth-submit">Connect</button>
+      <div class="auth-error" id="auth-error">Invalid API key or gateway unreachable</div>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 100 100">
+        <path d="M50 15 L75 50 L50 85 L25 50 Z" fill="none" stroke="#7c6cf0" stroke-width="4" />
+        <circle cx="50" cy="50" r="8" fill="#7c6cf0" />
+      </svg>
+      <span>Prism</span>
+    </div>
+    <div class="status-dot checking" id="status-dot"></div>
+    <div class="endpoint-pill" id="endpoint-display">connecting...</div>
+    <select class="model-select" id="model-select" disabled>
+      <option>loading...</option>
+    </select>
+    <button class="icon-btn" id="refresh-models" title="Refresh models">↻</button>
+    <button class="icon-btn" id="clear-chat" title="Clear chat">✕</button>
+    <button class="icon-btn" id="toggle-settings" title="Settings">⚙</button>
+    <div class="spacer"></div>
+  </header>
+
+  <div id="settings">
+    <div class="settings-inner">
+      <div class="setting-group">
+        <div class="setting-label">System Prompt</div>
+        <textarea id="system-prompt" placeholder="You are a helpful assistant..." rows="2"></textarea>
+      </div>
+      <div class="setting-row">
+        <div class="setting-group">
+          <div class="setting-label">Temperature: <span id="temp-val">0.7</span></div>
+          <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7">
+        </div>
+        <div class="setting-group">
+          <div class="setting-label">Max Tokens: <span id="tokens-val">512</span></div>
+          <input type="range" id="max-tokens" min="64" max="4096" step="64" value="512">
+        </div>
+        <div class="setting-group">
+          <div class="setting-label">API Key</div>
+          <div class="api-key-row">
+            <input type="password" id="api-key-input" placeholder="01KYN0...">
+            <button class="icon-btn" id="save-key">save</button>
+          </div>
+        </div>
+        <div class="setting-group">
+          <div class="setting-label">Gateway URL</div>
+          <div class="endpoint-row">
+            <input type="text" id="endpoint-input" placeholder="https://...">
+            <button class="icon-btn" id="save-endpoint">save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat">
+    <div class="welcome" id="welcome">
+      <h2>Prism Inference Gateway</h2>
+      <p>OpenAI-compatible proxy for local Ollama models</p>
+      <div class="stats" id="welcome-stats"></div>
+      <div class="models" id="welcome-models"></div>
+    </div>
+  </div>
+
+  <div id="input-area">
+    <div id="input-wrap">
+      <textarea id="msg-input" placeholder="Type a message... (Shift+Enter for newline)" rows="1" disabled></textarea>
+      <button id="send-btn" disabled>Send</button>
+    </div>
+  </div>
+
+  <div id="config-bar">
+    <span id="latency-display">latency: —</span>
+    <span>|</span>
+    <span><a href="ollama-config.json" target="_blank">config</a></span>
+    <span>|</span>
+    <span><a href="ollama.html" target="_blank">raw ollama</a></span>
+  </div>
+
+  <script>
+    const DEFAULT_GATEWAY = 'https://another-sample-investigations-ensures.trycloudflare.com';
+    const CONFIG_URL = './ollama-config.json';
+    const LS_KEY = 'prism-api-key';
+    const LS_EP = 'prism-endpoint';
+    const LS_SETTINGS = 'prism-settings';
+    let apiKey = '';
+    let gatewayUrl = '';
+    let currentModel = null;
+    let isStreaming = false;
+
+    // --- Storage ---
+    function getKey() { return localStorage.getItem(LS_KEY) || ''; }
+    function setKey(k) { localStorage.setItem(LS_KEY, k); }
+    function getEndpoint() { return localStorage.getItem(LS_EP) || ''; }
+    function setEndpoint(u) { localStorage.setItem(LS_EP, u); }
+    function loadSettings() { try { return JSON.parse(localStorage.getItem(LS_SETTINGS)) || {}; } catch { return {}; } }
+    function saveSettings(s) { localStorage.setItem(LS_SETTINGS, JSON.stringify(s)); }
+
+    // --- Config ---
+    async function loadConfig() {
+      try {
+        const r = await fetch(CONFIG_URL + '?t=' + Date.now());
+        if (!r.ok) return {};
+        return await r.json();
+      } catch { return {}; }
+    }
+
+    async function resolveGateway() {
+      const stored = getEndpoint();
+      if (stored) return stored;
+      const cfg = await loadConfig();
+      return cfg.primary_endpoint || DEFAULT_GATEWAY;
+    }
+
+    // --- API ---
+    async function checkHealth(url) {
+      const start = performance.now();
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 8000);
+        const r = await fetch(url + '/api/tags', { signal: ctrl.signal, cache: 'no-store' });
+        clearTimeout(t);
+        if (!r.ok) return { online: false, models: [], latency: null };
+        const data = await r.json();
+        return { online: true, models: data.models || [], latency: Math.round(performance.now() - start) };
+      } catch { return { online: false, models: [], latency: null }; }
+    }
+
+    async function streamChat(url, model, messages, options, onToken, onDone, onError) {
+      try {
+        const body = { model, messages, stream: true };
+        if (options.temperature !== undefined) body.options = { temperature: options.temperature, num_predict: options.maxTokens };
+        const headers = { 'Content-Type': 'application/json' };
+        if (apiKey && !url.includes('trycloudflare.com') && !url.includes('localhost:11434')) headers['X-Prism-Api-Key'] = apiKey;
+        const r = await fetch(url + '/api/chat', { method: 'POST', headers, body: JSON.stringify(body) });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const reader = r.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '', fullText = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            try {
+              const chunk = JSON.parse(line);
+              if (chunk.message?.content) { fullText += chunk.message.content; onToken(chunk.message.content); }
+              if (chunk.done) { onDone(fullText); return; }
+            } catch { }
+          }
+        }
+        onDone(fullText);
+      } catch (e) { onError(e.message); }
+    }
+
+    // --- UI helpers ---
+    const chat = document.getElementById('chat');
+    const welcome = document.getElementById('welcome');
+    const msgInput = document.getElementById('msg-input');
+    const sendBtn = document.getElementById('send-btn');
+    const modelSelect = document.getElementById('model-select');
+    const statusDot = document.getElementById('status-dot');
+    const endpointDisplay = document.getElementById('endpoint-display');
+    const latencyDisplay = document.getElementById('latency-display');
+
+    function escapeHtml(s) { return s ? String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;') : ''; }
+    function formatMarkdown(text) {
+      let html = escapeHtml(text);
+      html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (m, l, c) => `<pre><code>${c}</code></pre>`);
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      return html;
+    }
+
+    function addMessage(role, content, streaming = false) {
+      if (welcome) welcome.style.display = 'none';
+      const msg = document.createElement('div');
+      msg.className = 'msg';
+      msg.innerHTML = `<div class="msg-header"><span class="msg-role ${role}">${role}</span><span class="msg-time">${new Date().toLocaleTimeString()}</span></div><div class="msg-body ${role}"></div>`;
+      const body = msg.querySelector('.msg-body');
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+      if (streaming) {
+        return (token) => { body.textContent += token; chat.scrollTop = chat.scrollHeight; };
+      } else {
+        body.innerHTML = formatMarkdown(content);
+        chat.scrollTop = chat.scrollHeight;
+      }
+    }
+
+    // --- Connect ---
+    async function connect(url) {
+      gatewayUrl = url;
+      endpointDisplay.textContent = url;
+      statusDot.className = 'status-dot checking';
+      const health = await checkHealth(url);
+      if (health.online) {
+        statusDot.className = 'status-dot online';
+        msgInput.disabled = false;
+        sendBtn.disabled = false;
+        modelSelect.disabled = false;
+        latencyDisplay.textContent = `latency: ${health.latency}ms`;
+        modelSelect.innerHTML = '';
+        if (health.models.length === 0) {
+          modelSelect.innerHTML = '<option value="">no models</option>';
+        } else {
+          health.models.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m.name;
+            opt.textContent = m.name + (m.size ? ` (${(m.size / 1e9).toFixed(1)}GB)` : '');
+            modelSelect.appendChild(opt);
+          });
+          currentModel = health.models[0].name;
+        }
+        // Update welcome stats
+        const statsDiv = document.getElementById('welcome-stats');
+        const modelsDiv = document.getElementById('welcome-models');
+        statsDiv.innerHTML = `
       <div class="stat"><div class="stat-num">${health.models.length}</div><div class="stat-label">Models</div></div>
       <div class="stat"><div class="stat-num">${health.latency}ms</div><div class="stat-label">Latency</div></div>
       <div class="stat"><div class="stat-num" style="color:var(--accent2)">●</div><div class="stat-label">Online</div></div>
     `;
-    modelsDiv.innerHTML = health.models.map(m => escapeHtml(m.name)).join(' · ');
-    msgInput.focus();
-  } else {
-    statusDot.className = 'status-dot offline';
-    msgInput.disabled = true;
-    sendBtn.disabled = true;
-    modelSelect.disabled = true;
-    latencyDisplay.textContent = 'latency: unreachable';
-  }
-}
-
-// --- Auth ---
-const authOverlay = document.getElementById('auth-overlay');
-const authKeyInput = document.getElementById('auth-key-input');
-const authSubmit = document.getElementById('auth-submit');
-const authError = document.getElementById('auth-error');
-
-async function tryAuth() {
-  const key = authKeyInput.value.trim();
-  if (!key) { authError.style.display = 'block'; return; }
-  setKey(key);
-  apiKey = key;
-  const url = await resolveGateway();
-  gatewayUrl = url;
-  document.getElementById('endpoint-input').value = url;
-  document.getElementById('api-key-input').value = key;
-  const health = await checkHealth(url);
-  if (health.online) {
-    authOverlay.classList.add('hidden');
-    await connect(url);
-  } else {
-    authError.style.display = 'block';
-  }
-}
-
-authSubmit.addEventListener('click', tryAuth);
-authKeyInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryAuth(); });
-
-// --- Settings ---
-const settingsPanel = document.getElementById('settings');
-const systemPromptInput = document.getElementById('system-prompt');
-const tempSlider = document.getElementById('temperature');
-const tempVal = document.getElementById('temp-val');
-const maxTokensSlider = document.getElementById('max-tokens');
-const tokensVal = document.getElementById('tokens-val');
-
-const saved = loadSettings();
-if (saved.systemPrompt) systemPromptInput.value = saved.systemPrompt;
-if (saved.temperature) { tempSlider.value = saved.temperature; tempVal.textContent = saved.temperature; }
-if (saved.maxTokens) { maxTokensSlider.value = saved.maxTokens; tokensVal.textContent = saved.maxTokens; }
-
-document.getElementById('toggle-settings').addEventListener('click', () => {
-  settingsPanel.classList.toggle('open');
-});
-tempSlider.addEventListener('input', () => { tempVal.textContent = tempSlider.value; saveSettings({ ...loadSettings(), temperature: parseFloat(tempSlider.value) }); });
-maxTokensSlider.addEventListener('input', () => { tokensVal.textContent = maxTokensSlider.value; saveSettings({ ...loadSettings(), maxTokens: parseInt(maxTokensSlider.value) }); });
-systemPromptInput.addEventListener('input', () => { saveSettings({ ...loadSettings(), systemPrompt: systemPromptInput.value }); });
-
-document.getElementById('save-key').addEventListener('click', () => {
-  const k = document.getElementById('api-key-input').value.trim();
-  if (k) { setKey(k); apiKey = k; }
-});
-document.getElementById('save-endpoint').addEventListener('click', () => {
-  const u = document.getElementById('endpoint-input').value.trim();
-  if (u) { setEndpoint(u); connect(u); }
-});
-
-document.getElementById('refresh-models').addEventListener('click', () => { if (gatewayUrl) connect(gatewayUrl); });
-document.getElementById('clear-chat').addEventListener('click', () => {
-  chat.innerHTML = '';
-  chat.appendChild(welcome);
-  welcome.style.display = '';
-});
-
-// --- Send ---
-sendBtn.addEventListener('click', sendMessage);
-msgInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-});
-msgInput.addEventListener('input', () => {
-  msgInput.style.height = 'auto';
-  msgInput.style.height = Math.min(msgInput.scrollHeight, 200) + 'px';
-});
-
-async function sendMessage() {
-  const text = msgInput.value.trim();
-  if (!text || !gatewayUrl || isStreaming) return;
-  const model = modelSelect.value;
-  if (!model) { addMessage('error', 'No model selected'); return; }
-
-  addMessage('user', text);
-  msgInput.value = '';
-  msgInput.style.height = 'auto';
-
-  const messages = [];
-  const sysPrompt = systemPromptInput.value.trim();
-  if (sysPrompt) messages.push({ role: 'system', content: sysPrompt });
-  const allMsgs = chat.querySelectorAll('.msg');
-  allMsgs.forEach(m => {
-    const role = m.querySelector('.msg-role')?.textContent;
-    const body = m.querySelector('.msg-body')?.textContent;
-    if (role && body && role !== 'system' && role !== 'error') messages.push({ role, content: body });
-  });
-
-  isStreaming = true;
-  sendBtn.disabled = true;
-  sendBtn.textContent = '...';
-  const appendToken = addMessage('assistant', '', true);
-  const settings = loadSettings();
-
-  await streamChat(gatewayUrl, model, messages,
-    { temperature: settings.temperature ?? 0.7, maxTokens: settings.maxTokens ?? 512 },
-    (token) => appendToken(token),
-    () => { isStreaming = false; sendBtn.disabled = false; sendBtn.textContent = 'Send'; },
-    (err) => { isStreaming = false; sendBtn.disabled = false; sendBtn.textContent = 'Send'; appendToken(`\n[error: ${err}]`); }
-  );
-}
-
-// --- Init ---
-(async () => {
-  const storedKey = getKey();
-  if (storedKey) {
-    authKeyInput.value = storedKey;
-    apiKey = storedKey;
-    const url = await resolveGateway();
-    gatewayUrl = url;
-    document.getElementById('endpoint-input').value = url;
-    document.getElementById('api-key-input').value = storedKey;
-    const health = await checkHealth(url);
-    if (health.online) {
-      authOverlay.classList.add('hidden');
-      await connect(url);
-      return;
+        modelsDiv.innerHTML = health.models.map(m => escapeHtml(m.name)).join(' · ');
+        msgInput.focus();
+      } else {
+        statusDot.className = 'status-dot offline';
+        msgInput.disabled = true;
+        sendBtn.disabled = true;
+        modelSelect.disabled = true;
+        latencyDisplay.textContent = 'latency: unreachable';
+      }
     }
-  }
-  // Show auth overlay
-  authOverlay.classList.remove('hidden');
-})();
-</script>
+
+    // --- Auth ---
+    const authOverlay = document.getElementById('auth-overlay');
+    const authKeyInput = document.getElementById('auth-key-input');
+    const authSubmit = document.getElementById('auth-submit');
+    const authError = document.getElementById('auth-error');
+
+    async function tryAuth() {
+      const key = authKeyInput.value.trim();
+      if (!key) { authError.style.display = 'block'; return; }
+      setKey(key);
+      apiKey = key;
+      const url = await resolveGateway();
+      gatewayUrl = url;
+      document.getElementById('endpoint-input').value = url;
+      document.getElementById('api-key-input').value = key;
+      const health = await checkHealth(url);
+      if (health.online) {
+        authOverlay.classList.add('hidden');
+        await connect(url);
+      } else {
+        authError.style.display = 'block';
+      }
+    }
+
+    authSubmit.addEventListener('click', tryAuth);
+    authKeyInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryAuth(); });
+
+    // --- Settings ---
+    const settingsPanel = document.getElementById('settings');
+    const systemPromptInput = document.getElementById('system-prompt');
+    const tempSlider = document.getElementById('temperature');
+    const tempVal = document.getElementById('temp-val');
+    const maxTokensSlider = document.getElementById('max-tokens');
+    const tokensVal = document.getElementById('tokens-val');
+
+    const saved = loadSettings();
+    if (saved.systemPrompt) systemPromptInput.value = saved.systemPrompt;
+    if (saved.temperature) { tempSlider.value = saved.temperature; tempVal.textContent = saved.temperature; }
+    if (saved.maxTokens) { maxTokensSlider.value = saved.maxTokens; tokensVal.textContent = saved.maxTokens; }
+
+    document.getElementById('toggle-settings').addEventListener('click', () => {
+      settingsPanel.classList.toggle('open');
+    });
+    tempSlider.addEventListener('input', () => { tempVal.textContent = tempSlider.value; saveSettings({ ...loadSettings(), temperature: parseFloat(tempSlider.value) }); });
+    maxTokensSlider.addEventListener('input', () => { tokensVal.textContent = maxTokensSlider.value; saveSettings({ ...loadSettings(), maxTokens: parseInt(maxTokensSlider.value) }); });
+    systemPromptInput.addEventListener('input', () => { saveSettings({ ...loadSettings(), systemPrompt: systemPromptInput.value }); });
+
+    document.getElementById('save-key').addEventListener('click', () => {
+      const k = document.getElementById('api-key-input').value.trim();
+      if (k) { setKey(k); apiKey = k; }
+    });
+    document.getElementById('save-endpoint').addEventListener('click', () => {
+      const u = document.getElementById('endpoint-input').value.trim();
+      if (u) { setEndpoint(u); connect(u); }
+    });
+
+    document.getElementById('refresh-models').addEventListener('click', () => { if (gatewayUrl) connect(gatewayUrl); });
+    document.getElementById('clear-chat').addEventListener('click', () => {
+      chat.innerHTML = '';
+      chat.appendChild(welcome);
+      welcome.style.display = '';
+    });
+
+    // --- Send ---
+    sendBtn.addEventListener('click', sendMessage);
+    msgInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+    msgInput.addEventListener('input', () => {
+      msgInput.style.height = 'auto';
+      msgInput.style.height = Math.min(msgInput.scrollHeight, 200) + 'px';
+    });
+
+    async function sendMessage() {
+      const text = msgInput.value.trim();
+      if (!text || !gatewayUrl || isStreaming) return;
+      const model = modelSelect.value;
+      if (!model) { addMessage('error', 'No model selected'); return; }
+
+      addMessage('user', text);
+      msgInput.value = '';
+      msgInput.style.height = 'auto';
+
+      const messages = [];
+      const sysPrompt = systemPromptInput.value.trim();
+      if (sysPrompt) messages.push({ role: 'system', content: sysPrompt });
+      const allMsgs = chat.querySelectorAll('.msg');
+      allMsgs.forEach(m => {
+        const role = m.querySelector('.msg-role')?.textContent;
+        const body = m.querySelector('.msg-body')?.textContent;
+        if (role && body && role !== 'system' && role !== 'error') messages.push({ role, content: body });
+      });
+
+      isStreaming = true;
+      sendBtn.disabled = true;
+      sendBtn.textContent = '...';
+      const appendToken = addMessage('assistant', '', true);
+      const settings = loadSettings();
+
+      await streamChat(gatewayUrl, model, messages,
+        { temperature: settings.temperature ?? 0.7, maxTokens: settings.maxTokens ?? 512 },
+        (token) => appendToken(token),
+        () => { isStreaming = false; sendBtn.disabled = false; sendBtn.textContent = 'Send'; },
+        (err) => { isStreaming = false; sendBtn.disabled = false; sendBtn.textContent = 'Send'; appendToken(`\n[error: ${err}]`); }
+      );
+    }
+
+    // --- Init ---
+    (async () => {
+      const storedKey = getKey();
+      if (storedKey) {
+        authKeyInput.value = storedKey;
+        apiKey = storedKey;
+        const url = await resolveGateway();
+        gatewayUrl = url;
+        document.getElementById('endpoint-input').value = url;
+        document.getElementById('api-key-input').value = storedKey;
+        const health = await checkHealth(url);
+        if (health.online) {
+          authOverlay.classList.add('hidden');
+          await connect(url);
+          return;
+        }
+      }
+      // Show auth overlay
+      authOverlay.classList.remove('hidden');
+    })();
+  </script>
 </body>
+
 </html>
