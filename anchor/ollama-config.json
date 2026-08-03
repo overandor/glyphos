@@ -1,13 +1,16 @@
 {
-  "primary_endpoint": "https://proud-post-highest-college.trycloudflare.com",
-  "fallback_endpoints": [],
+  "primary_endpoint": "https://prism-ollama.fly.dev",
+  "fallback_endpoints": [
+    "https://proud-post-highest-college.trycloudflare.com"
+  ],
   "local_endpoint": "http://localhost:11434",
-  "cloud_endpoint": null,
-  "hosted_at": "https://anchor-blond-sigma.vercel.app",
+  "cloud_endpoint": "https://prism-ollama.fly.dev",
+  "hosted_at": "https://overandor.github.io/glyphos/",
   "vercel_url": "https://anchor-blond-sigma.vercel.app",
   "netlify_url": "https://hdar-anchor.netlify.app",
   "hf_space_url": "https://josephrw-ollama.hf.space",
   "github_pages_url": "https://overandor.github.io/glyphos/",
-  "last_updated": "2026-07-28T13:59:00Z",
-  "note": "primary_endpoint is the Ollama tunnel (port 11434). When laptop is off, use cloud_endpoint. Static UI hosted at HuggingFace Space + GitHub Pages."
+  "fly_url": "https://prism-ollama.fly.dev",
+  "last_updated": "2026-08-03T15:28:00Z",
+  "note": "primary_endpoint is Fly.io always-on Ollama (stable URL). fallback_endpoints[0] is local Cloudflare tunnel (ephemeral, laptop-dependent). Static UI hosted at GitHub Pages."
 }
